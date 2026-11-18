@@ -40,7 +40,15 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .app{display:grid;grid-template-columns:var(--side) minmax(0,1fr);gap:20px;max-width:1320px;margin:0 auto;padding:20px}
 @media (max-width:900px){.app{grid-template-columns:1fr;padding:12px}}
 .side{display:flex;flex-direction:column;gap:10px;position:sticky;top:72px;align-self:start}
-@media (max-width:900px){.side{position:static;display:grid;grid-template-columns:1fr 1fr;gap:8px}.side>#pk-build,.side>#clsgrid,.side>#partywrap{grid-column:1/-1}.pick{padding:10px 12px}.pick .val{font-size:15px}}
+@media (max-width:900px){.side{position:static;display:grid;grid-template-columns:1fr;gap:8px}.side>#pk-build,.side>#clsgrid,.side>#partywrap,.side>.sidehead{grid-column:1/-1}.pick{padding:10px 12px}.pick .val{font-size:15px}}
+.side{padding:14px;border-radius:16px;background:linear-gradient(180deg,rgba(70,30,18,.55),rgba(30,15,11,.55));border:1px solid var(--line2);box-shadow:inset 3px 0 0 var(--gold)}
+.sidehead{display:flex;align-items:baseline;gap:8px;margin:0 2px 2px}
+.sidehead .hd{font-size:15px;color:#f3dfb0;font-weight:700}
+.sidehead .mut{font-size:12px;font-style:italic}
+.step{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;margin-right:6px;font-size:10px;background:radial-gradient(circle at 35% 30%,#b3302a,#5e0f0b);border:1px solid var(--gold);color:#fbe7b8;letter-spacing:0}
+.pick .lb>span:first-child{display:flex;align-items:center}
+.nudge{animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{0%,100%{box-shadow:0 0 0 0 rgba(217,178,95,.0)}50%{box-shadow:0 0 0 4px rgba(217,178,95,.35)}}
 .pick{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);transition:border-color .15s,transform .15s}
 .pick:hover{border-color:var(--line2)}
 .pick.open{border-color:var(--gold)}
@@ -55,7 +63,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .seg button{flex:1;padding:5px 0;border-radius:999px;font-size:13px;color:var(--muted)}
 .seg button.on{background:linear-gradient(180deg,var(--lacq2),var(--lacq));color:#fbe7b8}
 .seg button:disabled{opacity:.35;cursor:not-allowed}
-.seglb{font-family:var(--head);font-size:11px;letter-spacing:.12em;color:var(--acc);margin:4px 2px 6px}
+.seglb{display:flex;align-items:center;font-family:var(--head);font-size:11px;letter-spacing:.12em;color:var(--acc);margin:4px 2px 6px}
 .clsgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px;border-radius:var(--r);background:var(--panel2);border:1px solid var(--gold)}
 .clsgrid button{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:14px}
 .clsgrid button:hover{background:rgba(201,162,78,.1)}
@@ -201,13 +209,14 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
 </div>
 
 <div class="app">
-  <aside class="side" aria-label="Auswahl">
-    <button class="pick" id="pk-class" aria-expanded="false"><div class="lb">Klasse</div><div class="val" id="v-class"></div></button>
+  <aside class="side" aria-label="Deine Auswahl">
+    <div class="sidehead"><span class="hd">Deine Auswahl</span><span class="mut">hier fängst du an</span></div>
+    <button class="pick" id="pk-class" aria-expanded="false"><div class="lb"><span><span class="step">1</span>Klasse</span></div><div class="val" id="v-class"></div></button>
     <div class="clsgrid" id="clsgrid" hidden role="radiogroup" aria-label="Klasse"></div>
-    <button class="pick" id="pk-build"><div class="lb">Build</div><div class="val" id="v-build"></div><div class="sub" id="v-build-sub"></div></button>
-    <button class="pick" id="pk-target"><div class="lb" id="l-target">Gebiet</div><div class="val" id="v-target"></div><div class="sub" id="v-target-sub"></div></button>
-    <div id="partywrap"><div class="seglb">Gruppengröße</div><div class="seg" id="party" role="radiogroup" aria-label="Gruppengröße"></div></div>
-    <button class="pick" id="pk-heroes"><div class="lb">Helden</div><div class="val" id="v-heroes"></div></button>
+    <button class="pick" id="pk-build"><div class="lb"><span><span class="step">2</span>Build</span></div><div class="val" id="v-build"></div><div class="sub" id="v-build-sub"></div></button>
+    <button class="pick" id="pk-target"><div class="lb"><span><span class="step">3</span><span id="l-target">Gebiet</span></span></div><div class="val" id="v-target"></div><div class="sub" id="v-target-sub"></div></button>
+    <div id="partywrap"><div class="seglb"><span class="step">4</span>Gruppengröße</div><div class="seg" id="party" role="radiogroup" aria-label="Gruppengröße"></div></div>
+    <button class="pick" id="pk-heroes"><div class="lb"><span><span class="step" id="st-heroes">5</span>Helden</span></div><div class="val" id="v-heroes"></div></button>
   </aside>
 
   <main>
@@ -441,6 +450,7 @@ function renderSide(){
   const size = partySize();
   $("party").innerHTML = [8,6,4].map(n=>`<button role="radio" aria-checked="${size===n}" class="${size===n?"on":""}" data-party="${n}"${ELITE_AREA(state.area)&&n!==8?" disabled title=\"Elitegebiete haben immer 8 Plätze\"":""}>${n}</button>`).join("");
   $("pk-heroes").hidden = TEAM.length<2 && !(SPOT && SPOT.team);
+  $("st-heroes").textContent = CAT==="team" ? "5" : "4";
   $("v-heroes").textContent = `${state.owned.size} von 31 · ${state.mercs} Söldner`;
 }
 function renderMain(){
@@ -457,7 +467,7 @@ function renderMain(){
   $("pills").innerHTML = pills.join("");
   // Hinweis nur wenn nötig
   let note = "";
-  if (!pb.skills.some(Boolean)) note = `<div class="notice"><span class="sp">Die Leiste ist leer. Wähle links einen Build oder klicke auf deine Karte.</span></div>`;
+  if (!pb.skills.some(Boolean)) note = `<div class="notice"><span class="sp">Die Leiste ist leer. Fang links bei „Deine Auswahl“ an.</span></div>`;
   else if (CAT!=="team") {
     const fits = SPOT && b && (b.spots||[]).includes(SPOT.key);
     if (SPOT && !fits) {
@@ -794,6 +804,10 @@ $("zip").addEventListener("click", async ()=>{
 });
 
 // ---------- Start ----------
+if (!store.get("seen", false)) {
+  $("pk-class").classList.add("nudge");
+  document.querySelector(".side").addEventListener("click", ()=>{ $("pk-class").classList.remove("nudge"); store.set("seen", true); }, { once:true });
+}
 state.owned = new Set(store.get("owned", GW.HEROES.map(h=>h[0])));
 state.mercs = store.get("mercs", 3);
 state.party = [8,6,4].includes(store.get("party",8)) ? store.get("party",8) : 8;
