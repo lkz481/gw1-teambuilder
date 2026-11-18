@@ -1,0 +1,305 @@
+{
+"urgoz": {
+"title": "Urgoz' Bau mit 7 Helden",
+"intro": "Das Team ist das PvX-Team \"7 Hero Urgoz\" (Bewertung Great, für Helden gebaut). Urgoz' Bau ist eine Elite-Mission ohne Wiederbelebungs-Schreine. Ein Wipe schickt dich zurück ins Outpost, deshalb trägt der UA-Mönch die Wiederbelebung.",
+"team": "urgoz",
+"sections": [
+{
+"t": "Heldensteuerung vorher einstellen",
+"b": [
+"Rand der Auslöschung beim Ritualisten deaktivieren und selbst auslösen, wenn ihr eine Gruppe spikt.",
+"Schutzgeist und Schild der Absorption beim Pullen deaktivieren und gezielt selbst setzen.",
+"Strahl des Urteils bei Bedarf deaktivieren: Helden rennen sonst in die Gruppe und spammen es.",
+"Vereinigung deaktivieren und gezielt gegen Blutsauger einsetzen.",
+"Fesselnde Ketten von Hand mit Strahl des Urteils kombinieren, damit die Gegner nicht auseinanderlaufen."
+]
+},
+{
+"t": "Gefahren im ganzen Gebiet",
+"b": [
+"Dornenwölfe (Thorn Wolves) töten Zauberwirker in 1 bis 2 Sekunden. Immer eine Geisterwand stehen haben und vorsichtig pullen. Schlägt der Spike fehl, zerlegt \"Desperate Strike\" die Gruppe.",
+"Große Blutsauger (Greater Blood Drinkers): Läufst du beim Spawnen mit Tempobonus (z. B. \"Zieht Euch zurück!\"), ballen sie sich erst, statt sofort anzugreifen. Das für saubere Spikes nutzen."
+]
+},
+{
+"t": "Abschnitt 1 (Schwäche)",
+"b": [
+"Direkt am Start kommen Selbstmord-Bomber. Der Seelenverflechtungs-Ritualist stellt seine Geister hinter die Gruppe, der Siegel-der-Geister-Ritualist vor die Gruppe. Helden dazwischen flaggen.",
+"Nach vorne laufen, damit die Bomber spawnen und an den Geistern explodieren. Der UA-Mönch belebt Tote wieder.",
+"Kurz dahinter rennen die Dredge-Gruppen zur Mitte. Mit \"Zieht Euch zurück!\" an der rechten Wand entlang laufen, um die Gruppe von dort knapp zu umgehen. Ziehst du sie doch, kommt im SM meist ein Wipe: einfach neu starten.",
+"Im engen Gang danach spawnen Große Blutsauger. Über die Brücke, Dredge töten. Vor dem letzten Raum kommen nochmal Blutsauger.",
+"Im letzten Raum beide Dredge-Gruppen zusammenziehen und gemeinsam töten, dann die Wächterschlange (Guardian Serpent)."
+]
+},
+{
+"t": "Abschnitt 2 (Lebenspunkte-Degeneration)",
+"b": [
+"Helden knapp außerhalb des Effekts an der Wand flaggen.",
+"Die patrouillierende Wardens-Gruppe pullen. Hinter der Tür spawnen Blutsauger, meist ziehst du beide. Bei Unsicherheit den Siegel-der-Geister-Ritualisten vorflaggen und Geister setzen.",
+"Eine zweite Warden-Gruppe läuft nah an der Twisted Bark vorbei. Die Bark zurückziehen, wenn die Patrouille weg ist, oder direkt stürmen.",
+"Unter den Klippen spawnen mehrere Blutsauger-Gruppen. Helden zurückflaggen und die Gegner um die Klippe herum ballen. Panik hält sie vom Zaubern ab.",
+"Zur Wächterschlange runterlaufen, nachkommende Blutsauger töten, wenn sie sich hinter euch ballen."
+]
+},
+{
+"t": "Abschnitt 3 und 4",
+"b": [
+"Abschnitt 3: Den ganzen Raum ziehen, an der Seite der Öffnung ballen, danach die Waldläufer töten. \"Ich bin unaufhaltbar!\" hilft gegen Fallen. Rechts selbst vorlaufen und Fallen auslösen, damit die Gruppe sie nicht abbekommt. Hebel ziehen und zum zweiten Hebel durcharbeiten.",
+"Abschnitt 4: Schmale Brücke mit Feuerblumen. Etwa bei jedem Viertel der Brücke spawnt eine Dornenwolf-Gruppe, insgesamt drei. Am Ende Geister setzen und die Selbstmord-Bomber erledigen. Bomber, die auf halber Strecke hinter euch spawnen, ignorieren."
+]
+},
+{
+"t": "Abschnitt 5 und 6 (Erschöpfung, dann ohne Effekt)",
+"b": [
+"Geisterwand neben dem Felsen an der linken Wand aufbauen, knapp außerhalb des Effekts.",
+"Zum linken Wurzeltor laufen: 6 Dornenwölfe spawnen, an der Wand ballen. Danach kommt eine zweite Gruppe an derselben Stelle.",
+"Hinter dem Wurzeltor auf der Brücke Geister setzen und die Wölfe dorthin pullen. Unter Erschöpfung bei Helden ggf. Zauber deaktivieren.",
+"Helden links hinter dem nächsten Wurzeltor flaggen (rechts ist der Effekt). Langer Pull: Die Wölfe sitzen am anderen Raumende beim Überhang. Fehlen nach der ersten Gruppe noch 1 bis 2 Wölfe, zurück an Wand oder Tor, denn die zweite Gruppe kommt gleich.",
+"Abschnitt 6: Gleiches Muster an den Wurzeltoren. Fallen vorher auslösen, dann die zwei Waldläufer. Wölfe auf dem Hügel um die Ecke lassen sich gut ballen. Unter der Brücke spiralförmig nach unten."
+]
+},
+{
+"t": "Abschnitt 7 (Energie-Degeneration)",
+"b": [
+"Weiter, bis rechts Säulen aus der Wand ragen, dort zwei Dornenwolf-Gruppen töten.",
+"Den Seelenverflechtungs-Ritualisten ein paar Schritte vor der Brücke flaggen. Sonst rennen die Heiler hinterher, sobald die Wächterschlange angreift, und ziehen viele Gegner.",
+"Wächterschlange töten. Ab der Hälfte der Brücke den Ritualisten entflaggen. Läuft er falsch, auf deine Position flaggen."
+]
+},
+{
+"t": "Abschnitt 8 (Erschöpfung und Schwäche)",
+"b": [
+"Kurz vor Ende der Brücke spawnt alles im nächsten Raum.",
+"Die Twisted Bark mit Schwäche kannst du ignorieren.",
+"Erst schnell die Brennenden Büsche pullen und töten.",
+"Helden zwischen Tür und Brücke flaggen. Linke, dann rechte Warden-Patrouille pullen, die mittlere jetzt oder später.",
+"Links hoch: Büsche ballen und spiken, dann die Bark mit Erschöpfung. Helden keine Fallen auslösen lassen, Verschiebung schützt vor den Waldläufern. Die überhängende Wurzel eignet sich zum Ballen."
+]
+},
+{
+"t": "Abschnitt 9 und 10",
+"b": [
+"Abschnitt 9 ist reine Warden-Arbeit: Die nächste Gruppe die Treppe hoch um die Ecke ziehen, dort erholt sich die Gruppe am besten von Churning Earth. Die Gruppen an der hinteren Wand meiden. Eine letzte Warden-Gruppe bei der Wächterschlange um eine große Säule pullen. Stationäre Waldläufer ignorieren.",
+"Abschnitt 10: Den Seelenverflechtungs-Ritualisten vor der Tür flaggen. Läuft die ganze Gruppe durch, schließt sich die Tür hinter euch.",
+"Große Blutsauger und Dornenwölfe spawnen in der Raummitte: zur Gruppe pullen und töten. Danach an der rechten Wand Runde zwei. Sind alle Blutsauger tot, öffnet sich die Tür. Vorher nachkommende Wölfe erledigen."
+]
+},
+{
+"t": "Urgoz (letzter Raum)",
+"b": [
+"Twisted Bark töten, über die Mittelbrücke. Die Gruppe am Ende täuscht: Beim Angreifen spawnen weitere Gegner. Brennende Büsche und Uproot Malices ballen und spiken, dann die Waldläufer.",
+"Wächterschlange töten, in Urgoz' Bereich links den Hügel runter. Die andere Seite des Raums hat Energieentzug.",
+"Den Helden mit Rand der Auslöschung knapp in Geisterreichweite zu Urgoz stellen. Zu nah, und Held plus Geist werden von Spawns und Urgoz getroffen. Guter Platz: eine Spalte in der Wand am Weg, den ihr gekommen seid. Urgoz muss erst unter 90 % Lebenspunkte, dann tötet ihn Edge of Extinction.",
+"Seelenverflechtungs-Ritualist und UA-Mönch weiter hinten flaggen, sie halten die Nuker am Leben.",
+"Mit der Gruppenflagge die Helden außerhalb der Wachstumszone stellen und Strahl des Urteils, Chaossturm und Alptraum beschwören vorbereiten. \"Zieht Euch zurück!\" zünden, nur die Gruppenflagge aufheben und mit den Nukes auf Urgoz.",
+"Sobald die Helden gezaubert haben, diagonal zurückflaggen, damit sie nicht von Wurzeln eingesperrt werden. Der UA-Mönch belebt eingesperrte Helden. Wiederholen, bis Edge of Extinction auslöst. Unterschlupf hält getroffene Helden am Leben."
+]
+}
+],
+"sources": [
+[
+"PvX: Team - 7 Hero Urgoz (inoffiziell)",
+"https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
+],
+[
+"Guild Wars Wiki: Urgoz's Warren",
+"https://wiki.guildwars.com/wiki/Urgoz's_Warren"
+]
+]
+},
+"uw": {
+"title": "Unterwelt mit Helden",
+"intro": "Für die Unterwelt gibt es auf PvX kein bewertetes 7-Helden-Team, die Teams dort sind für 8 Spieler. Die Leitfäden stützen sich deshalb auf einen 7-Helden-Leitfaden aus dem Guild Wars Guru Archiv (2011, Normaler und Schwerer Modus ohne Verbrauchsgüter getestet) und auf den Quest-Ablauf des PvX-Teams \"UW Triple Melee\". Wichtig: \"The Four Horsemen\" verlangt eigentlich eine geteilte Gruppe und ist solo der schwerste Teil.",
+"team": "std",
+"sections": [
+{
+"t": "Team-Grundsatz (7-Helden-Leitfaden)",
+"b": [
+"Zwei reine Verteidigungshelden: Der Seelenverflechtungs-Ritualist gilt dort als \"fast unverzichtbar\", dazu ein Nekromant/Ritualist-Heiler über Seelensammlung. Das entspricht Xandra und dem Blut-ist-Kraft-Heiler im Standardteam.",
+"Schadenshelden nach Schema: 1 Elite (z. B. Energiewelle, Schmaus der Verdorbenheit, Siegel der Geister), 1 bis 3 Flächenschaden (Argwohn, Verhexung brechen, Wut der Vorfahren, Splitterwaffe), 1 bis 3 Einzelziel (Geisterschmerz, Unnatürliches Siegel), 1 bis 2 Werkzeug (\"Zieht Euch zurück!\", \"Haltet Eure Stellung!\", Schützend war Kaolai), 1 bis 2 Energie (Kraftentzug, Geist abzapfen).",
+"Unterschlupf vor Vereinigung setzen. Laut Leitfaden senkt Shelter bei 600 Lebenspunkten einen Treffer auf 60, Union danach auf 45.",
+"Für Dhuum brauchst du Entfernung von Todesmalus und mindestens eine Verhexungs-Entfernung (gegen Weight of Dhuum).",
+"Verbrauchsgüter laut Leitfaden: Rüstung der Erlösung für Grenths Diener, The Four Horsemen, Imprisoned Spirits und Dhuum aufheben. Eine Essenz der Schnelligkeit ersetzt doppeltes \"Zieht Euch zurück!\" bei den Reitern."
+]
+},
+{
+"t": "Reihenfolge der Quests",
+"b": [
+"1. Säubert die Kammer, 2. Restoring Grenth's Monuments, 3. Zornige Geister, 4. Geleit der Seelen, 5. Demon Assassin, 6. The Four Horsemen, 7. Terrorweb Queen, 8. Imprisoned Spirits, 9. Ungebetene Gäste, 10. Grenths Diener, dann Dhuum. So steht es im PvX-Ablauf.",
+"Der 7-Helden-Leitfaden rät: \"The Four Horsemen\" früh machen. Klappt das, ist der Rest deutlich leichter.",
+"Neu in der Unterwelt? Erst im Normalen Modus üben."
+]
+},
+{
+"t": "Säubert die Kammer und Restoring Grenth's Monuments",
+"b": [
+"Drei zusätzliche Gruppen Grasping Darkness spawnen im Labyrinth. Vorher Aatxe und Skelette räumen.",
+"Restoring Grenth's Monuments: Den Schnitter jeder Region spawnst du durch Töten der drei Schrecknetz-Dryder am Monument. Vorher Patrouillen töten, sonst greifen sie den Schnitter an. Stirbt ein Schnitter, ist der Lauf vorbei. Mit abgeschlossener Quest wird er unsterblich.",
+"In den Zwillingsschlangenbergen kann der Schnitter in Fallen spawnen: zuerst die Fallen-Waldläufer am Monument töten."
+]
+},
+{
+"t": "Zornige Geister und Geleit der Seelen",
+"b": [
+"Zornige Geister: Feindliche Geister spawnen im Dorf des Vergessenen Tals in Dreiergruppen, pro Spawnpunkt drei Wellen, fünf Punkte. Mindestens einen freundlichen Geist beschützen. Vor Geleit der Seelen erledigen, sonst töten sie die neuen Seelen.",
+"Geleit der Seelen: Vorher Helden flaggen und Geister unten an der Treppe ins Tal setzen. Beim Annehmen kommen drei Mindblade-Gruppen, töten, bevor die Seelen sie erreichen. Ist der Weg frei, laufen die Seelen allein weiter.",
+"Vor dem Tor in die Zwillingsschlangenberge rechts drei Skelette von Dhuum töten. Das erleichtert später Ungebetene Gäste."
+]
+},
+{
+"t": "Demon Assassin",
+"b": [
+"Annehmen, den Weg zurück nach unten laufen, am Fuß des Berges den Slayer töten.",
+"Danach kommen Schrecknetz-Dryder und Seelenbewahrer langsam zum (jetzt unsterblichen) Schnitter. Nicht wieder in die Zwillingsschlangenberge teleportieren, sonst greifen sie dich sofort an.",
+"Laut Kommentar im Leitfaden: Fallen zerstören, bevor die Dryders sterben. Unterschlupf und Verschiebung oben halten."
+]
+},
+{
+"t": "The Four Horsemen (schwerster Teil)",
+"b": [
+"Vorher in den Chaosebenen jeden Banished Dream Rider töten. Jeder Tod spawnt 3, dann 6, dann 9 Mindblade-Geister. Erst weiter, wenn alle tot sind.",
+"SM-Vorbereitung aus dem 7-Helden-Leitfaden: Blutgesang, Schmerzen, Stachelfalle, Schlammiges Terrain, Erhaltung und \"Zieht Euch zurück!\" deaktivieren. Helden zu den Fallenpunkten flaggen, Geister und Fallen legen, Muddy Terrain setzen, Helden aus dessen Reichweite flaggen.",
+"Quest annehmen, \"Zieht Euch zurück!\", zum ersten Kampfpunkt. Beide Reiter dort töten, Meteoren ausweichen. Dann am Schnitter vorbei zum zweiten Punkt. Silberne Netze und Skelette kommen bald nach.",
+"Im Normalen Modus brauchst du Muddy Terrain und Barbed Trap nicht."
+]
+},
+{
+"t": "Terrorweb Queen und Imprisoned Spirits",
+"b": [
+"Terrorweb Queen: Skelette von Dhuum zuerst töten. Teer bremst um 33 %. Aus Meteorschauern raus. Behemoths werfen nieder.",
+"Imprisoned Spirits: Vor dem Annehmen Helden nach Norden flaggen und Geister mit über einer Minute Dauer setzen. Annehmen, Süden schnell räumen, dann nach Norden, bevor die Gegner dort die Geister erreichen. Danach zurück nach Süden für die letzte Welle. Die Geister bis zum Schnitter begleiten."
+]
+},
+{
+"t": "Ungebetene Gäste",
+"b": [
+"Sechs Seelenbewahrer töten. Jeder wird von unsterblichen Rachsüchtigen Aatxe bewacht, die im SM sehr hart zuschlagen. Helden vor dem Annehmen hinter dem Schnitter parken.",
+"Aatxe nicht bekämpfen: Patrouillen abwarten, durchschlüpfen und den Seelenbewahrer töten. Dessen Tod entfernt alle Gegner der Stelle außer Skeletten von Dhuum.",
+"Die Mittel-Stelle vor dem Teleport ins Tal räumen, ihre Aatxe können den Schnitter des Labyrinths ziehen. Unterschlupf, Verschiebung und \"Zieht Euch zurück!\" helfen im Normalen Modus beim Vorbeilaufen."
+]
+},
+{
+"t": "Grenths Diener",
+"b": [
+"Den nördlichen Weg vorher von Skeletten räumen.",
+"Helden auseinander an die Spawnpunkte unter dem Plateau flaggen und Geister vorher setzen. Laut Leitfaden-Kommentar wird die Quest so eine der leichtesten.",
+"Keine Gegner durchlassen, drei Gruppen töten."
+]
+},
+{
+"t": "Dhuum",
+"b": [
+"Ziel: Dhuum auf 20 bis 25 % bringen und den Balken \"Dhuums Ruhe\" füllen. Rund 80.000 Lebenspunkte, der Kampf kann bis zu 20 Minuten dauern.",
+"Wiederbelebung ist durch den Fluch von Dhuum gesperrt. Tote werden über den Bürgermeister Alegheri im Vergessenen Tal zu Geistern, Helden kommen automatisch. Geister-Fertigkeit 1 füllt Dhuums Ruhe, 4 entfernt Todesmalus, 5 macht Schaden. Fertigkeit 5 erst nutzen, wenn der Balken voll ist. Encase Skeletal bei toten Helden deaktivieren.",
+"Judgment: 75 Feuerschaden pro Sekunde über 4 Sekunden, alle 45 Sekunden. Dagegen Unterschlupf, \"Haltet Eure Stellung!\", \"Save Yourselves!\" (Luxon), Schmerztauscher.",
+"Touch of Dhuum gibt 15 % Todesmalus und tötet bei 60 %. Weight of Dhuum ist eine Verhexung, die 90 % verlangsamt: mindestens eine Verhexungs-Entfernung mitnehmen.",
+"Beschworene Diener sind Untote (Geisterschmerz macht Zusatzschaden): vor Dhuum töten.",
+"Mesmer-Helden, die ihre Energie über Unterbrechungen holen, leiden bei Dhuum laut einem Guru-Thread."
+]
+}
+],
+"sources": [
+[
+"Guild Wars Guru Archiv: [7H] the Underworld Guide (2011, inoffiziell)",
+"https://archive.guildwarslegacy.com/thread?id=10480563"
+],
+[
+"PvX: Team - UW Triple Melee, Ablauf (inoffiziell)",
+"https://gwpvx.fandom.com/wiki/Build:Team_-_UW_Triple_Melee"
+],
+[
+"YouTube: 7-Hero Underworld Guide (2026, Reforged) – konnte ich nicht auslesen",
+"https://www.youtube.com/watch?v=BBP131ho4FM"
+],
+[
+"Guild Wars Wiki: The Underworld",
+"https://wiki.guildwars.com/wiki/The_Underworld"
+]
+]
+},
+"doa": {
+"title": "Domäne der Pein (Start am Tor der Pein) mit Helden",
+"intro": "Auch für die Domäne der Pein gibt es auf PvX kein bewertetes 7-Helden-Team. Das Team hier stammt aus einem Guild Wars Guru Thread: Ein Spieler meldet damit alle vier Bereiche plus Mallyx im Normalen Modus ohne Verbrauchsgüter. Laut dem Thread gibt es keinen \"goldenen\" Build für ganz DoA. Ein Spieler fasst es so zusammen: Es kommt zur Hälfte aufs Team und zur Hälfte auf deine Taktik an (Pullen, Aggro-Kontrolle). Die Bereichsabläufe stammen vom PvX-Team \"DoA Schnablonskiway\" (8 Spieler) und vom Wiki.",
+"team": "doa",
+"sections": [
+{
+"t": "Für alle Bereiche",
+"b": [
+"Jeder Gegner hat Enraged: +50 % Schaden unter 70 % Lebenspunkte, weitere +50 % unter 30 %. Angeschlagene Gegner schnell töten.",
+"Immer nur eine Gruppe ziehen. Ausnahme laut Guru-Thread: Im Stygischen Schleier funktionieren mehrere Gruppen auf einmal.",
+"Die Umgebungseffekte gelten laut Wiki nur im Schweren Modus.",
+"Mehrere Bereiche in einem Lauf erhöhen die Edelsteine pro Truhe (1, 2, 3, 4), im SM doppelt."
+]
+},
+{
+"t": "Die Stadt Torc'qua",
+"b": [
+"SM-Effekt Repressive Energy: Jede Fertigkeit und jeder Angriff kostet 2 Energie. Angriffs-Fertigkeiten lösen es doppelt aus. Helden-Caster sparsam spielen.",
+"Margonit-Gruppen einzeln: nach dem Tor rechts herum ist laut PvX sicherer als links.",
+"Margoniten auf den Mauern sind meist von unten erreichbar.",
+"Lord Jadoth: Gruppe für Gruppe, Ballen geht vor Einzelzielen. Für die letzte Gruppe kannst du in den Stygischen Schleier ausweichen, dort gilt Repressive Energy nicht."
+]
+},
+{
+"t": "Stygischer Schleier",
+"b": [
+"SM-Effekt Demonic Miasma: Jeder geblockte oder ausgewichene Angriff auf dich macht 50 Schaden. Block-Fertigkeiten meiden.",
+"\"Breaching the Stygian Veil\": Eine Ecke wählen, eine Gruppe blockt den Eingang, Gegner laufen hinein und ballen sich. Panik hält sie still, dann mit Flächenschaden töten.",
+"\"Brood Wars\": In den Gräben rechts an der Wand ballen und warten, bis die Nahkämpfer von beiden Seiten in Reichweite sind. Dann die vier Stygischen Lords.",
+"Dreadspawn Maw: Sechs Smothering Tendrils, jeder Tod spawnt Gegner. Gegner an einem Tentakel ballen und spiken. Das Wiki rät zu Rebirth und Todesmalus-Entfernung."
+]
+},
+{
+"t": "Rabenherz (Ravenheart Gloom)",
+"b": [
+"SM-Effekt Shroud of Darkness: 50 % Fehlschlag für alle Angriffe. Nahkampf-Leisten leiden. Seelengreifer und Dunkle Aura lösen trotzdem aus.",
+"\"To the Rescue!\": Gegner an ihren Spawnpunkten töten. Beim letzten Punkt aufpassen, dass die nächste Welle nicht vorbeiläuft.",
+"\"The Greater Darkness\": Laut Guru-Thread im SM ohne Verbrauchsgüter extrem gefährlich. Anziehen, an die Nordwand ziehen, die drei töten. Dann spawnen sechs Finsternisse, jede spawnt beim Tod Erd-Peiniger. Panik auf die Masse, sauber spiken.",
+"Die Höhle in der Finsternis gilt im selben Thread ebenfalls als gefährlich."
+]
+},
+{
+"t": "Das Inferno der gescheiterten Schöpfung (Foundry)",
+"b": [
+"Laut Guru-Thread der schwerste Bereich und der einzige, für den manche Teams Verbrauchsgüter brauchten.",
+"SM-Effekt Enduring Torment: 10 Lebenspunkte pro Sekunde Bewegung. Nicht unnötig kiten.",
+"Kammern: Tentakel sperren den Rückweg ab, bis alles tot ist. Kammer 3: Nach dem Spawn zurück ans Tor, hinter dem Felsen ballen und Gegner einzeln reinziehen.",
+"Anguish-Titanen: Mesmer-Helden aus deren Zauberreichweite halten. Sie stehlen und kopieren Fertigkeiten, deshalb dort kein Panik.",
+"Black Beast of Arrgh: Laut Guru-Tipp zum großen Objekt in der Mitte zurückziehen und dort töten, weg vom Fury-Spawn. Dann greift die Fury nicht sofort an.",
+"The Fury: Warten, bis die Anur Ki nah sind, dann die Gruppe zu den Säulen ziehen, damit sie Sichtlinie brechen (Guru-Thread). Laut Wiki hilft Schmerztauscher, und Verteilen gegen Flächenschaden."
+]
+},
+{
+"t": "Mallyx (Ebenholz-Zitadelle)",
+"b": [
+"Elite-Mission ohne Wiederbelebungs-Schreine, ein Wipe schickt zurück ins Outpost.",
+"Laut Wiki entfernt Mallyx alle Verzauberungen (Banish Enchantment) und frisst Verhexungen und Zustände für +300 Lebenspunkte je Stück. Deshalb Leisten ohne Verzauberungen, Verhexungen und Zustände. Rituale, Brunnen, Rufe, Waffenzauber und Siegel funktionieren.",
+"Die vier Anguished Souls erzeugen die Umgebungseffekte. Laut einem Spielerbericht (Guild Wars Legacy) den Listless Spirit zuerst töten und immer wieder töten, wenn er erneut spawnt.",
+"Laut Guru-Thread machen Helden und eine offen gehaltene Tür den Kampf sicher. Ein anderer Spieler empfiehlt gegen Mallyx Energiewellen-Mesmer statt Zustands-Leisten und alle Zauber zu deaktivieren, die Zustände verursachen."
+]
+}
+],
+"sources": [
+[
+"Guild Wars Guru Archiv: Domain of Anguish mit Helden (inoffiziell)",
+"https://archive.guildwarslegacy.com/thread?id=10502800"
+],
+[
+"Guild Wars Guru Archiv: Mallyx Citadel 7 Heroes (inoffiziell)",
+"https://guru-archive-test.guildwarslegacy.com/thread?id=10482183"
+],
+[
+"Guild Wars Legacy: My First DoA Experience (2025, inoffiziell)",
+"https://guildwarslegacy.com/forum/thread/24955-my-first-doa-experience-defeating-mallyx-petway-any-tips/"
+],
+[
+"PvX: Team - DoA Schnablonskiway, Ablauf (inoffiziell)",
+"https://gwpvx.fandom.com/wiki/Build:Team_-_DoA_Schnablonskiway"
+],
+[
+"Guild Wars Wiki: Domain of Anguish",
+"https://wiki.guildwars.com/wiki/Domain_of_Anguish"
+]
+]
+}
+}

@@ -1,0 +1,2573 @@
+{
+"spots": [
+{
+"key": "drok",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Signalfeuer-Posten → Droknars Schmiede",
+"why": "Der bekannteste Lauf im Spiel. Bringt dich früh zu den Rüstungshändlern mit Maximalrüstung in Droknars Schmiede, zu den Prophecies-Fertigkeiten und nach Hochofen der Betrübnis.",
+"route": [
+"Signalfeuer-Posten",
+"Lornarpass",
+"Schreckensdrift",
+"Schlangentanz",
+"Rankor-Lager",
+"Talusschnelle",
+"Droknars Schmiede"
+],
+"time": "10 bis 25 Minuten",
+"hazards": [
+"Niederschlag durch Eiswürmer und Tundrariesen: \"Ich bin unaufhaltbar!\" oder Zwergenstabilität mit Alkohol.",
+"Verlangsamende Zauber und Verhexungen: Schattenform oder Schweigegelübde.",
+"Viele Gegner auf engem Raum: Tempo halten und mit Schattenschritten durchziehen."
+],
+"steps": [
+"In Signalfeuer-Posten starten und durch Lornarpass nach Süden laufen.",
+"Über Schreckensdrift und Schlangentanz nach Rankor-Lager. Dort ist der Außenposten freigeschaltet, eine Pause ist möglich.",
+"Weiter durch Talusschnelle bis Droknars Schmiede.",
+"Fallen in Lornarpass kannst du mit 50 % Tempobonus gefahrlos überlaufen."
+],
+"opts": [
+"Build:D/A Outpost Runner#0",
+"Build:A/R Shadow Form Runner#0",
+"Build:W/A Shadow Form Runner#0",
+"Build:Any/A General Shadow Form Runner#0",
+"Build:R/any Escape Runner#0",
+"Build:Any/A Wastrel's Collapse Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Guide to Drok's run",
+"u": "https://wiki.guildwars.com/wiki/Guide_to_Drok%27s_run"
+},
+{
+"t": "Wiki: Outpost runs",
+"u": "https://wiki.guildwars.com/wiki/Outpost_runs"
+}
+]
+},
+{
+"key": "drok_tour",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Droknars Schmiede → Marhans Grotte / Die Granitzitadelle",
+"why": "Schaltet die Außenposten mit den Prestige-Rüstungen frei.",
+"route": [
+"Droknars Schmiede",
+"Marhans Grotte",
+"Die Granitzitadelle"
+],
+"time": "",
+"hazards": [
+"Niederschlag und Verkrüppeln: \"Ich bin unaufhaltbar!\".",
+"Verlangsamende Zauber: Schattenform."
+],
+"steps": [
+"Startet in Droknars Schmiede. Ziel ist Marhans Grotte oder Die Granitzitadelle.",
+"Das Wiki hat für diese Strecke keine ausführliche Anleitung, die Übersichtskarte steht auf der Seite „Outpost runs“."
+],
+"opts": [
+"Build:D/A Outpost Runner#0",
+"Build:A/R Shadow Form Runner#0",
+"Build:W/A Shadow Form Runner#0",
+"Build:Any/A General Shadow Form Runner#0",
+"Build:R/any Escape Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Outpost runs",
+"u": "https://wiki.guildwars.com/wiki/Outpost_runs"
+}
+]
+},
+{
+"key": "asc_la",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Stadt Ascalon ↔ Löwenstein",
+"why": "Richtung Löwenstein kommen Prophecies-Charaktere schnell zu den anderen Kampagnen. Richtung Stadt Ascalon bekommen Charaktere anderer Kampagnen Zugang nach Ascalon.",
+"route": [
+"Stadt Ascalon",
+"Löwenstein"
+],
+"time": "lang, aber leicht",
+"hazards": [
+"Verkrüppeln durch Steingipfel-Waldläufer und Niederschlag durch Hydren und Steingipfel-Krieger: \"Ich bin unaufhaltbar!\".",
+"Verlangsamen durch Eisgolems und Gargoyles, Verzauberungsentfernung durch Mesmer: Schattenform.",
+"Körperblock: Angriff des Todes auf der Leiste behalten."
+],
+"steps": [
+"Das Wiki nennt den Lauf lang, aber leicht. Er enthält fast alle typischen Hindernisse und eignet sich zum Lernen.",
+"Ascalon ist verwinkelt: Den Weg vorher auf der Karte ansehen.",
+"Haltungen wie Preschen oder Fromme Eile sofort erneuern, wenn ein Treffer sie entfernt."
+],
+"opts": [
+"Build:D/A Outpost Runner#0",
+"Build:A/R Shadow Form Runner#0",
+"Build:W/A Shadow Form Runner#0",
+"Build:Any/A General Shadow Form Runner#0",
+"Build:R/any Escape Runner#0",
+"Build:Any/A Wastrel's Collapse Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Guide to running",
+"u": "https://wiki.guildwars.com/wiki/Guide_to_running"
+},
+{
+"t": "Wiki: Outpost runs",
+"u": "https://wiki.guildwars.com/wiki/Outpost_runs"
+}
+]
+},
+{
+"key": "la_toa",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Löwenstein → Tempel der Zeitalter / Riff der Stille",
+"why": "Tempel der Zeitalter öffnet den Weg in die Unterwelt und den Riss des Kummers ohne Passierschein. Riff der Stille führt über die Mission zur Kristallwüste.",
+"route": [
+"Löwenstein",
+"Tempel der Zeitalter",
+"Riff der Stille"
+],
+"time": "kurz",
+"hazards": [
+"Laut Wiki ein leichter Lauf, gut zum Üben."
+],
+"steps": [
+"In Löwenstein starten und zum Tempel der Zeitalter laufen.",
+"Für Riff der Stille von dort weiterlaufen.",
+"Für Unterwelt und Riss gelten trotzdem deren Zugangsbedingungen."
+],
+"opts": [
+"Build:D/A Outpost Runner#0",
+"Build:A/R Shadow Form Runner#0",
+"Build:W/A Shadow Form Runner#0",
+"Build:Any/A General Shadow Form Runner#0",
+"Build:R/any Escape Runner#0",
+"Build:Any/A Wastrel's Collapse Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Outpost runs",
+"u": "https://wiki.guildwars.com/wiki/Outpost_runs"
+},
+{
+"t": "Wiki: Guide to running",
+"u": "https://wiki.guildwars.com/wiki/Guide_to_running"
+}
+]
+},
+{
+"key": "maguuma",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Tempel der Zeitalter → Steinkreis von Denravi",
+"why": "Schaltet Ventaris Zuflucht und Druiden-Aussichtspunkt frei.",
+"route": [
+"Tempel der Zeitalter",
+"Steinkreis von Denravi"
+],
+"time": "",
+"hazards": [
+"Das Wiki nennt keine besonderen Gefahren. Allgemein gilt: Tempo halten, \"Ich bin unaufhaltbar!\" gegen Niederschlag."
+],
+"steps": [
+"Startet am Tempel der Zeitalter, Ziel ist Steinkreis von Denravi.",
+"Die Route ist auf der Wiki-Karte zur Seite „Outpost runs“ eingezeichnet."
+],
+"opts": [
+"Build:D/A Outpost Runner#0",
+"Build:A/R Shadow Form Runner#0",
+"Build:W/A Shadow Form Runner#0",
+"Build:Any/A General Shadow Form Runner#0",
+"Build:R/any Escape Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Outpost runs",
+"u": "https://wiki.guildwars.com/wiki/Outpost_runs"
+}
+]
+},
+{
+"key": "desert",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Wüstentour (Start: Die Oase Amnoon)",
+"why": "Gibt Zugang zu den vier Missions-Außenposten der Kristallwüste. Damit geht der Aufstieg schneller.",
+"route": [
+"Die Oase Amnoon",
+"Fels der Weissagung",
+"Dünen der Verzweiflung"
+],
+"time": "",
+"hazards": [
+"Verkrüppeln durch Stachelfallen und Lähmung.",
+"Verzauberungsentfernung durch Frostbeulen der Jadeskarabäen.",
+"Niederschlag durch Meteor, Schock, Sandwürmer und Riesenstampfer: \"Ich bin unaufhaltbar!\"."
+],
+"steps": [
+"Zwischen der Oase Amnoon und dem ersten Teleporter viele auftauchende Jadeskarabäen. Mit über 25 % Tempo laufen, sonst verfolgen sie dich lange.",
+"Teleporter erst aktivieren, wenn du keine Gegner mehr im Schlepptau hast.",
+"Von Fels der Weissagung Richtung Dünen der Verzweiflung nicht den südlichsten Weg nehmen: Sackgasse voller Greife.",
+"Im Westweg warten Sandwürmer und viele Sandelementare mit Schock."
+],
+"opts": [
+"Build:D/A Outpost Runner#0",
+"Build:A/R Shadow Form Runner#0",
+"Build:W/A Shadow Form Runner#0",
+"Build:Any/A General Shadow Form Runner#0",
+"Build:R/any Escape Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Guide to desert tour",
+"u": "https://wiki.guildwars.com/wiki/Guide_to_desert_tour"
+}
+]
+},
+{
+"key": "kaineng",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Kaineng-Tour: Der Marktplatz ↔ Zentrum von Kaineng → Boreas-Meeresgrund",
+"why": "Schneller Zugang zu Zentrum von Kaineng und über Senjis Ecke und Feste Maatu zum Außenposten Boreas-Meeresgrund, um dort mit der Kampagne weiterzumachen.",
+"route": [
+"Der Marktplatz",
+"Zentrum von Kaineng",
+"Senjis Ecke",
+"Feste Maatu",
+"Boreas-Meeresgrund"
+],
+"time": "",
+"hazards": [
+"Das Wiki nennt keine besonderen Gefahren. Allgemein gilt: Tempo halten, \"Ich bin unaufhaltbar!\" gegen Niederschlag."
+],
+"steps": [
+"Factions hat die wenigsten Gebiete, die man nur durch Laufen erreicht. Viele Zonen schalten erst Missionen frei.",
+"Die Route ist auf der Wiki-Karte „Full Canthan Tour“ eingezeichnet."
+],
+"opts": [
+"Build:D/A Outpost Runner#0",
+"Build:A/R Shadow Form Runner#0",
+"Build:W/A Shadow Form Runner#0",
+"Build:Any/A General Shadow Form Runner#0",
+"Build:R/any Escape Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Outpost runs",
+"u": "https://wiki.guildwars.com/wiki/Outpost_runs"
+}
+]
+},
+{
+"key": "jadesea",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Jademeer-Tour (Start: Zos Shivros-Kanal)",
+"why": "Schneller Zugang zu Cavalon und den meisten Außenposten im Jademeer, etwa für Fraktionsfarmen.",
+"route": [
+"Zos Shivros-Kanal",
+"Cavalon",
+"Gyala-Brutstätte"
+],
+"time": "",
+"hazards": [
+"Das Wiki nennt keine besonderen Gefahren. Allgemein gilt: Tempo halten, \"Ich bin unaufhaltbar!\" gegen Niederschlag."
+],
+"steps": [
+"Die Mission Sunjiang-Bezirk lässt sich überspringen, indem du nach Gyala-Brutstätte läufst.",
+"Leviathangruben, Seemannsruh und Die Auriosminen brauchen die Mission Gyala-Brutstätte oder den Umweg über Erntetempel."
+],
+"opts": [
+"Build:D/A Outpost Runner#0",
+"Build:A/R Shadow Form Runner#0",
+"Build:W/A Shadow Form Runner#0",
+"Build:Any/A General Shadow Form Runner#0",
+"Build:R/any Escape Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Outpost runs",
+"u": "https://wiki.guildwars.com/wiki/Outpost_runs"
+}
+]
+},
+{
+"key": "echovald",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Echovald-Tour (Start: Haus zu Heltzer)",
+"why": "Schneller Zugang zu den meisten Außenposten im Echovaldwald, etwa für Fraktionsfarmen.",
+"route": [
+"Haus zu Heltzer"
+],
+"time": "",
+"hazards": [
+"Das Wiki nennt keine besonderen Gefahren. Allgemein gilt: Tempo halten, \"Ich bin unaufhaltbar!\" gegen Niederschlag."
+],
+"steps": [
+"Startet in Haus zu Heltzer.",
+"Amatzbecken, Durheim-Archive und Vasburg-Zeughaus brauchen die Mission Der Ewige Hain oder den Umweg über Erntetempel."
+],
+"opts": [
+"Build:D/A Outpost Runner#0",
+"Build:A/R Shadow Form Runner#0",
+"Build:W/A Shadow Form Runner#0",
+"Build:Any/A General Shadow Form Runner#0",
+"Build:R/any Escape Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Outpost runs",
+"u": "https://wiki.guildwars.com/wiki/Outpost_runs"
+}
+]
+},
+{
+"key": "vabbi",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Vabbi-Tour: Ödland-Tor → Moddok-Spalte",
+"why": "Bringt dich schon ab Stufe 4 zu den Vabbi-Rüstungen im Kodash-Basar und schaltet alle Außenposten in Vabbi frei.",
+"route": [
+"Ödland-Tor",
+"Überreste Sahlahjars",
+"Basaltgrotte",
+"Jennurs Horde",
+"Der Kodash-Basar",
+"Honurhügel",
+"Markt von Yahnur",
+"Die Heilige Halle der Geheimnisse",
+"Terrassen von Wehhan",
+"Moddok-Spalte"
+],
+"time": "25 bis 45 Minuten",
+"hazards": [
+"Die Ödnis musst du zu Fuß durchqueren: Der Schwefel-Effekt tötet dich nach spätestens vier Sekunden auf Schwefel.",
+"Auf dem Weg nach Jennurs Horde durch Vehjin-Minen sterben die meisten: viel Schaden und Verkrüppeln, \"Ich bin unaufhaltbar!\" mitnehmen.",
+"Verbündete NPCs als Ziel für Schattenschritte wie Rückkehr nutzen."
+],
+"steps": [
+"Schwefel-Trick: Auf den Schwefel treten, warten bis der Schwefel-Effekt kommt, zurück auf sicheren Boden. Sobald der Effekt endet, mit mindestens 33 % Tempo bis zur nächsten sicheren Stelle rennen.",
+"Sicher sind Erde, Sand, schwarzer Basalt und graue Felsen. Bei hoher Latenz etwas früher loslaufen.",
+"Durch die Ödnis über Überreste Sahlahjars nach Basaltgrotte, dann durch Vabbi bis zum Kodash-Basar.",
+"Weiter nach Süden über Honurhügel und Markt von Yahnur. Auf dem Weg in der Heilige Halle der Geheimnisse liegt ein schwerer Abschnitt.",
+"Über Terrassen von Wehhan endet die Tour in Moddok-Spalte."
+],
+"opts": [
+"Build:Any/A Desolation Runner#0",
+"Build:D/A Outpost Runner#0",
+"Build:Any/A Wastrel's Collapse Runner#0",
+"Build:A/R Shadow Form Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Guide to Vabbi tour",
+"u": "https://wiki.guildwars.com/wiki/Guide_to_Vabbi_tour"
+},
+{
+"t": "Wiki: Guide to the Desolation run",
+"u": "https://wiki.guildwars.com/wiki/Guide_to_the_Desolation_run"
+}
+]
+},
+{
+"key": "eotn",
+"cat": "run",
+"group": "Außenposten-Läufe",
+"name": "Eye-of-the-North-Tour (Start: Gunnars Feste)",
+"why": "Schaltet alle Außenposten der Erweiterung frei außer Zentrale Transferkammer. Früher Zugang zu Missionen, Helden wie Livia, Brandor Grimmflamm und Jora und zu Farmspots.",
+"route": [
+"Gunnars Feste",
+"Sifhalla",
+"Olafsheim",
+"Umbralgrotte",
+"Vlox-Fälle",
+"Rata Sum",
+"Trübwinkel",
+"Gadds Lager",
+"Scharfauges Anhöhe",
+"Schrein des Schicksalswissens"
+],
+"time": "",
+"hazards": [
+"In den Fernen Zittergipfeln Niederschlag durch Jotun, Modniir, Frostelementare, Mandragore und Würmer: \"Ich bin unaufhaltbar!\".",
+"Schattenform oder Schweigegelübde gegen verlangsamende Zauber wie Tiefgefrieren und Unterbrechungen.",
+"Auftauchende Würmer: Direkt nach dem Aufstehen Schattenform oder Schweigegelübde setzen, sonst trifft dich ihre tödliche Galle."
+],
+"steps": [
+"Teil 1: Norrhart-Gebiete → Drakkar-See → Sifhalla, dann über Varajar-Moor nach Olafsheim, weiter über Grüne Kaskaden nach Umbralgrotte und Vlox-Fälle.",
+"Danach über Arborbucht, Alcazia-Dickicht und Zerrissene Erde nach Rata Sum und zurück nach Trübwinkel.",
+"Teil 2 (der schwerste): ab Vlox-Fälle über Arborbucht und Scherben von Orr nach Gadds Lager.",
+"Teil 3: ab Gunnars Feste über Bjora-Sümpfe nach Scharfauges Anhöhe und über Grothmar-Kriegshügel und Dalada-Hochlande nach Schrein des Schicksalswissens.",
+"Zwischen den Teilen per Karte reisen."
+],
+"opts": [
+"Build:D/A Outpost Runner#0",
+"Build:A/R Shadow Form Runner#0",
+"Build:W/A Shadow Form Runner#0",
+"Build:Any/A General Shadow Form Runner#0",
+"Build:R/any Escape Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "Wiki: Guide to running the Eye of the North tour",
+"u": "https://wiki.guildwars.com/wiki/Guide_to_running_the_Eye_of_the_North_tour"
+}
+]
+},
+{
+"key": "d_darkrime",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Düsterfels-Höhlen",
+"why": "Dungeon allein laufen, Ziel ist die Endtruhe.",
+"route": [
+"Scharfauges Anhöhe",
+"Düsterfels-Höhlen"
+],
+"time": "",
+"hazards": [
+"Niederschlag durch auftauchende Vaettir und Jotun."
+],
+"steps": [
+"In Scharfauges Anhöhe starten und zum Dungeon laufen. Den meisten Gegnern kann man ausweichen.",
+"Der Derwisch-Build holt vorher die Quest bei Einarr Frostkluft.",
+"Beim Laufen die Schutz- und Tempo-Effekte des Builds dauerhaft halten."
+],
+"opts": [
+"Build:A/Me Darkrime Delves Runner#0",
+"Build:D/A Darkrime Delves Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/Me Darkrime Delves Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/Me_Darkrime_Delves_Runner"
+}
+]
+},
+{
+"key": "d_oola",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Oolas Labor",
+"why": "Dungeon allein laufen, seltene Waffen in der Endtruhe.",
+"route": [
+"Oolas Labor"
+],
+"time": "",
+"hazards": [
+"Golems schlagen nieder: \"Ich bin unaufhaltbar!\"."
+],
+"steps": [
+"Aggro mit Preschen abschütteln.",
+"Am Ende Xien und den Golem töten, wie es der Build vorsieht."
+],
+"opts": [
+"Build:A/N Oola's Lab Runner#0",
+"Build:D/A Oola's Lab Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: D/A Oola's Lab Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/A_Oola%27s_Lab_Runner"
+}
+]
+},
+{
+"key": "d_ooze",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Schleimgrube (schwerer Modus)",
+"why": "An den Schleimgruppen vorbei, Gloop und die drei Prismaschleime töten.",
+"route": [
+"Scharfauges Anhöhe",
+"Grothmar-Kriegshügel",
+"Schleimgrube"
+],
+"time": "",
+"hazards": [
+"Prismaschleime saugen mit ihrer Absorptions-Fertigkeit Schaden auf: ausweichen, wie auf der PvX-Seite beschrieben."
+],
+"steps": [
+"In Scharfauges Anhöhe starten, mit Zwergenstabilität und Dunkle Flucht zum Dungeon.",
+"Nach Süden bis zur Steinbrücke und den Gruppen ausweichen. Schleier des Kummers gegen die Charr-Sucher."
+],
+"opts": [
+"Build:A/D Ooze Pit Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/D Ooze Pit Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/D_Ooze_Pit_Runner"
+}
+]
+},
+{
+"key": "d_kath",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Katakomben von Kathandrax",
+"why": "Dungeon komplett allein, inklusive Dschinn und Ilsundur.",
+"route": [
+"Katakomben von Kathandrax"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Zum Dungeon laufen und den Ablauf der PvX-Seite folgen."
+],
+"opts": [
+"Build:A/E Catacombs of Kathandrax Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/E Catacombs of Kathandrax Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/E_Catacombs_of_Kathandrax_Runner"
+}
+]
+},
+{
+"key": "d_frostmaw",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Frostrachens Hort (schwerer Modus)",
+"why": "Dungeon allein laufen.",
+"route": [
+"Frostrachens Hort"
+],
+"time": "",
+"hazards": [
+"Würmer tauchen immer direkt vor dir auf.",
+"Die Schneebälle töten alles außer Elementaren, auch dich."
+],
+"steps": [
+"Braucht drei Essenzen der Behändigkeit, Kuchen und Äpfel machen es leichter.",
+"Schattenform und Schleier des Kummers halten. Unter Beschleunigender Zephyr lassen sich auch \"Ich bin unaufhaltbar!\" und Dunkle Flucht halten."
+],
+"opts": [
+"Build:A/E Frostmaw's Burrows Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/E Frostmaw's Burrows Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/E_Frostmaw%27s_Burrows_Runner"
+}
+]
+},
+{
+"key": "d_rragar",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Rragars Menagerie (schwerer Modus)",
+"why": "Dungeon allein laufen.",
+"route": [
+"Schrein des Schicksalswissens",
+"Dalada-Hochlande",
+"Grothmar-Kriegshügel",
+"Sacnoth-Tal",
+"Rragars Menagerie"
+],
+"time": "",
+"hazards": [
+"Niederschlag in Sacnoth-Tal: Alkohol für Zwergenstabilität."
+],
+"steps": [
+"In Schrein des Schicksalswissens mit der Quest Verborgene Bedrohung starten.",
+"Nach Süden durch Dalada-Hochlande, Grothmar-Kriegshügel und Sacnoth-Tal zum Dungeon.",
+"Beim Laufen Schattenform, Schleier des Kummers, Zwergenstabilität und Dunkle Flucht halten."
+],
+"opts": [
+"Build:A/E Rragar's Menagerie Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/E Rragar's Menagerie Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/E_Rragar%27s_Menagerie_Runner"
+}
+]
+},
+{
+"key": "d_sepulchre",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Grabkammer des Dragrimmar (schwerer Modus)",
+"why": "Dungeon allein laufen, mit nur einem Kuchen gegen den Endboss.",
+"route": [
+"Drakkar-See",
+"Grabkammer des Dragrimmar"
+],
+"time": "",
+"hazards": [
+"Niederschlag durch Brutaler Schlag: Alkohol oder sehr schnell zum Eingang.",
+"Eispfeile unbedingt meiden."
+],
+"steps": [
+"Über Drakkar-See zum Eingang.",
+"Dunkle Flucht mit Zwergenstabilität halten, Angriff des Todes bei Körperblock."
+],
+"opts": [
+"Build:A/E Sepulchre of Dragrimmar Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/E Sepulchre of Dragrimmar Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/E_Sepulchre_of_Dragrimmar_Runner"
+}
+]
+},
+{
+"key": "d_heart",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Herz der Zittergipfel",
+"why": "Dungeon allein laufen.",
+"route": [
+"Zentrale Transferkammer",
+"Herz der Zittergipfel"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"In Zentrale Transferkammer starten, mit Zwergenstabilität und Dunkle Flucht zum Dungeon.",
+"Schattenform, Schleier des Kummers, Zwergenstabilität und Dunkle Flucht halten. Zwischen den Gruppen nachwirken."
+],
+"opts": [
+"Build:A/E Heart of the Shiverpeaks Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/E Heart of the Shiverpeaks Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/E_Heart_of_the_Shiverpeaks_Runner"
+}
+]
+},
+{
+"key": "d_bloodstone",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Blutstein-Höhlen (schwerer Modus)",
+"why": "Dungeon allein laufen.",
+"route": [
+"Blutstein-Höhlen"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Schattenform, Schleier des Kummers, Zwergenstabilität und Dunkle Flucht halten. Alkohol und Rotfels-Süßigkeiten werden empfohlen."
+],
+"opts": [
+"Build:A/D Bloodstone Caves Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/D Bloodstone Caves Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/D_Bloodstone_Caves_Runner"
+}
+]
+},
+{
+"key": "d_orr",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Scherben von Orr",
+"why": "Dungeon allein laufen oder andere mitnehmen.",
+"route": [
+"Scherben von Orr"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Bei jedem Angriff Dunkle Flucht halten.",
+"Ebene 1: Bis zum anderen Ende laufen, hinter dem Schrein die Aggro verlieren und den Brigant mit dem Bogen pullen.",
+"Ebene 2: Gegner an der rechten Wand im Wasser ballen und mit den Fratzen-Fertigkeiten ihre Energie auf null halten."
+],
+"opts": [
+"Build:A/Me Shards of Orr Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/Me Shards of Orr Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/Me_Shards_of_Orr_Runner"
+}
+]
+},
+{
+"key": "d_arachni",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Arachnis Schlupfwinkel",
+"why": "Dungeon allein mit Wirbelverteidigung.",
+"route": [
+"Arachnis Schlupfwinkel"
+],
+"time": "",
+"hazards": [
+"Spinnen unterbrechen: Blockfertigkeiten halten."
+],
+"steps": [
+"Braucht Rote Süßigkeiten zum Laufen, Rüstung der Erlösung wird empfohlen.",
+"Tödliches Paradoxon früh einsetzen, damit die Gegner ihre Unterbrechung verbrauchen. Im Bereich von Arachni musst du Schattenform dauerhaft halten."
+],
+"opts": [
+"Build:R/A Arachni's Haunt Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: R/A Arachni's Haunt Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/A_Arachni%27s_Haunt_Runner"
+}
+]
+},
+{
+"key": "d_slaver",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Das Exil des Sklavenhändlers",
+"why": "Dungeon mit dem Assassinen laufen oder allein schaffen.",
+"route": [
+"Das Exil des Sklavenhändlers"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Die PvX-Seite hat eigene Leisten für jeden Abschnitt (Thommis, Rand, Selvetarm, Forgewight, Duncan). Den Code für den jeweiligen Abschnitt dort holen."
+],
+"opts": [
+"Build:A/any Slaver's Exile Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/any Slaver's Exile Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/any_Slaver%27s_Exile_Runner"
+}
+]
+},
+{
+"key": "m_sanctum",
+"cat": "run",
+"group": "Dungeons und Missionen",
+"name": "Mission Kaiserliches Refugium",
+"why": "Die letzte Factions-Mission allein schaffen, auch im schweren Modus, und dabei andere mitnehmen.",
+"route": [
+"Kaiserliches Refugium"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Den Gefolgsmann Lukas in die Gruppe nehmen. Er wird verbannt, dadurch erscheint der Shiro'ken-Krieger, den der Build zum Aufladen nutzt.",
+"Elementarmagier-Build: Bei Kuunavang die Fertigkeit „Celestial Storm“ für den freien Platz holen.",
+"Durch das Tor gehen und die Zwischensequenz auslösen. Mitgenommene Spieler an einen der zwei Türme stellen.",
+"Knapp außerhalb der Aggro die Schutzzauber des Builds vorwirken, dann Aggro ziehen."
+],
+"opts": [
+"Build:E/Me Imperial Sanctum Runner#0",
+"Build:A/Mo Imperial Sanctum Runner#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: E/Me Imperial Sanctum Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/Me_Imperial_Sanctum_Runner"
+}
+]
+},
+{
+"key": "f_raptor",
+"cat": "farm",
+"group": "Eye of the North",
+"name": "Raptoren-Höhle · Zerrissene Erde (bei Rata Sum)",
+"why": "Rekoff-Brutmutter und bis zu 33 Raptorenjunge im schweren Modus in unter einer Minute. Gibt Drops und viele Asura-Punkte.",
+"route": [
+"Rata Sum",
+"Zerrissene Erde"
+],
+"time": "unter 1 Minute pro Durchgang",
+"hazards": [],
+"steps": [
+"In Rata Sum den schweren Modus einschalten, Paragon-Helden in die Gruppe nehmen und nach Zerrissene Erde gehen.",
+"Den Helden mit \"Zieht Euch zurück!\" und \"Schon unterwegs!\" zum Höhleneingang laufen lassen, unterwegs den Segen mitnehmen.",
+"Am Eingang wirkt der Held Lautstark war Sogolon, dann auf dich Dauerhafte Harmonie, \"Beeilt Euch!\", \"Darf nicht angerührt werden!\" und \"Haltet Eure Stellung!\".",
+"Den Helden weg zum Schrein flaggen, damit er nicht stört und keine Drops nimmt.",
+"In die Höhle laufen, Zeichen des Schmerzes auf das erste Junge, alle Raptoren einsammeln und an einer Wand ballen. Dann mit den Angriffen des Builds auslösen.",
+"Nach dem Durchgang zurück nach Rata Sum und neu starten."
+],
+"opts": [
+"Build:W/N Raptor Farmer#0",
+"Build:N/W Raptor Farmer#0",
+"Build:D/N Raptor Farmer#0"
+],
+"helpers": [
+{
+"role": "Paragon-Held für Tempo und Schutz",
+"optional": false,
+"codes": {
+"Build:W/N Raptor Farmer#0": "OQijEqmMKO84htJ+GTvrxAAAA",
+"Build:N/W Raptor Farmer#0": "OQijEqmMqN7YesJ+GTvrxDbAA",
+"Build:D/N Raptor Farmer#0": "OQijEqmMKO7YT8EmFfjp314hN"
+}
+}
+],
+"team": "",
+"src": [
+{
+"t": "PvX: W/N Raptor Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/N_Raptor_Farmer"
+},
+{
+"t": "PvX: D/N Raptor Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/N_Raptor_Farmer"
+}
+]
+},
+{
+"key": "f_vaettir",
+"cat": "farm",
+"group": "Eye of the North",
+"name": "Vaettir · Jaga-Moräne",
+"why": "Gletschersteine, Mesmer-Folianten, goldene Gegenstände und Event-Items. Beliebt für den Überlebenden-Titel.",
+"route": [
+"Scharfauges Anhöhe",
+"Bjora-Sümpfe",
+"Jaga-Moräne"
+],
+"time": "",
+"hazards": [
+"Ein Frostwurm kann dich unterwegs niederschlagen: nach dem Aufstehen sofort Schattenform und weiter."
+],
+"steps": [
+"Norn-Titel anzeigen, schweren Modus einschalten.",
+"Von Scharfauges Anhöhe durch Bjora-Sümpfe nach Jaga-Moräne. Unterwegs nichts angreifen.",
+"Beim allerersten Mal den Schreinwächter mit Helden besiegen, danach brauchst du keine Helden mehr.",
+"Die Vaettir in zwei Gruppen ziehen (Norden und Süden), an der Wand ballen und mit den Fertigkeiten des Builds töten.",
+"Zurück nach Bjora-Sümpfe und wieder rein, um neu zu starten."
+],
+"opts": [
+"Build:Mo/A 55hp Vaettir Farmer#0",
+"Build:Me/A Vaettir Farm#0",
+"Build:A/Me Vaettir Farm#0",
+"Build:E/Me Obsidian Flesh Vaettir Farmer#0",
+"Build:D/N Vaettir Farmer#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: A/Me Vaettir Farm",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/Me_Vaettir_Farm"
+}
+]
+},
+{
+"key": "f_carving",
+"cat": "farm",
+"group": "Eye of the North",
+"name": "Charr-Schnitzereien · Dalada-Hochlande (schwerer Modus)",
+"why": "Hervorragende Charr-Schnitzereien.",
+"route": [
+"Schrein des Schicksalswissens",
+"Dalada-Hochlande"
+],
+"time": "",
+"hazards": [
+"Charr-Patrouille auf der Straße: nach Osten ausweichen, aber Mantiden-Gruppen meiden."
+],
+"steps": [
+"Ebon-Vorhut-Titel anzeigen.",
+"Von Schrein des Schicksalswissens nach Süden Richtung Portal nach Grothmar-Kriegshügel, allen Gruppen ausweichen.",
+"Zur sicheren Stelle zwischen Baum und Felsen laufen und dort bleiben, bis die Charr tot sind."
+],
+"opts": [
+"Build:N/Me Superb Charr Carving Farmer#0",
+"Build:D/any General Vow of Strength Farmer#7"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: N/Me Superb Charr Carving Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:N/Me_Superb_Charr_Carving_Farmer"
+}
+]
+},
+{
+"key": "f_direpet",
+"cat": "farm",
+"group": "Eye of the North",
+"name": "Schneewürmer · Nördliche Station (Tierbegleiter-Stufe)",
+"why": "9 bis 10 Schneewürmer auf Stufe 30 im schweren Modus. Garantiert die Entwicklung „Grausam“ für dein Tier.",
+"route": [
+"Nördliche Station"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Den Bindungs-Helden mitnehmen und seine Bindungen deaktivieren, dann von Hand auf das Tier setzen: zuerst Lebenssperre, danach Lebensbindung.",
+"Ruf des Schutzes und Wilde Aggression halten und zu den Würmern gehen."
+],
+"opts": [
+"Build:Any/R MA Dire Pet Leveler#0"
+],
+"helpers": [
+{
+"role": "Bindungs-Held für das Tier",
+"optional": false,
+"codes": {
+"Build:Any/R MA Dire Pet Leveler#0": "OwAS44HHOMezDA0EAAAAA"
+}
+}
+],
+"team": "",
+"src": [
+{
+"t": "PvX: Any/R MA Dire Pet Leveler",
+"u": "https://gwpvx.fandom.com/wiki/Build:Any/R_MA_Dire_Pet_Leveler"
+}
+]
+},
+{
+"key": "f_mantid",
+"cat": "farm",
+"group": "Cantha",
+"name": "Mantiden · Nahpuiviertel",
+"why": "Mantiden und Truhen, die unterwegs erscheinen.",
+"route": [
+"Nahpuiviertel"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Direkt nach dem Betreten Tempo-Fertigkeiten wirken und zu den Mantiden laufen.",
+"Vor der ersten Gruppe anhalten, Schutz vorwirken, dann alle Gruppen einsammeln. Truhen erst danach öffnen.",
+"In die kleine Bucht rechts laufen und in die hintere Ecke, damit die Mönche um die Wand gezogen werden.",
+"Ballen und mit dem Build töten."
+],
+"opts": [
+"Build:R/A Mantid Farmer#0",
+"Build:A/R Mantid Farmer#0",
+"Build:R/A Whirling Defense Farmer#4"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: R/A Mantid Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/A_Mantid_Farmer"
+}
+]
+},
+{
+"key": "f_temple",
+"cat": "farm",
+"group": "Cantha",
+"name": "Tempelwächter · Tahnnakai-Tempel (schwerer Modus)",
+"why": "Quansong Geistsprecher für himmlische Waffen und Ritualisten-Elitefolianten.",
+"route": [
+"Zin Ku-Gang",
+"Tahnnakai-Tempel"
+],
+"time": "etwa 12 Minuten",
+"hazards": [],
+"steps": [
+"Aus Zin Ku-Gang im schweren Modus in Tahnnakai-Tempel und nach Norden.",
+"Optional einen Tempo-Helden mitnehmen und ihn beim Verlassen des Tempelbereichs nach Süden flaggen.",
+"Tier auf „Folgen“, Ziele selbst wählen und das Tier die Aggro ziehen lassen."
+],
+"opts": [
+"Build:R/any Temple Guardian Farmer#0"
+],
+"helpers": [
+{
+"role": "Tempo-Held (optional)",
+"optional": true,
+"codes": {
+"Build:R/any Temple Guardian Farmer#0": "OQijEymM6M84dsJ+GTvrxAghN"
+}
+}
+],
+"team": "",
+"src": [
+{
+"t": "PvX: R/any Temple Guardian Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/any_Temple_Guardian_Farmer"
+}
+]
+},
+{
+"key": "f_halcyon_out",
+"cat": "farm",
+"group": "Cantha",
+"name": "Ausgestoßene · Boreas-Meeresgrund (Quest Schützt die Halkyon)",
+"why": "40 Ausgestoßene allein im schweren Modus.",
+"route": [
+"Zos Shivros-Kanal",
+"Boreas-Meeresgrund"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Von Zos Shivros-Kanal nach Boreas-Meeresgrund und auf die Halcyon.",
+"Mit Blick auf das große Holztor mit Rion sprechen und die Quest starten. Mit Gemeinsam rennen die Halcyon verlassen und zweimal rechts abbiegen.",
+"Am kleinen Hügel bei der Segelspitze die Geister setzen und die Gruppen hineinziehen."
+],
+"opts": [
+"Build:R/N Lacerate Outcast Farmer#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: R/N Lacerate Outcast Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/N_Lacerate_Outcast_Farmer"
+}
+]
+},
+{
+"key": "f_halcyon_job",
+"cat": "farm",
+"group": "Cantha",
+"name": "Luxon-Assassinen · Boreas-Meeresgrund (Quest Der Halkyon-Job)",
+"why": "Jadeit-Splitter, alte goldene Gegenstände und goldene Runen.",
+"route": [
+"Zos Shivros-Kanal",
+"Boreas-Meeresgrund"
+],
+"time": "",
+"hazards": [
+"Du brauchst mehr Kurzick- als Luxon-Fraktion. Den Schrein beim Betreten nicht bezahlen."
+],
+"steps": [
+"Die Quest Der Halkyon-Job muss im Log sein. Schwerer Modus lohnt sich, er macht den Farm nicht schwerer.",
+"Von Zos Shivros-Kanal nach Boreas-Meeresgrund.",
+"Rechts in die Kraken-Brut laufen und sterben. Du wirst am Farmspot wiederbelebt.",
+"Über die Brücke gehen, dadurch erscheinen die Luxon-Assassinen."
+],
+"opts": [
+"Build:Mo/W 105hp Halcyon Farmer#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: Mo/W 105hp Halcyon Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/W_105hp_Halcyon_Farmer"
+}
+]
+},
+{
+"key": "f_moss",
+"cat": "farm",
+"group": "Cantha",
+"name": "Drachenmoos · Drazachdickicht (Quest Eine neue Eskorte)",
+"why": "Schnelle Drachenmoos-Gruppen direkt vor dem Außenposten.",
+"route": [
+"Schrein der Heiligen Anjeka",
+"Drazachdickicht"
+],
+"time": "",
+"hazards": [
+"Eine Wächter-Patrouille läuft in der Nähe: nach dem Ziehen etwas Richtung Außenposten zurück."
+],
+"steps": [
+"Die Quest Eine neue Eskorte muss aktiv sein.",
+"Von Schrein der Heiligen Anjeka nach Drazachdickicht.",
+"Alle Drachenmoose ziehen und an der Wand Richtung Schrein zurücklaufen, damit sie sich hinter dir ballen.",
+"Schutz neu wirken und mit den Fertigkeiten des Builds töten. Mit Tab zwischen Zielen wechseln."
+],
+"opts": [
+"Build:Mo/Me 55hp Dragon Moss Farmer#0",
+"Build:E/Me Obsidian Flesh Caster Farmer#0",
+"Build:A/Me Vaettir Farm#0",
+"Build:Me/A Vaettir Farm#0",
+"Build:R/A Whirling Defense Farmer#1"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: Mo/Me 55hp Dragon Moss Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/Me_55hp_Dragon_Moss_Farmer"
+}
+]
+},
+{
+"key": "f_chkkr",
+"cat": "farm",
+"group": "Cantha",
+"name": "Chkkr Hellklaue · Melandrus Hoffnung (schwerer Modus)",
+"why": "Der Gegenstand Hellklaue und Ritualisten-Elitefolianten. Dietriche für die Truhen mitnehmen.",
+"route": [
+"Jadeebenen (Kurzick)",
+"Melandrus Hoffnung"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Von Jadeebenen (Kurzick) nach Melandrus Hoffnung. Beim ersten Mal kurz zurück, damit du künftig oben startest.",
+"Von der Treppe einmal mit dem Bogen auf Chkkr schießen, dann hinter den Felsen rechts weiter unten.",
+"Hexereien des Builds setzen und jeden Zauber unterbrechen, bis er tot ist."
+],
+"opts": [
+"Build:Me/N Chkkr Brightclaw Farmer HM#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: Me/N Chkkr Brightclaw Farmer HM",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/N_Chkkr_Brightclaw_Farmer_HM"
+}
+]
+},
+{
+"key": "f_feather",
+"cat": "farm",
+"group": "Cantha",
+"name": "Federn · Jaya-Klippen",
+"why": "Sensali für Federn.",
+"route": [
+"Hafen von Seitung",
+"Jaya-Klippen"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Von Hafen von Seitung nach Jaya-Klippen.",
+"Vor dem Ziehen die Verzauberungen des Builds wirken, die Sensali in den Nahkampf kommen lassen und mit dem Build töten."
+],
+"opts": [
+"Build:E/any Dust and Feather Farmer#0",
+"Build:D/any General Vow of Strength Farmer#1"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: E/any Dust and Feather Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_Dust_and_Feather_Farmer"
+}
+]
+},
+{
+"key": "f_kappa",
+"cat": "farm",
+"group": "Cantha",
+"name": "Kappa · Die Unterstadt",
+"why": "Kappa-Schilde und bis zu vier verschlossene Truhen auf dem Weg.",
+"route": [
+"Vizunahplatz (Einheimischenviertel)",
+"Die Unterstadt"
+],
+"time": "",
+"hazards": [
+"Kappa nutzen Geistige Erfrierung: Obsidianfleisch verhindert das."
+],
+"steps": [
+"Balthasars Geist wirken und aus Vizunahplatz (Einheimischenviertel) zu den Kappa laufen.",
+"Vor der Seuchengeborenen-Gruppe die Paragon-Fertigkeiten des Helden und die ersten vier Verzauberungen wirken, dann durchlaufen.",
+"Bei den Kappa Steinfleisch-Aura und Erdrüstung neu wirken."
+],
+"opts": [
+"Build:E/Mo Undercity Kappa Farmer#0"
+],
+"helpers": [
+{
+"role": "Paragon-Held als Läufer",
+"optional": false,
+"codes": {
+"Build:E/Mo Undercity Kappa Farmer#0": "OQijEymM6MDbT8Nme7jBA84dM"
+}
+}
+],
+"team": "",
+"src": [
+{
+"t": "PvX: E/Mo Undercity Kappa Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/Mo_Undercity_Kappa_Farmer"
+}
+]
+},
+{
+"key": "f_hanaku",
+"cat": "farm",
+"group": "Cantha",
+"name": "Fokus von Hanaku · Rheas Krater (normaler Modus)",
+"why": "Hanakus Fokus, ein 20/20-Fokus.",
+"route": [
+"Seemannsruh",
+"Rheas Krater"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Mit sieben Helden (am besten mit Tempo-Helden) aus Seemannsruh los. Die Helden helfen nur beim Hinweg.",
+"Die Helden am Wiederbelebungsschrein abstellen, damit sie keine Drops nehmen.",
+"Die Betroffenen-Gruppe an der Treppe zum Schrein ziehen, Zauberwirker ballen, dann den Boss und die Nahkämpfer dazuziehen und mit dem Build töten."
+],
+"opts": [
+"Build:A/D Focus of Hanaku Farmer#0",
+"Build:D/any General Vow of Silence Farmer#3"
+],
+"helpers": [],
+"team": "Sieben Helden nur für den Weg, danach am Schrein abstellen.",
+"src": [
+{
+"t": "PvX: A/D Focus of Hanaku Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/D_Focus_of_Hanaku_Farmer"
+},
+{
+"t": "Wiki: Focus of Hanaku",
+"u": "https://wiki.guildwars.com/wiki/Focus_of_Hanaku"
+}
+]
+},
+{
+"key": "f_ministry",
+"cat": "farm",
+"group": "Cantha",
+"name": "Ministerium der Reinheit (Quest Ein zufälliges Treffen, schwerer Modus)",
+"why": "Ministeriale Belobigungen und einzigartige Gegenstände.",
+"route": [
+"Zentrum von Kaineng"
+],
+"time": "",
+"hazards": [
+"Keine Helden mit Dienern mitnehmen."
+],
+"steps": [
+"Mit sieben Helden die Quest Ein zufälliges Treffen im schweren Modus betreten.",
+"Vor das Podest stellen, die Helden dahinter verteilt flaggen.",
+"Nach dem Dialog werden die Gegner feindlich: alle töten. Danach die Helden wegflaggen und weiter laut Build."
+],
+"opts": [
+"Build:Any/W Ministerial Commendation Farmer#0",
+"Build:Any/W Ministerial Commendation Farmer#1",
+"Build:Any/W Ministerial Commendation Farmer#2",
+"Build:Any/W Ministerial Commendation Farmer#3",
+"Build:Any/W Ministerial Commendation Farmer#4",
+"Build:Any/W Ministerial Commendation Farmer#5",
+"Build:D/any General Vow of Strength Farmer#5"
+],
+"helpers": [],
+"team": "Sieben Helden für den ersten Kampf, PvX empfiehlt ein Mesmerway-Team.",
+"src": [
+{
+"t": "PvX: Any/W Ministerial Commendation Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:Any/W_Ministerial_Commendation_Farmer"
+}
+]
+},
+{
+"key": "f_corsair",
+"cat": "farm",
+"group": "Elona",
+"name": "Korsaren in der Mission Moddok-Spalte",
+"why": "Alle Korsaren der Mission einschließlich Kapitän Bohseda.",
+"route": [
+"Moddok-Spalte"
+],
+"time": "",
+"hazards": [
+"Dunkoro ist in der Mission fest dabei. Ihn direkt am Start weit nach hinten flaggen."
+],
+"steps": [
+"Kapitän Bohseda anwählen, zur Korsaren-Sperre gehen und Herz der Schatten wirken. So überspringst du den Dialog.",
+"Bis zur Fackel links und dem großen Felsen rechts laufen, dort die Schutzfertigkeiten des Builds wirken.",
+"Ein paar Schritte vor, damit die Korsaren erscheinen, sofort Shadow Sanctuary (Luxon) und zurück zu den anderen Korsaren laufen."
+],
+"opts": [
+"Build:R/A Moddok Crevice Corsair Farmer#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: R/A Moddok Crevice Corsair Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/A_Moddok_Crevice_Corsair_Farmer"
+}
+]
+},
+{
+"key": "f_rilohn",
+"cat": "farm",
+"group": "Elona",
+"name": "Zelnehlun Flinkfuß · Rilohn-Refugium",
+"why": "Veldt-Nephila und Zelnehlun Flinkfuß für Waldläufer-Elitefolianten.",
+"route": [
+"Rilohn-Refugium",
+"Die Schwemmebene von Mahnkelon"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Beim Wandernden Priester vor Rilohn-Refugium die Prämie holen.",
+"Nach Nordosten zur Ntouka-Gruppe und dann den Spinnen wie im Build beschrieben ausweichen."
+],
+"opts": [
+"Build:N/A Zelnehlun Fastfoot Farmer#0",
+"Build:Me/A Zelnehlun Fastfoot Farmer#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: N/A Zelnehlun Fastfoot Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:N/A_Zelnehlun_Fastfoot_Farmer"
+}
+]
+},
+{
+"key": "f_drakes",
+"cat": "farm",
+"group": "Elona",
+"name": "Drachen-Kebab · Die Schwemmebene von Mahnkelon (Quest Die Lindwürmer sind los)",
+"why": "Stahlzahndrachen für Drachenfleisch.",
+"route": [
+"Rilohn-Refugium",
+"Die Schwemmebene von Mahnkelon"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Die Quest Die Lindwürmer sind los braucht den Helden Koss in der Gruppe.",
+"Aus Rilohn-Refugium in die Schwemmebene von Mahnkelon. Koss gibt dir Dauerhafte Harmonie und \"Beeilt Euch!\", dann zur Gruppe im Südwesten flaggen.",
+"Durch die Drachen laufen, die zweite Gruppe holen und an einer Wand ballen."
+],
+"opts": [
+"Build:W/N Hundred Blades MoP Farmer#0",
+"Build:D/any General Vow of Strength Farmer#3",
+"Build:R/D Escape Farmer#0"
+],
+"helpers": [
+{
+"role": "Koss (Pflicht für die Quest), gibt Tempo und Schutz",
+"fixed": "Koss"
+}
+],
+"team": "",
+"src": [
+{
+"t": "PvX: W/N Hundred Blades MoP Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/N_Hundred_Blades_MoP_Farmer"
+}
+]
+},
+{
+"key": "f_torcqua",
+"cat": "farm",
+"group": "Domäne der Pein",
+"name": "Margoniten · Die Stadt Torc'qua",
+"why": "Margonit-Edelsteine und Gold. Braucht Zugang zur Domäne der Pein über Tor der Pein.",
+"route": [
+"Tor der Pein",
+"Die Stadt Torc'qua"
+],
+"time": "",
+"hazards": [
+"Paragone werfen Wilder Wurf: Wirbelverteidigung halten.",
+"Magiejägerschmetterer schlägt nieder: \"Ich bin unaufhaltbar!\" halten."
+],
+"steps": [
+"Den Bindungs-Helden mitnehmen.",
+"Zauberwirker und Paragone eng an einer Wand ballen, dann die Nahkämpfer dazuziehen.",
+"Auf Beschleunigender Zephyr achten, um Schattenform mit Tödliches Paradoxon rechtzeitig zu erneuern."
+],
+"opts": [
+"Build:R/A Whirling Defense City Farmer#0",
+"Build:A/Me Margonite Gemstone Farm#0"
+],
+"helpers": [
+{
+"role": "Bindungs-Held",
+"optional": false,
+"codes": {
+"Build:R/A Whirling Defense City Farmer#0": "OwIU00HDJ8FgUmbPliUexzhA",
+"Build:A/Me Margonite Gemstone Farm#0": "OwIT8Y4Y5Qe/zhxDApE6yE"
+}
+}
+],
+"team": "",
+"src": [
+{
+"t": "PvX: R/A Whirling Defense City Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/A_Whirling_Defense_City_Farmer"
+},
+{
+"t": "PvX: A/Me Margonite Gemstone Farm",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/Me_Margonite_Gemstone_Farm"
+}
+]
+},
+{
+"key": "f_stygian",
+"cat": "farm",
+"group": "Domäne der Pein",
+"name": "Stygier am Stygischen Schleier (Quest Eine Bresche im Stygischen Schleier)",
+"why": "Stygische Edelsteine, Lichtbringer-Punkte und Gold. Braucht Zugang über Tor der Pein.",
+"route": [
+"Tor der Pein",
+"Stygischer Schleier"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Lichtbringer-Titel anzeigen und die Quest bei der Adeptin des Flüsterns annehmen.",
+"Fallen-Build: Den Helden zurückflaggen, Fallen und Geist vorbereiten und die ersten zwei Wellen hineinlaufen lassen.",
+"Mesmer-Build: Zur sicheren Stelle zwischen Klippe und Ranken-Tor. Bei jedem kleinsten Ruckeln neu starten."
+],
+"opts": [
+"Build:R/N HM Stygian Veil Trapper#0",
+"Build:Me/A Stygian Farmer#0"
+],
+"helpers": [
+{
+"role": "Wiederbelebungs-Held mit Rand der Auslöschung",
+"optional": false,
+"codes": {
+"Build:R/N HM Stygian Veil Trapper#0": "OgMSY5LHQnh0EAAAAAAAA"
+}
+}
+],
+"team": "",
+"src": [
+{
+"t": "PvX: R/N HM Stygian Veil Trapper",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/N_HM_Stygian_Veil_Trapper"
+},
+{
+"t": "PvX: Me/A Stygian Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/A_Stygian_Farmer"
+}
+]
+},
+{
+"key": "f_uw_wastes",
+"cat": "farm",
+"group": "Unterwelt",
+"name": "Eiswüste der Unterwelt",
+"why": "Schmähkriecher und Dhuum-Skelette, gute Ektoplasma-Chance.",
+"route": [
+"Tempel der Zeitalter",
+"Die Unterwelt"
+],
+"time": "etwa 12 Minuten",
+"hazards": [],
+"steps": [
+"Mit Helden die Kammer säubern: Quest Säubert die Kammer annehmen, Helden zurückflaggen, du ziehst und ballst, dann die Helden loslassen.",
+"Am Eingang der Eiswüste die Helden im Labyrinth stehen lassen.",
+"In der Eiswüste allein mit dem Build farmen."
+],
+"opts": [
+"Build:E/any EA UW Wastes Farmer#0"
+],
+"helpers": [],
+"team": "Helden nur für die Kammer, danach im Labyrinth abstellen.",
+"src": [
+{
+"t": "PvX: E/any EA UW Wastes Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_EA_UW_Wastes_Farmer"
+}
+]
+},
+{
+"key": "f_uw_plains",
+"cat": "farm",
+"group": "Unterwelt",
+"name": "Gedankenklingen-Gespenster in den Chaosebenen der Unterwelt (normaler Modus)",
+"why": "Gedankenklingen-Gespenster in den Chaosebenen.",
+"route": [
+"Tempel der Zeitalter",
+"Die Unterwelt"
+],
+"time": "",
+"hazards": [
+"Geladene Schwärze ausweichen.",
+"Blutsauger-Siegel der Gespenster: Der Build umgeht es mit Siegel der mystischen Geschwindigkeit."
+],
+"steps": [
+"Mit sieben Helden Kammer und Aatxe säubern und die Quest der Verlorenen Seele annehmen.",
+"Den Westgang räumen und die Helden zurückflaggen.",
+"Zu den Obsidian-Behemoths laufen. Ist der Weg blockiert, räumen die Helden.",
+"In den Ebenen die erste Gruppe töten, dann die Gespenster ziehen und mit dem Build töten."
+],
+"opts": [
+"Build:A/D Plains Farmer#0",
+"Build:D/any General Vow of Silence Farmer#4"
+],
+"helpers": [],
+"team": "Sieben Helden für Kammer und Westgang, danach zurückflaggen.",
+"src": [
+{
+"t": "PvX: A/D Plains Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/D_Plains_Farmer"
+}
+]
+},
+{
+"key": "f_dust",
+"cat": "farm",
+"group": "Tyria",
+"name": "Staub · Der Schwarze Vorhang",
+"why": "Nebel-Albträume für glitzernden Staub.",
+"route": [
+"Tempel der Zeitalter",
+"Der Schwarze Vorhang"
+],
+"time": "",
+"hazards": [
+"Manchmal erscheint ein Todesschatten."
+],
+"steps": [
+"Aus Tempel der Zeitalter los, Eile des Flammen-Dschinn als Tempo nutzen.",
+"Vor dem Ziehen Elementareinstimmung, Wiederherstellungs-Aura und Elemental Lord (Luxon) wirken.",
+"Wenn die Albträume im Nahkampf sind, Glyphe der Wiederherstellung und dann mit den Flächenzaubern töten."
+],
+"opts": [
+"Build:E/any Dust and Feather Farmer#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: E/any Dust and Feather Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_Dust_and_Feather_Farmer"
+}
+]
+},
+{
+"key": "f_reed",
+"cat": "farm",
+"group": "Tyria",
+"name": "Schilfpirscher · Tempel der Zeitalter (schwerer Modus)",
+"why": "Schilfpirscher direkt vor dem Außenposten.",
+"route": [
+"Tempel der Zeitalter"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"Vor dem Außenposten Mantra des Abschlusses wirken, dann Arkanes Echo und Nachtragend war Khanhei.",
+"Alle Schilfpirscher ziehen und rückwärts den Hügel hoch, damit sie knapp außerhalb der Geisterreichweite stehen.",
+"Stillstehen und Nachtragend war Khanhei kurz vor Ablauf neu wirken."
+],
+"opts": [
+"Build:Rt/Me Reed Stalker ToA Farmer#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: Rt/Me Reed Stalker ToA Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:Rt/Me_Reed_Stalker_ToA_Farmer"
+}
+]
+},
+{
+"key": "f_gok",
+"cat": "farm",
+"group": "Tyria",
+"name": "Untote am Anfang der Mission Tore von Kryta (schwerer Modus)",
+"why": "Untote mit Flächenschaden aus Peinigungsgebeten.",
+"route": [
+"Tore von Kryta"
+],
+"time": "",
+"hazards": [
+"Todesnova auf Dienern der Nekromanten ist die einzige echte Gefahr: Leichen nicht in deren Reichweite stapeln."
+],
+"steps": [
+"Mission starten und den versteckten Weg hinter dem kleinen Haus links nehmen.",
+"Gegner ziehen und an einer engen Stelle ballen.",
+"Erst angreifen, wenn alles geballt ist, dann mit den Fertigkeiten des Builds töten."
+],
+"opts": [
+"Build:W/Mo Gates of Kryta Farmer#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: W/Mo Gates of Kryta Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/Mo_Gates_of_Kryta_Farmer"
+}
+]
+},
+{
+"key": "f_vermin",
+"cat": "farm",
+"group": "Cantha",
+"name": "Ungeziefer · Xaquang-Himmelsweg",
+"why": "Ungeziefer-Gruppen mit Zeichen des Schmerzes sprengen.",
+"route": [
+"Xaquang-Himmelsweg"
+],
+"time": "",
+"hazards": [],
+"steps": [
+"In Xaquang-Himmelsweg dich mit Balthasars Geist und Lebensbindung binden lassen, \"Schon unterwegs!\" für Tempo.",
+"Den Mönch-Helden zur Seite flaggen. Vor dem Ziehen wirkt er Dauerhafte Harmonie, \"Beeilt Euch!\" und Heilender Hauch auf dich.",
+"Zeichen des Schmerzes auf das erste Ungeziefer, mit \"Ich bin unaufhaltbar!\" die Treppe runter und Richtung Brücke. Dann den Helden wieder folgen lassen."
+],
+"opts": [
+"Build:W/N Hundred Blades MoP Farmer#0"
+],
+"helpers": [
+{
+"role": "Mönch-Held für Bindungen und Tempo",
+"optional": false,
+"codes": {
+"Build:W/N Hundred Blades MoP Farmer#0": "Owkk0kPM0YmDP2EfjBJbaAQ8QeA"
+}
+}
+],
+"team": "",
+"src": [
+{
+"t": "PvX: W/N Hundred Blades MoP Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/N_Hundred_Blades_MoP_Farmer"
+}
+]
+},
+{
+"key": "f_presear",
+"cat": "farm",
+"group": "Tyria",
+"name": "Ascalon vor der Zerstörung",
+"why": "Farbstoffe, Nicholas-Gegenstände, Erfahrung und Event-Items. Nur für Charaktere, die noch vor der Zerstörung sind.",
+"route": [
+"Stadt Ascalon",
+"Aschfurt-Abtei"
+],
+"time": "1 bis 5 Minuten je Spot",
+"hazards": [
+"Nördlich der Mauer (Nordlande) vorsichtig: Charr-Schamanen zuerst töten."
+],
+"steps": [
+"Charr: Aus Stadt Ascalon nach Westen zum Hebel, ziehen und sofort durch das Tor bei Wache Torin.",
+"Würmer: Aus Aschfurt-Abtei nach Norden durch Lakeside County.",
+"Banditen: Lakeside County direkt hinter dem Portal, in etwa 40 Sekunden."
+],
+"opts": [
+"Build:R/W Pre-Searing Charr Farmer#0",
+"Build:Mo/E Pre-Searing Farmer#0"
+],
+"helpers": [],
+"team": "",
+"src": [
+{
+"t": "PvX: R/W Pre-Searing Charr Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/W_Pre-Searing_Charr_Farmer"
+},
+{
+"t": "PvX: Mo/E Pre-Searing Farmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/E_Pre-Searing_Farmer"
+}
+]
+},
+{
+"key": "f_flex",
+"cat": "farm",
+"group": "Vielseitig",
+"name": "Viele Gebiete (Liste auf der Build-Seite)",
+"why": "Diese Builds farmen viele unterschiedliche Gegnergruppen. Welche genau, steht als Liste auf der jeweiligen PvX-Seite.",
+"route": [],
+"time": "",
+"hazards": [
+"Gegner mit Verzauberungsentfernung oder sehr hohem Zauberschaden meiden, das sind die üblichen Schwachstellen dieser Builds."
+],
+"steps": [
+"Auf der PvX-Seite des Builds ein Gebiet aus der Liste wählen.",
+"Schutz vor dem Ziehen vorwirken, Gegner an einer Wand ballen, dann mit dem Schaden des Builds auslösen."
+],
+"opts": [
+"Build:Mo/any Mark of Protection Farmer#0",
+"Build:N/Mo 105hp Farmer#0",
+"Build:Me/Mo 105hp Farmer#0",
+"Build:N/Mo 55hp Boss Farmer#0",
+"Build:Rt/any Signet of Spirits Farmer#0",
+"Build:Rt/Mo 330hp Vengeful Farmer#0",
+"Build:R/D Escape Farmer#0",
+"Build:D/any General Vow of Silence Farmer#0",
+"Build:D/any General Vow of Strength Farmer#0",
+"Build:R/A Whirling Defense Farmer#0",
+"Build:E/Me Obsidian Flesh Caster Farmer#0"
+],
+"helpers": [],
+"team": "",
+"src": []
+}
+],
+"opts": {
+"Build:D/A Outpost Runner#0": {
+"id": "Build:D/A Outpost Runner#0",
+"name": "Outpost Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/A_Outpost_Runner",
+"code": "Ogej4NfMLTIQ0k6MHYjb3l4OAAA",
+"pri": 10,
+"sec": 7,
+"cat": "run",
+"any": false
+},
+"Build:A/R Shadow Form Runner#0": {
+"id": "Build:A/R Shadow Form Runner#0",
+"name": "Shadow Form Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/R_Shadow_Form_Runner",
+"code": "OwJSg5PTTQ/a6M0k3lIQ4OAAA",
+"pri": 7,
+"sec": 2,
+"cat": "run",
+"any": false
+},
+"Build:W/A Shadow Form Runner#0": {
+"id": "Build:W/A Shadow Form Runner#0",
+"name": "Shadow Form Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/A_Shadow_Form_Runner",
+"code": "OQcTEnK/ZamkSUnBVkmE3hC6AC",
+"pri": 1,
+"sec": 7,
+"cat": "run",
+"any": false
+},
+"Build:Any/A General Shadow Form Runner#0": {
+"id": "Build:Any/A General Shadow Form Runner#0",
+"name": "General Shadow Form Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/A_General_Shadow_Form_Runner",
+"code": "OAcR8ZSnhmEAAAAAA3BBSVE",
+"pri": 0,
+"sec": 7,
+"cat": "run",
+"any": true
+},
+"Build:R/any Escape Runner#0": {
+"id": "Build:R/any Escape Runner#0",
+"name": "Escape Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/any_Escape_Runner",
+"code": "OgARcZK1A4gVimEnEAAAAAA",
+"pri": 2,
+"sec": 0,
+"cat": "run",
+"any": false
+},
+"Build:Any/A Wastrel's Collapse Runner#0": {
+"id": "Build:Any/A Wastrel's Collapse Runner#0",
+"name": "Wastrel's Collapse Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/A_Wastrel's_Collapse_Runner",
+"code": "OAcR8ZSV8uEBCAgNjmE3hCC",
+"pri": 0,
+"sec": 7,
+"cat": "run",
+"any": true
+},
+"Build:Any/A Desolation Runner#0": {
+"id": "Build:Any/A Desolation Runner#0",
+"name": "Desolation Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/A_Desolation_Runner",
+"code": "OAcR8ZaC6uUnhmEBqBC3BAA",
+"pri": 0,
+"sec": 7,
+"cat": "run",
+"any": true
+},
+"Build:A/Me Darkrime Delves Runner#0": {
+"id": "Build:A/Me Darkrime Delves Runner#0",
+"name": "Darkrime Delves Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Darkrime_Delves_Runner",
+"code": "OwVTI4x8Z6ASnJJgmsBiIUDozB",
+"pri": 7,
+"sec": 5,
+"cat": "run",
+"any": false
+},
+"Build:D/A Darkrime Delves Runner#0": {
+"id": "Build:D/A Darkrime Delves Runner#0",
+"name": "Darkrime Delves Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/A_Darkrime_Delves_Runner",
+"code": "Ogej8NqMLThX3ldfHYtX3kEhdOA",
+"pri": 10,
+"sec": 7,
+"cat": "run",
+"any": false
+},
+"Build:A/N Oola's Lab Runner#0": {
+"id": "Build:A/N Oola's Lab Runner#0",
+"name": "Oola's Lab Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/N_Oola's_Lab_Runner",
+"code": "OwRjcwf84Q6MHQ3lNQ0kIQAA7BA",
+"pri": 7,
+"sec": 4,
+"cat": "run",
+"any": false
+},
+"Build:D/A Oola's Lab Runner#0": {
+"id": "Build:D/A Oola's Lab Runner#0",
+"name": "Oola's Lab Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/A_Oola's_Lab_Runner",
+"code": "Ogej8tqKrSHQhXtX0kTQdf7iAAA",
+"pri": 10,
+"sec": 7,
+"cat": "run",
+"any": false
+},
+"Build:A/D Ooze Pit Runner#0": {
+"id": "Build:A/D Ooze Pit Runner#0",
+"name": "Ooze Pit Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/D_Ooze_Pit_Runner",
+"code": "Owpj8xjjKTHQ6M3lNQAAdf7iAAA",
+"pri": 7,
+"sec": 10,
+"cat": "run",
+"any": false
+},
+"Build:A/E Catacombs of Kathandrax Runner#0": {
+"id": "Build:A/E Catacombs of Kathandrax Runner#0",
+"name": "Catacombs of Kathandrax Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/E_Catacombs_of_Kathandrax_Runner",
+"code": "OwZTk4+8ZSn5A6rimsBKXkHaXE",
+"pri": 7,
+"sec": 6,
+"cat": "run",
+"any": false
+},
+"Build:A/E Frostmaw's Burrows Runner#0": {
+"id": "Build:A/E Frostmaw's Burrows Runner#0",
+"name": "Frostmaw's Burrows Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/E_Frostmaw's_Burrows_Runner",
+"code": "OwZjkwf84QHQ6MlC5i8QNQ0k4OA",
+"pri": 7,
+"sec": 6,
+"cat": "run",
+"any": false
+},
+"Build:A/E Rragar's Menagerie Runner#0": {
+"id": "Build:A/E Rragar's Menagerie Runner#0",
+"name": "Rragar's Menagerie Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/E_Rragar's_Menagerie_Runner",
+"code": "OwZjkwf84QHQ6M3lNQlC5i8Q6iA",
+"pri": 7,
+"sec": 6,
+"cat": "run",
+"any": false
+},
+"Build:A/E Sepulchre of Dragrimmar Runner#0": {
+"id": "Build:A/E Sepulchre of Dragrimmar Runner#0",
+"name": "Sepulchre of Dragrimmar Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/E_Sepulchre_of_Dragrimmar_Runner",
+"code": "OwZkgIJ8HPKk0nOzB0dZDEuDAAPE",
+"pri": 7,
+"sec": 6,
+"cat": "run",
+"any": false
+},
+"Build:A/E Heart of the Shiverpeaks Runner#0": {
+"id": "Build:A/E Heart of the Shiverpeaks Runner#0",
+"name": "Heart of the Shiverpeaks Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/E_Heart_of_the_Shiverpeaks_Runner",
+"code": "OwZjkwf84QHQ6M3lNQ5i8QIQ4OA",
+"pri": 7,
+"sec": 6,
+"cat": "run",
+"any": false
+},
+"Build:A/D Bloodstone Caves Runner#0": {
+"id": "Build:A/D Bloodstone Caves Runner#0",
+"name": "Bloodstone Caves Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/D_Bloodstone_Caves_Runner",
+"code": "Owpj8xjzKTHQ6M3lNQrXcepZRQA",
+"pri": 7,
+"sec": 10,
+"cat": "run",
+"any": false
+},
+"Build:A/Me Shards of Orr Runner#0": {
+"id": "Build:A/Me Shards of Orr Runner#0",
+"name": "Shards of Orr Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Shards_of_Orr_Runner",
+"code": "OwVUEQhOkPT6MHQ3lNQeQiA3UmAA",
+"pri": 7,
+"sec": 5,
+"cat": "run",
+"any": false
+},
+"Build:R/A Arachni's Haunt Runner#0": {
+"id": "Build:R/A Arachni's Haunt Runner#0",
+"name": "Arachni's Haunt Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Arachni's_Haunt_Runner",
+"code": "OgcTcZ/8ZiHRn5A6uU4gmEBKuE",
+"pri": 2,
+"sec": 7,
+"cat": "run",
+"any": false
+},
+"Build:A/any Slaver's Exile Runner#0": {
+"id": "Build:A/any Slaver's Exile Runner#0",
+"name": "Slaver's Exile Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/any_Slaver's_Exile_Runner",
+"code": "OwVjIwf84Q6MHQ0k1Z3U2gaArgA",
+"pri": 7,
+"sec": 5,
+"cat": "run",
+"any": false
+},
+"Build:E/Me Imperial Sanctum Runner#0": {
+"id": "Build:E/Me Imperial Sanctum Runner#0",
+"name": "Imperial Sanctum Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/Me_Imperial_Sanctum_Runner",
+"code": "OgVSkYGTlCwCxlLBKBAA8Q5iA",
+"pri": 6,
+"sec": 5,
+"cat": "run",
+"any": false
+},
+"Build:A/Mo Imperial Sanctum Runner#0": {
+"id": "Build:A/Mo Imperial Sanctum Runner#0",
+"name": "Imperial Sanctum Runner",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Mo_Imperial_Sanctum_Runner",
+"code": "OwNj0gd8oSOMMMHM6PSQDQ1g+DA",
+"pri": 7,
+"sec": 3,
+"cat": "run",
+"any": false
+},
+"Build:W/N Raptor Farmer#0": {
+"id": "Build:W/N Raptor Farmer#0",
+"name": "Raptor Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/N_Raptor_Farmer",
+"code": "OQQTcUqWXimUlJvwSovYUbHEAA",
+"pri": 1,
+"sec": 4,
+"cat": "farm",
+"any": false
+},
+"Build:N/W Raptor Farmer#0": {
+"id": "Build:N/W Raptor Farmer#0",
+"name": "Raptor Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/W_Raptor_Farmer",
+"code": "OAFTcYaWTySgmsvQlZULXMvYHE",
+"pri": 4,
+"sec": 1,
+"cat": "farm",
+"any": false
+},
+"Build:D/N Raptor Farmer#0": {
+"id": "Build:D/N Raptor Farmer#0",
+"name": "Raptor Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/N_Raptor_Farmer",
+"code": "OgSkcoq06ymEmI31326V2lYolQzF",
+"pri": 10,
+"sec": 4,
+"cat": "farm",
+"any": false
+},
+"Build:Mo/A 55hp Vaettir Farmer#0": {
+"id": "Build:Mo/A 55hp Vaettir Farmer#0",
+"name": "55hp Vaettir Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/A_55hp_Vaettir_Farmer",
+"code": "OwcU4wn6lPP1DekODAARyi3D5B",
+"pri": 3,
+"sec": 7,
+"cat": "farm",
+"any": false
+},
+"Build:Me/A Vaettir Farm#0": {
+"id": "Build:Me/A Vaettir Farm#0",
+"name": "Vaettir Farm",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/A_Vaettir_Farm",
+"code": "OQdUAQROqPP8Id2BEAAAWC3UAA",
+"pri": 5,
+"sec": 7,
+"cat": "farm",
+"any": false
+},
+"Build:A/Me Vaettir Farm#0": {
+"id": "Build:A/Me Vaettir Farm#0",
+"name": "Vaettir Farm",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Vaettir_Farm",
+"code": "OwVUI2h5lPP8Id2BEAAAWC3UTA",
+"pri": 7,
+"sec": 5,
+"cat": "farm",
+"any": false
+},
+"Build:E/Me Obsidian Flesh Vaettir Farmer#0": {
+"id": "Build:E/Me Obsidian Flesh Vaettir Farmer#0",
+"name": "Obsidian Flesh Vaettir Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/Me_Obsidian_Flesh_Vaettir_Farmer",
+"code": "OgVVI4Rhk0ymR6rN+qGAZwNFAAAA",
+"pri": 6,
+"sec": 5,
+"cat": "farm",
+"any": false
+},
+"Build:D/N Vaettir Farmer#0": {
+"id": "Build:D/N Vaettir Farmer#0",
+"name": "Vaettir Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/N_Vaettir_Farmer",
+"code": "OgSjUorILTfXsXf1NX0Bsi7X9gA",
+"pri": 10,
+"sec": 4,
+"cat": "farm",
+"any": false
+},
+"Build:N/Me Superb Charr Carving Farmer#0": {
+"id": "Build:N/Me Superb Charr Carving Farmer#0",
+"name": "Superb Charr Carving Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/Me_Superb_Charr_Carving_Farmer",
+"code": "OAVTISCbSSFSD4GEAIHwGsqCAA",
+"pri": 4,
+"sec": 5,
+"cat": "farm",
+"any": false
+},
+"Build:D/any General Vow of Strength Farmer#7": {
+"id": "Build:D/any General Vow of Strength Farmer#7",
+"name": "General Vow of Strength Farmer (Variante Charr-Schnitzereien)",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Strength_Farmer",
+"code": "OgCjkirL7SmXfbaXNXqikXcXsXA",
+"pri": 10,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:Any/R MA Dire Pet Leveler#0": {
+"id": "Build:Any/R MA Dire Pet Leveler#0",
+"name": "MA Dire Pet Leveler",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/R_MA_Dire_Pet_Leveler",
+"code": "OgMT4SLfTa3g3A3wLk3ahgzg2A",
+"pri": 2,
+"sec": 3,
+"cat": "farm",
+"any": false
+},
+"Build:R/A Mantid Farmer#0": {
+"id": "Build:R/A Mantid Farmer#0",
+"name": "Mantid Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Mantid_Farmer",
+"code": "OgcVYvLiRf8ZiHRn5A6X7uM0R4A6A",
+"pri": 2,
+"sec": 7,
+"cat": "farm",
+"any": false
+},
+"Build:A/R Mantid Farmer#0": {
+"id": "Build:A/R Mantid Farmer#0",
+"name": "Mantid Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/R_Mantid_Farmer",
+"code": "OwJTYVs+XiHRn5AS44u8XL0B6A",
+"pri": 7,
+"sec": 2,
+"cat": "farm",
+"any": false
+},
+"Build:R/A Whirling Defense Farmer#4": {
+"id": "Build:R/A Whirling Defense Farmer#4",
+"name": "Whirling Defense Farmer (Variante Mantiden)",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Whirling_Defense_Farmer",
+"code": "OgcVYvLiRf8ZiHRn5A6X7uM0R4A6A",
+"pri": 2,
+"sec": 7,
+"cat": "farm",
+"any": false
+},
+"Build:R/any Temple Guardian Farmer#0": {
+"id": "Build:R/any Temple Guardian Farmer#0",
+"name": "Temple Guardian Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/any_Temple_Guardian_Farmer",
+"code": "OgASY5LTj18G4G3krifGcG0GA",
+"pri": 2,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:R/N Lacerate Outcast Farmer#0": {
+"id": "Build:R/N Lacerate Outcast Farmer#0",
+"name": "Lacerate Outcast Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/N_Lacerate_Outcast_Farmer",
+"code": "OgQTUYLfHSNI4B4C6gucX8GclB",
+"pri": 2,
+"sec": 4,
+"cat": "farm",
+"any": false
+},
+"Build:Mo/W 105hp Halcyon Farmer#0": {
+"id": "Build:Mo/W 105hp Halcyon Farmer#0",
+"name": "105hp Halcyon Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/W_105hp_Halcyon_Farmer",
+"code": "OwET8UKXRqeYl4uimcuIXsvYHE",
+"pri": 3,
+"sec": 1,
+"cat": "farm",
+"any": false
+},
+"Build:Mo/Me 55hp Dragon Moss Farmer#0": {
+"id": "Build:Mo/Me 55hp Dragon Moss Farmer#0",
+"name": "55hp Dragon Moss Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/Me_55hp_Dragon_Moss_Farmer",
+"code": "OwUWI0R1AH8UoO1jVydNBERupyAAC",
+"pri": 3,
+"sec": 5,
+"cat": "farm",
+"any": false
+},
+"Build:E/Me Obsidian Flesh Caster Farmer#0": {
+"id": "Build:E/Me Obsidian Flesh Caster Farmer#0",
+"name": "Obsidian Flesh Caster Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/Me_Obsidian_Flesh_Caster_Farmer",
+"code": "OgVUI4hgkEPSftxXFAAAAA3UZA",
+"pri": 6,
+"sec": 5,
+"cat": "farm",
+"any": false
+},
+"Build:R/A Whirling Defense Farmer#1": {
+"id": "Build:R/A Whirling Defense Farmer#1",
+"name": "Whirling Defense Farmer (Variante Drachenmoos)",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Whirling_Defense_Farmer",
+"code": "OgcSc5PTIH6MHQ4O0lBMNQCHA",
+"pri": 2,
+"sec": 7,
+"cat": "farm",
+"any": false
+},
+"Build:Me/N Chkkr Brightclaw Farmer HM#0": {
+"id": "Build:Me/N Chkkr Brightclaw Farmer HM#0",
+"name": "Chkkr Brightclaw Farmer HM",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/N_Chkkr_Brightclaw_Farmer_HM",
+"code": "OQRTAswKYSDoGon6CwGkrJHQMA",
+"pri": 5,
+"sec": 4,
+"cat": "farm",
+"any": false
+},
+"Build:E/any Dust and Feather Farmer#0": {
+"id": "Build:E/any Dust and Feather Farmer#0",
+"name": "Dust and Feather Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/any_Dust_and_Feather_Farmer",
+"code": "OgBSoYGT9C8C6ClVAAkCug0CA",
+"pri": 6,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:D/any General Vow of Strength Farmer#1": {
+"id": "Build:D/any General Vow of Strength Farmer#1",
+"name": "General Vow of Strength Farmer (Variante Federn)",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Strength_Farmer",
+"code": "OgCjkirL7SmXfbEYNXHY3lsX7XA",
+"pri": 10,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:E/Mo Undercity Kappa Farmer#0": {
+"id": "Build:E/Mo Undercity Kappa Farmer#0",
+"name": "Undercity Kappa Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/Mo_Undercity_Kappa_Farmer",
+"code": "OgNTkYm2QyFsU4rSbAkwtkHSeA",
+"pri": 6,
+"sec": 3,
+"cat": "farm",
+"any": false
+},
+"Build:A/D Focus of Hanaku Farmer#0": {
+"id": "Build:A/D Focus of Hanaku Farmer#0",
+"name": "Focus of Hanaku Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/D_Focus_of_Hanaku_Farmer",
+"code": "Owpl4Jf8ImmqFxjozcANG6c19BAUDC",
+"pri": 7,
+"sec": 10,
+"cat": "farm",
+"any": false
+},
+"Build:D/any General Vow of Silence Farmer#3": {
+"id": "Build:D/any General Vow of Silence Farmer#3",
+"name": "General Vow of Silence Farmer (Variante Fokus von Hanaku)",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Silence_Farmer",
+"code": "OgCjkuqLLShXdftXxlxk0kjhOXA",
+"pri": 10,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:Any/W Ministerial Commendation Farmer#0": {
+"id": "Build:Any/W Ministerial Commendation Farmer#0",
+"name": "Ministerial Commendation Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/W_Ministerial_Commendation_Farmer",
+"code": "OwFkQZV63Oi0VBPRfxOYAgLDlYuI",
+"pri": 7,
+"sec": 1,
+"cat": "farm",
+"any": false
+},
+"Build:Any/W Ministerial Commendation Farmer#1": {
+"id": "Build:Any/W Ministerial Commendation Farmer#1",
+"name": "Ministerial Commendation Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/W_Ministerial_Commendation_Farmer",
+"code": "OQATEXqVZKX8qgnovYHMAItYwC",
+"pri": 1,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:Any/W Ministerial Commendation Farmer#2": {
+"id": "Build:Any/W Ministerial Commendation Farmer#2",
+"name": "Ministerial Commendation Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/W_Ministerial_Commendation_Farmer",
+"code": "OgEUQrqeVsSXF8E9F7gBA+GMH5iA",
+"pri": 2,
+"sec": 1,
+"cat": "farm",
+"any": false
+},
+"Build:Any/W Ministerial Commendation Farmer#3": {
+"id": "Build:Any/W Ministerial Commendation Farmer#3",
+"name": "Ministerial Commendation Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/W_Ministerial_Commendation_Farmer",
+"code": "OwEU0WYQ1qSXF8E9F7gBAgEUi5iA",
+"pri": 3,
+"sec": 1,
+"cat": "farm",
+"any": false
+},
+"Build:Any/W Ministerial Commendation Farmer#4": {
+"id": "Build:Any/W Ministerial Commendation Farmer#4",
+"name": "Ministerial Commendation Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/W_Ministerial_Commendation_Farmer",
+"code": "OAFUQWTQ1qSXF8E9F7gBAzBUi5iA",
+"pri": 4,
+"sec": 1,
+"cat": "farm",
+"any": false
+},
+"Build:Any/W Ministerial Commendation Farmer#5": {
+"id": "Build:Any/W Ministerial Commendation Farmer#5",
+"name": "Ministerial Commendation Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/W_Ministerial_Commendation_Farmer",
+"code": "OAGkQpVa4SG0VBPRfxOYAwETxUuI",
+"pri": 8,
+"sec": 1,
+"cat": "farm",
+"any": false
+},
+"Build:D/any General Vow of Strength Farmer#5": {
+"id": "Build:D/any General Vow of Strength Farmer#5",
+"name": "General Vow of Strength Farmer (Variante Ministerium)",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Strength_Farmer",
+"code": "OgCjkmrMbS5imXfb0XaXNXEYsXA",
+"pri": 10,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:R/A Moddok Crevice Corsair Farmer#0": {
+"id": "Build:R/A Moddok Crevice Corsair Farmer#0",
+"name": "Moddok Crevice Corsair Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Moddok_Crevice_Corsair_Farmer",
+"code": "OgcSc5PThOIQ4Orgj13lHQCHA",
+"pri": 2,
+"sec": 7,
+"cat": "farm",
+"any": false
+},
+"Build:N/A Zelnehlun Fastfoot Farmer#0": {
+"id": "Build:N/A Zelnehlun Fastfoot Farmer#0",
+"name": "Zelnehlun Fastfoot Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/A_Zelnehlun_Fastfoot_Farmer",
+"code": "OAdTU4D/H6NIP4MQB8LA3J0ZCC",
+"pri": 4,
+"sec": 7,
+"cat": "farm",
+"any": false
+},
+"Build:Me/A Zelnehlun Fastfoot Farmer#0": {
+"id": "Build:Me/A Zelnehlun Fastfoot Farmer#0",
+"name": "Zelnehlun Fastfoot Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/A_Zelnehlun_Fastfoot_Farmer",
+"code": "OQdSI4/MLB3mGAAAAwdhuJI",
+"pri": 5,
+"sec": 7,
+"cat": "farm",
+"any": false
+},
+"Build:W/N Hundred Blades MoP Farmer#0": {
+"id": "Build:W/N Hundred Blades MoP Farmer#0",
+"name": "Hundred Blades MoP Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/N_Hundred_Blades_MoP_Farmer",
+"code": "OQQTcUKXRSlBAIXEAYUzSovYHE",
+"pri": 1,
+"sec": 4,
+"cat": "farm",
+"any": false
+},
+"Build:D/any General Vow of Strength Farmer#3": {
+"id": "Build:D/any General Vow of Strength Farmer#3",
+"name": "General Vow of Strength Farmer (Variante Drachen-Kebab)",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Strength_Farmer",
+"code": "OgCjkqrMLSmXfbaXNX0krXsX5iA",
+"pri": 10,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:R/D Escape Farmer#0": {
+"id": "Build:R/D Escape Farmer#0",
+"name": "Escape Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/D_Escape_Farmer",
+"code": "Ogojchpr6SAHFH3kdfjhOXxl3lA",
+"pri": 2,
+"sec": 10,
+"cat": "farm",
+"any": false
+},
+"Build:R/A Whirling Defense City Farmer#0": {
+"id": "Build:R/A Whirling Defense City Farmer#0",
+"name": "Whirling Defense City Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Whirling_Defense_City_Farmer",
+"code": "OgcTcZ/8ZiHRn5AKCim8uU4AAA",
+"pri": 2,
+"sec": 7,
+"cat": "farm",
+"any": false
+},
+"Build:A/Me Margonite Gemstone Farm#0": {
+"id": "Build:A/Me Margonite Gemstone Farm#0",
+"name": "Margonite Gemstone Farm",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Margonite_Gemstone_Farm",
+"code": "OwVTEY/8ZiHRn5AiVkm0DSEA3B",
+"pri": 7,
+"sec": 5,
+"cat": "farm",
+"any": false
+},
+"Build:R/N HM Stygian Veil Trapper#0": {
+"id": "Build:R/N HM Stygian Veil Trapper#0",
+"name": "HM Stygian Veil Trapper",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/N_HM_Stygian_Veil_Trapper",
+"code": "OgQTcybiZK5o5Y5wSIXc465o7A",
+"pri": 2,
+"sec": 4,
+"cat": "farm",
+"any": false
+},
+"Build:Me/A Stygian Farmer#0": {
+"id": "Build:Me/A Stygian Farmer#0",
+"name": "Stygian Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/A_Stygian_Farmer",
+"code": "OQdUASBPmfS3UyAAAAAmA3lhOTQA",
+"pri": 5,
+"sec": 7,
+"cat": "farm",
+"any": false
+},
+"Build:E/any EA UW Wastes Farmer#0": {
+"id": "Build:E/any EA UW Wastes Farmer#0",
+"name": "EA UW Wastes Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/any_EA_UW_Wastes_Farmer",
+"code": "OgBTkSFzSaYYXos6XgW4riUwFE",
+"pri": 6,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:A/D Plains Farmer#0": {
+"id": "Build:A/D Plains Farmer#0",
+"name": "Plains Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/D_Plains_Farmer",
+"code": "Owpl8xjWaqSrGxjozcAVDiJCAAAAAA",
+"pri": 7,
+"sec": 10,
+"cat": "farm",
+"any": false
+},
+"Build:D/any General Vow of Silence Farmer#4": {
+"id": "Build:D/any General Vow of Silence Farmer#4",
+"name": "General Vow of Silence Farmer (Variante Unterwelt-Ebenen)",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Silence_Farmer",
+"code": "OgCjkqqLrShXdftXYiAA0kWgOXA",
+"pri": 10,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:Rt/Me Reed Stalker ToA Farmer#0": {
+"id": "Build:Rt/Me Reed Stalker ToA Farmer#0",
+"name": "Reed Stalker ToA Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/Me_Reed_Stalker_ToA_Farmer",
+"code": "OAWiMwhssEWMxDAAAAAARA",
+"pri": 8,
+"sec": 5,
+"cat": "farm",
+"any": false
+},
+"Build:W/Mo Gates of Kryta Farmer#0": {
+"id": "Build:W/Mo Gates of Kryta Farmer#0",
+"name": "Gates of Kryta Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/Mo_Gates_of_Kryta_Farmer",
+"code": "OQMU0QHGZZS+EpF7gKFLEAAzDjEA",
+"pri": 1,
+"sec": 3,
+"cat": "farm",
+"any": false
+},
+"Build:R/W Pre-Searing Charr Farmer#0": {
+"id": "Build:R/W Pre-Searing Charr Farmer#0",
+"name": "Pre-Searing Charr Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/W_Pre-Searing_Charr_Farmer",
+"code": "OgEVUD7cR8l5gxXG2a13Bg2AA",
+"pri": 2,
+"sec": 1,
+"cat": "farm",
+"any": false
+},
+"Build:Mo/E Pre-Searing Farmer#0": {
+"id": "Build:Mo/E Pre-Searing Farmer#0",
+"name": "Pre-Searing Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/E_Pre-Searing_Farmer",
+"code": "OwYS4wnEgcl3rYZkfokWA",
+"pri": 3,
+"sec": 6,
+"cat": "farm",
+"any": false
+},
+"Build:Mo/any Mark of Protection Farmer#0": {
+"id": "Build:Mo/any Mark of Protection Farmer#0",
+"name": "Mark of Protection Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/any_Mark_of_Protection_Farmer",
+"code": "OwAQENEAAAAAAAAUeA",
+"pri": 3,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:N/Mo 105hp Farmer#0": {
+"id": "Build:N/Mo 105hp Farmer#0",
+"name": "105hp Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/Mo_105hp_Farmer",
+"code": "OANVQgCYmD/YqeYl4uKPAAQfQeAnE",
+"pri": 4,
+"sec": 3,
+"cat": "farm",
+"any": false
+},
+"Build:Me/Mo 105hp Farmer#0": {
+"id": "Build:Me/Mo 105hp Farmer#0",
+"name": "105hp Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/Mo_105hp_Farmer",
+"code": "OQNUAQBPknOLB3GAAAcXXJ1D5B",
+"pri": 5,
+"sec": 3,
+"cat": "farm",
+"any": false
+},
+"Build:N/Mo 55hp Boss Farmer#0": {
+"id": "Build:N/Mo 55hp Boss Farmer#0",
+"name": "55hp Boss Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/Mo_55hp_Boss_Farmer",
+"code": "OANTQYz8YSuUFaOoNoe4ualQeA",
+"pri": 4,
+"sec": 3,
+"cat": "farm",
+"any": false
+},
+"Build:Rt/any Signet of Spirits Farmer#0": {
+"id": "Build:Rt/any Signet of Spirits Farmer#0",
+"name": "Signet of Spirits Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Signet_of_Spirits_Farmer",
+"code": "OACjAaiM5SXT+glTVTQT0gAAAAA",
+"pri": 8,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:Rt/Mo 330hp Vengeful Farmer#0": {
+"id": "Build:Rt/Mo 330hp Vengeful Farmer#0",
+"name": "330hp Vengeful Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/Mo_330hp_Vengeful_Farmer",
+"code": "OAOk4gPaITKjFj4VP0i4V8h+QeA",
+"pri": 8,
+"sec": 3,
+"cat": "farm",
+"any": false
+},
+"Build:D/any General Vow of Silence Farmer#0": {
+"id": "Build:D/any General Vow of Silence Farmer#0",
+"name": "General Vow of Silence Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Silence_Farmer",
+"code": "OgCjkqqLrShXdftXAAAAAAjhOXA",
+"pri": 10,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:D/any General Vow of Strength Farmer#0": {
+"id": "Build:D/any General Vow of Strength Farmer#0",
+"name": "General Vow of Strength Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Strength_Farmer",
+"code": "OgCjkirMrOm3vt2t5CAAAAAAA",
+"pri": 10,
+"sec": 0,
+"cat": "farm",
+"any": false
+},
+"Build:R/A Whirling Defense Farmer#0": {
+"id": "Build:R/A Whirling Defense Farmer#0",
+"name": "Whirling Defense Farmer",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Whirling_Defense_Farmer",
+"code": "OgcUcXs5lPP8Id2BEAAAAACnjD",
+"pri": 2,
+"sec": 7,
+"cat": "farm",
+"any": false
+}
+}
+}

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GW-Reinfickmaschine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0707;--panel:rgba(30,17,13,.92);--panel2:rgba(44,25,18,.95);--line:rgba(201,162,78,.16);--line2:rgba(201,162,78,.32);
+  --text:#efe4cf;--muted:#bba78a;--dim:#8a765a;--acc:#d9b25f;--gold:#c9a24e;--lacq:#8e1f1a;--lacq2:#b0291f;
+  --ok:#7cc59a;--warn:#e8b84a;--bad:#e2584a;--r:12px;--head:"Cinzel",Georgia,serif;
+  --side:300px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;color:var(--text);font:15px/1.5 Spectral,Georgia,serif}
+body{background:var(--bg);
+ background-image:radial-gradient(ellipse at 50% -10%,rgba(142,31,26,.5),transparent 60%),radial-gradient(ellipse at 50% 120%,rgba(90,14,10,.4),transparent 55%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40' viewBox='0 0 80 40'%3E%3Cg fill='none' stroke='%23c9a24e' stroke-opacity='.07' stroke-width='1.2'%3E%3Cpath d='M0 40a20 20 0 0 1 40 0M8 40a12 12 0 0 1 24 0M16 40a4 4 0 0 1 8 0M40 40a20 20 0 0 1 40 0M48 40a12 12 0 0 1 24 0M56 40a4 4 0 0 1 8 0M-20 20a20 20 0 0 1 40 0M-12 20a12 12 0 0 1 24 0M-4 20a4 4 0 0 1 8 0M20 20a20 20 0 0 1 40 0M28 20a12 12 0 0 1 24 0M36 20a4 4 0 0 1 8 0M60 20a20 20 0 0 1 40 0M68 20a12 12 0 0 1 24 0M76 20a4 4 0 0 1 8 0'/%3E%3C/g%3E%3C/svg%3E");
+ background-attachment:fixed;min-height:100vh}
+a{color:var(--acc)}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:6px}
+.hd{font-family:var(--head);letter-spacing:.05em}
+.mut{color:var(--muted)} .dim{color:var(--dim)} .sm{font-size:13px}
+
+/* Kopfzeile */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 20px;background:rgba(13,7,7,.82);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.logo{font-family:var(--head);font-weight:700;font-size:18px;color:var(--acc);letter-spacing:.06em;text-shadow:0 0 14px rgba(201,162,78,.3);white-space:nowrap}
+.topbar .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;border:1px solid var(--line2);background:rgba(40,22,16,.8);font-size:14px;transition:border-color .15s,background .15s}
+.btn:hover{border-color:var(--acc);background:rgba(60,32,20,.9)}
+.btn.pri{background:linear-gradient(180deg,var(--lacq2),var(--lacq));border-color:var(--gold);color:#fbe7b8;font-family:var(--head);letter-spacing:.04em}
+.btn.pri:hover{background:linear-gradient(180deg,#c3322a,#9a2219)}
+.btn.s{padding:4px 10px;font-size:13px}
+
+/* Layout */
+.app{display:grid;grid-template-columns:var(--side) minmax(0,1fr);gap:20px;max-width:1320px;margin:0 auto;padding:20px}
+@media (max-width:900px){.app{grid-template-columns:1fr;padding:12px}}
+.side{display:flex;flex-direction:column;gap:10px;position:sticky;top:72px;align-self:start}
+@media (max-width:900px){.side{position:static;display:grid;grid-template-columns:1fr 1fr;gap:8px}.side>#pk-build,.side>#clsgrid,.side>#partywrap{grid-column:1/-1}.pick{padding:10px 12px}.pick .val{font-size:15px}}
+.pick{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);transition:border-color .15s,transform .15s}
+.pick:hover{border-color:var(--line2)}
+.pick.open{border-color:var(--gold)}
+.pick .lb{font-family:var(--head);font-size:11px;letter-spacing:.12em;color:var(--acc);display:flex;justify-content:space-between}
+.pick .lb::after{content:"›";font-size:16px;line-height:1;color:var(--dim)}
+.pick .val{font-size:16px;margin-top:2px;display:flex;align-items:center;gap:8px}
+.pick .sub{font-size:12px;color:var(--muted);margin-top:2px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 6px currentColor}
+.mini{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;margin-top:8px}
+.mini span{aspect-ratio:1;border-radius:4px;background:#120a08;overflow:hidden;display:block}
+.seg{display:flex;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{flex:1;padding:5px 0;border-radius:999px;font-size:13px;color:var(--muted)}
+.seg button.on{background:linear-gradient(180deg,var(--lacq2),var(--lacq));color:#fbe7b8}
+.seg button:disabled{opacity:.35;cursor:not-allowed}
+.seglb{font-family:var(--head);font-size:11px;letter-spacing:.12em;color:var(--acc);margin:4px 2px 6px}
+.clsgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px;border-radius:var(--r);background:var(--panel2);border:1px solid var(--gold)}
+.clsgrid button{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:14px}
+.clsgrid button:hover{background:rgba(201,162,78,.1)}
+.clsgrid button.on{background:rgba(201,162,78,.18)}
+
+/* Hauptbereich */
+.mainhead{display:flex;align-items:center;flex-wrap:wrap;gap:10px 16px;margin-bottom:14px}
+.mainhead h1{font-family:var(--head);font-size:22px;margin:0;font-weight:600;color:#f3dfb0;letter-spacing:.04em}
+.mainhead h1 small{display:block;font-family:Spectral,serif;font-size:13px;color:var(--muted);letter-spacing:0;font-weight:400}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-size:14px;transition:border-color .15s}
+.pill:hover{border-color:var(--acc)}
+.pill b{font-family:var(--head);color:#f3dfb0}
+.pill .ok{color:var(--ok)} .pill .warn{color:var(--warn)} .pill .bad{color:var(--bad)}
+.notice{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 14px;border-radius:var(--r);background:rgba(232,184,74,.08);border:1px solid rgba(232,184,74,.35);margin-bottom:14px;font-size:14px}
+.notice.good{background:rgba(124,197,154,.07);border-color:rgba(124,197,154,.35)}
+.notice .sp{flex:1}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{position:relative;text-align:left;width:100%;padding:12px 14px 12px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;gap:6px;transition:border-color .15s,transform .15s,box-shadow .15s}
+.card:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.card.you{border-color:rgba(201,162,78,.55);background:linear-gradient(180deg,rgba(60,30,18,.95),rgba(30,17,13,.95))}
+.card.sel{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.card .nm{font-family:var(--head);font-size:15px;color:#f3dfb0;display:flex;align-items:center;gap:8px}
+.card .nm .n{font-size:12px;color:var(--dim)}
+.card .pf{font-size:12px;color:var(--muted)}
+.card .rl{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.card .ft{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);margin-top:2px}
+.card .ft b{color:#f3dfb0;font-family:var(--head)}
+.card .flag{color:var(--warn)}
+.card .missing{color:var(--bad)}
+.bar8{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+.ico{aspect-ratio:1;border-radius:5px;background:#120a08;overflow:hidden;position:relative;display:block;box-shadow:0 0 0 1px rgba(0,0,0,.8)}
+.ico.el{box-shadow:0 0 0 1px #e7c25a,0 0 6px rgba(231,194,90,.45)}
+.ic{display:block;width:100%;height:100%;background-repeat:no-repeat}
+.empty{color:var(--muted);padding:30px;text-align:center;border:1px dashed var(--line2);border-radius:var(--r)}
+.foot{margin-top:28px;color:var(--dim);font-size:12px;line-height:1.6}
+.foot details{margin:0}
+
+/* Seitenfenster */
+.scrim{position:fixed;inset:0;background:rgba(5,3,3,.55);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100vw);z-index:41;background:linear-gradient(180deg,#22130e,#130a07);border-left:1px solid var(--line2);box-shadow:-20px 0 40px rgba(0,0,0,.5);transform:translateX(102%);transition:transform .25s ease;display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dh{display:flex;align-items:center;gap:10px;padding:16px 18px 10px}
+.dh h2{font-family:var(--head);font-size:18px;margin:0;color:#f3dfb0;letter-spacing:.04em;flex:1;min-width:0}
+.dh h2 small{display:block;font-family:Spectral,serif;font-size:13px;color:var(--muted);letter-spacing:0;font-weight:400}
+.x{width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);font-size:18px;line-height:1;flex:none}
+.x:hover{border-color:var(--acc)}
+.tabs{display:flex;gap:4px;padding:0 18px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{padding:8px 12px;font-family:var(--head);font-size:13px;letter-spacing:.04em;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button.on{color:#f3dfb0;border-color:var(--gold)}
+.tabs button:disabled{opacity:.35;cursor:not-allowed}
+.db{flex:1;overflow:auto;padding:16px 18px 30px}
+.db h3{font-family:var(--head);font-size:13px;letter-spacing:.08em;color:var(--acc);margin:16px 0 6px;font-weight:600}
+.db h3:first-child{margin-top:0}
+.db ul,.db ol{margin:0;padding-left:20px}
+.db li{margin:4px 0}
+.list{display:grid;gap:6px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.opt{display:flex;flex-direction:column;gap:4px;width:100%;text-align:left;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid var(--line);transition:border-color .15s}
+.opt:hover{border-color:var(--line2)}
+.opt.on{border-color:var(--gold);background:rgba(201,162,78,.08)}
+.opt.off{opacity:.55}
+.opt .t{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.opt .t .nm{font-weight:600}
+.opt .s{font-size:12px;color:var(--muted)}
+.grp{font-family:var(--head);font-size:11px;letter-spacing:.12em;color:var(--acc);margin:12px 2px 2px}
+.grp:first-child{margin-top:0}
+.tag{display:inline-block;font-family:var(--head);font-size:10px;letter-spacing:.06em;padding:1px 7px;border-radius:999px;border:1px solid var(--line2);color:var(--muted)}
+.tag.rec{background:var(--lacq);border-color:var(--gold);color:#fbe7b8}
+.tag.ann{background:#3a2a5a;border-color:#8c6cc8;color:#e2d4ff}
+.tag.test{background:#3a3020;border-color:#a08040;color:#f0d8a0}
+.tag.fit{background:rgba(124,197,154,.15);border-color:var(--ok);color:var(--ok)}
+.big8{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+@media (max-width:600px){.big8{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.big8 .slotb{display:flex;flex-direction:column;gap:3px;align-items:stretch;font-size:10px;line-height:1.2;color:var(--muted);text-align:center}
+.big8 .slotb span.nmx{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.big8 .add{aspect-ratio:1;border-radius:5px;border:1px dashed var(--line2);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:20px}
+button.slotb:hover .ico{box-shadow:0 0 0 2px var(--acc)}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:14px}
+.kv:last-child{border:0}
+.code{display:flex;gap:6px}
+.code input{flex:1;min-width:0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background:#120a08;border:1px solid var(--line2);color:#e9d7ae;border-radius:8px;padding:8px 10px}
+select{background:#120a08;border:1px solid var(--line2);color:var(--text);border-radius:8px;padding:6px 8px;font:inherit}
+.attrs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.attrs label{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:4px 4px 4px 10px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:13px}
+.msgs{list-style:none;padding:0!important;display:grid;gap:4px}
+.msgs li{padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.03);border-left:3px solid var(--line2);font-size:14px;margin:0!important}
+.msgs li.bad{border-color:var(--bad)} .msgs li.warn{border-color:var(--warn)} .msgs li.ok{border-color:var(--ok)} .msgs li.info{border-color:#4fa39a}
+.route{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:6px 0;font-size:13px}
+.route span{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:6px;padding:1px 7px}
+details.more{margin-top:10px}
+details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
+.heroes{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;font-size:14px}
+.heroes label{display:flex;gap:8px;align-items:center;padding:3px 0;cursor:pointer}
+.heroes .pf{color:var(--dim);font-size:11px;margin-left:auto}
+.dpsrow{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.dpsrow b{font-family:var(--head);color:#f3dfb0}
+.meter{height:4px;border-radius:2px;background:rgba(255,255,255,.06);margin-top:4px;overflow:hidden}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--lacq2),var(--gold))}
+
+/* Menü */
+.menu{position:fixed;z-index:45;min-width:240px;max-width:340px;padding:6px;border-radius:12px;background:#22130e;border:1px solid var(--gold);box-shadow:0 12px 30px rgba(0,0,0,.5)}
+.menu button{display:block;width:100%;text-align:left;padding:8px 10px;border-radius:8px;font-size:14px}
+.menu button:hover{background:rgba(201,162,78,.1)}
+.menu button.on{background:rgba(201,162,78,.18)}
+.menu small{display:block;color:var(--muted);font-size:12px}
+
+/* Fertigkeitsauswahl */
+.modal{position:fixed;inset:0;background:rgba(5,3,3,.7);display:none;align-items:flex-start;justify-content:center;z-index:60;padding:5vh 12px}
+.modal.open{display:flex}
+.mbox{background:linear-gradient(180deg,#24150f,#140b08);border:1px solid var(--gold);border-radius:14px;width:min(860px,100%);max-height:88vh;display:flex;flex-direction:column}
+.mhead{padding:14px;border-bottom:1px solid var(--line);display:grid;gap:10px}
+.mhead input{background:#120a08;border:1px solid var(--line2);color:var(--text);border-radius:8px;padding:8px 10px;font:inherit}
+.mlist{overflow:auto;padding:10px 14px 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px}
+.sk{display:flex;gap:8px;align-items:center;text-align:left;padding:5px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.sk:hover{border-color:var(--acc)}
+.sk.sug{border-color:var(--gold);background:rgba(60,30,14,.85)}
+.sk .ic{width:40px;height:40px;flex:none;border-radius:6px}
+.sk .tx{min-width:0}
+.sk .tx div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sk .tx .s{font-size:11px;color:var(--muted)}
+.sk .why{font-size:11px;color:#d9c08a;white-space:normal!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mhd{grid-column:1/-1;font-family:var(--head);color:var(--acc);letter-spacing:.06em;font-size:12px;margin:6px 0 0}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid var(--line2)}
+.chip.on{background:linear-gradient(180deg,var(--lacq2),var(--lacq));border-color:var(--gold);color:#fbe7b8}
+
+#tip{position:fixed;z-index:70;pointer-events:none;max-width:320px;background:linear-gradient(180deg,#1d120d,#0d0806);border:1px solid var(--gold);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.45;box-shadow:0 8px 24px rgba(0,0,0,.5);display:none}
+#tip b{font-size:15px;font-family:var(--head);color:#f3dfb0}
+#tip .meta{color:var(--muted);margin:2px 0 4px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#24150f;border:1px solid var(--line2);padding:8px 14px;border-radius:999px;display:none;z-index:80}
+@media (max-width:600px){.topbar .btn span.l{display:none}.attrs,.heroes{grid-template-columns:1fr}.mainhead h1{font-size:19px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo">GW-Reinfickmaschine</div>
+  <div class="sp"></div>
+  <button class="btn" id="copyall" title="Alle Codes kopieren">⧉ <span class="l">Codes kopieren</span></button>
+  <button class="btn pri" id="zip" hidden title="Alle Leisten als Vorlagen herunterladen">⇩ <span class="l">Vorlagen (ZIP)</span></button>
+</div>
+
+<div class="app">
+  <aside class="side" aria-label="Auswahl">
+    <button class="pick" id="pk-class" aria-expanded="false"><div class="lb">Klasse</div><div class="val" id="v-class"></div></button>
+    <div class="clsgrid" id="clsgrid" hidden role="radiogroup" aria-label="Klasse"></div>
+    <button class="pick" id="pk-build"><div class="lb">Build</div><div class="val" id="v-build"></div><div class="sub" id="v-build-sub"></div></button>
+    <button class="pick" id="pk-target"><div class="lb" id="l-target">Gebiet</div><div class="val" id="v-target"></div><div class="sub" id="v-target-sub"></div></button>
+    <div id="partywrap"><div class="seglb">Gruppengröße</div><div class="seg" id="party" role="radiogroup" aria-label="Gruppengröße"></div></div>
+    <button class="pick" id="pk-heroes"><div class="lb">Helden</div><div class="val" id="v-heroes"></div></button>
+  </aside>
+
+  <main>
+    <div class="mainhead">
+      <h1 id="title"></h1>
+      <div class="pills" id="pills"></div>
+    </div>
+    <div id="notice"></div>
+    <div class="cards" id="cards"></div>
+    <div class="foot">
+      <details><summary>Quellen und Hinweise</summary>
+      Fertigkeitswerte, Fertigkeitsbilder, Heldenliste und Gebietsdaten: <a href="https://wiki.guildwars.com" target="_blank" rel="noopener">wiki.guildwars.com</a>. Deutsche Namen und Beschreibungen: <a href="https://www.guildwiki.de" target="_blank" rel="noopener">guildwiki.de</a>. Builds und Ausrüstung: PvX-Wiki (inoffiziell). Rush- und Farm-Abläufe: Laufanleitungen aus dem Guild Wars Wiki und PvX. Schadenswerte sind eine Rechnung nach Wiki-Regeln, kein Messwert aus dem Spiel.<br>
+      © ArenaNet, LLC. All rights reserved. NCSOFT, the interlocking NC logo, ArenaNet, Guild Wars, Guild Wars Factions, Guild Wars Nightfall, Guild Wars: Eye of the North and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation. Nicht-kommerzielles Fanprojekt, nicht mit ArenaNet oder NCSOFT verbunden.
+      </details>
+    </div>
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dtitle">
+  <div class="dh"><h2 id="dtitle"></h2><button class="x" id="dclose" aria-label="Schließen">×</button></div>
+  <div class="tabs" id="dtabs" role="tablist"></div>
+  <div class="db" id="dbody"></div>
+</aside>
+<div class="menu" id="menu" hidden></div>
+<div id="tip" role="tooltip"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle">
+  <div class="mbox">
+    <div class="mhead">
+      <div class="row" style="justify-content:space-between">
+        <strong class="hd" id="mtitle">Fertigkeit für Slot <span id="mslot"></span></strong>
+        <div class="row"><button class="btn s" id="mclear">Slot leeren</button><button class="x" id="mclose" aria-label="Schließen">×</button></div>
+      </div>
+      <input type="text" id="msearch" placeholder="Suchen (deutsch oder englisch) …" autocomplete="off">
+      <div class="chips" id="mchips"></div>
+    </div>
+    <div class="mlist" id="mlist"></div>
+  </div>
+</div>
+<script src="logic.js"></script>
+<script>
+(async function(){
+const GW = window.GW;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const BASE_AREAS = [
+  {key:"", name:"Missionen und Quests", flags:[], notes:[], env:[]},
+  {key:"hm", name:"Schwerer Modus und Bezwingen", flags:[], notes:[], env:[]},
+];
+const ATTR_DE = {0:"Schnellwirkung",1:"Illusionsmagie",2:"Beherrschungsmagie",3:"Inspirationsmagie",4:"Blutmagie",5:"Todesmagie",6:"Seelensammlung",7:"Flüche",8:"Luftmagie",9:"Erdmagie",10:"Feuermagie",11:"Wassermagie",12:"Energiespeicherung",13:"Heilgebete",14:"Peinigungsgebete",15:"Schutzgebete",16:"Gunst der Götter",17:"Stärke",18:"Axtbeherrschung",19:"Hammerbeherrschung",20:"Schwertkunst",21:"Taktik",22:"Tierbeherrschung",23:"Fachkenntnis",24:"Überleben in der Wildnis",25:"Treffsicherheit",29:"Dolchbeherrschung",30:"Tödliche Künste",31:"Schattenkünste",32:"Zwiesprache",33:"Wiederherstellungsmagie",34:"Kanalisierungsmagie",35:"Kritische Stöße",36:"Macht des Herbeirufens",37:"Speerbeherrschung",38:"Befehlsgewalt",39:"Motivation",40:"Führung",41:"Sensenbeherrschung",42:"Windgebete",43:"Erdgebete",44:"Mystik"};
+const PCOL = [0,"#d6b14a","#8cc051","#8ec5ea","#57a77a","#b88ae0","#e2675a","#d47ab8","#5fc4b8","#e8a23e","#a68ad8"];
+function attrDe(id){ return ATTR_DE[id] || (GW.ATTR && GW.ATTR[id]) || ""; }
+const state = { team:null, forceTeam:false, spot:null, spotBuild:null, party:8, dpsN:3, pri:10, sec:0, attrs:new Map(), skills:[0,0,0,0,0,0,0,0], area:"", owned:new Set(GW.HEROES.map(h=>h[0])), mercs:3 };
+const ui = { drawer:null, tab:null, idx:0, bcat:null };
+const store = { get(k,d){ try{ const v=localStorage.getItem("gwbw."+k); return v==null?d:JSON.parse(v);}catch(e){return d;} }, set(k,v){ try{ localStorage.setItem("gwbw."+k, JSON.stringify(v)); }catch(e){} } };
+
+// ---------- Daten ----------
+const [sdata, adata, BUILDS, SYN, EQ, TEAMS, GUIDES, SPD] = await Promise.all(["skills.json","areas.json","builds.json","synergy.json","equip.json","teams.json","guides.json","spots.json"].map(f=>fetch(f).then(r=>r.json())));
+GW.loadSkills(sdata);
+const SPOTS = SPD.spots;
+const normCode = c => { try{ const d=GW.decode(c); return GW.encode(d.pri,d.sec,d.attrs,d.skills); }catch(e){ return c; } };
+for (const sp of SPOTS) {
+  sp.byClass = {};
+  for (const oid of sp.opts) {
+    const o = SPD.opts[oid];
+    for (const cls of (o.any ? [1,2,3,4,5,6,7,8,9,10] : [o.pri])) {
+      let code = o.code;
+      if (o.any) { try { code = GW.adaptAny(o.code, cls); } catch(e){ continue; } }
+      const list = BUILDS[cls] = BUILDS[cls] || [];
+      const nc = normCode(code);
+      let b = list.find(x => (x.norm || (x.norm = normCode(x.code))) === nc);
+      if (!b) { b = { name: o.name, code, src:"pvx", url:o.url, cat:o.cat, any:o.any, norm:nc }; list.push(b); }
+      (b.spots = b.spots || []).includes(sp.key) || b.spots.push(sp.key);
+      (b.optIds = b.optIds || []).includes(oid) || b.optIds.push(oid);
+      (sp.byClass[cls] = sp.byClass[cls] || []).push(b);
+    }
+  }
+}
+for (const k in BUILDS) BUILDS[k].forEach(b=>{ if(!b.norm) b.norm = normCode(b.code); });
+const spotByKey = Object.fromEntries(SPOTS.map(s=>[s.key,s]));
+const AREAS = BASE_AREAS.concat(adata);
+const IC = GW.icon;
+const ALL = sdata.rows.map(r => GW.skill(r[0]));
+const ALL_ICONS = Math.max(...ALL.map(s=>s.ic))+1;
+const ANN_IDS = new Set([3422,3423,3424,3425,3426,3427,3428,3429,3430,3431]);
+
+// ---------- Hilfen ----------
+function iconStyle(s, px){ const sc=px/IC.size, col=s.ic%IC.N, row=Math.floor(s.ic/IC.N); return `background-image:url(icons0.jpg);background-size:${IC.N*IC.size*sc}px auto;background-position:-${col*IC.size*sc}px -${row*IC.size*sc}px`; }
+function iconPct(s){ const rows=Math.ceil(ALL_ICONS/IC.N), col=s.ic%IC.N, row=Math.floor(s.ic/IC.N); return `background-image:url(icons0.jpg);background-size:${IC.N*100}% ${rows*100}%;background-position:${col/(IC.N-1)*100}% ${row/(rows-1)*100}%`; }
+function dname(s){ return s.de || s.n; }
+const EN2DE_ATTR = {}; for (const [id,de] of Object.entries(ATTR_DE)) EN2DE_ATTR[GW.ATTR[id]] = de;
+function sattr(s){ return s.a ? (EN2DE_ATTR[s.a] || s.a.replace(/ rank$/," (Rang)")) : ""; }
+const NAME_MAP = ALL.filter(s=>s.de && s.de!==s.n && !s.pvp && (/\s/.test(s.n) || s.n.startsWith('"')) && !/\((Kurzick|Luxon)\)$/.test(s.n)).map(s=>[s.n,s.de]).sort((a,b)=>b[0].length-a[0].length);
+const reEsc = x => x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+const NAME_RE = new RegExp("(^|[^A-Za-z])(" + NAME_MAP.map(x=>reEsc(x[0])).join("|") + ")(?![A-Za-z])","g");
+const NAME_OBJ = Object.fromEntries(NAME_MAP);
+const GLOSS = [["Enchantment-Entfernung","Verzauberungs-Entfernung"],["Enchantment-lastige","verzauberungslastige"],["Enchantment-basierte","verzauberungsbasierte"],["Enchantment-Spells","Verzauberungen"],["Enchantments","Verzauberungen"],["Enchantment","Verzauberung"],
+ ["Hex-Entfernung","Verhexungs-Entfernung"],["Hex-Last","Verhexungslast"],["Mesmer-Hexes","Mesmer-Verhexungen"],["Degen-Hexes","Degenerations-Verhexungen"],["Signet-Hex","Siegel-Verhexung"],["Hexes","Verhexungen"],["Hex","Verhexung"],
+ ["Condition-Entfernung","Zustands-Entfernung"],["Conditions","Zustände"],["Condition","Zustand"],
+ ["Deep Wound","Tiefe Wunde"],["Bleeding","Blutung"],["Poison","Gift"],["Burning","Brennen"],["Weakness","Schwäche"],["Crippled","Verkrüppelung"],["Cripple","Verkrüppelung"],["Blindness","Blindheit"],["Blind","Blindheit"],["Dazed","Benommenheit"],["Daze","Benommenheit"],["Disease","Krankheit"],["Cracked Armor","Beschädigte Rüstung"],
+ ["Health degeneration","Lebenspunkte-Degeneration"],["Energy degeneration","Energie-Degeneration"],["Energy-Management","Energie-Management"],["Energy-Denial","Energieentzug"],["Energy","Energie"],["Health","Lebenspunkte"],
+ ["Resurrection Shrines","Wiederbelebungs-Schreine"],["Resurrection-Skills","Wiederbelebungs-Fertigkeiten"],["Shrines","Wiederbelebungs-Schreine"],["Resurrection","Wiederbelebung"],
+ ["Interrupt-Druck","Unterbrechungsdruck"],["Interrupt-Resistenz","Schutz vor Unterbrechung"],["Interrupts","Unterbrechungen"],["Interrupt","Unterbrechung"],
+ ["Hard Mode","Schwerer Modus"],["HM","SM"],["Spirits","Geister"],["Minions","Diener"],["Minion Master","Dienerbeschwörer"],["Spells","Zauber"],["Spell","Zauber"],["Skills","Fertigkeiten"],["Skill","Fertigkeit"],["Stance","Haltung"],["Overcast","Überwirken"],["Party-Wipe","Tod der ganzen Gruppe"],["Party","Gruppe"]];
+const GLOSS_RE = new RegExp("(^|[^A-Za-zÄÖÜäöü-])(" + GLOSS.map(g=>reEsc(g[0])).join("|") + ")(?![A-Za-zäöü])","g");
+const GLOSS_OBJ = Object.fromEntries(GLOSS);
+function deText(x){ const s=String(x).replace(NAME_RE,(m,p,n)=>p+NAME_OBJ[n]); return s.split(/("[^"]*")/).map((part,i)=> i%2 ? part : part.replace(GLOSS_RE,(m,p,w)=>p+GLOSS_OBJ[w])).join(""); }
+const bname = b => b ? (b.src==="team" ? deText(b.name) : b.name) : "Eigene Leiste";
+const pname = (p,s) => GW.PROF_DE[p] + (s ? " / " + GW.PROF_DE[s] : "");
+const ico = (id, cls="") => { const s=GW.skill(id); return s ? `<span class="ico${s.e?" el":""} ${cls}" data-sid="${id}"><span class="ic" style="${iconPct(s)}"></span></span>` : `<span class="ico ${cls}"></span>`; };
+
+// Tooltip (nur Maus)
+const tip = $("tip");
+function showTip(e, s){
+  if(!s) return;
+  const prof = s.p ? GW.PROF_DE[s.p] : "Allgemein";
+  const cost = (s.cost||"").replace(/E$/," Energie").replace(/A$/," Adrenalin").replace(/%HP$/,"% Lebenspunkte-Opfer");
+  tip.innerHTML = `<b>${esc(dname(s))}</b><div class="meta">${esc(prof)}${s.dt?" · "+esc(s.dt):""}${s.a?" · "+esc(sattr(s)):""}${s.e?" · Elite":""}${s.pve?" · nur PvE":""}</div><div class="meta">${[cost, s.ac?s.ac+" s Aktivierung":"", s.rc?s.rc+" s Aufladen":""].filter(Boolean).map(esc).join(" · ")}</div>${s.dd ? esc(s.dd) : `<span lang="en">${esc(s.d)}</span>`}`;
+  tip.style.display="block"; moveTip(e);
+}
+function moveTip(e){ const w=tip.offsetWidth,h=tip.offsetHeight; let x=e.clientX+14,y=e.clientY+14; if(x+w>innerWidth-8)x=e.clientX-w-14; if(y+h>innerHeight-8)y=e.clientY-h-14; tip.style.left=Math.max(8,x)+"px"; tip.style.top=Math.max(8,y)+"px"; }
+function hideTip(){ tip.style.display="none"; }
+document.addEventListener("pointerover", e => { if(e.pointerType!=="mouse") return; const el=e.target.closest("[data-sid]"); if(el) showTip(e, GW.skill(+el.dataset.sid)); });
+document.addEventListener("pointermove", e => { if(tip.style.display==="block") moveTip(e); });
+document.addEventListener("pointerout", e => { if(e.target.closest("[data-sid]")) hideTip(); });
+function toast(t){ const el=$("toast"); el.textContent=t; el.style.display="block"; clearTimeout(toast._t); toast._t=setTimeout(()=>el.style.display="none",1800); }
+async function copy(text){ try{ await navigator.clipboard.writeText(text); toast("Kopiert"); }catch(e){ toast("Kopieren nicht erlaubt"); } }
+
+// ---------- Spielerleiste ----------
+function playerBar(){ return { pri: state.pri, sec: state.sec, attrs: [...state.attrs].filter(a=>a[1]>0), skills: state.skills.slice() }; }
+function playerCode(){ try{ const pb=playerBar(); return GW.encode(pb.pri,pb.sec,pb.attrs,pb.skills); }catch(e){ return ""; } }
+function loadCode(code, silent){
+  try{
+    const d = GW.decode(code);
+    state.pri=d.pri; state.sec=d.sec===d.pri?0:d.sec; state.attrs=new Map(d.attrs); state.skills=d.skills.map(id=>GW.skill(id)?id:0);
+    const unknown = d.skills.filter(id=>id && !GW.skill(id));
+    if(unknown.length && !silent) toast("Unbekannte Fertigkeiten entfernt");
+    render(); return true;
+  }catch(err){ if(!silent) toast(err.message); return false; }
+}
+let baseBuild = { pri:0, idx:-1 };
+function syncBase(){
+  const list = BUILDS[state.pri] || [], cur = playerCode();
+  const i = list.findIndex(b=>b.norm===cur);
+  if (i >= 0) baseBuild = { pri:state.pri, idx:i };
+  else if (baseBuild.pri !== state.pri) baseBuild = { pri:state.pri, idx:-1 };
+  return i >= 0;
+}
+function currentBuild(){ return baseBuild.pri===state.pri ? (BUILDS[state.pri]||[])[baseBuild.idx] : null; }
+function currentCat(){ const b=currentBuild(); return b ? (b.cat||"team") : "team"; }
+function takeBuild(i){ const x=(BUILDS[state.pri]||[])[i]; if(!x) return; baseBuild={pri:state.pri, idx:i}; state.forceTeam=false; loadCode(x.code); }
+const ELITE_AREA = k => k && k!=="hm";
+function partySize(){ return ELITE_AREA(state.area) ? 8 : state.party; }
+function syncSpot(cat){
+  if (cat==="team") return;
+  const b = currentBuild(), key = b ? b.norm : null, cur = spotByKey[state.spot];
+  if (key !== state.spotBuild) {
+    state.spotBuild = key;
+    if (!(cur && cur.cat===cat && b && (b.spots||[]).includes(cur.key))) state.spot = b && b.spots && b.spots.length ? b.spots[0] : (cur && cur.cat===cat ? cur.key : null);
+  } else if (cur && cur.cat!==cat) state.spot = null;
+}
+
+// ---------- Team berechnen ----------
+let TEAM = [], PLAN = null, CHECKS = [], DPS = [], FIXED = [], CAT = "team", SPOT = null, EXACT = false;
+function teamSlotsFor(pb, size){
+  const teamKey = state.team || (GUIDES[state.area] && GUIDES[state.area].team) || "std";
+  const plan = GW.resolveTeam(teamKey, pb, state.area, AREAS, TEAMS);
+  if (size < 8) {
+    const keep = GW.trimSlots(plan.slots, size-1);
+    const dropped = plan.slots.filter((s,i)=>!keep.includes(i));
+    plan.slots = keep.map(i=>plan.slots[i]);
+    plan.reasons = plan.reasons.concat([`${size} Spieler: weggelassen ${dropped.map(s=>deText(s.role)).join(", ")}. Heilung und Schutz bleiben zuerst.`]);
+  }
+  return plan;
+}
+const ANN_W = { 'Spear':[17,"Speer"], 'Sword':[23,"Schwert"], 'Hammer':[16,"Hammer"], 'Scythe':[6,"Sense"], 'Axe':[12,"Axt"], 'Shortbow':[35,"Bogen"], 'Flatbow':[36,"Bogen"], 'Staff':[44,"Stab"], 'Daggers':[40,"Dolche"] };
+function computeDps(){
+  const n = state.dpsN;
+  const eff = TEAM.map(m=>{ let r=[]; try{ r=GW.equipFor(m.bar, EQ).runes; }catch(e){} return GW.effRanks(m.bar, r); });
+  const wOf = m => { const aw=m.build && m.build.annWeapon; return aw ? (ANN_W[aw.split(" ")[0]]||null) : null; };
+  const first = GW.dps(TEAM[0].bar, eff[0], { targets:n, weapon:wOf(TEAM[0]), foeRate:0.5 });
+  return TEAM.map((m,i)=> i===0 ? first : GW.dps(m.bar, eff[i], { targets:n, foeRate:0.5, physRate:first.physical }));
+}
+function compute(){
+  EXACT = syncBase();
+  CAT = currentCat(); syncSpot(CAT);
+  const pb = playerBar(), b = currentBuild();
+  SPOT = CAT==="team" ? null : spotByKey[state.spot];
+  TEAM = [{ you:true, role:"Deine Leiste", code:playerCode()||"–", bar:pb, build:b }];
+  PLAN = null; CHECKS = []; FIXED = [];
+  if (!pb.skills.some(Boolean)) { DPS = []; return; }
+  const showTeam = CAT==="team" || (SPOT && SPOT.team && state.forceTeam);
+  if (showTeam) {
+    PLAN = teamSlotsFor(pb, CAT==="team" ? partySize() : 8);
+    const heroes = GW.assignHeroes(PLAN.slots, state.owned, state.mercs);
+    PLAN.slots.forEach((s,i)=>{ const h=heroes[i]; TEAM.push({ hero:true, name:h.name, merc:h.merc, role:deText(s.role), why:deText(s.why) + (h.merc?" Ein Söldner übernimmt, weil kein passender Held frei ist.":""), code:s.code, bar:GW.decode(s.code) }); });
+    if (CAT==="team") CHECKS = GW.areaChecks(pb, PLAN.slots, PLAN.area);
+  } else if (SPOT) {
+    const myOpt = b && b.optIds ? b.optIds.find(o=>SPOT.opts.includes(o)) : null;
+    const slots = [];
+    SPOT.helpers.forEach(h=>{
+      if (h.fixed) { FIXED.push(h); return; }
+      const code = (myOpt && h.codes[myOpt]) || (!myOpt && Object.values(h.codes)[0]);
+      if (code) slots.push({ code, role: h.role + (h.optional?" (optional)":""), why:"Diese Leiste steht auf der PvX-Seite des Builds." });
+    });
+    if (slots.length) { const hs = GW.assignHeroes(slots, state.owned, state.mercs); slots.forEach((s,i)=>TEAM.push({ hero:true, name:hs[i].name, merc:hs[i].merc, role:s.role, why:s.why, code:s.code, bar:GW.decode(s.code) })); }
+  }
+  DPS = computeDps();
+}
+
+// ---------- Darstellung ----------
+function render(){
+  compute();
+  renderSide(); renderMain();
+  if (ui.drawer) renderDrawer();
+  store.set("bar", playerCode());
+}
+function renderSide(){
+  const b = currentBuild(), pb = playerBar();
+  $("v-class").innerHTML = `<span class="dot" style="color:${PCOL[state.pri]};background:${PCOL[state.pri]}"></span>${esc(GW.PROF_DE[state.pri])}`;
+  $("clsgrid").innerHTML = GW.PROF.slice(1).map((n,i)=>`<button role="radio" aria-checked="${state.pri===i+1}" class="${state.pri===i+1?"on":""}" data-cls="${i+1}"><span class="dot" style="color:${PCOL[i+1]};background:${PCOL[i+1]}"></span>${esc(GW.PROF_DE[i+1])}</button>`).join("");
+  $("v-build").textContent = bname(b);
+  const cat = {team:"Team", run:"Rushen", farm:"Farmen"}[CAT];
+  $("v-build-sub").textContent = [pname(pb.pri,pb.sec), b ? cat : "", b && !EXACT ? "angepasst" : ""].filter(Boolean).join(" · ");
+  $("l-target").textContent = CAT==="team" ? "Gebiet" : "Ziel";
+  if (CAT==="team") { const a=AREAS.find(x=>x.key===state.area); $("v-target").textContent=a?a.name:"Missionen und Quests"; $("v-target-sub").textContent = ELITE_AREA(state.area) ? "Elitegebiet" : ""; }
+  else { $("v-target").textContent = SPOT ? SPOT.name : "Ziel wählen"; $("v-target-sub").textContent = SPOT ? SPOT.group : ""; }
+  $("partywrap").hidden = CAT!=="team";
+  const size = partySize();
+  $("party").innerHTML = [8,6,4].map(n=>`<button role="radio" aria-checked="${size===n}" class="${size===n?"on":""}" data-party="${n}"${ELITE_AREA(state.area)&&n!==8?" disabled title=\"Elitegebiete haben immer 8 Plätze\"":""}>${n}</button>`).join("");
+  $("pk-heroes").hidden = TEAM.length<2 && !(SPOT && SPOT.team);
+  $("v-heroes").textContent = `${state.owned.size} von 31 · ${state.mercs} Söldner`;
+}
+function renderMain(){
+  const pb = playerBar(), b = currentBuild();
+  // Titel
+  if (CAT==="team") $("title").innerHTML = `Dein Team<small>${partySize()} Spieler · Karte antippen für Details</small>`;
+  else $("title").innerHTML = `${CAT==="run"?"Dein Rush":"Dein Farm"}<small>${esc(SPOT?SPOT.why:"Wähle ein Ziel.")}</small>`;
+  // Kennzahlen
+  const pills = [];
+  if (PLAN && CAT==="team") pills.push(`<button class="pill" id="p-team" aria-haspopup="menu">${esc(PLAN.def.name)} ▾</button>`);
+  if (CAT!=="run" && DPS.length) pills.push(`<button class="pill" data-open="dps">⚔ <b>${Math.round(DPS.reduce((a,d)=>a+d.total,0))}</b> Schaden/s</button>`);
+  if (CHECKS.length) { const n=k=>CHECKS.filter(c=>c[0]===k).length; pills.push(`<button class="pill" data-open="info" data-tab="check">Prüfung <span class="ok">✓ ${n("ok")}</span>${n("warn")?`<span class="warn">⚠ ${n("warn")}</span>`:""}${n("bad")?`<span class="bad">✕ ${n("bad")}</span>`:""}</button>`); }
+  if (hasGuide()) pills.push(`<button class="pill" data-open="info" data-tab="guide">☰ Ablauf</button>`);
+  $("pills").innerHTML = pills.join("");
+  // Hinweis nur wenn nötig
+  let note = "";
+  if (!pb.skills.some(Boolean)) note = `<div class="notice"><span class="sp">Die Leiste ist leer. Wähle links einen Build oder klicke auf deine Karte.</span></div>`;
+  else if (CAT!=="team") {
+    const fits = SPOT && b && (b.spots||[]).includes(SPOT.key);
+    if (SPOT && !fits) {
+      const mine = SPOT.byClass[state.pri] || [];
+      note = `<div class="notice"><span class="sp">⚠ Deine Leiste ist für dieses Ziel nicht gelistet.</span>` + (mine.length ? mine.slice(0,2).map(x=>`<button class="btn s" data-take="${BUILDS[state.pri].indexOf(x)}">${esc(x.name)}</button>`).join("") + (mine.length>2?`<button class="btn s" data-open="build">+${mine.length-2}</button>`:"") : `<span class="mut sm">Kein Build für ${esc(GW.PROF_DE[state.pri])}</span>`) + `</div>`;
+    }
+    if (SPOT && SPOT.team) note += `<div class="notice good"><span class="sp">${esc(SPOT.team)}</span><button class="btn s" id="forceteam">${state.forceTeam?"Heldenteam ausblenden":"Heldenteam zeigen"}</button></div>`;
+  }
+  const missing = TEAM.filter(m=>m.hero && !m.name).length;
+  if (missing) note += `<div class="notice"><span class="sp">${missing} Leiste(n) ohne Helden. Aktiviere mehr Helden oder Söldner.</span><button class="btn s" data-open="heroes">Helden</button></div>`;
+  $("notice").innerHTML = note;
+  // Karten
+  if (!pb.skills.some(Boolean)) { $("cards").innerHTML = ""; return; }
+  const maxD = Math.max(1, ...DPS.map(d=>d.total));
+  $("cards").innerHTML = TEAM.map((m,i)=>{
+    const d = m.bar, D = DPS[i];
+    const ai = m.hero && d.skills.some(id=>{ const s=GW.skill(id); return s && GW.heroai[s.n] && GW.heroai[s.n][0]>=2; });
+    const who = m.you ? "Du" : (m.name ? esc(m.name) : `<span class="missing">Kein Held frei</span>`);
+    return `<button class="card${m.you?" you":""}${ui.drawer==="member"&&ui.idx===i?" sel":""}" data-member="${i}" aria-label="Details zu ${m.you?"deiner Leiste":esc(m.name||"Held")}">
+      <div class="nm"><span class="dot" style="color:${PCOL[d.pri]};background:${PCOL[d.pri]}"></span>${who}<span class="n">${esc(pname(d.pri,d.sec))}</span></div>
+      <div class="rl">${esc(m.you ? "Deine Leiste · antippen zum Bearbeiten" : m.role)}</div>
+      <div class="bar8">${d.skills.map(id=>ico(id)).join("")}</div>
+      <div class="ft"><span>${CAT!=="run" && D ? `⚔ <b>${Math.round(D.total)}</b>/s` : ""}</span>${ai?`<span class="flag" title="Die Helden-KI nutzt eine Fertigkeit schlecht">⚠ KI</span>`:""}</div>
+      ${CAT!=="run" && D ? `<div class="meter"><i style="width:${Math.round(D.total/maxD*100)}%"></i></div>` : ""}
+    </button>`;
+  }).join("") + FIXED.map(h=>`<div class="card"><div class="nm">${esc(h.fixed)}<span class="n">fester Begleiter</span></div><div class="rl">${esc(h.role)}</div></div>`).join("");
+}
+function hasGuide(){
+  if (CAT!=="team") return !!SPOT;
+  const a = AREAS.find(x=>x.key===state.area);
+  return !!(GUIDES[state.area] || (a && a.notes.length));
+}
+
+// ---------- Seitenfenster ----------
+function openDrawer(kind, opt={}){
+  ui.drawer = kind; ui.tab = opt.tab || null; if (opt.idx!=null) ui.idx = opt.idx;
+  if (kind==="build") ui.bcat = CAT;
+  $("drawer").classList.add("on"); $("scrim").classList.add("on");
+  renderDrawer(); renderMain();
+  setTimeout(()=>$("dclose").focus(), 50);
+}
+function closeDrawer(){ ui.drawer=null; $("drawer").classList.remove("on"); $("scrim").classList.remove("on"); hideTip(); renderMain(); }
+$("dclose").addEventListener("click", closeDrawer);
+$("scrim").addEventListener("click", closeDrawer);
+function tabs(list){ // [key,label,disabled]
+  if (!list.some(t=>t[0]===ui.tab && !t[2])) ui.tab = (list.find(t=>!t[2])||list[0])[0];
+  $("dtabs").hidden = list.length<2;
+  $("dtabs").innerHTML = list.map(([k,l,dis])=>`<button role="tab" aria-selected="${ui.tab===k}" class="${ui.tab===k?"on":""}" data-tab="${k}"${dis?" disabled":""}>${esc(l)}</button>`).join("");
+}
+$("dtabs").addEventListener("click", e=>{ const b=e.target.closest("[data-tab]"); if(!b||b.disabled) return; ui.tab=b.dataset.tab; if(ui.drawer==="build") ui.bcat=ui.tab; renderDrawer(); });
+function renderDrawer(){
+  const k = ui.drawer, body = $("dbody");
+  if (k==="build") return drawBuild(body);
+  if (k==="target") return drawTarget(body);
+  if (k==="heroes") return drawHeroes(body);
+  if (k==="member") return drawMember(body);
+  if (k==="info") return drawInfo(body);
+  if (k==="dps") return drawDps(body);
+}
+function drawBuild(body){
+  const all = BUILDS[state.pri] || [];
+  const cats = [["team","Team"],["run","Rushen"],["farm","Farmen"]].map(([c,l])=>[c, `${l} ${all.filter(b=>(b.cat||"team")===c).length}`, !all.some(b=>(b.cat||"team")===c)]);
+  ui.tab = ui.bcat; tabs(cats); ui.bcat = ui.tab;
+  $("dtitle").innerHTML = `Build wählen<small>${esc(GW.PROF_DE[state.pri])}</small>`;
+  const cur = playerCode();
+  body.innerHTML = `<div class="list">` + all.map((b,i)=>[b,i]).filter(([b])=>(b.cat||"team")===ui.tab).map(([b,i])=>{
+    const d = GW.decode(b.code), on = b.norm===cur;
+    const tags = (b.src==="team"?`<span class="tag rec">Empfohlen</span>`:"") + (b.meta?`<span class="tag">Meta</span>`:"") + (b.anniv?`<span class="tag ann">Jubiläum</span>`:"") + (b.test?`<span class="tag test">Test</span>`:"") + (SPOT && (b.spots||[]).includes(SPOT.key)?`<span class="tag fit">passt zum Ziel</span>`:"");
+    return `<button class="opt${on?" on":""}" data-take="${i}"><div class="t"><span class="nm">${esc(bname(b))}</span>${tags}</div><div class="s">${esc(pname(d.pri,d.sec))}${b.any?" · für jede Klasse":""}${b.annWeapon?" · Jubiläumswaffe":""}</div><div class="mini">${d.skills.map(id=>ico(id)).join("")}</div></button>`;
+  }).join("") + `</div><p class="dim sm" style="margin-top:14px">Empfohlen = unsere durchgerechneten Teams. Alle anderen: PvX-Wiki, inoffiziell.</p>`;
+}
+function drawTarget(body){
+  $("dtabs").hidden = true; $("dtabs").innerHTML = "";
+  const b = currentBuild();
+  if (CAT==="team") {
+    $("dtitle").innerHTML = `Gebiet wählen<small>★ mit Ablauf</small>`;
+    const opt = a => `<button class="opt${state.area===a.key?" on":""}" data-area="${esc(a.key)}"><div class="t"><span class="nm">${esc(a.name)}</span>${GUIDES[a.key]?`<span class="tag rec">★ Ablauf</span>`:""}</div>${a.en?`<div class="s">${esc(a.en)}</div>`:""}</button>`;
+    body.innerHTML = `<div class="grp">Allgemein</div><div class="list">${AREAS.filter(a=>!ELITE_AREA(a.key)).map(opt).join("")}</div><div class="grp">Elitegebiete</div><div class="list">${AREAS.filter(a=>ELITE_AREA(a.key)).map(opt).join("")}</div>`;
+    return;
+  }
+  $("dtitle").innerHTML = `${CAT==="run"?"Wohin rushst du?":"Wo farmst du?"}<small>✓ = dein Build ist dafür gelistet</small>`;
+  const list = SPOTS.filter(s=>s.cat===CAT), fits = new Set((b&&b.spots)||[]);
+  const groups = [...new Set(list.map(s=>s.group))];
+  body.innerHTML = groups.map(g=>`<div class="grp">${esc(g)}</div><div class="list">` + list.filter(s=>s.group===g).map(s=>{
+    const mine = (s.byClass[state.pri]||[]).length;
+    return `<button class="opt${state.spot===s.key?" on":""}${!mine&&!fits.has(s.key)?" off":""}" data-spot="${s.key}"><div class="t"><span class="nm">${esc(s.name)}</span>${fits.has(s.key)?`<span class="tag fit">✓ dein Build</span>`:mine?"":`<span class="tag">kein ${esc(GW.PROF_DE[state.pri])}-Build</span>`}</div></button>`;
+  }).join("") + `</div>`).join("");
+}
+function drawHeroes(body){
+  $("dtabs").hidden = true; $("dtabs").innerHTML = "";
+  $("dtitle").innerHTML = `Meine Helden<small>Nur angehakte Helden werden eingeplant</small>`;
+  const order=[5,4,8,3,1,2,6,7,9,10,0];
+  const list = GW.HEROES.slice().sort((a,b)=>order.indexOf(a[1])-order.indexOf(b[1]));
+  body.innerHTML = `<div class="row" style="margin-bottom:12px"><button class="btn s" id="hall">Alle</button><button class="btn s" id="hnone">Keine</button><span class="sp" style="flex:1"></span><label for="mercs" class="sm">Söldner</label><select id="mercs">${[0,1,2,3].map(n=>`<option${state.mercs===n?" selected":""}>${n}</option>`).join("")}</select></div>
+    <div class="heroes">${list.map(([n,p])=>`<label><input type="checkbox" data-hero="${esc(n)}"${state.owned.has(n)?" checked":""}> ${esc(n)} <span class="pf">${p?esc(GW.PROF_DE[p]):"beliebig"}</span></label>`).join("")}</div>`;
+}
+function equipData(d, build){
+  const e = GW.equipFor(d, EQ);
+  const aw = build && build.annWeapon ? GW.deEquip("Anniversary " + build.annWeapon) : "";
+  const items = [];
+  e.items.filter(x=>!/^(armor|armour|weapons?|runes?|insignias?|equipment)[:.]?$/i.test(x.trim())).forEach(x=>{ const de=GW.deEquip(x); if (GW.equipLineOk(de) && !items.some(i=>i.de===de)) items.push({en:x, de}); });
+  if (aw) {
+    const typ = aw.split(" ")[0].replace("Jubiläums-","");
+    for (let k=items.length-1;k>=0;k--) if (/\b(Speer|Schwert|Axt|Hammer|Sense|Dolche|Bogen|Kurzbogen|Flachbogen|Stab|Schild)\b/.test(items[k].de) && !items[k].de.includes(typ) && !/Befähigung|Rune/.test(items[k].de)) items.splice(k,1);
+    items.unshift({ en:"Anniversary " + build.annWeapon, de: aw + " (Jubiläumswaffe)" });
+  }
+  return { e, items };
+}
+function drawMember(body){
+  const m = TEAM[ui.idx]; if (!m) return closeDrawer();
+  const d = m.bar, D = DPS[ui.idx];
+  const C = sdata.chg || {};
+  const chg = d.skills.map(id=>GW.skill(id)).filter(s=>s && C[s.n.replace(/ \((Kurzick|Luxon|PvP)\)$/,"")]);
+  tabs([["bar","Leiste"],["eq","Ausrüstung"],["dps","Schaden",CAT==="run"],["code","Code"],["chg",`Änderungen${chg.length?" "+chg.length:""}`,!chg.length]]);
+  $("dtitle").innerHTML = `${m.you?"Deine Leiste":esc(m.name||"Kein Held frei")}<small>${esc(pname(d.pri,d.sec))}${m.you?"":" · "+esc(m.role)}</small>`;
+  const attrs = d.attrs.filter(a=>a[1]>0).map(a=>`<div class="kv"><span>${esc(attrDe(a[0]))}</span><b>${a[1]}</b></div>`).join("");
+  if (ui.tab==="bar") {
+    const slots = d.skills.map((id,i)=>{ const s=GW.skill(id);
+      const inner = s ? `${ico(id)}<span class="nmx">${esc(dname(s))}</span>` : `<span class="add">+</span><span class="nmx"></span>`;
+      return m.you ? `<button class="slotb" data-slot="${i}" aria-label="Slot ${i+1} tauschen">${inner}</button>` : `<div class="slotb">${inner}</div>`; }).join("");
+    let html = `<div class="big8">${slots}</div>`;
+    if (m.you) {
+      html += `<p class="dim sm" style="margin:8px 0 0">Fertigkeit antippen zum Tauschen.</p>`;
+      const v = GW.validate(playerBar(), false);
+      const msgs = v.msgs.filter(x=>x[0]!=="ok").map(x=>[x[0],deText(x[1])]);
+      if (msgs.length) html += `<h3>Hinweise</h3><ul class="msgs">${msgs.map(([c,t])=>`<li class="${c}">${esc(t)}</li>`).join("")}</ul>`;
+    } else {
+      html += `<p style="margin-top:14px">${esc(m.why||"")}</p>`;
+      const ai = d.skills.map(id=>GW.skill(id)).filter(s=>s && GW.heroai[s.n] && GW.heroai[s.n][0]>=2);
+      if (ai.length) html += `<h3>Helden-KI</h3><ul class="msgs">${ai.map(s=>`<li class="warn">${esc(dname(s))}: ${esc(deText(GW.heroai[s.n][1]))}</li>`).join("")}</ul>`;
+    }
+    html += `<h3>Attribute</h3>${attrs}`;
+    body.innerHTML = html;
+  } else if (ui.tab==="eq") {
+    const { e, items } = equipData(d, m.build || null);
+    const why = [];
+    e.runes.forEach(r=>why.push(`<li><b>${esc(r.item)}, ${esc(attrDe(r.attr))}</b>: ${esc(r.why)}</li>`));
+    items.forEach(x=>{ const ex=GW.explainEquip(x.en); if(ex.length) why.push(`<li><b>${esc(x.de)}</b>: ${esc(ex.join(" "))}</li>`); });
+    body.innerHTML = `<h3>Runen</h3>${e.runes.map(r=>`<div class="kv"><span>${esc(r.item)}</span><b>${esc(attrDe(r.attr))}</b></div>`).join("") || `<p class="mut">Keine Attributrunen nötig.</p>`}
+      <h3>Rüstung und Waffen</h3><ul>${items.map(i=>`<li>${esc(i.de)}</li>`).join("") || `<li class="mut">Keine Angabe.</li>`}</ul>
+      <details class="more"><summary>Warum?</summary><ul>${why.join("")||"<li>Keine Erklärung hinterlegt.</li>"}</ul></details>
+      <p class="dim sm" style="margin-top:12px">${e.derived ? "Herleitung aus den Wiki-Regeln." : `PvX: <a href="${esc(e.src.url)}" target="_blank" rel="noopener">${esc(e.src.page)}</a> (${e.overlap} von 8 Fertigkeiten gleich)`}</p>`;
+  } else if (ui.tab==="dps") {
+    body.innerHTML = `<div class="row" style="justify-content:space-between"><div><div class="mut sm">Schaden pro Sekunde, Dauerwert</div><div class="hd" style="font-size:28px;color:#f3dfb0">${Math.round(D.total)}</div></div>${targetSeg()}</div>
+      ${D.parts.map(p=>`<div class="dpsrow"><div>${p.sid?`<span data-sid="${p.sid}">${esc(p.name)}</span>`:esc(p.name)}<div class="dim sm">${esc(p.detail)}</div></div><b>${p.dps.toFixed(1)}</b></div>`).join("") || `<p class="mut">Kein eigener Schaden.</p>`}
+      ${D.notes.length?`<p class="dim sm" style="margin-top:10px">${D.notes.map(esc).join(" ")}</p>`:""}`;
+  } else if (ui.tab==="code") {
+    let html = `<h3>Vorlagen-Code</h3><div class="code"><input readonly value="${esc(m.code)}" aria-label="Code"><button class="btn s" data-copy="${esc(m.code)}">Kopieren</button></div>`;
+    if (m.you) {
+      const allowed = [...GW.allowedAttrs(state.pri, state.sec)];
+      const v = GW.validate(playerBar(), false);
+      html += `<h3>Eigenen Code laden</h3><div class="code"><input id="codein" placeholder="Code einfügen" spellcheck="false" autocomplete="off"><button class="btn s pri" id="codeload">Laden</button></div>
+        <h3>Klassen</h3><div class="row"><select id="pri">${GW.PROF.slice(1).map((n,i)=>`<option value="${i+1}"${state.pri===i+1?" selected":""}>${GW.PROF_DE[i+1]}</option>`).join("")}</select> / <select id="sec">${GW.PROF.map((n,i)=>`<option value="${i}"${state.sec===i?" selected":""}>${i?GW.PROF_DE[i]:"keine"}</option>`).join("")}</select></div>
+        <h3>Attribute <span class="dim sm">${v.points} / 200 Punkte</span></h3><div class="attrs">${allowed.map(a=>`<label><span>${esc(attrDe(a))}</span><select data-attr="${a}">${Array.from({length:13},(_,x)=>`<option${(state.attrs.get(a)||0)===x?" selected":""}>${x}</option>`).join("")}</select></label>`).join("")}</div>`;
+    }
+    body.innerHTML = html;
+  } else if (ui.tab==="chg") {
+    const fmt = x => x.slice(6,8)+"."+x.slice(4,6)+"."+x.slice(0,4);
+    body.innerHTML = chg.map(s=>`<h3>${esc(dname(s))}</h3><ul>${C[s.n.replace(/ \((Kurzick|Luxon|PvP)\)$/,"")].map(([dt,tx])=>`<li><b>${fmt(dt)}</b>: ${esc(GW.dePatch(tx))}</li>`).join("")}</ul>`).join("") + `<p class="dim sm" style="margin-top:12px">Spielupdates seit Reforged laut Guild Wars Wiki. Die Werte im Tool sind schon aktuell.</p>`;
+  }
+}
+function targetSeg(){ return `<div><div class="mut sm" style="text-align:right">Ziele</div><div class="seg" style="width:130px">${[1,3,5].map(k=>`<button class="${state.dpsN===k?"on":""}" data-dpsn="${k}">${k}</button>`).join("")}</div></div>`; }
+function drawDps(body){
+  $("dtabs").hidden = true; $("dtabs").innerHTML = "";
+  const total = DPS.reduce((a,d)=>a+d.total,0), max = Math.max(1,...DPS.map(d=>d.total));
+  $("dtitle").innerHTML = `Schaden pro Sekunde<small>Dauerwert gegen 60 Rüstung</small>`;
+  body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="hd" style="font-size:30px;color:#f3dfb0">${Math.round(total)}</div>${targetSeg()}</div>
+    ${TEAM.map((m,i)=>`<button class="opt" style="margin-top:6px" data-member="${i}"><div class="t"><span class="nm">${m.you?"Du":esc(m.name||"–")}</span><span class="sp" style="flex:1"></span><b class="hd">${Math.round(DPS[i].total)}</b></div><div class="meter"><i style="width:${Math.round(DPS[i].total/max*100)}%"></i></div></button>`).join("")}
+    <details class="more"><summary>So wird gerechnet</summary><ul class="sm">
+      <li>Jede Fertigkeit so oft, wie Aufladen, Aktivierung und 0,75 s Nachwirkzeit erlauben. Reicht die Energie nicht, sinkt die Nutzung anteilig (1 Pip = 1 Energie alle 3 s).</li>
+      <li>Attributränge inklusive empfohlener Runen. Waffen nach Wiki-Werten, kritische Treffer mit Rang als Prozent-Chance.</li>
+      <li>Brennen −7, Gift und Krankheit −4, Blutung −3 Pips (1 Pip = 2 Lebenspunkte/s), höchstens 10 Pips je Ziel.</li>
+      <li>Nicht drin: Diener, Geister, Tiere, Energie aus Seelensammlung, kritischen Treffern und Führung. Auslöser durch Gegner-Aktionen: eine Aktion alle 2 s angenommen.</li>
+    </ul></details>`;
+}
+function drawInfo(body){
+  const list = [];
+  if (CHECKS.length) list.push(["check","Prüfung"]);
+  if (hasGuide()) list.push(["guide","Ablauf"]);
+  if (PLAN) list.push(["why","Warum"]);
+  if (!list.length) return closeDrawer();
+  tabs(list);
+  const a = AREAS.find(x=>x.key===state.area);
+  $("dtitle").innerHTML = CAT==="team" ? `${esc(a?a.name:"")}<small>${esc(PLAN?PLAN.def.name:"")}</small>` : `${esc(SPOT?SPOT.name:"")}<small>${CAT==="run"?"Rush":"Farm"}</small>`;
+  if (ui.tab==="check") body.innerHTML = `<ul class="msgs">${CHECKS.map(([c,t])=>`<li class="${c}">${esc(t)}</li>`).join("")}</ul>`;
+  else if (ui.tab==="why") body.innerHTML = `<p>${esc(PLAN.def.desc)}${PLAN.def.src?` <a href="${esc(PLAN.def.src)}" target="_blank" rel="noopener">Quelle</a>`:""}</p><ul>${PLAN.reasons.map(x=>`<li>${esc(deText(x))}</li>`).join("")}</ul>`;
+  else if (CAT!=="team" && SPOT) {
+    const sp = SPOT;
+    body.innerHTML = (sp.route.length>1 ? `<div class="route">${sp.route.map(x=>`<span>${esc(x)}</span>`).join("→")}</div>` : "") + (sp.time?`<p class="mut sm">Dauer: ${esc(sp.time)}</p>`:"") +
+      `<h3>So gehst du vor</h3><ol>${sp.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>` +
+      (sp.hazards.length?`<h3>Gefahren</h3><ul>${sp.hazards.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"") +
+      (sp.src.length?`<p class="dim sm" style="margin-top:14px">${sp.src.map(s=>`<a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.t)}</a>`).join(" · ")}</p>`:"");
+  } else {
+    const g = GUIDES[state.area];
+    let html = "";
+    if (g) html += `<p>${esc(g.intro)}</p>` + g.sections.map((s,i)=>`<details class="more"${i===0?" open":""}><summary class="hd">${esc(s.t)}</summary><ul>${s.b.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`).join("");
+    if (a && a.notes.length) html += `<h3>Anforderungen laut Wiki</h3><ul>${a.notes.map(n=>`<li>${esc(deText(n))}</li>`).join("")}</ul>` + (a.env.length?`<h3>Umgebung</h3><ul>${a.env.map(n=>`<li>${esc(deText(n).replace(/^(.*?) · /,"$1: "))}</li>`).join("")}</ul>`:"");
+    const srcs = (g?g.sources:[]).concat(a&&a.url?[["Wiki: "+a.en,a.url]]:[]);
+    if (srcs.length) html += `<p class="dim sm" style="margin-top:14px">${srcs.map(([l,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(" · ")}</p>`;
+    body.innerHTML = html;
+  }
+}
+
+// ---------- Menü (Teamtyp) ----------
+function openMenu(anchor, html){
+  const m = $("menu"); m.innerHTML = html; m.hidden = false;
+  const r = anchor.getBoundingClientRect();
+  m.style.top = Math.min(r.bottom+6, innerHeight-m.offsetHeight-8) + "px";
+  m.style.left = Math.max(8, Math.min(r.left, innerWidth-m.offsetWidth-8)) + "px";
+}
+function closeMenu(){ $("menu").hidden = true; }
+document.addEventListener("click", e=>{ if(!$("menu").hidden && !e.target.closest("#menu") && !e.target.closest("#p-team")) closeMenu(); });
+$("menu").addEventListener("click", e=>{ const b=e.target.closest("[data-team]"); if(!b) return; state.team=b.dataset.team||null; closeMenu(); render(); });
+
+// ---------- Klicks ----------
+document.addEventListener("click", e=>{
+  const t = e.target;
+  const op = t.closest("[data-open]"); if (op) { openDrawer(op.dataset.open, {tab:op.dataset.tab}); return; }
+  const mem = t.closest("[data-member]"); if (mem) { openDrawer("member", {idx:+mem.dataset.member, tab: ui.drawer==="dps" ? "dps" : (ui.drawer==="member" ? ui.tab : "bar")}); return; }
+  const tk = t.closest("[data-take]"); if (tk) { takeBuild(+tk.dataset.take); if (ui.drawer==="build") closeDrawer(); return; }
+  const cp = t.closest("[data-copy]"); if (cp) { copy(cp.dataset.copy); return; }
+  const dn = t.closest("[data-dpsn]"); if (dn) { state.dpsN=+dn.dataset.dpsn; render(); return; }
+  const sl = t.closest("[data-slot]"); if (sl) { openPicker(+sl.dataset.slot); return; }
+  const ar = t.closest("[data-area]"); if (ar) { state.area=ar.dataset.area; state.team=null; store.set("area",state.area); closeDrawer(); render(); return; }
+  const sp = t.closest("[data-spot]"); if (sp) { state.spot=sp.dataset.spot; state.forceTeam=false; closeDrawer(); render(); return; }
+  if (t.closest("#forceteam")) { state.forceTeam=!state.forceTeam; render(); return; }
+  if (t.closest("#p-team")) { openMenu(t.closest("#p-team"), TEAMS.map(T=>`<button class="${PLAN&&T.key===PLAN.def.key?"on":""}" data-team="${T.key}">${esc(T.name)}${GUIDES[state.area]&&GUIDES[state.area].team===T.key?" ★":""}<small>${esc(T.desc).slice(0,90)}…</small></button>`).join("") + (state.team?`<button data-team="">Automatisch wählen</button>`:"")); return; }
+  if (t.closest("#hall")) { state.owned=new Set(GW.HEROES.map(h=>h[0])); store.set("owned",[...state.owned]); render(); return; }
+  if (t.closest("#hnone")) { state.owned=new Set(); store.set("owned",[]); render(); return; }
+  if (t.closest("#codeload")) { if(loadCode($("codein").value)) toast("Geladen"); return; }
+});
+$("pk-class").addEventListener("click", ()=>{ const g=$("clsgrid"); g.hidden=!g.hidden; $("pk-class").classList.toggle("open",!g.hidden); $("pk-class").setAttribute("aria-expanded", String(!g.hidden)); });
+$("clsgrid").addEventListener("click", e=>{ const b=e.target.closest("[data-cls]"); if(!b) return; $("clsgrid").hidden=true; $("pk-class").classList.remove("open"); $("pk-class").setAttribute("aria-expanded","false");
+  const p=+b.dataset.cls; if (p===state.pri) return; state.forceTeam=false; const list=BUILDS[p]||[]; const first=list.findIndex(x=>(x.cat||"team")==="team"); if(first>=0){ baseBuild={pri:p,idx:first}; loadCode(list[first].code); } else { state.pri=p; state.sec=0; state.skills=[0,0,0,0,0,0,0,0]; state.attrs=new Map(); render(); } });
+$("pk-build").addEventListener("click", ()=>openDrawer("build"));
+$("pk-target").addEventListener("click", ()=>openDrawer("target"));
+$("pk-heroes").addEventListener("click", ()=>openDrawer("heroes"));
+$("party").addEventListener("click", e=>{ const b=e.target.closest("[data-party]"); if(!b||b.disabled) return; state.party=+b.dataset.party; store.set("party",state.party); render(); });
+document.addEventListener("change", e=>{
+  const t = e.target;
+  if (t.dataset.hero) { t.checked?state.owned.add(t.dataset.hero):state.owned.delete(t.dataset.hero); store.set("owned",[...state.owned]); render(); }
+  else if (t.id==="mercs") { state.mercs=+t.value; store.set("mercs",state.mercs); render(); }
+  else if (t.id==="pri") { state.pri=+t.value; if(state.sec===state.pri) state.sec=0; render(); }
+  else if (t.id==="sec") { const v=+t.value; state.sec = v===state.pri?0:v; render(); }
+  else if (t.dataset.attr) { state.attrs.set(+t.dataset.attr, +t.value); render(); }
+});
+document.addEventListener("keydown", e=>{
+  if (e.key!=="Escape") return;
+  if ($("modal").classList.contains("open")) return closePicker();
+  if (!$("menu").hidden) return closeMenu();
+  if (ui.drawer) closeDrawer();
+  if (!$("clsgrid").hidden) { $("clsgrid").hidden=true; $("pk-class").classList.remove("open"); }
+});
+document.addEventListener("paste", e=>{ if(e.target.id==="codein") setTimeout(()=>loadCode(e.target.value),0); });
+document.addEventListener("keydown", e=>{ if(e.target.id==="codein" && e.key==="Enter") loadCode(e.target.value); });
+
+// ---------- Fertigkeitsauswahl ----------
+let pickSlot=0, pickFilter="fit";
+function openPicker(i){ pickSlot=i; $("mslot").textContent=i+1; $("msearch").value=""; $("modal").classList.add("open"); renderPicker(); setTimeout(()=>$("msearch").focus(),30); }
+function closePicker(){ $("modal").classList.remove("open"); hideTip(); }
+$("mclose").addEventListener("click", closePicker);
+$("modal").addEventListener("click", e=>{ if(e.target.id==="modal") closePicker(); });
+$("mclear").addEventListener("click", ()=>{ state.skills[pickSlot]=0; closePicker(); render(); });
+$("msearch").addEventListener("input", renderPicker);
+$("mchips").addEventListener("click", e=>{ const c=e.target.closest("[data-f]"); if(c){ pickFilter=c.dataset.f; renderPicker(); } });
+$("mlist").addEventListener("click", e=>{ const b=e.target.closest("[data-pick]"); if(!b) return; const id=+b.dataset.pick; const j=state.skills.indexOf(id); if(j>=0 && j!==pickSlot) state.skills[j]=0; state.skills[pickSlot]=id; closePicker(); render(); });
+function renderPicker(){
+  const chips=[["fit",`${GW.PROF_DE[state.pri]}${state.sec?" / "+GW.PROF_DE[state.sec]:""} + allgemein`],["pve","Nur PvE"],["ann","Jubiläum"],["all","Alle Berufe"]];
+  $("mchips").innerHTML = chips.map(([k,t])=>`<button class="chip${pickFilter===k?" on":""}" data-f="${k}">${esc(t)}</button>`).join("");
+  const q = $("msearch").value.trim().toLowerCase();
+  let list = ALL.filter(s=>!s.pvp && !/ \(Luxon\)$/.test(s.n));
+  if(pickFilter==="fit") list = list.filter(s=>!s.p || s.p===state.pri || s.p===state.sec);
+  if(pickFilter==="pve") list = list.filter(s=>s.pve);
+  if(pickFilter==="ann") list = list.filter(s=>ANN_IDS.has(s.id));
+  if(q) list = list.filter(s=> s.n.toLowerCase().includes(q) || (s.de||"").toLowerCase().includes(q) || sattr(s).toLowerCase().includes(q));
+  const rank = s => s.p===state.pri ? 0 : s.p && s.p===state.sec ? 1 : 2;
+  list.sort((a,b)=> (rank(a)-rank(b)) || (a.p-b.p) || sattr(a).localeCompare(sattr(b),"de") || dname(a).localeCompare(dname(b),"de"));
+  const pb = playerBar(), allowed = new Set(list.map(s=>s.id));
+  const sug = pickFilter==="all" ? [] : GW.suggest(pb, pickSlot, SYN, 12).filter(r=>allowed.has(r.id));
+  const sugIds = new Set(sug.map(r=>r.id));
+  const shown = list.filter(s=>!sugIds.has(s.id)).slice(0, 400);
+  const card = (s, r) => `<button class="sk${r?" sug":""}" data-pick="${s.id}" data-sid="${s.id}"><span class="ic" style="${iconStyle(s,40)}"></span><span class="tx"><div>${esc(dname(s))}${s.e?" ★":""}${s.id===pb.skills[pickSlot]?" (aktuell)":""}</div><div class="s">${esc(sattr(s)||"ohne Attribut")}</div>${r?`<div class="why">${esc(r.why.slice(0,2).join(" · "))}</div>`:""}</span></button>`;
+  let out = "";
+  if (sug.length) out += `<div class="mhd">Passt zu deiner Leiste</div>` + sug.map(r=>card(GW.skill(r.id), r)).join("") + `<div class="mhd">Alle</div>`;
+  out += shown.map(s=>card(s)).join("");
+  $("mlist").innerHTML = (sug.length || shown.length) ? out : `<div class="empty">Nichts gefunden.</div>`;
+}
+
+// ---------- Export ----------
+function safe(s){ return s.replace(/["<>:\\/|?*]/g,"").replace(/\s+/g," ").trim(); }
+function teamFiles(){
+  const a = AREAS.find(x=>x.key===state.area);
+  const where = CAT==="team" ? (a&&a.key?" - "+a.name:"") : (SPOT?" - "+SPOT.name:"");
+  const folder = safe(`${CAT==="team"?"Team":CAT==="run"?"Rush":"Farm"} ${GW.PROF_DE[state.pri]}${where}`).slice(0,80);
+  return TEAM.map((t,i)=>({ name:`${folder}/${i+1} ${safe(t.you?"Du":(t.name||"Held"))} - ${safe(t.role).slice(0,50)}.txt`, data:t.code }));
+}
+$("copyall").addEventListener("click", ()=>{ if(!TEAM.length) return; copy(TEAM.map((t,i)=>`${i+1}. ${t.you?"Du":(t.name||"–")}: ${t.code}`).join("\n")); });
+const CRC = (()=>{ const t=new Uint32Array(256); for(let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c = c&1 ? 0xEDB88320^(c>>>1) : c>>>1; t[n]=c>>>0; } return t; })();
+function crc32(b){ let c=0xFFFFFFFF; for(let i=0;i<b.length;i++) c=CRC[(c^b[i])&255]^(c>>>8); return (c^0xFFFFFFFF)>>>0; }
+function makeZip(files){
+  const enc=new TextEncoder(); const parts=[]; const central=[]; let off=0;
+  files.forEach(f=>{
+    const name=enc.encode(f.name), data=enc.encode(f.data), crc=crc32(data);
+    const h=new DataView(new ArrayBuffer(30));
+    h.setUint32(0,0x04034b50,true); h.setUint16(4,20,true); h.setUint16(6,0x0800,true); h.setUint16(8,0,true);
+    h.setUint16(10,0,true); h.setUint16(12,0x21,true); h.setUint32(14,crc,true); h.setUint32(18,data.length,true); h.setUint32(22,data.length,true);
+    h.setUint16(26,name.length,true); h.setUint16(28,0,true);
+    parts.push(new Uint8Array(h.buffer), name, data);
+    const c=new DataView(new ArrayBuffer(46));
+    c.setUint32(0,0x02014b50,true); c.setUint16(4,20,true); c.setUint16(6,20,true); c.setUint16(8,0x0800,true); c.setUint16(10,0,true);
+    c.setUint16(12,0,true); c.setUint16(14,0x21,true); c.setUint32(16,crc,true); c.setUint32(20,data.length,true); c.setUint32(24,data.length,true);
+    c.setUint16(28,name.length,true); c.setUint16(30,0,true); c.setUint16(32,0,true); c.setUint16(34,0,true); c.setUint16(36,0,true); c.setUint32(38,0,true); c.setUint32(42,off,true);
+    central.push(new Uint8Array(c.buffer), name);
+    off += 30+name.length+data.length;
+  });
+  const csize = central.reduce((s,p)=>s+p.length,0);
+  const e=new DataView(new ArrayBuffer(22));
+  e.setUint32(0,0x06054b50,true); e.setUint16(8,files.length,true); e.setUint16(10,files.length,true); e.setUint32(12,csize,true); e.setUint32(16,off,true);
+  return new Blob([...parts,...central,new Uint8Array(e.buffer)]);
+}
+let downloads=null;
+if(window.claude && window.claude.use){ window.claude.use("downloads").then(d=>{ downloads=d; if(d) $("zip").hidden=false; }).catch(()=>{}); }
+else { $("zip").hidden=false; }
+$("zip").addEventListener("click", async ()=>{
+  if(!TEAM.length) return;
+  const files = teamFiles(), folder = files[0].name.split("/")[0];
+  if(!downloads){
+    const url = URL.createObjectURL(makeZip(files));
+    const a = document.createElement("a"); a.href=url; a.download=folder+".zip"; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),5000); toast("In Dokumente/GUILD WARS/Templates/Skills entpacken"); return;
+  }
+  try{ await downloads.save({ filename:folder+".zip", data:makeZip(files) }); toast("In Dokumente/GUILD WARS/Templates/Skills entpacken"); }
+  catch(err){ if(err && err.code!=="declined") toast("Download nicht möglich"); }
+});
+
+// ---------- Start ----------
+state.owned = new Set(store.get("owned", GW.HEROES.map(h=>h[0])));
+state.mercs = store.get("mercs", 3);
+state.party = [8,6,4].includes(store.get("party",8)) ? store.get("party",8) : 8;
+state.area = store.get("area",""); if(!AREAS.some(a=>a.key===state.area)) state.area="";
+const DEF = "OgCjkqrK7SbXSXRXPXNXihcXygA";
+const saved = store.get("bar", DEF);
+if(!loadCode(saved || DEF, true)) loadCode(DEF, true);
+})();
+</script>
+</body>
+</html>

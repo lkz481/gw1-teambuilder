@@ -1,0 +1,248 @@
+[
+{
+"key": "std",
+"name": "Mesmerway (Standard)",
+"desc": "Unser durchgerechnetes Team: Energiewellen-Mesmer, Seelenverflechtung-Schutz und Blut-ist-Kraft-Heiler, angepasst an deine Leiste. Laut Steam-Diskussionen nach dem Energiewellen-Nerf vom 24.06.2026 weiterhin das Standard-Meta.",
+"slots": null
+},
+{
+"key": "discord",
+"name": "Dual Mesmer Discord",
+"desc": "PvX \"Great\": Zwei Zwietracht-Nekromanten mit Dienern, Panik- und Unfähigkeit-Mesmer, Splitterwaffe-Support, Heiler und Schutz. Mehr Verhexungs- und Zustandsschaden statt Energiewelle.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord",
+"slots": [
+{
+"code": "OAOj4wiM5MXTMm3scS5o+uk5B",
+"role": "Splitterwaffe-Support mit Siegel der Geister",
+"why": "Splitterwaffe und Wut der Vorfahren verteilen Schaden, Zustand zerschlagen und Verhexung zerschlagen reinigen die Gruppe.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord"
+},
+{
+"code": "OQhkAoC8AGKDNAna6me5gMARYIA",
+"role": "Panik-Mesmer",
+"why": "Panik legt ganze Gruppen lahm, dazu Argwohn, Schrei der Frustration und Verhexung brechen.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord"
+},
+{
+"code": "OQhkAoB8AGK0LACIHUeGJQGARwFD",
+"role": "Unbeholfenheit-Mesmer",
+"why": "Schwächt Nahkämpfer mit Unbeholfenheit, Wanderndes Auge und Siegel der Unbeholfenheit.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord"
+},
+{
+"code": "OAljUwGpZSxMKgVVbhUBNf7Y1bA",
+"role": "Zwietracht mit Knochenteufel beleben",
+"why": "Zwietracht macht viel Schaden auf verhexte oder zustandsbelegte Ziele, die Knochenteufel ergänzen.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord"
+},
+{
+"code": "OAljUwGopSxMKgVVbhfB4B1Y7YA",
+"role": "Zwietracht mit Explosion der Verwesung",
+"why": "Zweiter Zwietracht-Nekromant, nutzt Leichen für Flächenschaden.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord"
+},
+{
+"code": "OAhjQkGZIP3hhWVVaO5EeDzxJ",
+"role": "Blut-ist-Kraft-Heiler",
+"why": "Energie über Blut ist Kraft, Heilung über Wiederherstellungsmagie.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord"
+},
+{
+"code": "OAOjAyhDJPYTnp17xFOhmtkLG",
+"role": "Seelenverflechtung-Schutz",
+"why": "Unterschlupf, Vereinigung und Verschiebung fangen Schaden ab.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord"
+}
+]
+},
+{
+"key": "keystone",
+"name": "Keystone Discordway",
+"desc": "PvX \"Great\": Zwei Schlussstein-Siegel-Mesmer, zwei Zwietracht-Nekromanten, Heiler und Heilstoß-Mönch. Am stärksten mit einer \"Assassin's Promise\"-Leiste.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway",
+"slots": [
+{
+"code": "OQhkAoC8AGKzJw0hTne5gMAR4iB",
+"role": "Energiewellen-Mesmer",
+"why": "Variabler Mesmer: mit Energiewelle für Spieler ohne Fieberträume.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
+},
+{
+"code": "OQRUAYhMkCPTVuGyfH8D4pVB0A",
+"role": "Schlussstein-Siegel-Mesmer 1",
+"why": "Siegel-Spam mit Schlussstein-Siegel und Symbolische Schnelligkeit, unterbricht und macht Schaden. Diener als Puffer.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
+},
+{
+"code": "OQRUAYhMkCPTVuGyvH8D4pVB0A",
+"role": "Schlussstein-Siegel-Mesmer 2",
+"why": "Zweiter Siegel-Mesmer mit Blutsauger-Siegel.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
+},
+{
+"code": "OAlkUwG4RZmUMjC4OWN2uzWYVgdA",
+"role": "Zwietracht-Nekromant 1",
+"why": "Zwietracht mit Verzauberung zerreißen und Knochendiener beleben.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
+},
+{
+"code": "OAlkUwG4RZmUMjC4OWNWC4WIegdA",
+"role": "Zwietracht-Nekromant 2",
+"why": "Zwietracht mit Widerliches Gelage und Blut des Meisters.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
+},
+{
+"code": "OAhjQoGYIP3hhWVVaO5EeDzxJ",
+"role": "Blut-ist-Kraft-Heiler",
+"why": "Energie und Heilung für die Gruppe.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
+},
+{
+"code": "OwAT02HCXyLaj4upe4ua6DC0oB",
+"role": "Heilsalve-Mönch",
+"why": "Starke Flächenheilung mit Schutz. Hinweis: Heilsalve wurde am 24.06.2026 abgeschwächt.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
+}
+]
+},
+{
+"key": "soultaker",
+"name": "Soul Taker Mesmerway",
+"desc": "PvX \"Great\": Gebaut für einen Seelengreifer-Nekromanten als Spieler. Panik-Mesmer, Siegel der Illusionen, Dunkle Aura und doppelte Heilung.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Soul_Taker_Mesmerway",
+"slots": [
+{
+"code": "OQhkAsC8gFKDNY6lDGC4UAQG4iB",
+"role": "Panik-Mesmer",
+"why": "Legt Gruppen lahm, Schaden über Geisterschmerz.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Soul_Taker_Mesmerway"
+},
+{
+"code": "OQhTA2APMSoCBMHYIAjpJID4iB",
+"role": "Siegel der Illusionen-Support",
+"why": "Bringt Splitterwaffe und Chaossturm über das Siegel der Illusionen.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Soul_Taker_Mesmerway"
+},
+{
+"code": "OQhkAsC8gFKzJY6lDGC4UTXG4iB",
+"role": "Energiewellen-Mesmer",
+"why": "Energiewelle als Schaden und Energieentzug.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Soul_Taker_Mesmerway"
+},
+{
+"code": "OAlkUwGpZeOEAwOWNGAAdwnYV1WI",
+"role": "Dunkle Aura-Support mit Rufen",
+"why": "Dunkle Aura auf dem Nahkämpfer macht bei jedem Angriff Flächenschaden.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Soul_Taker_Mesmerway"
+},
+{
+"code": "OAhjQoGYIP3Bp5kboNMfEV1xJ",
+"role": "Blut-ist-Kraft-Heiler",
+"why": "Energie und Heilung.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Soul_Taker_Mesmerway"
+},
+{
+"code": "OANTY0G/QKuKC0jY67j4uqqqeA",
+"role": "Segen des Heilers-Nekromant",
+"why": "Zweiter Heiler mit Schutz.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Soul_Taker_Mesmerway"
+},
+{
+"code": "OAmkAykrZdSE20Om1zjT4E00nozE",
+"role": "Seelenverflechtung-Schutz",
+"why": "Schadensverhinderung über Geister.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Soul_Taker_Mesmerway"
+}
+]
+},
+{
+"key": "urgoz",
+"name": "7 Hero Urgoz",
+"desc": "PvX \"Great\", eigens für Urgoz' Bau mit Helden gebaut: drei Mönche (UA und zwei Strahl-des-Urteils), zwei Ritualisten, Panik- und Unfähigkeit-Mesmer.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz",
+"area": "urgoz",
+"slots": [
+{
+"code": "OACjEyiM5MXzyJAAAwMlmTuhJ",
+"role": "Siegel der Geister-Heiler",
+"why": "Geisterwand vorne, Heilung und Energie über Geist abzapfen.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
+},
+{
+"code": "OAKkYhgcoQqD206FOfcQHqpz8iB",
+"role": "Seelenverflechtung-Schutz mit Rand der Auslöschung",
+"why": "Schutz plus Rand der Auslöschung als Hauptschaden gegen Urgoz. Fesselnde Ketten hält Gegner zusammen.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
+},
+{
+"code": "OwUTMwGDVihoBcj4u5ioLa5LDA",
+"role": "Unnachgiebige Aura-Heiler",
+"why": "Wiederbelebung ohne Schreine: belebt Tote sofort wieder.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
+},
+{
+"code": "OwAT44XCzx67zo+uEAAAoecXB",
+"role": "Strahl des Urteils-Mönch 1",
+"why": "Flächenschaden gegen geballte Gegner, reinigt mit Zustand zerschlagen und Verhexung zerschlagen.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
+},
+{
+"code": "Owkj4wQopOWffG13lcRqx+4dM",
+"role": "Strahl des Urteils-Mönch 2",
+"why": "Zweiter Strahl, dazu \"Haltet Eure Stellung!\" und \"Ergebt Euch nicht!\".",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
+},
+{
+"code": "OQlkAgC8AaeDNY6lDMdNhcaGYHD",
+"role": "Panik-Mesmer",
+"why": "Panik und Chaossturm, wichtig gegen geballte Blutsauger.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
+},
+{
+"code": "OQRUAwAPyTRAAIgrAkA2BAA5UZAA",
+"role": "Unbeholfenheit-Mesmer",
+"why": "Wanderndes Auge, Ungeschick und Arkanes Rätsel gegen Nahkämpfer und Zauberer.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
+}
+]
+},
+{
+"key": "doa",
+"name": "DoA mit Helden (Spielerbericht)",
+"desc": "Aus einem Guild Wars Guru Thread: Damit meldet ein Spieler alle vier Bereiche und Mallyx im Normalen Modus ohne Verbrauchsgüter. Panik, Unfähigkeit, Energiewelle, Dienerbeschwörer, Seelenverflechtung, Nekro-Heiler und UA-Mönch.",
+"src": "https://archive.guildwarslegacy.com/thread?id=10502800",
+"area": "doa",
+"slots": [
+{
+"code": "OQhkAoC8AGKDNAna6me5gMARYIA",
+"role": "Panik-Mesmer",
+"why": "Legt die großen Gruppen in DoA lahm.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord"
+},
+{
+"code": "OQhkAoB8AGK0LACIHUeGJQGARwFD",
+"role": "Unbeholfenheit-Mesmer",
+"why": "Schwächt die vielen Nahkämpfer (Stygier, Titanen).",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord"
+},
+{
+"own": "ES_SE_MO"
+},
+{
+"own": "LIVIA_MM"
+},
+{
+"own": "XANDRA_ST_CASTER"
+},
+{
+"own": "BIP_BB"
+},
+{
+"code": "OwUTMwGDVihoBcj4u5ioLa5LDA",
+"role": "Unnachgiebige Aura-Heiler",
+"why": "Wiederbelebung in der Elite-Mission ohne Schreine (Mallyx).",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
+}
+]
+}
+]

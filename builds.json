@@ -1,0 +1,1533 @@
+{
+"1": [
+{
+"name": "Hundred Blades mit Whirlwind Attack und \"Save Yourselves!\"",
+"code": "OQASEZKT9F7gTN8V5iGWXFxgA",
+"src": "team",
+"cat": "team"
+},
+{
+"name": "Warrior's Endurance Daggers",
+"combo": "W/A",
+"code": "OQcSE5OPOMG2BDAAAAAFW7C",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/A_Warrior's_Endurance_Daggers",
+"cat": "team"
+},
+{
+"name": "Charging Strike Axe",
+"combo": "W/any",
+"code": "OQcSEZJTKF7g9VZf7VAA1gvlA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/any_Charging_Strike_Axe",
+"cat": "team"
+},
+{
+"name": "Hundred Blades",
+"combo": "W/any",
+"code": "OQASEZKT9F7gTNAAAAAAXFxgA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/any_Hundred_Blades",
+"cat": "team"
+},
+{
+"name": "Seven Weapons Stance",
+"combo": "W/any",
+"code": "OQASE55QAAhFJOCFGFi1vl0kA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/any_Seven_Weapons_Stance",
+"cat": "team",
+"anniv": true,
+"annElite": true,
+"annWeapon": "Spear \"Arbalest\""
+},
+{
+"name": "Seven Weapons Stance Hammer",
+"combo": "W/any",
+"code": "OQATE55UZ6tknIsIxJOS8RsmmE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/any_Seven_Weapons_Stance_Hammer",
+"cat": "team",
+"anniv": true,
+"annElite": true,
+"annWeapon": "Spear \"Arbalest\""
+},
+{
+"name": "Warrior's Endurance Axe",
+"combo": "W/any",
+"code": "OQASEZJHRVoGFAAAA2FAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/any_Warrior's_Endurance_Axe",
+"cat": "team"
+},
+{
+"name": "Charging Strike Scythe",
+"combo": "W/D",
+"code": "OQoiExpMx9tDaUwX1XBAAAcVA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/D_Charging_Strike_Scythe",
+"cat": "team"
+},
+{
+"name": "Seven Weapons Stance Scythe",
+"combo": "W/D",
+"code": "OQojExVbqRvl8ECFAAOXcfi10kA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/D_Seven_Weapons_Stance_Scythe",
+"cat": "team",
+"anniv": true,
+"annElite": true,
+"annWeapon": "Spear \"Arbalest\""
+},
+{
+"name": "Seven Weapons Stance Spear",
+"combo": "W/P",
+"code": "OQkjExVbpR8EmYXFLYKYzgi1xgA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/P_Seven_Weapons_Stance_Spear",
+"cat": "team",
+"anniv": true,
+"annElite": true,
+"annWeapon": "Spear \"Arbalest\""
+},
+{
+"name": "Shadow Form Runner",
+"combo": "W/A",
+"code": "OQcTEnK/ZamkSUnBVkmE3hC6AC",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/A_Shadow_Form_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Gates of Kryta Farmer",
+"combo": "W/Mo",
+"code": "OQMU0QHGZZS+EpF7gKFLEAAzDjEA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/Mo_Gates_of_Kryta_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Hundred Blades MoP Farmer",
+"combo": "W/N",
+"code": "OQQTcUKXRSlBAIXEAYUzSovYHE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/N_Hundred_Blades_MoP_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Raptor Farmer",
+"combo": "W/N",
+"code": "OQQTcUqWXimUlJvwSovYUbHEAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/N_Raptor_Farmer",
+"cat": "farm",
+"meta": true,
+"upd": false
+},
+{
+"name": "Seven Weapons Stance Daggers",
+"combo": "W/A",
+"code": "OQcTE5p1X6tEAIxxhhh5gRsmmE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/A_Seven_Weapons_Stance_Daggers",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": "Spear \"Arbalest\""
+},
+{
+"name": "Seven Weapons Stance Axe",
+"combo": "W/any",
+"code": "OQASEZJTvli1RFKFZf7VXF0kA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/any_Seven_Weapons_Stance_Axe",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": "Spear \"Arbalest\""
+},
+{
+"name": "Seven Weapons Stance Scythe Farmer",
+"combo": "W/D",
+"code": "OQoiEtpFJWnWAAMGOgtDCAcVA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/D_Seven_Weapons_Stance_Scythe_Farmer",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Seven Weapons Stance Beast Mastery",
+"combo": "W/R",
+"code": "OQITE55YZSsGAIsQ8JxZV83g2A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:W/R_Seven_Weapons_Stance_Beast_Mastery",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": true,
+"annWeapon": "Spear \"Arbalest\""
+}
+],
+"2": [
+{
+"name": "Together as One Dolche",
+"code": "OgcTc5O/Hyhhh5gRVMXc4D3ZsG",
+"src": "team",
+"cat": "team",
+"anniv": true,
+"annElite": true
+},
+{
+"name": "Together as One Daggers",
+"combo": "R/A",
+"code": "OgcSc5OTOMMMHMAAAAAAAAj1A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Together_as_One_Daggers",
+"cat": "team",
+"anniv": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Expert's Dexterity Bow",
+"combo": "R/any",
+"code": "OgASc5MT8a5iAAghnSOGzkrlA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/any_Expert's_Dexterity_Bow",
+"cat": "team"
+},
+{
+"name": "QZ Ural's Support",
+"combo": "R/Rt",
+"code": "OggScVMS7iAAAAAAAA0gbHpiA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/Rt_QZ_Ural's_Support",
+"cat": "team"
+},
+{
+"name": "Flail Turret",
+"combo": "R/W",
+"code": "OgESc5MTwgMG7WqG8VwGj1xgA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/W_Flail_Turret",
+"cat": "team",
+"anniv": true,
+"annElite": true
+},
+{
+"name": "Arachni's Haunt Runner",
+"combo": "R/A",
+"code": "OgcTcZ/8ZiHRn5A6uU4gmEBKuE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Arachni's_Haunt_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "MA Dire Pet Leveler",
+"combo": "Any/R",
+"code": "OgMT4SLfTa3g3A3wLk3ahgzg2A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/R_MA_Dire_Pet_Leveler",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Mantid Farmer",
+"combo": "R/A",
+"code": "OgcVYvLiRf8ZiHRn5A6X7uM0R4A6A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Mantid_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Moddok Crevice Corsair Farmer",
+"combo": "R/A",
+"code": "OgcSc5PThOIQ4Orgj13lHQCHA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Moddok_Crevice_Corsair_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false,
+"anniv": true,
+"annElite": true,
+"annWeapon": "Sword \"Prominence\""
+},
+{
+"name": "Whirling Defense City Farmer",
+"combo": "R/A",
+"code": "OgcTcZ/8ZiHRn5AKCim8uU4AAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Whirling_Defense_City_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Whirling Defense Farmer",
+"combo": "R/A",
+"code": "OgcUcXs5lPP8Id2BEAAAAACnjD",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/A_Whirling_Defense_Farmer",
+"cat": "farm",
+"meta": true,
+"upd": false
+},
+{
+"name": "Temple Guardian Farmer",
+"combo": "R/any",
+"code": "OgASY5LTj18G4G3krifGcG0GA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/any_Temple_Guardian_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false,
+"anniv": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Escape Farmer",
+"combo": "R/D",
+"code": "Ogojchpr6SAHFH3kdfjhOXxl3lA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/D_Escape_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "HM Stygian Veil Trapper",
+"combo": "R/N",
+"code": "OgQTcybiZK5o5Y5wSIXc465o7A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/N_HM_Stygian_Veil_Trapper",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Lacerate Outcast Farmer",
+"combo": "R/N",
+"code": "OgQTUYLfHSNI4B4C6gucX8GclB",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/N_Lacerate_Outcast_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": true
+},
+{
+"name": "Pre-Searing Charr Farmer",
+"combo": "R/W",
+"code": "OgEVUD7cR8l5gxXG2a13Bg2AA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/W_Pre-Searing_Charr_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Escape Runner",
+"combo": "R/any",
+"code": "OgARcZK1A4gVimEnEAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/any_Escape_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Together as One Bow Spam",
+"combo": "R/any",
+"code": "OgASc5MThhnSOGtSj1AAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/any_Together_as_One_Bow_Spam",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Anniversary Beastmaster",
+"combo": "R/W",
+"code": "OgESY5LTTN8G4Gxgj18gcG0GA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/W_Anniversary_Beastmaster",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": "Sword \"Prominence\""
+},
+{
+"name": "Together as One Scythe",
+"combo": "R/D",
+"code": "OgojYZXbKTffcfXgQXzk8gj10GA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/D_Together_as_One_Scythe",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Anniversary Star Burst Hero",
+"combo": "R/E",
+"code": "OgYTgUFfx5IaLKroDkhwp4gaA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/E_Anniversary_Star_Burst_Hero",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": false,
+"annWeapon": "Sword \"Prominence\""
+},
+{
+"name": "Together as One Midline Spear",
+"combo": "R/P",
+"code": "OgkjYpXrpSWY1b4GAA1Y8gj10GA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/P_Together_as_One_Midline_Spear",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Anniversary Tactics Sword",
+"combo": "R/W",
+"code": "OgESU5LTTNfaGF7g8V8EAAj1A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:R/W_Anniversary_Tactics_Sword",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": true,
+"annWeapon": "Sword \"Prominence\""
+}
+],
+"3": [
+{
+"name": "Dolch-Mönch mit Way of the Empty Palm und eigenem Strength of Honor",
+"code": "OwcT42O7Nyhhh5gx6LXc7RVceA",
+"src": "team",
+"cat": "team"
+},
+{
+"name": "PvE Aura of Faith Prot",
+"combo": "Mo/any",
+"code": "OwAS8YIPEEtIAYlcXBAbaAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/any_PvE_Aura_of_Faith_Prot",
+"cat": "team"
+},
+{
+"name": "PvE Boon Prot",
+"combo": "Mo/any",
+"code": "OwAS8YITPNfPTEaR3Vvg5gcEA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/any_PvE_Boon_Prot",
+"cat": "team"
+},
+{
+"name": "PvE Healing Burst",
+"combo": "Mo/any",
+"code": "OwAT04XCTyLCAAAIH8ua67mAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/any_PvE_Healing_Burst",
+"cat": "team"
+},
+{
+"name": "55hp Vaettir Farmer",
+"combo": "Mo/A",
+"code": "OwcU4wn6lPP1DekODAARyi3D5B",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/A_55hp_Vaettir_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Mark of Protection Farmer",
+"combo": "Mo/any",
+"code": "OwAQENEAAAAAAAAUeA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/any_Mark_of_Protection_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": true
+},
+{
+"name": "Pre-Searing Farmer",
+"combo": "Mo/E",
+"code": "OwYS4wnEgcl3rYZkfokWA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/E_Pre-Searing_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "55hp Dragon Moss Farmer",
+"combo": "Mo/Me",
+"code": "OwUWI0R1AH8UoO1jVydNBERupyAAC",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/Me_55hp_Dragon_Moss_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": true
+},
+{
+"name": "105hp Halcyon Farmer",
+"combo": "Mo/W",
+"code": "OwET8UKXRqeYl4uimcuIXsvYHE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/W_105hp_Halcyon_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Judgment Scythe",
+"combo": "Mo/D",
+"code": "Owok4sQaquGUY9/l2VzlzFNpq48A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/D_Judgment_Scythe",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Judgment Strike Hammer",
+"combo": "Mo/W",
+"code": "OwETAnJXZ6qIsepQ8JswtgmUVE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Mo/W_Judgment_Strike_Hammer",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": true,
+"annWeapon": "Hammer \"Verdict\""
+}
+],
+"4": [
+{
+"name": "Assassin's Promise mit Minions",
+"code": "OAdTUYD6VSBcXcBKmkKIX80ZLE",
+"src": "team",
+"cat": "team"
+},
+{
+"name": "Assassin's Promise Death Magic",
+"combo": "N/A",
+"code": "OAdTUYD6VSBcXcBKmkKAAAAYLE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/A_Assassin's_Promise_Death_Magic",
+"cat": "team"
+},
+{
+"name": "Soul Taker Dagger Spam",
+"combo": "N/A",
+"code": "OAdSY4OTOMMMHMAAAAf10kqiA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/A_Soul_Taker_Dagger_Spam",
+"cat": "team",
+"anniv": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Cultist's Fervor Orders",
+"combo": "N/any",
+"code": "OABSQYDSmMGCTCDNAAAAAAJgA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/any_Cultist's_Fervor_Orders",
+"cat": "team"
+},
+{
+"name": "Dark Aura Support",
+"combo": "N/any",
+"code": "OABSUYTS0Bbhri0lAAAAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/any_Dark_Aura_Support",
+"cat": "team"
+},
+{
+"name": "Minion Bomber",
+"combo": "N/any",
+"code": "OABSUYDTyBVBHVoBbhAAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/any_Minion_Bomber",
+"cat": "team"
+},
+{
+"name": "Order of Undeath",
+"combo": "N/any",
+"code": "OABSUYDT5iIVUBbh4BAAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/any_Order_of_Undeath",
+"cat": "team"
+},
+{
+"name": "Supported Soul Taker",
+"combo": "N/D",
+"code": "OApjYwpzKTbhf1PXNXaXZXqi0kA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/D_Supported_Soul_Taker",
+"cat": "team",
+"anniv": true,
+"annElite": true,
+"annWeapon": "Scythe \"Sufferer\""
+},
+{
+"name": "Soul Reaping Prot",
+"combo": "N/Mo",
+"code": "OANSY4HTEEzEaRAA3VbatEvgA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/Mo_Soul_Reaping_Prot",
+"cat": "team"
+},
+{
+"name": "Soul Reaping Healer",
+"combo": "N/Rt",
+"code": "OAhiYwhMVVBAAAMMJNN5MOtWC",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/Rt_Soul_Reaping_Healer",
+"cat": "team"
+},
+{
+"name": "Zelnehlun Fastfoot Farmer",
+"combo": "N/A",
+"code": "OAdTU4D/H6NIP4MQB8LA3J0ZCC",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/A_Zelnehlun_Fastfoot_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Superb Charr Carving Farmer",
+"combo": "N/Me",
+"code": "OAVTISCbSSFSD4GEAIHwGsqCAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/Me_Superb_Charr_Carving_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": true
+},
+{
+"name": "105hp Farmer",
+"combo": "N/Mo",
+"code": "OANVQgCYmD/YqeYl4uKPAAQfQeAnE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/Mo_105hp_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "55hp Boss Farmer",
+"combo": "N/Mo",
+"code": "OANTQYz8YSuUFaOoNoe4ualQeA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/Mo_55hp_Boss_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Raptor Farmer",
+"combo": "N/W",
+"code": "OAFTcYaWTySgmsvQlZULXMvYHE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/W_Raptor_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Soul Taker Scythe",
+"combo": "N/D",
+"code": "OApjUoGoKTYibh0Bf1fXdfAAqiA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/D_Soul_Taker_Scythe",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": "Scythe \"Sufferer\""
+},
+{
+"name": "Soul Taker Axe",
+"combo": "N/W",
+"code": "OAFTYQJXVSpYHMqwognAr4rmmE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:N/W_Soul_Taker_Axe",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": ""
+}
+],
+"5": [
+{
+"name": "Simple Energy Surge mit Mind Wrack",
+"code": "OQJTAUBjRKGwG8Ew0BnKH4uE5A",
+"src": "team",
+"cat": "team"
+},
+{
+"name": "Signet of Illusions Support",
+"combo": "Me/any",
+"code": "OQBTA4APGSoCBc6BAAAgEAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/any_Signet_of_Illusions_Support",
+"cat": "team"
+},
+{
+"name": "Enchanter's Conundrum",
+"combo": "Me/E",
+"code": "OQZSAYBTIDBV2gmObAAAAAwlA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/E_Enchanter's_Conundrum",
+"cat": "team"
+},
+{
+"name": "Ineptitude",
+"combo": "Me/E",
+"code": "OQZSA4ATvAIg5ZkA2gAAAAIDA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/E_Ineptitude",
+"cat": "team"
+},
+{
+"name": "PvE Panic",
+"combo": "Me/E",
+"code": "OQZSAYBTID0ATP2gmOAAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/E_PvE_Panic",
+"cat": "team"
+},
+{
+"name": "Simple Energy Surge",
+"combo": "Me/R",
+"code": "OQJTAUBjRKGwG8Ew0BnCA4uE5A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/R_Simple_Energy_Surge",
+"cat": "team"
+},
+{
+"name": "Stygian Farmer",
+"combo": "Me/A",
+"code": "OQdUASBPmfS3UyAAAAAmA3lhOTQA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/A_Stygian_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": true
+},
+{
+"name": "Vaettir Farm",
+"combo": "Me/A",
+"code": "OQdUAQROqPP8Id2BEAAAWC3UAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/A_Vaettir_Farm",
+"cat": "farm",
+"meta": true,
+"upd": false
+},
+{
+"name": "Zelnehlun Fastfoot Farmer",
+"combo": "Me/A",
+"code": "OQdSI4/MLB3mGAAAAwdhuJI",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/A_Zelnehlun_Fastfoot_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "105hp Farmer",
+"combo": "Me/Mo",
+"code": "OQNUAQBPknOLB3GAAAcXXJ1D5B",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/Mo_105hp_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Chkkr Brightclaw Farmer HM",
+"combo": "Me/N",
+"code": "OQRTAswKYSDoGon6CwGkrJHQMA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Me/N_Chkkr_Brightclaw_Farmer_HM",
+"cat": "farm",
+"meta": false,
+"upd": false
+}
+],
+"6": [
+{
+"name": "Double Dragon Beastmaster mit Axt",
+"code": "OgJToYWaTiucIKXssCYjm0Wg2A",
+"src": "team",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/R_Double_Dragon_Beastmaster",
+"cat": "team"
+},
+{
+"name": "Assassin's Promise",
+"combo": "E/A",
+"code": "OgdSwGPT7i2kLQxkAAAAIDAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/A_Assassin's_Promise",
+"cat": "team"
+},
+{
+"name": "Ether Renewal Bonder",
+"combo": "E/Mo",
+"code": "OgNTw4284hkAA0iAA6xBpWQLA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/Mo_Ether_Renewal_Bonder",
+"cat": "team"
+},
+{
+"name": "Glimmering Mark",
+"combo": "E/R",
+"code": "OgJTgYmiRac4bwbAH8uE5wFMcA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/R_Glimmering_Mark",
+"cat": "team"
+},
+{
+"name": "Imperial Sanctum Runner",
+"combo": "E/Me",
+"code": "OgVSkYGTlCwCxlLBKBAA8Q5iA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/Me_Imperial_Sanctum_Runner",
+"cat": "run",
+"meta": true,
+"upd": false
+},
+{
+"name": "Dust and Feather Farmer",
+"combo": "E/any",
+"code": "OgBSoYGT9C8C6ClVAAkCug0CA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/any_Dust_and_Feather_Farmer",
+"cat": "farm",
+"meta": true,
+"upd": false
+},
+{
+"name": "EA UW Wastes Farmer",
+"combo": "E/any",
+"code": "OgBTkSFzSaYYXos6XgW4riUwFE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/any_EA_UW_Wastes_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Obsidian Flesh Caster Farmer",
+"combo": "E/Me",
+"code": "OgVUI4hgkEPSftxXFAAAAA3UZA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/Me_Obsidian_Flesh_Caster_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": true
+},
+{
+"name": "Obsidian Flesh Vaettir Farmer",
+"combo": "E/Me",
+"code": "OgVVI4Rhk0ymR6rN+qGAZwNFAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/Me_Obsidian_Flesh_Vaettir_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": true
+},
+{
+"name": "Undercity Kappa Farmer",
+"combo": "E/Mo",
+"code": "OgNTkYm2QyFsU4rSbAkwtkHSeA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:E/Mo_Undercity_Kappa_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+}
+],
+"7": [
+{
+"name": "Dagger Spammer mit Way of the Empty Palm",
+"code": "OwBj0xe24SOMMMHMvl1g6PbPykA",
+"src": "team",
+"cat": "team"
+},
+{
+"name": "Dagger Spammer",
+"combo": "A/any",
+"code": "OwFi0xjM5wwwcw8WCAAAEnp/A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/any_Dagger_Spammer",
+"cat": "team"
+},
+{
+"name": "Ooze Pit Runner",
+"combo": "A/D",
+"code": "Owpj8xjjKTHQ6M3lNQAAdf7iAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/D_Ooze_Pit_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Catacombs of Kathandrax Runner",
+"combo": "A/E",
+"code": "OwZTk4+8ZSn5A6rimsBKXkHaXE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/E_Catacombs_of_Kathandrax_Runner",
+"cat": "run",
+"meta": true,
+"upd": false
+},
+{
+"name": "Frostmaw's Burrows Runner",
+"combo": "A/E",
+"code": "OwZjkwf84QHQ6MlC5i8QNQ0k4OA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/E_Frostmaw's_Burrows_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Rragar's Menagerie Runner",
+"combo": "A/E",
+"code": "OwZjkwf84QHQ6M3lNQlC5i8Q6iA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/E_Rragar's_Menagerie_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Sepulchre of Dragrimmar Runner",
+"combo": "A/E",
+"code": "OwZkgIJ8HPKk0nOzB0dZDEuDAAPE",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/E_Sepulchre_of_Dragrimmar_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Darkrime Delves Runner",
+"combo": "A/Me",
+"code": "OwVTI4x8Z6ASnJJgmsBiIUDozB",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Darkrime_Delves_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Oola's Lab Runner",
+"combo": "A/N",
+"code": "OwRjcwf84Q6MHQ3lNQ0kIQAA7BA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/N_Oola's_Lab_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Shadow Form Runner",
+"combo": "A/R",
+"code": "OwJSg5PTTQ/a6M0k3lIQ4OAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/R_Shadow_Form_Runner",
+"cat": "run",
+"meta": true,
+"upd": false
+},
+{
+"name": "Slaver's Exile Runner",
+"combo": "A/any",
+"code": "OwVjIwf84Q6MHQ0k1Z3U2gaArgA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/any_Slaver's_Exile_Runner",
+"cat": "run",
+"meta": true,
+"upd": true
+},
+{
+"name": "Focus of Hanaku Farmer",
+"combo": "A/D",
+"code": "Owpl4Jf8ImmqFxjozcANG6c19BAUDC",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/D_Focus_of_Hanaku_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Plains Farmer",
+"combo": "A/D",
+"code": "Owpl8xjWaqSrGxjozcAVDiJCAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/D_Plains_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Margonite Gemstone Farm",
+"combo": "A/Me",
+"code": "OwVTEY/8ZiHRn5AiVkm0DSEA3B",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Margonite_Gemstone_Farm",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Vaettir Farm",
+"combo": "A/Me",
+"code": "OwVUI2h5lPP8Id2BEAAAWC3UTA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Vaettir_Farm",
+"cat": "farm",
+"meta": true,
+"upd": false
+},
+{
+"name": "Mantid Farmer",
+"combo": "A/R",
+"code": "OwJTYVs+XiHRn5AS44u8XL0B6A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/R_Mantid_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Ministerial Commendation Farmer",
+"combo": "Any/W",
+"code": "OwFkQZV63Oi0VBPRfxOYAgLDlYuI",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Any/W_Ministerial_Commendation_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Bloodstone Caves Runner",
+"combo": "A/D",
+"code": "Owpj8xjzKTHQ6M3lNQrXcepZRQA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/D_Bloodstone_Caves_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Heart of the Shiverpeaks Runner",
+"combo": "A/E",
+"code": "OwZjkwf84QHQ6M3lNQ5i8QIQ4OA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/E_Heart_of_the_Shiverpeaks_Runner",
+"cat": "run",
+"meta": false,
+"upd": true
+},
+{
+"name": "Shards of Orr Runner",
+"combo": "A/Me",
+"code": "OwVUEQhOkPT6MHQ3lNQeQiA3UmAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Shards_of_Orr_Runner",
+"cat": "run",
+"meta": false,
+"upd": true
+},
+{
+"name": "Imperial Sanctum Runner",
+"combo": "A/Mo",
+"code": "OwNj0gd8oSOMMMHM6PSQDQ1g+DA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Mo_Imperial_Sanctum_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Shadow Theft Scythe",
+"combo": "A/D",
+"code": "OwpjMyp86Qk16PSXOXaXXXLi1gA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/D_Shadow_Theft_Scythe",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": "Shortbow \"Whispers\""
+},
+{
+"name": "Shadow Theft Deadly Arts Caster",
+"combo": "A/Me",
+"code": "OwVjMMe8ITk1mZ5iaNOQ7IuZmAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Shadow_Theft_Deadly_Arts_Caster",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Shadow Theft Healer",
+"combo": "A/Rt",
+"code": "OwhjEui6oSk10lSTTODTjTYMMTA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:A/Rt_Shadow_Theft_Healer",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": ""
+}
+],
+"8": [
+{
+"name": "Spirit Spammer",
+"code": "OACiIykMdNVO5DWNRDyMtL6NB",
+"src": "team",
+"cat": "team"
+},
+{
+"name": "Attuned Was Songkai Healer",
+"combo": "Rt/any",
+"code": "OACiEyk8M5kmAAAAAAAMOJmA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Attuned_Was_Songkai_Healer",
+"cat": "team"
+},
+{
+"name": "Ritual Lord Bomber",
+"combo": "Rt/any",
+"code": "OACiIykMFMh5QDW5AAAAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Ritual_Lord_Bomber",
+"cat": "team"
+},
+{
+"name": "Ritual Lord Healer",
+"combo": "Rt/any",
+"code": "OACiEykMN5INBAAAAAU9wJGMB",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Ritual_Lord_Healer",
+"cat": "team"
+},
+{
+"name": "Ritual Lord Prot",
+"combo": "Rt/any",
+"code": "OACiAykMFMZ9ANRDCAAAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Ritual_Lord_Prot",
+"cat": "team"
+},
+{
+"name": "Soul Twisting Prot",
+"combo": "Rt/any",
+"code": "OACiAykMhNZ984EOBNRD6MBAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Soul_Twisting_Prot",
+"cat": "team"
+},
+{
+"name": "Spirit Channeling Healer",
+"combo": "Rt/any",
+"code": "OACiEyk8AAGnDTp5kDA8MBAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Spirit_Channeling_Healer",
+"cat": "team"
+},
+{
+"name": "Spirit Spammer",
+"combo": "Rt/any",
+"code": "OACiIykMdNVO5DWNRDyMBAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Spirit_Spammer",
+"cat": "team"
+},
+{
+"name": "QZ Ural's Support",
+"combo": "Rt/R",
+"code": "OAKigtkGtLCAAAAAAAQDudkKC",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/R_QZ_Ural's_Support",
+"cat": "team"
+},
+{
+"name": "Signet of Spirits Farmer",
+"combo": "Rt/any",
+"code": "OACjAaiM5SXT+glTVTQT0gAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Signet_of_Spirits_Farmer",
+"cat": "farm",
+"meta": true,
+"upd": false
+},
+{
+"name": "Reed Stalker ToA Farmer",
+"combo": "Rt/Me",
+"code": "OAWiMwhssEWMxDAAAAAARA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/Me_Reed_Stalker_ToA_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "330hp Vengeful Farmer",
+"combo": "Rt/Mo",
+"code": "OAOk4gPaITKjFj4VP0i4V8h+QeA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/Mo_330hp_Vengeful_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Weapons of Three Forges Healer",
+"combo": "Rt/any",
+"code": "OACiEykMVWLNFPN5MOV9AAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Weapons_of_Three_Forges_Healer",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Anniversary Bow Spirit's Strength",
+"combo": "Rt/R",
+"code": "OAKjkNiMJTghwgMGAAAAYMIb5iA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:Rt/R_Anniversary_Bow_Spirit's_Strength",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": false,
+"annWeapon": "Flatbow \"Oracle\""
+}
+],
+"9": [
+{
+"name": "Heroic Refrain Support mit Motivation und Bladeturn Refrain",
+"code": "OQGkUKm25iy08WM4GmGmHGQIL2ZN",
+"src": "team",
+"cat": "team",
+"anniv": true,
+"annElite": true
+},
+{
+"name": "Heroic Refrain Daggers",
+"combo": "P/A",
+"code": "OQej0xmDKTAh9YWYOMMMHMn1nYA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:P/A_Heroic_Refrain_Daggers",
+"cat": "team",
+"anniv": true,
+"annElite": true,
+"annWeapon": "Daggers \"Vengeance\""
+},
+{
+"name": "Heroic Refrain Spear",
+"combo": "P/any",
+"code": "OQCjUymDKTAAAAAAAAAAAh0bn1A",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:P/any_Heroic_Refrain_Spear",
+"cat": "team",
+"anniv": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Focused Anger Spear",
+"combo": "P/W",
+"code": "OQGjUhlMqS8EpbLYhixgAhubqiA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:P/W_Focused_Anger_Spear",
+"cat": "team"
+},
+{
+"name": "Heroic Refrain Scythe",
+"combo": "P/D",
+"code": "OQqjYOocKT/XOXcfAh9YWYn1nYA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:P/D_Heroic_Refrain_Scythe",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Heroic Refrain Axe",
+"combo": "P/W",
+"code": "OQGjIxmDKTZfRF7VAh9YWYn1nYA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:P/W_Heroic_Refrain_Axe",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Heroic Refrain Hammer",
+"combo": "P/W",
+"code": "OQGjMxmDKTxRiPJOWYAh9Yn1nYA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:P/W_Heroic_Refrain_Hammer",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Heroic Refrain Sword",
+"combo": "P/W",
+"code": "OQGjQxmDKTkPTN4RAh9YWYn1nYA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:P/W_Heroic_Refrain_Sword",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": true,
+"annElite": true,
+"annWeapon": ""
+}
+],
+"10": [
+{
+"name": "Pious Renewal mit Eremite's Attack",
+"code": "OgCjkqrK7SbXSXRXPXNXihcXygA",
+"src": "team",
+"cat": "team"
+},
+{
+"name": "Pious Renewal",
+"combo": "D/any",
+"code": "OgCjkyrG7SbXSXRXPXAAihcXygA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_Pious_Renewal",
+"cat": "team"
+},
+{
+"name": "Vow of Strength",
+"combo": "D/any",
+"code": "OgCjkirMrSmXfb5iaXNXAAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_Vow_of_Strength",
+"cat": "team"
+},
+{
+"name": "Wounding Strike",
+"combo": "D/W",
+"code": "OgGikysMBg5cZUIu9WidNuRTC",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/W_Wounding_Strike",
+"cat": "team"
+},
+{
+"name": "Darkrime Delves Runner",
+"combo": "D/A",
+"code": "Ogej8NqMLThX3ldfHYtX3kEhdOA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/A_Darkrime_Delves_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Outpost Runner",
+"combo": "D/A",
+"code": "Ogej4NfMLTIQ0k6MHYjb3l4OAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/A_Outpost_Runner",
+"cat": "run",
+"meta": true,
+"upd": false
+},
+{
+"name": "General Vow of Silence Farmer",
+"combo": "D/any",
+"code": "OgCjkqqLrShXdftXAAAAAAjhOXA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Silence_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "General Vow of Strength Farmer",
+"combo": "D/any",
+"code": "OgCjkirMrOm3vt2t5CAAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Strength_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Raptor Farmer",
+"combo": "D/N",
+"code": "OgSkcoq06ymEmI31326V2lYolQzF",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/N_Raptor_Farmer",
+"cat": "farm",
+"meta": false,
+"upd": false
+},
+{
+"name": "Vaettir Farmer",
+"combo": "D/N",
+"code": "OgSjUorILTfXsXf1NX0Bsi7X9gA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/N_Vaettir_Farmer",
+"cat": "farm",
+"meta": true,
+"upd": false,
+"anniv": true,
+"annElite": true,
+"annWeapon": ""
+},
+{
+"name": "Oola's Lab Runner",
+"combo": "D/A",
+"code": "Ogej8tqKrSHQhXtX0kTQdf7iAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/A_Oola's_Lab_Runner",
+"cat": "run",
+"meta": false,
+"upd": false
+},
+{
+"name": "Vow of Revolution Prot",
+"combo": "D/Mo",
+"code": "OgOi8wsMZWbfpFVPcXBAAAAAA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/Mo_Vow_of_Revolution_Prot",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": "Staff \"Unveil\""
+},
+{
+"name": "Soul Taker Scythe",
+"combo": "D/N",
+"code": "OgSjkyrDLTvlaXf1NXLXMXib0kA",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/N_Soul_Taker_Scythe",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": "Staff \"Unveil\""
+},
+{
+"name": "Vow of Revolution Healer",
+"combo": "D/Rt",
+"code": "OgiiEysMZWDAMMZfJNN5MORfB",
+"src": "pvx",
+"url": "https://gwpvx.fandom.com/wiki/Build:D/Rt_Vow_of_Revolution_Healer",
+"cat": "team",
+"meta": false,
+"upd": false,
+"anniv": true,
+"test": false,
+"annElite": true,
+"annWeapon": "Staff \"Unveil\""
+}
+]
+}

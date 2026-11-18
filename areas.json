@@ -1,0 +1,259 @@
+[
+{
+"key": "doa",
+"name": "Domäne der Pein",
+"flags": [
+"hex",
+"cond",
+"ench",
+"energy",
+"intr",
+"kd",
+"elem"
+],
+"notes": [
+"Energiemanagement zentral (Torc'qua, Foundry): Famine, Quickening Zephyr, Energy Surge, Mind Wrack, Power Leak, Feedback, Wither, Malaise, im HM Repressive Energy. Niedrige Kosten und Spirit-Killing nötig.",
+"Viel Hex-Entfernung: Spiteful Spirit, Visions of Regret, Empathy, Backfire, Migraine, Mind Wrack, Wither, Meekness, Faintheartedness, Bonds of Torment.",
+"Condition-Entfernung: Bleeding, Deep Wound, Cripple, Poison, Disease, Burning, Blind, Weakness.",
+"Enchantments werden oft entfernt (Shatter, Strip, Corrupt, Defile/Desecrate, Mirror, Rending Sweep, Fingers of Chaos) und bestraft; bei Mallyx praktisch nicht nutzbar.",
+"Interrupt-Druck auf Caster: Power Block, Power Spike, Power Drain, Cry of Frustration, Distracting Shot, Savage Shot, Choking Gas, Jadoth's Storm.",
+"Knockdown-Schutz gegen Hammer-Warriors, Earthquake, Meteor Shower, Gale.",
+"AoE-Feuer und Erdschaden: Meteor Shower, Fire Storm, Searing Flames, Earthquake, Sandstorm; Verteilen nötig. Elementarschutz hilfreich.",
+"Hoher physischer Druck und Masse in Stygian Veil. Block oder Dodge im HM durch Demonic Miasma bestraft, Stygian Hunger umgeht Rüstung.",
+"Gegnerische Heiler (Anur Ki, Heart Tormentor, Scourge of Darkness): Spike oder Anti-Heal nötig; Scourge Healing und Reversal of Damage bestrafen eigene Heilung.",
+"Hoher Burst, da Enraged lange Kämpfe teuer macht. Im HM-Ravenheart leiden Angriffs-Builds unter 50 % Missrate, in der HM-Foundry Kiten unter Enduring Torment.",
+"Mallyx: Builds ohne Enchantments, Hexes und Conditions; kein stance-abhängiges Tanken."
+],
+"env": [
+"Repressive Energy · Jeder Skill oder Angriff kostet 2 Energie · City of Torc'qua (nur HM); Citadel solange Listless Soul lebt",
+"Enduring Torment · 10 Health Verlust pro Sekunde Bewegung · Foundry (nur HM); Citadel (Tormented Soul)",
+"Shroud of Darkness · Alle Angriffe 50 % Missrate; nur Asuran Scan ignoriert das · Ravenheart Gloom (nur HM); Citadel (Shrouded Soul)",
+"Demonic Miasma · 50 Schaden bei jedem Block oder Dodge · Stygian Veil (nur HM); Citadel (Demonic Soul)"
+],
+"url": "https://wiki.guildwars.com/wiki/Domain_of_Anguish",
+"en": "Domain of Anguish"
+},
+{
+"key": "fow",
+"name": "Der Riss des Kummers",
+"flags": [
+"hex",
+"kd",
+"cond",
+"ench",
+"intr",
+"norez"
+],
+"notes": [
+"Viel Hex-Entfernung nötig, vor allem gegen Spiteful Spirit, Mark of Pain, Empathy, Lingering Curse und Degen-Hexes der Skale.",
+"Schutz gegen Knockdown und Deep Wound für die Frontline wichtig (Abyssals in großer Zahl). Blind und Weakness gegen Abyssals laut Wiki wirksam.",
+"Enchantment-lastige Builds und Bonder leiden unter Dryders, Skale, Shadow Mesmers, Ether Breakers und Dragon Liches.",
+"Spike-Schaden auf Caster durch Abyssals und Dragon Liches; Caster brauchen Abstand oder Blocker.",
+"Feuer-AoE (Shadow Elemental, Mahgo Hydra) verlangt Verteilen der Gruppe; Spiteful Spirit bestraft Angriffe und Skills.",
+"Gegnerische Heiler mit Resurrection (Shadow Monk, Priest, Temple Guards) zuerst ausschalten oder unterbrechen; Interrupts generell wertvoll.",
+"Condition-Entfernung für Poison, Bleeding, Cripple, Blind, Burning, Dazed.",
+"Hard Mode mit 7 Pips Regeneration verlangt hohen Schadensausstoß oder Degen-Gegenmittel.",
+"Keine Shrines und Eskorten verlangen hohe Ausfallsicherheit und gute Pull-Kontrolle."
+],
+"env": [
+"Kein Umgebungseffekt dokumentiert. Die Lava in FoW ist laut Wiki harmlos (Anomalie, keine Conditions)."
+],
+"url": "https://wiki.guildwars.com/wiki/Fissure_of_Woe",
+"en": "Fissure of Woe"
+},
+{
+"key": "uw",
+"name": "Die Unterwelt",
+"flags": [
+"hex",
+"ench",
+"intr",
+"energy",
+"elem"
+],
+"notes": [
+"Viel Hex-Entfernung nötig (Mindblades, Threshers, Keeper, Coldfire Rust, Weight of Dhuum).",
+"Enchantments werden oft entfernt (Rend Enchantments, Shatter/Drain Enchantment, Nature's Renewal). Builds mit gehaltenen Enchantments sind riskant.",
+"Caster brauchen Schutz vor Interrupts und Energieentzug (Grasping Darkness, Mindblades, Dream Rider, Horsemen).",
+"Feuer- und Blitz-AoE erfordert Abstand und Elementarschutz. Skeletons ignorieren Prot und Block, also Heilung und Sichtlinie.",
+"Nahkämpfer leiden unter Behemoth-Traps, Whirling Defense, Reversal of Fortune und Disease. Blind oder Weakness gegen Aatxe nützt.",
+"Gegen Ende AoE gegen Skelett-Summons und hoher Einzelschaden gegen Dhuum. Conditions wirken bei ihm nicht.",
+"Durch Schutzquests ist starke Ally-Heilung oder ein Tank für Chokepoints gefragt."
+],
+"env": [
+"Curse of Dhuum (nur im Dhuum-Kampf): \"Resurrection is disabled. Should you die, your spirit will travel to the Forgotten Vale.\" Tod oder 60 % Death Penalty führt zur Spirit Form. Scroll of Resurrection, \"By Ural's Hammer!\" und vorher gewirkte Unyielding Aura, Lively Was Naomei oder Restoration funktionieren noch.",
+"Spirit Form (Disguise): Skillleiste Dhuum's Rest, Spiritual Healing (250 Heilung, nicht selbst), Encase Skeletal (Skelett 20 s harmlos), Reversal of Death (wirkt laut Wiki als 5 % Morale Boost), Ghostly Fury (250 Schaden, sperrt Dhuum's Rest 10 s). Tod in Spirit Form ist endgültig. Rückkehr über Mayor Alegheri, Heroes automatisch.",
+"Tar (Becken der Spawning Pools): 30 % langsamere Bewegung."
+],
+"url": "https://wiki.guildwars.com/wiki/The_Underworld",
+"en": "The Underworld"
+},
+{
+"key": "urgoz",
+"name": "Urgoz' Bau",
+"flags": [
+"hex",
+"ench",
+"energy",
+"kd",
+"cond",
+"norez"
+],
+"notes": [
+"Viel AoE-Schaden für große, geballte Gruppen. Wiki nennt Nukers als Kern.",
+"Hex-Entfernung wichtig: Shroud of Silence, Life Siphon, Icy Veins, Seeping Wound, Binding Chains.",
+"Enchantments werden oft entfernt (Strip Enchantment, Shatter Enchantment, Disenchantment, Forest's Binding).",
+"Energy-Management zentral: Energy Drain, Sheer Exhaustion, Energy Surge, Thought Stealer.",
+"Spike-Schutz gegen Thorn Wolves und Earth Wardens. Knockdown-Druck durch Wardens, Dredge und Urgoz.",
+"Conditions aller Art (Bleeding, Deep Wound, Poison, Burning, Weakness, Cripple). Condition-Entfernung hilfreich.",
+"Kein physischer oder elementarer Schwerpunkt der Gegnerrüstung erkennbar; Ranger/Warrior-Gegner mit hoher Element-Rüstung, Twisted Bark/Malice schwach gegen Slashing und Fire.",
+"Wiki: Resurrection (inkl. Rebirth), Minions plus Rotting Flesh, Spirits als Köder, Weakness senkt Attribute-Breakpoints."
+],
+"env": [
+"Weakness (Raum 1, Raum 8 Nord): Laut Missionsseite weniger Angriffsschaden (Condition-Seite: -66 % Waffen-Grundschaden) und alle Attribute -1. Eigene Effektseite fehlt.",
+"Life Drain (Raum 2, Raum 10 hinter dem Spawn-Raum): -15 Health degeneration.",
+"Sheer Exhaustion (Raum 5, Raum 8 Süd): Jeder Spell verursacht 10 Overcast. Bereits overcastende Spells nicht doppelt.",
+"Energy Drain (Raum 7): -4 Energy degeneration. Wird die Bark nicht getötet, gilt der Effekt auch in der Südhälfte von Urgoz' Raum.",
+"Raum 5: Wiki empfiehlt, die Bark zu ignorieren und Feinde an effektfreie Stellen zu ziehen."
+],
+"url": "https://wiki.guildwars.com/wiki/Urgoz's_Warren",
+"en": "Urgoz's Warren"
+},
+{
+"key": "deep",
+"name": "Die Tiefe",
+"flags": [
+"ownkd",
+"ench",
+"energy",
+"intr",
+"cond"
+],
+"notes": [
+"Knockdowns sind Pflicht für Aspects und Kanaxai. Jede Teilgruppe in Room 0/1 braucht einen.",
+"Enchantment-Entfernung mit schneller Wiederholung gegen Nightmare Refuge, alternativ Interrupts oder Life stealing.",
+"Starke Party-Heilung und Degen-Resistenz: -2, -4 (bedingt) und -8 Health degeneration, dazu Heilreduktion in Room 1C und 2.",
+"Enchantment-basierte Builds unzuverlässig (Room 6, viel Enchantment-Entfernung).",
+"Room 5 verlangt Nicht-Spell-Schaden oder Wall-Taktik.",
+"Energiemanagement wichtig (Overcast, Energy Burn, Chaos Storm, Energy Drain, Room 9).",
+"Viele gegnerische Interrupts: Caster brauchen Schutz oder kurze Casts.",
+"Condition-Entfernung (Bleeding, Poison, v. a. Room 10). Hex-Entfernung in moderatem Umfang.",
+"AoE-Schaden und AoE-Verteidigung wegen großer Gruppen und Spawns. Elementarer Schaden gegen Kanaxai etwas schwächer (130 Rüstung).",
+"Escape-Skills (Recall, Shadow Meld) für Room 3 und Kanaxai-Pull. Block-Builds in 1A und Adrenalin-Builds in 1D geschwächt.",
+"Snares (z. B. Cripple) gegen kitende Aspects und Kanaxai. Spirits und Minions als Body-Block."
+],
+"env": [
+"0 · Aspect of Exhaustion · 10 Overcast alle 30 s (löst laut Wiki häufiger aus); permanent bis zum Verlassen",
+"1A · Aspect of Exposure · Du kannst Angriffe nicht blocken",
+"1B · Aspect of Surrender · Jeder Treffer durch einen Angriff wirft dich nieder",
+"1C · Aspect of Death · 20 % weniger Heilwirkung",
+"1D · Aspect of Soothing · Adrenalin baut sich halb so schnell auf",
+"2 · Aspect of Pain · -2 Health degeneration plus \"Deep Wound\"-Effekt (nur -20 % eingehende Heilung, kein echter Zustand; Vigorous Spirit unberührt)",
+"3 · Aspect of Lethargy · 50 % langsamer",
+"4 · Aspect of Depletion · Alle 30 s 10 Energie Verlust und 8 Schaden je verlorenem Punkt",
+"5 · Aspect of Failure · Alle Spells schlagen fehl",
+"6 · Aspect of Shadows · Keine Enchantment-Spells wirken und nicht Ziel von Enchantment-Spells sein",
+"7 · Scorpion Aspect · Alle 30 s Teleport zum nächsten Gegner plus Knockdown; laut Wiki verkürzt sich das Intervall mit der Zeit (Bug)",
+"8 · Aspect of Fear · 10 % schneller, 25 Schaden pro Sekunde in Bewegung",
+"9 · Aspect of Depletion · 50 Schaden, sobald Energie 0 erreicht",
+"10 · Aspect of Decay · Bei Poison oder Bleeding zusätzlich -4 Health degeneration",
+"11 · Aspect of Torment · 50 Schaden alle 3 s ohne Skill-Einsatz",
+"12 · Nightmare Aspect · -8 Health degeneration, bleibt auch nach Kanaxais Tod"
+],
+"url": "https://wiki.guildwars.com/wiki/The_Deep",
+"en": "The Deep"
+},
+{
+"key": "slavers",
+"name": "Das Exil des Sklavenhändlers",
+"flags": [
+"hex",
+"intr",
+"energy",
+"ench",
+"elem",
+"kd",
+"cond"
+],
+"notes": [
+"Resurrection-Verhinderung (Frozen Soil) praktisch Pflicht in allen Zwergen-Bereichen.",
+"Hohe Hex-Last (Degeneration, Arcane Conundrum, Spiteful Spirit, Insidious Parasite): Hex-Entfernung wichtig.",
+"Viele Interrupts und Energy-Denial gegen Caster.",
+"Enchantments werden oft entfernt oder bestraft. Enchantment-lastige Builds sind anfällig.",
+"Viel AoE-Elementarschaden (Feuer bei Forgewight, Erde bei Warder, Blitz bei Shock Phantom und Duncan): Verteilen, Schutzzauber, Elementar-Resistenz.",
+"Häufiger Knockdown: Stabilitäts- oder Knockdown-Schutz sinnvoll.",
+"Conditions: Bleeding, Deep Wound, Disease, Poison, Weakness, Blindness, Dazed, Burning. Condition-Entfernung nötig.",
+"Starke Gegnerheilung und Minions: Fokus-Damage oder AoE.",
+"Duncan: Keine schnellen Burst-Schadensbuilds ohne Schutz; Life Stealing, Health Loss, Interrupts und Daze bevorzugt. Spirit-Kontrolle (Swap, Spirit-Killer) hilft.",
+"Aggro-Management (Pullen, Tank) wegen großer Gruppen und Popups."
+],
+"env": [
+"Lava (Duncans und Selvetarms Bereich): Crippled und Burning für 3 Sekunden (nicht bei Minions). Sonst keine belegt."
+],
+"url": "https://wiki.guildwars.com/wiki/Slavers'_Exile",
+"en": "Slavers' Exile"
+},
+{
+"key": "sf",
+"name": "Hochofen der Betrübnis",
+"flags": [
+"ench",
+"intr",
+"hex",
+"cond",
+"kd"
+],
+"notes": [
+"Enchantments werden oft entfernt (Strip und Shatter Enchantment, Consuming Flames). Melandru's Arrows bestraft verzauberte Ziele. Enchantment-lastige Verteidigung ist anfällig.",
+"Interrupt-Resistenz wichtig: Savage Shot, Disrupting Chop, Cry of Frustration, Distracting Blow, Dwarven Battle Stance. Lange Casts sind riskant.",
+"Hex-Entfernung nötig gegen Crippling Anguish, Conjure Phantasm, Rust, Empathy, Life Siphon. Krieger stark von Crippling Anguish betroffen.",
+"Condition-Entfernung für Weakness, Bleeding, Poison, Crippled, Deep Wound. Weakness ermöglicht KD-Kombos (Heavy Blow, Stoning).",
+"Knockdown-Schutz sinnvoll: Giant Stomp, Water Trident, Spike Trap, Bull's Charge, Stun on Critical Hit.",
+"Gegner-Resurrection unterbinden: Interrupts für 8-s-Resurrect, Priorität auf Heiler, ggf. Frozen Soil, Leichen verwerten (Wiki: Minion Master hilfreich).",
+"Gemischter Schaden: Physisch gegen Ranger, Element gegen Krieger, Feuer stark gegen Summit Warden und Siege Ice Golem. Rüstung gegen Kälte, Erde und physischen Schaden.",
+"Mobilität und Aufteilbarkeit der Gruppe (Rage Binder, Alkar), Speedboost für Eskorten.",
+"Gegen Flame Djinn: Eng zusammenstehen oder Minions, Interrupts auf Consuming Flames."
+],
+"env": [
+"Sorrow's Fist (Iron Forgeman, nur The Forge Heart): Spell, 170 physischer Schaden unter dem Riesenflegel.",
+"Sorrow's Flame (Iron Forgeman, Environment): Flüssiges Metall über einem Partymitglied, nach einigen Sekunden mehrere kleine bis mittlere Schadenspakete. Je näher am Ziel, desto mehr Schaden.",
+"Crushing traps (Crusher, u. a. bei The Gap): Treffen nur Partymitglieder und Frost Golems, Tod ohne Death Penalty. Eigene Wiki-Seite fehlt, Schadenswerte offen.",
+"Chains of Enslavement (nur Summit Slaves): Kein Hex und keine Enchantment, nicht entfernbar. Stone Summit sind verbündet und nicht angreifbar, Gegner sind dann vor allem rebellische Dredge."
+],
+"url": "https://wiki.guildwars.com/wiki/Sorrow's_Furnace",
+"en": "Sorrow's Furnace"
+},
+{
+"key": "topk",
+"name": "Grab der altehrwürdigen Könige",
+"flags": [
+"energy",
+"intr",
+"ench",
+"hex",
+"elem",
+"kd",
+"cond",
+"norez"
+],
+"notes": [
+"Starker Energiedruck durch Energy Surge, Energy Drain, Power Drain, Mind Wrack und \"Fear Me!\": Energieunabhängige Builds im Vorteil.",
+"Viele Interrupts (auch AoE durch Cry of Frustration): Lange Casts riskant, schnelle Skills besser.",
+"Enchantments werden häufig entfernt (Rend Enchantments, Shatter, Fingers of Chaos gegen Monks): Schutz nicht allein auf Enchantments stützen, Monk-Builds besonders betroffen.",
+"Hex-Entfernung wichtig, vor allem gegen Mesmer-Hexes. Backfire bestraft Caster gegen die Bosse.",
+"Eigene Interrupts oder Shutdown gegen die Mesmer-Caster lohnen.",
+"Feuer-AoE und Knockdown durch Meteor Shower: Auseinanderstehen, Knockdown-Schutz und Feuerresistenz nützlich.",
+"Condition-Entfernung für Deep Wound, Burning, Blind und Crippled. Warriors leiden besonders unter Fingers of Chaos.",
+"Ignorance sperrt Signets, Soothing Images sperrt Adrenalin: Builds, die nur auf Signets oder Adrenalin setzen, sind gegen die Bosse geschwächt.",
+"Chaos Wurms und Bosse mit Natural Resistance: Hexes und Conditions halbe Dauer, direkter Schaden zuverlässiger.",
+"Rüstung physisch deutlich höher als gegen Elemente (Darkness 128/88, Grasp 123/83): Elementarschaden effizienter.",
+"HM: 7 Pips Regeneration erfordert konzentrierten Burst statt Abnutzungsschaden.",
+"Ohne Shrines: Ausreichend Resurrection-Skills in der Gruppe einplanen."
+],
+"env": [
+"Das Wiki nennt für keine der vier Zonen einen Umgebungseffekt."
+],
+"url": "https://wiki.guildwars.com/wiki/Tomb_of_the_Primeval_Kings",
+"en": "Tomb of the Primeval Kings"
+}
+]
