@@ -571,11 +571,11 @@
     // Energie
     let pips = REGEN[bar.pri] || 2;
     const income = pips / 3;
-    const uses = []; let usedTitle = false;
+    const uses = [], minions = []; let usedTitle = false;
     for (const [i, s] of sk) {
       const dRaw = (s.d || "").toLowerCase(), dd = (s.dd || "");
       // Schaden an eigenen Geistern und Verstärkungen für Verbündete zählen nicht als Schaden am Gegner
-      const d = dRaw.replace(/(this spirit|the spirit) (takes|loses) \d+(\.\.\.\d+)? (damage|health)/g, "").replace(/(target (other )?ally|allies|party members)[^.]*deals? (\+)?\d+(\.\.\.\d+)? (more )?damage[^.]*/g, "");
+      const d = dRaw.replace(/(this spirit|the spirit) (takes|loses) \d+(\.\.\.\d+)? (damage|health)/g, "").replace(/(its attacks|these spirits|attacks) deal \d+(\.\.\.\d+)? damage/g, "").replace(/(target (other )?ally|allies|party members)[^.]*deals? (\+)?\d+(\.\.\.\d+)? (more )?damage[^.]*/g, "");
       const ac = frac(s.ac), rc = frac(s.rc);
       const spell = /spell|signet|ritual|chant|shout|echo|well|glyph/i.test(s.t) && !/attack/i.test(s.t);
       const T = Math.max(0.25, rc + ac + (/spell/i.test(s.t) ? 0.75 : 0));
@@ -601,7 +601,7 @@
       let dm = null;
       if (/for each point of energy lost/.test(d)) { const el = d.match(/causes (\d+\.\.\.\d+) energy loss/); const per = d.match(/deals (\d+) damage[^.]*for each point/); if (el && per) dm = at(el[1], r) * +per[1]; }
       if (dm == null) { const m = d.match(/(?:deals?|causes?|take|takes) \+?(\d+(?:\.\.\.\d+)?) (?:\w+ )?damage/); if (m) dm = at(m[1], r); }
-      if (dm == null) { const m = dd.match(/\+?(\d+\.\.\.\d+) Punkte (?:\w+ )?(?:Sakral-|Feuer|Kälte|Blitz|Erd|Dunkel|Chaos|heiligen )?Schaden/); if (m) dm = at(m[1], r); }
+      if (dm == null && !/(its attacks|these spirits) (deal|steal)/.test(dRaw)) { const m = dd.match(/\+?(\d+\.\.\.\d+) Punkte (?:\w+ )?(?:Sakral-|Feuer|Kälte|Blitz|Erd|Dunkel|Chaos|heiligen )?Schaden/); if (m) dm = at(m[1], r); }
       const perAttack = /whenever you attack|attacks deal|your attacks|whenever you hit|next \d+ attacks?|ends after \d/.test(d) || /Angriffe (verursachen|richten)/.test(dd);
       const onFoe = /whenever (this|target) foe (attacks|uses a skill|takes physical damage)|whenever it takes physical damage/.test(d);
       const every = d.match(/every second \((\d+) seconds?\)/);
@@ -654,6 +654,19 @@
         else if (armM && !/hex/i.test(s.t)) { const a = at(armM[1], r); perHit = HIT * (1 - Math.pow(2, -a / 40)); lab = "+" + a + " Rüstung"; }
         if (perHit > 0) parts.push({ kind: "Schutz", per: perHit * HITRATE * D2, dur: D2, aoe: mult, label: lab });
       }
+      // ---- Diener und Geister (Wiki: Minion, Bone Horror, Bone Fiend, Flesh Golem, Spirit) ----
+      const lvM = d.match(/level (\d+\.\.\.\d+) (bone horror|bone fiend|vampiric horror|shambling horror|flesh golem|bone minion)/) || d.match(/creates? (?:two|2) level (\d+\.\.\.\d+) (bone minion)/) || d.match(/animates? a level (\d+\.\.\.\d+) (bone horror)/);
+      if (lvM) {
+        const L = at(lvM[1], r), kind = lvM[2];
+        const mean = (kind === "flesh golem" ? 3.5 : 1.53) * L, per = mean / (kind === "bone fiend" ? 1.86 : 3.10);
+        minions.push({ s, per, count: /two|2 level/.test(d) || kind === "bone minion" ? 2 : 1, max: kind === "flesh golem" ? 1 : 99, rate: 1 / Math.max(1, rc + ac + 0.75), cost, L, kind });
+      }
+      const spA = dRaw.match(/(?:its attacks|these spirits|attacks) (?:deal|steal) (\d+(?:\.\.\.\d+)?) (?:damage|health)/);
+      if (spA && /ritual|signet/i.test(s.t) && /spirit/.test(dRaw)) {
+        const dmgS = at(spA[1], r), life = lifeM ? at(lifeM[1], r) : (d.match(/\((\d+)[- ]second lifespan\)/) || [0, 30])[1] * 1;
+        const cnt = (d.match(/creates (\d) level/) || [0, 1])[1] * 1;
+        parts.push({ kind: "Geist", per: dmgS * 0.5 * life * cnt * (/double damage to hexed/.test(dRaw) ? 1.5 : 1), dur: life, aoe: 1, label: cnt + (cnt > 1 ? " Geister" : " Geist") + ", " + dmgS + " alle 2 s" });
+      }
       // Gunst der Götter: Mönchszauber auf Verbündete heilen zusätzlich 3,2 je Rang (Wiki "Divine Favor")
       if (bar.pri === 3 && s.p === 3 && /spell/i.test(s.t) && /Verbündete/.test(dd) && rank(16) > 0) parts.push({ kind: "Heilung", per: Math.round(3.2 * rank(16)), dur: 0, aoe: 1, label: "Gunst der Götter " + Math.round(3.2 * rank(16)) });
       if (!parts.length) continue;
@@ -684,6 +697,14 @@
     const deg = out.filter(o => /Zustand|Degeneration/.test(o.kind)).reduce((a, o) => a + o.dps, 0);
     const cap = 20 * n;
     if (deg > cap) { const k = cap / deg; out.forEach(o => { if (/Zustand|Degeneration/.test(o.kind)) o.dps *= k; }); notes.push("Degeneration auf 10 Pips je Ziel begrenzt."); }
+    // Diener: Obergrenze 2 + halber Rang Todesmagie (Wiki "Minion"), verteilt nach Wirkrate
+    if (minions.length) {
+      const cap = 2 + Math.floor(rank(5) / 2);
+      const w8 = minions.map(m => m.rate * m.count), tot = w8.reduce((a, b) => a + b, 0);
+      let left = cap;
+      minions.sort((a, b) => a.max - b.max).forEach(m => { const share = Math.min(m.max, Math.max(m.max < 99 ? 1 : 0, Math.round(cap * (m.rate * m.count) / tot)), left); left -= share; if (share > 0) out.push({ name: m.s.de || m.s.n, sid: m.s.id, dps: share * m.per, cat: "dmg", kind: "Diener", detail: share + " Diener auf Stufe " + m.L + ", je " + m.per.toFixed(1) + "/s" }); });
+      notes.push("Diener: Höchstwert mit voller Dienerzahl (" + cap + " bei diesem Rang Todesmagie). Ohne Leichen sind es weniger.");
+    }
     if (usedTitle) notes.push("Titel-Fertigkeiten sind mit maximalem Titelrang gerechnet.");
     out.forEach(o => { if (!o.cat) o.cat = "dmg"; });
     const sum = c => out.filter(o => o.cat === c).reduce((a, o) => a + o.dps, 0);

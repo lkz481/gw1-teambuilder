@@ -318,6 +318,7 @@ const ATTR_DE = {0:"Schnellwirkung",1:"Illusionsmagie",2:"Beherrschungsmagie",3:
 const PCOL = [0,"#d6b14a","#8cc051","#8ec5ea","#57a77a","#b88ae0","#e2675a","#d47ab8","#5fc4b8","#e8a23e","#a68ad8"];
 function attrDe(id){ return ATTR_DE[id] || (GW.ATTR && GW.ATTR[id]) || ""; }
 const state = { team:null, forceTeam:false, spot:null, spotBuild:null, party:8, dpsN:3, pri:10, sec:0, attrs:new Map(), skills:[0,0,0,0,0,0,0,0], area:"", owned:new Set(GW.HEROES.map(h=>h[0])), mercs:3 };
+state.over = {};
 const ui = { drawer:null, tab:null, idx:0, bcat:null };
 const store = { get(k,d){ try{ const v=localStorage.getItem("gwbw."+k); return v==null?d:JSON.parse(v);}catch(e){return d;} }, set(k,v){ try{ localStorage.setItem("gwbw."+k, JSON.stringify(v)); }catch(e){} } };
 
@@ -462,8 +463,10 @@ function compute(){
   const showTeam = CAT==="team" || (SPOT && SPOT.team && state.forceTeam);
   if (showTeam) {
     PLAN = teamSlotsFor(pb, CAT==="team" ? partySize() : 8);
+    const seenK = {};
+    PLAN.slots.forEach(s=>{ const n = seenK[s.code] = (seenK[s.code]||0)+1; s.key = s.code + "#" + n; s.orig = s.code; const o = state.over[s.key]; if (o) { try { GW.decode(o); s.code = o; s.changed = true; } catch(e){} } });
     const heroes = GW.assignHeroes(PLAN.slots, state.owned, state.mercs);
-    PLAN.slots.forEach((s,i)=>{ const h=heroes[i]; TEAM.push({ hero:true, name:h.name, merc:h.merc, role:deText(s.role), why:deText(s.why) + (h.merc?" Ein Söldner übernimmt, weil kein passender Held frei ist.":""), code:s.code, bar:GW.decode(s.code) }); });
+    PLAN.slots.forEach((s,i)=>{ const h=heroes[i]; TEAM.push({ hero:true, key:s.key, changed:s.changed, name:h.name, merc:h.merc, role:deText(s.role), why:deText(s.why) + (h.merc?" Ein Söldner übernimmt, weil kein passender Held frei ist.":""), code:s.code, bar:GW.decode(s.code) }); });
     if (CAT==="team") CHECKS = GW.areaChecks(pb, PLAN.slots, PLAN.area, partySize());
   } else if (SPOT) {
     const myOpt = b && b.optIds ? b.optIds.find(o=>SPOT.opts.includes(o)) : null;
@@ -493,7 +496,7 @@ let LAST = null;
 function render(){
   compute();
   const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
-  const now = { code: playerCode(), pri: state.pri, n: TEAM.length, t: state.dpsN, dmg: sum("dmg"), heal: sum("heal"), prot: sum("prot") };
+  const now = { code: TEAM.map(m=>m.code).join("|"), pri: state.pri, n: TEAM.length, t: state.dpsN, dmg: sum("dmg"), heal: sum("heal"), prot: sum("prot") };
   if (LAST && LAST.code !== now.code && LAST.pri === now.pri && LAST.n === now.n && LAST.t === now.t && ui.drawer === "member" && CAT !== "run") {
     const parts = ["dmg","heal","prot"].filter(k=>now[k]!==LAST[k]).map(k=>`${METRIC[k][0]} ${LAST[k]} → ${now[k]} <span class="${now[k]>LAST[k]?"up":"down"}">(${now[k]>LAST[k]?"+":""}${now[k]-LAST[k]})</span>`);
     if (parts.length) toastHTML(parts.join(" · "));
@@ -562,7 +565,7 @@ function renderMain(){
     const mk = mainMetric(D), hasVal = D && (D.total+D.heal+D.prot) >= 0.5;
     return `<button class="card${m.you?" you":""}${ui.drawer==="member"&&ui.idx===i?" sel":""}" style="--pc:${PCOL[d.pri]};animation-delay:${i*40}ms" data-member="${i}" aria-label="Details zu ${m.you?"deiner Leiste":esc(m.name||"Held")}">
       <div class="nm"><span class="dot" style="color:${PCOL[d.pri]};background:${PCOL[d.pri]}"></span>${who}<span class="n">${esc(pname(d.pri,d.sec))}</span>${CAT!=="run"&&hasVal?`<span class="rolechip ${mk}">${{dmg:"Schaden",heal:"Heilung",prot:"Schutz"}[mk]}</span>`:""}</div>
-      <div class="rl">${esc(m.you ? "Deine Leiste · antippen zum Bearbeiten" : m.role)}</div>
+      <div class="rl">${esc(m.you ? "Deine Leiste · antippen zum Bearbeiten" : (m.changed ? "Angepasst · " : "") + m.role)}</div>
       <div class="bar8">${d.skills.map(id=>ico(id)).join("")}</div>
       ${m.you ? (nd=>{ const l=nd.titles.map(x=>x.title).concat(nd.cons.map(x=>x.name)); return l.length?`<div class="need">Braucht: ${esc(l.slice(0,3).join(" · "))}${l.length>3?" …":""}</div>`:""; })(myNeeds()) : ""}
       <div class="ft"><span>${CAT!=="run" ? metricHTML(D) : ""}</span>${ai?`<span class="flag" title="Die Helden-KI nutzt eine Fertigkeit schlecht">${ICN.warn} KI</span>`:""}</div>
@@ -662,7 +665,7 @@ function drawMember(body){
   if (ui.tab==="bar") {
     const slots = d.skills.map((id,i)=>{ const s=GW.skill(id);
       const inner = s ? `${ico(id)}<span class="nmx">${esc(dname(s))}</span>` : `<span class="add">+</span><span class="nmx"></span>`;
-      return m.you ? `<button class="slotb" draggable="true" data-slot="${i}" aria-label="Slot ${i+1} tauschen">${inner}</button>` : `<div class="slotb">${inner}</div>`; }).join("");
+      return (m.you || m.key) ? `<button class="slotb" draggable="true" data-slot="${i}" aria-label="Slot ${i+1} tauschen">${inner}</button>` : `<div class="slotb">${inner}</div>`; }).join("");
     let html = `<div class="big8">${slots}</div>`;
     if (m.you) {
       html += `<p class="dim sm" style="margin:8px 0 0">Antippen zum Tauschen, ziehen zum Umsortieren.</p>`;
@@ -674,7 +677,10 @@ function drawMember(body){
         nd.titles.map(x=>`<li class="info"><b>${esc(x.title)}</b> für ${esc(x.skills.join(", "))}. Die Werte steigen mit dem Titelrang.</li>`).join("") +
         nd.cons.map(x=>`<li class="info"><b>${esc(x.name)}</b>: ${esc(x.why)}.</li>`).join("") + `</ul>`;
     } else {
-      html += `<p style="margin-top:14px">${esc(m.why||"")}</p>`;
+      if (m.key) html += `<div class="row" style="margin:8px 0 0"><span class="dim sm" style="flex:1">Antippen zum Tauschen, ziehen zum Umsortieren.</span>${m.changed?`<button class="btn s" data-reset="${esc(m.key)}">Original wiederherstellen</button>`:""}</div>`;
+      const v = GW.validate(d, true), msgs = v.msgs.filter(x=>x[0]!=="ok").map(x=>[x[0],deText(x[1])]);
+      if (m.changed && msgs.length) html += `<ul class="msgs" style="margin-top:8px">${msgs.map(([c,t])=>`<li class="${c}">${esc(t)}</li>`).join("")}</ul>`;
+      html += `<p style="margin-top:14px">${m.changed?"<b>Von dir angepasst.</b> ":""}${esc(m.why||"")}</p>`;
       const ai = d.skills.map(id=>GW.skill(id)).filter(s=>s && GW.heroai[s.n] && GW.heroai[s.n][0]>=2);
       if (ai.length) html += `<h3>Helden-KI</h3><ul class="msgs">${ai.map(s=>`<li class="warn">${esc(dname(s))}: ${esc(deText(GW.heroai[s.n][1]))}</li>`).join("")}</ul>`;
     }
@@ -726,7 +732,8 @@ function drawDps(body){
       <li>Jede Fertigkeit so oft, wie Aufladen, Aktivierung und 0,75 s Nachwirkzeit erlauben. Reicht die Energie nicht, sinkt die Nutzung anteilig (1 Pip = 1 Energie alle 3 s).</li>
       <li>Attributränge inklusive empfohlener Runen. Waffen nach Wiki-Werten, kritische Treffer mit Rang als Prozent-Chance.</li>
       <li>Brennen −7, Gift und Krankheit −4, Blutung −3 Pips (1 Pip = 2 Lebenspunkte/s), höchstens 10 Pips je Ziel.</li>
-      <li>Nicht drin: Diener, Geister, Tiere, Energie aus Seelensammlung, kritischen Treffern und Führung. Auslöser durch Gegner-Aktionen: eine Aktion alle 2 s angenommen.</li>
+      <li>Diener: Schaden nach Stufe laut Wiki-Messwerten, volle Dienerzahl angenommen (2 plus halber Rang Todesmagie). Angriffsgeister treffen alle 2 s mit dem Wert aus der Beschreibung, solange sie leben.</li>
+      <li>Nicht drin: Tiere, Energie aus Seelensammlung, kritischen Treffern und Führung. Auslöser durch Gegner-Aktionen: eine Aktion alle 2 s angenommen.</li>
       <li>Heilung: direkte Heilung, Regeneration und ausgelöste Heilung, Mönchszauber mit Gunst der Götter (3,2 je Rang). Gruppenheilung zählt für jedes Gruppenmitglied.</li>
       <li>Schutz ist eine Schätzung: Jedes geschützte Gruppenmitglied wird alle 2 s für 80 Schaden getroffen und hat 480 Lebenspunkte. Gezählt werden Schadensgrenzen, Schadensminderung, Blocken und Rüstungsboni.</li>
     </ul></details>`;
@@ -781,6 +788,7 @@ document.addEventListener("click", e=>{
   const sl = t.closest("[data-slot]"); if (sl) { openPicker(+sl.dataset.slot); return; }
   const ar = t.closest("[data-area]"); if (ar) { state.area=ar.dataset.area; state.team=null; store.set("area",state.area); closeDrawer(); render(); return; }
   const sp = t.closest("[data-spot]"); if (sp) { state.spot=sp.dataset.spot; state.forceTeam=false; closeDrawer(); render(); return; }
+  const rs = t.closest("[data-reset]"); if (rs) { delete state.over[rs.dataset.reset]; render(); return; }
   if (t.closest("#forceteam")) { state.forceTeam=!state.forceTeam; render(); return; }
   if (t.closest("#p-team")) { openMenu(t.closest("#p-team"), TEAMS.map(T=>`<button class="${PLAN&&T.key===PLAN.def.key?"on":""}" data-team="${T.key}">${esc(T.name)}${GUIDES[state.area]&&GUIDES[state.area].team===T.key?" ★":""}<small>${esc(T.desc).slice(0,90)}…</small></button>`).join("") + (state.team?`<button data-team="">Automatisch wählen</button>`:"")); return; }
   if (t.closest("#hall")) { state.owned=new Set(GW.HEROES.map(h=>h[0])); store.set("owned",[...state.owned]); render(); return; }
@@ -851,7 +859,7 @@ let dragFrom = null;
 document.addEventListener("dragstart", e=>{ const s=e.target.closest && e.target.closest("button.slotb"); if(!s) return; dragFrom=+s.dataset.slot; e.dataTransfer.effectAllowed="move"; hideTip(); });
 document.addEventListener("dragover", e=>{ const s=e.target.closest && e.target.closest("button.slotb"); if(s && dragFrom!=null){ e.preventDefault(); s.classList.add("over"); } });
 document.addEventListener("dragleave", e=>{ const s=e.target.closest && e.target.closest("button.slotb"); if(s) s.classList.remove("over"); });
-document.addEventListener("drop", e=>{ const s=e.target.closest && e.target.closest("button.slotb"); if(!s || dragFrom==null) return; e.preventDefault(); const to=+s.dataset.slot; if(to!==dragFrom){ const a=state.skills; [a[dragFrom],a[to]]=[a[to],a[dragFrom]]; render(); } dragFrom=null; });
+document.addEventListener("drop", e=>{ const s=e.target.closest && e.target.closest("button.slotb"); if(!s || dragFrom==null) return; e.preventDefault(); const to=+s.dataset.slot; if(to!==dragFrom){ const c=editCtx(), a=c.bar.skills.slice(); [a[dragFrom],a[to]]=[a[to],a[dragFrom]]; applySkills(c, a); } dragFrom=null; });
 document.addEventListener("dragend", ()=>{ dragFrom=null; });
 $("cards").addEventListener("pointermove", e=>{ if(e.pointerType!=="mouse") return; const c=e.target.closest(".card"); if(!c) return; const r=c.getBoundingClientRect(); c.style.setProperty("--mx",(e.clientX-r.left)+"px"); c.style.setProperty("--my",(e.clientY-r.top)+"px"); });
 $("rnd").addEventListener("click", ()=>{
@@ -862,30 +870,39 @@ $("rnd").addEventListener("click", ()=>{
 
 // ---------- Fertigkeitsauswahl ----------
 let pickSlot=0, pickFilter="fit";
+function editCtx(){ const m = ui.drawer==="member" ? TEAM[ui.idx] : null; return m && m.hero ? { hero:true, m, bar:m.bar } : { hero:false, bar:playerBar() }; }
+function applySkills(ctx, skills){
+  if (!ctx.hero) state.skills = skills;
+  else if (ctx.m.key) state.over[ctx.m.key] = GW.encode(ctx.bar.pri, ctx.bar.sec, ctx.bar.attrs, skills);
+  render();
+}
 function openPicker(i){ pickSlot=i; $("mslot").textContent=i+1; $("msearch").value=""; $("modal").classList.add("open"); renderPicker(); setTimeout(()=>$("msearch").focus(),30); }
 function closePicker(){ $("modal").classList.remove("open"); hideTip(); }
 $("mclose").addEventListener("click", closePicker);
 $("modal").addEventListener("click", e=>{ if(e.target.id==="modal") closePicker(); });
-$("mclear").addEventListener("click", ()=>{ state.skills[pickSlot]=0; closePicker(); render(); });
+$("mclear").addEventListener("click", ()=>{ const c=editCtx(), sk=c.bar.skills.slice(); sk[pickSlot]=0; closePicker(); applySkills(c, sk); });
 $("msearch").addEventListener("input", renderPicker);
 $("mchips").addEventListener("click", e=>{ const c=e.target.closest("[data-f]"); if(c){ pickFilter=c.dataset.f; renderPicker(); } });
-$("mlist").addEventListener("click", e=>{ const b=e.target.closest("[data-pick]"); if(!b) return; const id=+b.dataset.pick; const j=state.skills.indexOf(id); if(j>=0 && j!==pickSlot) state.skills[j]=0; state.skills[pickSlot]=id; closePicker(); render(); });
+$("mlist").addEventListener("click", e=>{ const b=e.target.closest("[data-pick]"); if(!b) return; const id=+b.dataset.pick; const c=editCtx(), sk=c.bar.skills.slice(); const j=sk.indexOf(id); if(j>=0 && j!==pickSlot) sk[j]=0; sk[pickSlot]=id; closePicker(); applySkills(c, sk); });
 function renderPicker(){
-  const chips=[["fit",`${GW.PROF_DE[state.pri]}${state.sec?" / "+GW.PROF_DE[state.sec]:""} + allgemein`],["pve","Nur PvE"],["ann","Jubiläum"],["all","Alle Berufe"]];
+  const ctx = editCtx(), P1 = ctx.bar.pri, P2 = ctx.bar.sec;
+  const chips=[["fit",`${GW.PROF_DE[P1]}${P2?" / "+GW.PROF_DE[P2]:""} + allgemein`]].concat(ctx.hero ? [] : [["pve","Nur PvE"],["ann","Jubiläum"],["all","Alle Berufe"]]);
+  if (ctx.hero) pickFilter = "fit";
   $("mchips").innerHTML = chips.map(([k,t])=>`<button class="chip${pickFilter===k?" on":""}" data-f="${k}">${esc(t)}</button>`).join("");
   const q = $("msearch").value.trim().toLowerCase();
-  let list = ALL.filter(s=>!s.pvp && !/ \(Luxon\)$/.test(s.n));
-  if(pickFilter==="fit") list = list.filter(s=>!s.p || s.p===state.pri || s.p===state.sec);
+  let list = ALL.filter(s=>!s.pvp && !/ \(Luxon\)$/.test(s.n) && !(ctx.hero && s.pve));
+  if(pickFilter==="fit") list = list.filter(s=>!s.p || s.p===P1 || s.p===P2);
   if(pickFilter==="pve") list = list.filter(s=>s.pve);
   if(pickFilter==="ann") list = list.filter(s=>ANN_IDS.has(s.id));
   if(q) list = list.filter(s=> s.n.toLowerCase().includes(q) || (s.de||"").toLowerCase().includes(q) || sattr(s).toLowerCase().includes(q));
-  const rank = s => s.p===state.pri ? 0 : s.p && s.p===state.sec ? 1 : 2;
+  const rank = s => s.p===P1 ? 0 : s.p && s.p===P2 ? 1 : 2;
   list.sort((a,b)=> (rank(a)-rank(b)) || (a.p-b.p) || sattr(a).localeCompare(sattr(b),"de") || dname(a).localeCompare(dname(b),"de"));
-  const pb = playerBar(), allowed = new Set(list.map(s=>s.id));
-  const sug = pickFilter==="all" ? [] : (CAT==="team" ? GW.suggest(pb, pickSlot, SYN, 12) : catSuggest(pb, 14)).filter(r=>allowed.has(r.id));
+  const pb = ctx.bar, allowed = new Set(list.map(s=>s.id));
+  const aiBad = s => ctx.hero && GW.heroai[s.n] && GW.heroai[s.n][0]>=2;
+  const sug = pickFilter==="all" ? [] : (CAT==="team" || ctx.hero ? GW.suggest(pb, pickSlot, SYN, 12) : catSuggest(pb, 14)).filter(r=>allowed.has(r.id));
   const sugIds = new Set(sug.map(r=>r.id));
   const shown = list.filter(s=>!sugIds.has(s.id)).slice(0, 400);
-  const card = (s, r) => `<button class="sk${r?" sug":""}" data-pick="${s.id}" data-sid="${s.id}"><span class="ic" style="${iconStyle(s,40)}"></span><span class="tx"><div>${esc(dname(s))}${s.e?" ★":""}${s.id===pb.skills[pickSlot]?" (aktuell)":""}</div><div class="s">${esc(sattr(s)||"ohne Attribut")}</div>${r?`<div class="why">${esc(r.why.slice(0,2).join(" · "))}</div>`:""}</span></button>`;
+  const card = (s, r) => `<button class="sk${r?" sug":""}" data-pick="${s.id}" data-sid="${s.id}"><span class="ic" style="${iconStyle(s,40)}"></span><span class="tx"><div>${esc(dname(s))}${s.e?" ★":""}${s.id===pb.skills[pickSlot]?" (aktuell)":""}</div><div class="s">${esc(sattr(s)||"ohne Attribut")}${aiBad(s)?" · Helden-KI nutzt das schlecht":""}</div>${r?`<div class="why">${esc(r.why.slice(0,2).join(" · "))}</div>`:""}</span></button>`;
   let out = "";
   if (sug.length) out += `<div class="mhd">${CAT==="run"?"Passt zum Rushen":CAT==="farm"?"Passt zum Farmen":"Passt zu deiner Leiste"}</div>` + sug.map(r=>card(GW.skill(r.id), r)).join("") + `<div class="mhd">Alle</div>`;
   out += shown.map(s=>card(s)).join("");
