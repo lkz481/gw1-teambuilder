@@ -490,7 +490,11 @@
     ];
     R.forEach(([re, to]) => { s = s.replace(re, to); });
     s = s.replace(LIST(ATTR_DE), m => { const k = Object.keys(ATTR_DE).find(x => x.toLowerCase() === m.toLowerCase()); return k ? ATTR_DE[k] : m; });
+    s = s.replace(/\bvitae\b/gi, "Rune der Lebenskraft (+10 Leben)").replace(/\battunement\b/gi, "Rune der Einstimmung");
     s = s.replace(/\s+/g, " ").replace(/\s+([.,;])/g, "$1").trim().replace(/^1x\s*/i, "").replace(/^(\d+)x\s*/i, "$1× ");
+    s = s.replace(/([A-Za-zäöüÄÖÜ]+-) (Sense|Schwert|Axt|Hammer|Speer|Dolche|Bogen|Stab|Waffe|Nahkampfwaffe|Langbogen|Kurzbogen|Flachbogen|Zauberstab|Schild|Fokus)/g, "$1$2")
+         .replace(/Befähigung (Rüstung|Insignia)\b/g, "Befähigung").replace(/^beliebig /i, "").replace(/\.$/, "");
+    s = s.charAt(0).toUpperCase() + s.slice(1);
     return s;
   };
   // Zeile ist eine reine Ausrüstungsangabe (kein englischer Erklärtext)?

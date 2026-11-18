@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GW-Reinfickmaschine</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0d0707;--panel:rgba(30,17,13,.92);--panel2:rgba(44,25,18,.95);--line:rgba(201,162,78,.16);--line2:rgba(201,162,78,.32);
@@ -14,7 +14,7 @@
   --side:300px;
 }
 *{box-sizing:border-box}
-html,body{margin:0;color:var(--text);font:15px/1.5 Spectral,Georgia,serif}
+html,body{margin:0;color:var(--text);font:15px/1.5 Outfit,system-ui,sans-serif;font-feature-settings:"tnum"}
 body{background:var(--bg);
  background-image:radial-gradient(ellipse at 50% -10%,rgba(142,31,26,.5),transparent 60%),radial-gradient(ellipse at 50% 120%,rgba(90,14,10,.4),transparent 55%),
   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40' viewBox='0 0 80 40'%3E%3Cg fill='none' stroke='%23c9a24e' stroke-opacity='.07' stroke-width='1.2'%3E%3Cpath d='M0 40a20 20 0 0 1 40 0M8 40a12 12 0 0 1 24 0M16 40a4 4 0 0 1 8 0M40 40a20 20 0 0 1 40 0M48 40a12 12 0 0 1 24 0M56 40a4 4 0 0 1 8 0M-20 20a20 20 0 0 1 40 0M-12 20a12 12 0 0 1 24 0M-4 20a4 4 0 0 1 8 0M20 20a20 20 0 0 1 40 0M28 20a12 12 0 0 1 24 0M36 20a4 4 0 0 1 8 0M60 20a20 20 0 0 1 40 0M68 20a12 12 0 0 1 24 0M76 20a4 4 0 0 1 8 0'/%3E%3C/g%3E%3C/svg%3E");
@@ -28,7 +28,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 
 /* Kopfzeile */
 .topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 20px;background:rgba(13,7,7,.82);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.logo{font-family:var(--head);font-weight:700;font-size:18px;color:var(--acc);letter-spacing:.06em;text-shadow:0 0 14px rgba(201,162,78,.3);white-space:nowrap}
+.logo{font-family:var(--head);font-weight:700;font-size:18px;color:var(--acc);letter-spacing:.06em;white-space:nowrap}
 .topbar .sp{flex:1}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;border:1px solid var(--line2);background:rgba(40,22,16,.8);font-size:14px;transition:border-color .15s,background .15s}
 .btn:hover{border-color:var(--acc);background:rgba(60,32,20,.9)}
@@ -48,7 +48,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .step{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;margin-right:6px;font-size:10px;background:radial-gradient(circle at 35% 30%,#b3302a,#5e0f0b);border:1px solid var(--gold);color:#fbe7b8;letter-spacing:0}
 .pick .lb>span:first-child{display:flex;align-items:center}
 .nudge{animation:nudge 1.6s ease-in-out infinite}
-@keyframes nudge{0%,100%{box-shadow:0 0 0 0 rgba(217,178,95,.0)}50%{box-shadow:0 0 0 4px rgba(217,178,95,.35)}}
+@keyframes nudge{0%,100%{border-color:var(--line)}50%{border-color:var(--gold)}}
 .pick{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);transition:border-color .15s,transform .15s}
 .pick:hover{border-color:var(--line2)}
 .pick.open{border-color:var(--gold)}
@@ -72,7 +72,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 /* Hauptbereich */
 .mainhead{display:flex;align-items:center;flex-wrap:wrap;gap:10px 16px;margin-bottom:14px}
 .mainhead h1{font-family:var(--head);font-size:22px;margin:0;font-weight:600;color:#f3dfb0;letter-spacing:.04em}
-.mainhead h1 small{display:block;font-family:Spectral,serif;font-size:13px;color:var(--muted);letter-spacing:0;font-weight:400}
+.mainhead h1 small{display:block;font-family:Outfit,system-ui,sans-serif;font-size:13px;color:var(--muted);letter-spacing:0;font-weight:400}
 .pills{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-size:14px;transition:border-color .15s}
 .pill:hover{border-color:var(--acc)}
@@ -83,11 +83,54 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .notice .sp{flex:1}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
 .card{position:relative;text-align:left;width:100%;padding:12px 14px 12px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;gap:6px;transition:border-color .15s,transform .15s,box-shadow .15s}
-.card:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.card:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(40,8,6,.8)}
 .card.you{border-color:rgba(201,162,78,.55);background:linear-gradient(180deg,rgba(60,30,18,.95),rgba(30,17,13,.95))}
-.card.sel{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.card.sel{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+.card{--pc:var(--gold);overflow:hidden}
+.card::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--pc),transparent 85%);opacity:.85}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(400px 120px at 0 0,color-mix(in srgb,var(--pc) 14%,transparent),transparent 70%);pointer-events:none}
+.card>*{position:relative;z-index:1}
+#cards.fresh .card{animation:rise .4s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.card .ico{transition:transform .12s ease,box-shadow .12s ease}
+.card .ico:hover{transform:scale(1.28);z-index:3;box-shadow:0 0 0 1px var(--gold),0 6px 14px rgba(20,6,5,.7)}
+.card .go{position:absolute;right:12px;top:12px;font-size:12px;color:var(--dim);opacity:0;transform:translateX(-4px);transition:.15s}
+.card:hover .go{opacity:1;transform:none;color:var(--acc)}
+.rolechip{margin-left:auto;font-family:var(--head);font-size:10px;letter-spacing:.08em;padding:1px 8px;border-radius:999px;border:1px solid var(--line2);color:var(--muted)}
+.rolechip.dmg{color:#f0b9a8;border-color:rgba(226,88,74,.5)} .rolechip.heal{color:#a9e3c1;border-color:rgba(124,197,154,.5)} .rolechip.prot{color:#a9cdee;border-color:rgba(120,170,220,.5)}
+.meter{height:5px!important}
+.pick,.pill,.btn,.opt{will-change:transform}
+.pick:hover{transform:translateX(2px)}
+.pick:active,.pill:active,.btn:active,.opt:active,.card:active{transform:scale(.985)}
+.pill{backdrop-filter:blur(4px)}
+.drawer .db>*{animation:fade .25s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+button.slotb{cursor:grab;border-radius:8px;padding:3px;transition:background .12s}
+button.slotb:hover{background:rgba(201,162,78,.1)}
+button.slotb.over{background:rgba(201,162,78,.25)}
+.big8 .add{animation:nudge 1.8s ease-in-out infinite}
+.toast{font-family:var(--head);letter-spacing:.03em}
+.toast .up{color:var(--ok)} .toast .down{color:var(--bad)}
+.eqg{display:grid;gap:8px}
+.eqc{padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.eqc h4{margin:0 0 4px;font-family:var(--head);font-size:11px;letter-spacing:.12em;color:var(--acc);font-weight:600}
+.eqc div{padding:2px 0}
+.i{width:1em;height:1em;vertical-align:-.14em;flex:none}
+.pill .i,.btn .i{width:15px;height:15px}
+*{--ease:cubic-bezier(.16,1,.3,1)}
+.pick,.pill,.btn,.opt,.card,.ico,.x,.seg button,.tabs button{transition:transform .3s var(--ease),border-color .2s,background .2s,box-shadow .3s var(--ease),color .2s}
+.drawer{transition:transform .45s var(--ease)!important;box-shadow:inset 1px 0 0 rgba(255,255,255,.05),-30px 0 60px -20px rgba(20,6,5,.9)!important}
+.topbar,.pill{box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.card::after{background:radial-gradient(260px circle at var(--mx,0px) var(--my,0px),color-mix(in srgb,var(--pc) 22%,transparent),transparent 65%)!important;opacity:0;transition:opacity .3s}
+.card:hover::after{opacity:1}
+@media (min-width:901px){.card.you{grid-column:span 2}.card.you .bar8{gap:6px;max-width:520px}.card.you .nm{font-size:18px}}
+.sk8{height:132px;border-radius:var(--r);border:1px solid var(--line);background:linear-gradient(100deg,rgba(255,255,255,.02) 40%,rgba(255,255,255,.06) 50%,rgba(255,255,255,.02) 60%) 0 0/200% 100%,var(--panel);animation:shim 1.4s linear infinite}
+.sk8:first-child{grid-column:span 2}
+@keyframes shim{to{background-position:-200% 0}}
+.empty{display:grid;gap:10px;justify-items:start;text-align:left;padding:28px}
+.empty b{font-family:var(--head);font-size:17px;color:#f3dfb0;font-weight:600}
 .card .nm{font-family:var(--head);font-size:15px;color:#f3dfb0;display:flex;align-items:center;gap:8px}
-.card .nm .n{font-size:12px;color:var(--dim)}
+.card .nm{flex-wrap:nowrap}.card .nm .n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;font-size:12px;color:var(--dim)}
 .card .pf{font-size:12px;color:var(--muted)}
 .card .rl{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 .card .ft{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);margin-top:2px}
@@ -96,8 +139,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .card .need{font-size:12px;color:#e8c98a}
 .card .missing{color:var(--bad)}
 .bar8{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
-.ico{aspect-ratio:1;border-radius:5px;background:#120a08;overflow:hidden;position:relative;display:block;box-shadow:0 0 0 1px rgba(0,0,0,.8)}
-.ico.el{box-shadow:0 0 0 1px #e7c25a,0 0 6px rgba(231,194,90,.45)}
+.ico{aspect-ratio:1;border-radius:5px;background:#120a08;overflow:hidden;position:relative;display:block;box-shadow:0 0 0 1px rgba(13,7,7,.9)}
+.ico.el{box-shadow:0 0 0 1.5px #e7c25a}
 .ic{display:block;width:100%;height:100%;background-repeat:no-repeat}
 .empty{color:var(--muted);padding:30px;text-align:center;border:1px dashed var(--line2);border-radius:var(--r)}
 .foot{margin-top:28px;color:var(--dim);font-size:12px;line-height:1.6}
@@ -110,7 +153,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .drawer.on{transform:none}
 .dh{display:flex;align-items:center;gap:10px;padding:16px 18px 10px}
 .dh h2{font-family:var(--head);font-size:18px;margin:0;color:#f3dfb0;letter-spacing:.04em;flex:1;min-width:0}
-.dh h2 small{display:block;font-family:Spectral,serif;font-size:13px;color:var(--muted);letter-spacing:0;font-weight:400}
+.dh h2 small{display:block;font-family:Outfit,system-ui,sans-serif;font-size:13px;color:var(--muted);letter-spacing:0;font-weight:400}
 .x{width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);font-size:18px;line-height:1;flex:none}
 .x:hover{border-color:var(--acc)}
 .tabs{display:flex;gap:4px;padding:0 18px;border-bottom:1px solid var(--line);overflow-x:auto}
@@ -206,8 +249,9 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
 <div class="topbar">
   <div class="logo">GW-Reinfickmaschine</div>
   <div class="sp"></div>
-  <button class="btn" id="copyall" title="Alle Codes kopieren">⧉ <span class="l">Codes kopieren</span></button>
-  <button class="btn pri" id="zip" hidden title="Alle Leisten als Vorlagen herunterladen">⇩ <span class="l">Vorlagen (ZIP)</span></button>
+  <button class="btn" id="rnd" title="Zufälligen Build laden"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r=".8" fill="currentColor"/><circle cx="15" cy="15" r=".8" fill="currentColor"/><circle cx="15" cy="9" r=".8" fill="currentColor"/><circle cx="9" cy="15" r=".8" fill="currentColor"/></svg> <span class="l">Überrasch mich</span></button>
+  <button class="btn" id="copyall" title="Alle Codes kopieren"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> <span class="l">Codes kopieren</span></button>
+  <button class="btn pri" id="zip" hidden title="Alle Leisten als Vorlagen herunterladen"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg> <span class="l">Vorlagen (ZIP)</span></button>
 </div>
 
 <div class="app">
@@ -227,7 +271,7 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
       <div class="pills" id="pills"></div>
     </div>
     <div id="notice"></div>
-    <div class="cards" id="cards"></div>
+    <div class="cards" id="cards"><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div></div>
     <div class="foot">
       <details><summary>Quellen und Hinweise</summary>
       Fertigkeitswerte, Fertigkeitsbilder, Heldenliste und Gebietsdaten: <a href="https://wiki.guildwars.com" target="_blank" rel="noopener">wiki.guildwars.com</a>. Deutsche Namen und Beschreibungen: <a href="https://www.guildwiki.de" target="_blank" rel="noopener">guildwiki.de</a>. Builds und Ausrüstung: PvX-Wiki (inoffiziell). Rush- und Farm-Abläufe: Laufanleitungen aus dem Guild Wars Wiki und PvX. Schadenswerte sind eine Rechnung nach Wiki-Regeln, kein Messwert aus dem Spiel.<br>
@@ -346,6 +390,7 @@ function hideTip(){ tip.style.display="none"; }
 document.addEventListener("pointerover", e => { if(e.pointerType!=="mouse") return; const el=e.target.closest("[data-sid]"); if(el) showTip(e, GW.skill(+el.dataset.sid)); });
 document.addEventListener("pointermove", e => { if(tip.style.display==="block") moveTip(e); });
 document.addEventListener("pointerout", e => { if(e.target.closest("[data-sid]")) hideTip(); });
+function toastHTML(h){ const el=$("toast"); el.innerHTML=h; el.style.display="block"; clearTimeout(toast._t); toast._t=setTimeout(()=>el.style.display="none",2600); }
 function toast(t){ const el=$("toast"); el.textContent=t; el.style.display="block"; clearTimeout(toast._t); toast._t=setTimeout(()=>el.style.display="none",1800); }
 async function copy(text){ try{ await navigator.clipboard.writeText(text); toast("Kopiert"); }catch(e){ toast("Kopieren nicht erlaubt"); } }
 
@@ -434,7 +479,8 @@ function compute(){
 }
 
 // ---------- Darstellung ----------
-const METRIC = { dmg:["⚔","Schaden/s","total"], heal:["✚","Heilung/s","heal"], prot:["🛡","Schutz/s","prot"] };
+const ICN = {"dmg": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14.5 3.5 20.5 3.5 20.5 9.5 9 21 3 15z\"/><path d=\"M5 13l6 6M3 21l3-3\"/></svg>", "heal": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg>", "prot": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z\"/></svg>", "copy": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"9\" y=\"9\" width=\"11\" height=\"11\" rx=\"2\"/><path d=\"M5 15V6a2 2 0 0 1 2-2h9\"/></svg>", "down": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 4v11M7 11l5 5 5-5M5 20h14\"/></svg>", "dice": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"3\"/><circle cx=\"9\" cy=\"9\" r=\".8\" fill=\"currentColor\"/><circle cx=\"15\" cy=\"15\" r=\".8\" fill=\"currentColor\"/><circle cx=\"15\" cy=\"9\" r=\".8\" fill=\"currentColor\"/><circle cx=\"9\" cy=\"15\" r=\".8\" fill=\"currentColor\"/></svg>", "list": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01\"/></svg>", "ok": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg>", "warn": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 4l9 16H3z\"/><path d=\"M12 10v4M12 17h.01\"/></svg>", "bad": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 6l12 12M18 6L6 18\"/></svg>"};
+const METRIC = { dmg:[ICN.dmg,"Schaden/s","total"], heal:[ICN.heal,"Heilung/s","heal"], prot:[ICN.prot,"Schutz/s","prot"] };
 const val = (D,k) => D ? D[METRIC[k][2]] || 0 : 0;
 function mainMetric(D){ if(!D) return "dmg"; const s=D.heal+D.prot; return s > D.total*1.2 && s > 2 ? (D.heal>=D.prot?"heal":"prot") : "dmg"; }
 function metricHTML(D){
@@ -443,8 +489,16 @@ function metricHTML(D){
   if (!list.length) return `<span class="dim">kein Schaden, keine Heilung</span>`;
   return list.map(k=>`${METRIC[k][0]} <b>${Math.round(val(D,k))}</b>/s`).join(" · ");
 }
+let LAST = null;
 function render(){
   compute();
+  const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
+  const now = { code: playerCode(), pri: state.pri, n: TEAM.length, t: state.dpsN, dmg: sum("dmg"), heal: sum("heal"), prot: sum("prot") };
+  if (LAST && LAST.code !== now.code && LAST.pri === now.pri && LAST.n === now.n && LAST.t === now.t && ui.drawer === "member" && CAT !== "run") {
+    const parts = ["dmg","heal","prot"].filter(k=>now[k]!==LAST[k]).map(k=>`${METRIC[k][0]} ${LAST[k]} → ${now[k]} <span class="${now[k]>LAST[k]?"up":"down"}">(${now[k]>LAST[k]?"+":""}${now[k]-LAST[k]})</span>`);
+    if (parts.length) toastHTML(parts.join(" · "));
+  }
+  LAST = now;
   renderSide(); renderMain();
   if (ui.drawer) renderDrawer();
   store.set("bar", playerCode());
@@ -476,20 +530,20 @@ function renderMain(){
   if (PLAN && CAT==="team") pills.push(`<button class="pill" id="p-team" aria-haspopup="menu">${esc(PLAN.def.name)} ▾</button>`);
   if (CAT!=="run" && DPS.length) {
     const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
-    pills.push(`<button class="pill" data-open="dps">⚔ <b>${sum("dmg")}</b> Schaden/s</button>`);
-    if (sum("heal")+sum("prot") > 0) pills.push(`<button class="pill" data-open="dps">✚ <b>${sum("heal")}</b> Heilung/s${sum("prot")?` · 🛡 <b>${sum("prot")}</b> Schutz/s`:""}</button>`);
+    pills.push(`<button class="pill" data-open="dps">${ICN.dmg} <b>${sum("dmg")}</b> Schaden/s</button>`);
+    if (sum("heal")+sum("prot") > 0) pills.push(`<button class="pill" data-open="dps">${ICN.heal} <b>${sum("heal")}</b> Heilung/s${sum("prot")?` · ${ICN.prot} <b>${sum("prot")}</b> Schutz/s`:""}</button>`);
   }
-  if (CHECKS.length) { const n=k=>CHECKS.filter(c=>c[0]===k).length; pills.push(`<button class="pill" data-open="info" data-tab="check">Prüfung <span class="ok">✓ ${n("ok")}</span>${n("warn")?`<span class="warn">⚠ ${n("warn")}</span>`:""}${n("bad")?`<span class="bad">✕ ${n("bad")}</span>`:""}</button>`); }
-  if (hasGuide()) pills.push(`<button class="pill" data-open="info" data-tab="guide">☰ Ablauf</button>`);
+  if (CHECKS.length) { const n=k=>CHECKS.filter(c=>c[0]===k).length; pills.push(`<button class="pill" data-open="info" data-tab="check">Prüfung <span class="ok">${ICN.ok} ${n("ok")}</span>${n("warn")?`<span class="warn">${ICN.warn} ${n("warn")}</span>`:""}${n("bad")?`<span class="bad">${ICN.bad} ${n("bad")}</span>`:""}</button>`); }
+  if (hasGuide()) pills.push(`<button class="pill" data-open="info" data-tab="guide">${ICN.list} Ablauf</button>`);
   $("pills").innerHTML = pills.join("");
   // Hinweis nur wenn nötig
   let note = "";
-  if (!pb.skills.some(Boolean)) note = `<div class="notice"><span class="sp">Die Leiste ist leer. Wähle unter „Deine Auswahl“ einen Build.</span></div>`;
+  if (!pb.skills.some(Boolean)) note = ``;
   else if (CAT!=="team") {
     const fits = SPOT && b && (b.spots||[]).includes(SPOT.key);
     if (SPOT && !fits) {
       const mine = SPOT.byClass[state.pri] || [];
-      note = `<div class="notice"><span class="sp">⚠ Deine Leiste ist für dieses Ziel nicht gelistet.</span>` + (mine.length ? mine.slice(0,2).map(x=>`<button class="btn s" data-take="${BUILDS[state.pri].indexOf(x)}">${esc(x.name)}</button>`).join("") + (mine.length>2?`<button class="btn s" data-open="build">+${mine.length-2}</button>`:"") : `<span class="mut sm">Kein Build für ${esc(GW.PROF_DE[state.pri])}</span>`) + `</div>`;
+      note = `<div class="notice"><span class="sp">${ICN.warn} Deine Leiste ist für dieses Ziel nicht gelistet.</span>` + (mine.length ? mine.slice(0,2).map(x=>`<button class="btn s" data-take="${BUILDS[state.pri].indexOf(x)}">${esc(x.name)}</button>`).join("") + (mine.length>2?`<button class="btn s" data-open="build">+${mine.length-2}</button>`:"") : `<span class="mut sm">Kein Build für ${esc(GW.PROF_DE[state.pri])}</span>`) + `</div>`;
     }
     if (SPOT && SPOT.team) note += `<div class="notice good"><span class="sp">${esc(SPOT.team)}</span><button class="btn s" id="forceteam">${state.forceTeam?"Heldenteam ausblenden":"Heldenteam zeigen"}</button></div>`;
   }
@@ -497,18 +551,21 @@ function renderMain(){
   if (missing) note += `<div class="notice"><span class="sp">${missing} Leiste(n) ohne Helden. Aktiviere mehr Helden oder Söldner.</span><button class="btn s" data-open="heroes">Helden</button></div>`;
   $("notice").innerHTML = note;
   // Karten
-  if (!pb.skills.some(Boolean)) { $("cards").innerHTML = ""; return; }
+  if (!pb.skills.some(Boolean)) { $("cards").innerHTML = `<div class="empty" style="grid-column:1/-1"><b>Noch keine Leiste</b><span class="mut">Nimm einen fertigen Build oder stell dir selbst acht Fertigkeiten zusammen.</span><div class="row"><button class="btn pri" data-open="build">Build wählen</button><button class="btn" data-member="0">Selbst bauen</button></div></div>`; return; }
   const maxOf = k => Math.max(1, ...DPS.map(d=>val(d,k)));
+  const sig = TEAM.map(m=>m.hero?m.code:"").join("|") + "|" + state.pri;
+  $("cards").classList.toggle("fresh", sig !== renderMain.sig); renderMain.sig = sig;
   $("cards").innerHTML = TEAM.map((m,i)=>{
     const d = m.bar, D = DPS[i];
     const ai = m.hero && d.skills.some(id=>{ const s=GW.skill(id); return s && GW.heroai[s.n] && GW.heroai[s.n][0]>=2; });
     const who = m.you ? "Du" : (m.name ? esc(m.name) : `<span class="missing">Kein Held frei</span>`);
-    return `<button class="card${m.you?" you":""}${ui.drawer==="member"&&ui.idx===i?" sel":""}" data-member="${i}" aria-label="Details zu ${m.you?"deiner Leiste":esc(m.name||"Held")}">
-      <div class="nm"><span class="dot" style="color:${PCOL[d.pri]};background:${PCOL[d.pri]}"></span>${who}<span class="n">${esc(pname(d.pri,d.sec))}</span></div>
+    const mk = mainMetric(D), hasVal = D && (D.total+D.heal+D.prot) >= 0.5;
+    return `<button class="card${m.you?" you":""}${ui.drawer==="member"&&ui.idx===i?" sel":""}" style="--pc:${PCOL[d.pri]};animation-delay:${i*40}ms" data-member="${i}" aria-label="Details zu ${m.you?"deiner Leiste":esc(m.name||"Held")}">
+      <div class="nm"><span class="dot" style="color:${PCOL[d.pri]};background:${PCOL[d.pri]}"></span>${who}<span class="n">${esc(pname(d.pri,d.sec))}</span>${CAT!=="run"&&hasVal?`<span class="rolechip ${mk}">${{dmg:"Schaden",heal:"Heilung",prot:"Schutz"}[mk]}</span>`:""}</div>
       <div class="rl">${esc(m.you ? "Deine Leiste · antippen zum Bearbeiten" : m.role)}</div>
       <div class="bar8">${d.skills.map(id=>ico(id)).join("")}</div>
       ${m.you ? (nd=>{ const l=nd.titles.map(x=>x.title).concat(nd.cons.map(x=>x.name)); return l.length?`<div class="need">Braucht: ${esc(l.slice(0,3).join(" · "))}${l.length>3?" …":""}</div>`:""; })(myNeeds()) : ""}
-      <div class="ft"><span>${CAT!=="run" ? metricHTML(D) : ""}</span>${ai?`<span class="flag" title="Die Helden-KI nutzt eine Fertigkeit schlecht">⚠ KI</span>`:""}</div>
+      <div class="ft"><span>${CAT!=="run" ? metricHTML(D) : ""}</span>${ai?`<span class="flag" title="Die Helden-KI nutzt eine Fertigkeit schlecht">${ICN.warn} KI</span>`:""}</div>
       ${CAT!=="run" && D ? (k=>`<div class="meter${k!=="dmg"?" sup":""}"><i style="width:${Math.round(val(D,k)/maxOf(k)*100)}%"></i></div>`)(mainMetric(D)) : ""}
     </button>`;
   }).join("") + FIXED.map(h=>`<div class="card"><div class="nm">${esc(h.fixed)}<span class="n">fester Begleiter</span></div><div class="rl">${esc(h.role)}</div></div>`).join("");
@@ -523,7 +580,7 @@ function hasGuide(){
 function openDrawer(kind, opt={}){
   ui.drawer = kind; ui.tab = opt.tab || null; if (opt.idx!=null) ui.idx = opt.idx;
   if (kind==="build") ui.bcat = CAT;
-  $("drawer").classList.add("on"); $("scrim").classList.add("on");
+  $("drawer").classList.add("on"); $("scrim").classList.add("on"); hideTip();
   renderDrawer(); renderMain();
   setTimeout(()=>$("dclose").focus(), 50);
 }
@@ -605,10 +662,10 @@ function drawMember(body){
   if (ui.tab==="bar") {
     const slots = d.skills.map((id,i)=>{ const s=GW.skill(id);
       const inner = s ? `${ico(id)}<span class="nmx">${esc(dname(s))}</span>` : `<span class="add">+</span><span class="nmx"></span>`;
-      return m.you ? `<button class="slotb" data-slot="${i}" aria-label="Slot ${i+1} tauschen">${inner}</button>` : `<div class="slotb">${inner}</div>`; }).join("");
+      return m.you ? `<button class="slotb" draggable="true" data-slot="${i}" aria-label="Slot ${i+1} tauschen">${inner}</button>` : `<div class="slotb">${inner}</div>`; }).join("");
     let html = `<div class="big8">${slots}</div>`;
     if (m.you) {
-      html += `<p class="dim sm" style="margin:8px 0 0">Fertigkeit antippen zum Tauschen.</p>`;
+      html += `<p class="dim sm" style="margin:8px 0 0">Antippen zum Tauschen, ziehen zum Umsortieren.</p>`;
       const v = GW.validate(playerBar(), false);
       const msgs = v.msgs.filter(x=>x[0]!=="ok").map(x=>[x[0],deText(x[1])]);
       if (msgs.length) html += `<h3>Hinweise</h3><ul class="msgs">${msgs.map(([c,t])=>`<li class="${c}">${esc(t)}</li>`).join("")}</ul>`;
@@ -628,8 +685,13 @@ function drawMember(body){
     const why = [];
     e.runes.forEach(r=>why.push(`<li><b>${esc(r.item)}, ${esc(attrDe(r.attr))}</b>: ${esc(r.why)}</li>`));
     items.forEach(x=>{ const ex=GW.explainEquip(x.en); if(ex.length) why.push(`<li><b>${esc(x.de)}</b>: ${esc(ex.join(" "))}</li>`); });
-    body.innerHTML = `<h3>Runen</h3>${e.runes.map(r=>`<div class="kv"><span>${esc(r.item)}</span><b>${esc(attrDe(r.attr))}</b></div>`).join("") || `<p class="mut">Keine Attributrunen nötig.</p>`}
-      <h3>Rüstung und Waffen</h3><ul>${items.map(i=>`<li>${esc(i.de)}</li>`).join("") || `<li class="mut">Keine Angabe.</li>`}</ul>
+    const isArmor = x => /Befähigung|Rune\b|Runen\b|Rüstung/.test(x.de);
+    const grp = (h, l) => l.length ? `<div class="eqc"><h4>${h}</h4>${l.map(x=>`<div>${x}</div>`).join("")}</div>` : "";
+    body.innerHTML = `<div class="eqg">` +
+      grp("Attributrunen", e.runes.map(r=>`${esc(r.item)} · <b>${esc(attrDe(r.attr))}</b>`)) +
+      grp("Rüstung", items.filter(isArmor).map(i=>esc(i.de))) +
+      grp("Waffen", items.filter(i=>!isArmor(i)).map(i=>esc(i.de))) + `</div>` +
+      (!e.runes.length && !items.length ? `<p class="mut">Keine Angabe.</p>` : "") + `
       <details class="more"><summary>Warum?</summary><ul>${why.join("")||"<li>Keine Erklärung hinterlegt.</li>"}</ul></details>
       <p class="dim sm" style="margin-top:12px">${e.derived ? "Herleitung aus den Wiki-Regeln." : `PvX: <a href="${esc(e.src.url)}" target="_blank" rel="noopener">${esc(e.src.page)}</a> (${e.own ? "Seite dieses Builds" : e.overlap + " von 8 Fertigkeiten gleich"})`}</p>`;
   } else if (ui.tab==="dps") {
@@ -783,6 +845,20 @@ function catSuggest(pb, limit){
   }
   return out.sort((a,b)=>b.score-a.score).slice(0, limit);
 }
+
+// Ziehen zum Umsortieren
+let dragFrom = null;
+document.addEventListener("dragstart", e=>{ const s=e.target.closest && e.target.closest("button.slotb"); if(!s) return; dragFrom=+s.dataset.slot; e.dataTransfer.effectAllowed="move"; hideTip(); });
+document.addEventListener("dragover", e=>{ const s=e.target.closest && e.target.closest("button.slotb"); if(s && dragFrom!=null){ e.preventDefault(); s.classList.add("over"); } });
+document.addEventListener("dragleave", e=>{ const s=e.target.closest && e.target.closest("button.slotb"); if(s) s.classList.remove("over"); });
+document.addEventListener("drop", e=>{ const s=e.target.closest && e.target.closest("button.slotb"); if(!s || dragFrom==null) return; e.preventDefault(); const to=+s.dataset.slot; if(to!==dragFrom){ const a=state.skills; [a[dragFrom],a[to]]=[a[to],a[dragFrom]]; render(); } dragFrom=null; });
+document.addEventListener("dragend", ()=>{ dragFrom=null; });
+$("cards").addEventListener("pointermove", e=>{ if(e.pointerType!=="mouse") return; const c=e.target.closest(".card"); if(!c) return; const r=c.getBoundingClientRect(); c.style.setProperty("--mx",(e.clientX-r.left)+"px"); c.style.setProperty("--my",(e.clientY-r.top)+"px"); });
+$("rnd").addEventListener("click", ()=>{
+  const cls = 1 + Math.floor(Math.random()*10), list = BUILDS[cls] || []; if(!list.length) return;
+  const i = Math.floor(Math.random()*list.length);
+  baseBuild = { pri: cls, idx: i }; state.forceTeam = false; loadCode(list[i].code); toast(GW.PROF_DE[cls] + ": " + bname(list[i]));
+});
 
 // ---------- Fertigkeitsauswahl ----------
 let pickSlot=0, pickFilter="fit";
