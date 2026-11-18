@@ -93,6 +93,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .card .ft{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);margin-top:2px}
 .card .ft b{color:#f3dfb0;font-family:var(--head)}
 .card .flag{color:var(--warn)}
+.card .need{font-size:12px;color:#e8c98a}
 .card .missing{color:var(--bad)}
 .bar8{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
 .ico{aspect-ratio:1;border-radius:5px;background:#120a08;overflow:hidden;position:relative;display:block;box-shadow:0 0 0 1px rgba(0,0,0,.8)}
@@ -211,7 +212,7 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
 
 <div class="app">
   <aside class="side" aria-label="Deine Auswahl">
-    <div class="sidehead"><span class="hd">Deine Auswahl</span><span class="mut">hier fängst du an</span></div>
+    <div class="sidehead"><span class="hd">Deine Auswahl</span></div>
     <button class="pick" id="pk-class" aria-expanded="false"><div class="lb"><span><span class="step">1</span>Klasse</span></div><div class="val" id="v-class"></div></button>
     <div class="clsgrid" id="clsgrid" hidden role="radiogroup" aria-label="Klasse"></div>
     <button class="pick" id="pk-build"><div class="lb"><span><span class="step">2</span>Build</span></div><div class="val" id="v-build"></div><div class="sub" id="v-build-sub"></div></button>
@@ -382,6 +383,7 @@ function syncSpot(cat){
   } else if (cur && cur.cat!==cat) state.spot = null;
 }
 
+function myNeeds(){ const b=currentBuild(); return GW.needs(playerBar(), b && EXACT && b.url ? (SPD.cons||{})[b.url] : null); }
 // ---------- Team berechnen ----------
 let TEAM = [], PLAN = null, CHECKS = [], DPS = [], FIXED = [], CAT = "team", SPOT = null, EXACT = false;
 function teamSlotsFor(pb, size){
@@ -398,7 +400,7 @@ function teamSlotsFor(pb, size){
 const ANN_W = { 'Spear':[17,"Speer"], 'Sword':[23,"Schwert"], 'Hammer':[16,"Hammer"], 'Scythe':[6,"Sense"], 'Axe':[12,"Axt"], 'Shortbow':[35,"Bogen"], 'Flatbow':[36,"Bogen"], 'Staff':[44,"Stab"], 'Daggers':[40,"Dolche"] };
 function computeDps(){
   const n = state.dpsN;
-  const eff = TEAM.map(m=>{ let r=[]; try{ r=GW.equipFor(m.bar, EQ).runes; }catch(e){} return GW.effRanks(m.bar, r); });
+  const eff = TEAM.map(m=>{ let r=[]; try{ r=GW.equipFor(m.bar, EQ, m.build && m.build.url).runes; }catch(e){} return GW.effRanks(m.bar, r); });
   const wOf = m => { const aw=m.build && m.build.annWeapon; return aw ? (ANN_W[aw.split(" ")[0]]||null) : null; };
   const allies = Math.max(TEAM.length, 1);
   const first = GW.dps(TEAM[0].bar, eff[0], { targets:n, weapon:wOf(TEAM[0]), foeRate:0.5, allies });
@@ -417,7 +419,7 @@ function compute(){
     PLAN = teamSlotsFor(pb, CAT==="team" ? partySize() : 8);
     const heroes = GW.assignHeroes(PLAN.slots, state.owned, state.mercs);
     PLAN.slots.forEach((s,i)=>{ const h=heroes[i]; TEAM.push({ hero:true, name:h.name, merc:h.merc, role:deText(s.role), why:deText(s.why) + (h.merc?" Ein Söldner übernimmt, weil kein passender Held frei ist.":""), code:s.code, bar:GW.decode(s.code) }); });
-    if (CAT==="team") CHECKS = GW.areaChecks(pb, PLAN.slots, PLAN.area);
+    if (CAT==="team") CHECKS = GW.areaChecks(pb, PLAN.slots, PLAN.area, partySize());
   } else if (SPOT) {
     const myOpt = b && b.optIds ? b.optIds.find(o=>SPOT.opts.includes(o)) : null;
     const slots = [];
@@ -482,7 +484,7 @@ function renderMain(){
   $("pills").innerHTML = pills.join("");
   // Hinweis nur wenn nötig
   let note = "";
-  if (!pb.skills.some(Boolean)) note = `<div class="notice"><span class="sp">Die Leiste ist leer. Fang links bei „Deine Auswahl“ an.</span></div>`;
+  if (!pb.skills.some(Boolean)) note = `<div class="notice"><span class="sp">Die Leiste ist leer. Wähle unter „Deine Auswahl“ einen Build.</span></div>`;
   else if (CAT!=="team") {
     const fits = SPOT && b && (b.spots||[]).includes(SPOT.key);
     if (SPOT && !fits) {
@@ -505,6 +507,7 @@ function renderMain(){
       <div class="nm"><span class="dot" style="color:${PCOL[d.pri]};background:${PCOL[d.pri]}"></span>${who}<span class="n">${esc(pname(d.pri,d.sec))}</span></div>
       <div class="rl">${esc(m.you ? "Deine Leiste · antippen zum Bearbeiten" : m.role)}</div>
       <div class="bar8">${d.skills.map(id=>ico(id)).join("")}</div>
+      ${m.you ? (nd=>{ const l=nd.titles.map(x=>x.title).concat(nd.cons.map(x=>x.name)); return l.length?`<div class="need">Braucht: ${esc(l.slice(0,3).join(" · "))}${l.length>3?" …":""}</div>`:""; })(myNeeds()) : ""}
       <div class="ft"><span>${CAT!=="run" ? metricHTML(D) : ""}</span>${ai?`<span class="flag" title="Die Helden-KI nutzt eine Fertigkeit schlecht">⚠ KI</span>`:""}</div>
       ${CAT!=="run" && D ? (k=>`<div class="meter${k!=="dmg"?" sup":""}"><i style="width:${Math.round(val(D,k)/maxOf(k)*100)}%"></i></div>`)(mainMetric(D)) : ""}
     </button>`;
@@ -580,10 +583,10 @@ function drawHeroes(body){
     <div class="heroes">${list.map(([n,p])=>`<label><input type="checkbox" data-hero="${esc(n)}"${state.owned.has(n)?" checked":""}> ${esc(n)} <span class="pf">${p?esc(GW.PROF_DE[p]):"beliebig"}</span></label>`).join("")}</div>`;
 }
 function equipData(d, build){
-  const e = GW.equipFor(d, EQ);
+  const e = GW.equipFor(d, EQ, build && build.url);
   const aw = build && build.annWeapon ? GW.deEquip("Anniversary " + build.annWeapon) : "";
   const items = [];
-  e.items.filter(x=>!/^(armor|armour|weapons?|runes?|insignias?|equipment)[:.]?$/i.test(x.trim())).forEach(x=>{ const de=GW.deEquip(x); if (GW.equipLineOk(de) && !items.some(i=>i.de===de)) items.push({en:x, de}); });
+  e.items.filter(x=>!/^(armor|armour|weapons?|runes?|insignias?|equipment|consumables?)[:.]?$/i.test(x.trim()) && !/essence of celerity|grail of might|armor of salvation|cupcake|rock candy|candy apple|candy corn|golden egg|pumpkin pie|war supplies|alcohol|conset|consumable/i.test(x)).forEach(x=>{ const de=GW.deEquip(x); if (GW.equipLineOk(de) && !items.some(i=>i.de===de)) items.push({en:x, de}); });
   if (aw) {
     const typ = aw.split(" ")[0].replace("Jubiläums-","");
     for (let k=items.length-1;k>=0;k--) if (/\b(Speer|Schwert|Axt|Hammer|Sense|Dolche|Bogen|Kurzbogen|Flachbogen|Stab|Schild)\b/.test(items[k].de) && !items[k].de.includes(typ) && !/Befähigung|Rune/.test(items[k].de)) items.splice(k,1);
@@ -609,6 +612,10 @@ function drawMember(body){
       const v = GW.validate(playerBar(), false);
       const msgs = v.msgs.filter(x=>x[0]!=="ok").map(x=>[x[0],deText(x[1])]);
       if (msgs.length) html += `<h3>Hinweise</h3><ul class="msgs">${msgs.map(([c,t])=>`<li class="${c}">${esc(t)}</li>`).join("")}</ul>`;
+      const nd = myNeeds();
+      if (nd.titles.length || nd.cons.length) html += `<h3>Das brauchst du</h3><ul class="msgs">` +
+        nd.titles.map(x=>`<li class="info"><b>${esc(x.title)}</b> für ${esc(x.skills.join(", "))}. Die Werte steigen mit dem Titelrang.</li>`).join("") +
+        nd.cons.map(x=>`<li class="info"><b>${esc(x.name)}</b>: ${esc(x.why)}.</li>`).join("") + `</ul>`;
     } else {
       html += `<p style="margin-top:14px">${esc(m.why||"")}</p>`;
       const ai = d.skills.map(id=>GW.skill(id)).filter(s=>s && GW.heroai[s.n] && GW.heroai[s.n][0]>=2);
@@ -624,7 +631,7 @@ function drawMember(body){
     body.innerHTML = `<h3>Runen</h3>${e.runes.map(r=>`<div class="kv"><span>${esc(r.item)}</span><b>${esc(attrDe(r.attr))}</b></div>`).join("") || `<p class="mut">Keine Attributrunen nötig.</p>`}
       <h3>Rüstung und Waffen</h3><ul>${items.map(i=>`<li>${esc(i.de)}</li>`).join("") || `<li class="mut">Keine Angabe.</li>`}</ul>
       <details class="more"><summary>Warum?</summary><ul>${why.join("")||"<li>Keine Erklärung hinterlegt.</li>"}</ul></details>
-      <p class="dim sm" style="margin-top:12px">${e.derived ? "Herleitung aus den Wiki-Regeln." : `PvX: <a href="${esc(e.src.url)}" target="_blank" rel="noopener">${esc(e.src.page)}</a> (${e.overlap} von 8 Fertigkeiten gleich)`}</p>`;
+      <p class="dim sm" style="margin-top:12px">${e.derived ? "Herleitung aus den Wiki-Regeln." : `PvX: <a href="${esc(e.src.url)}" target="_blank" rel="noopener">${esc(e.src.page)}</a> (${e.own ? "Seite dieses Builds" : e.overlap + " von 8 Fertigkeiten gleich"})`}</p>`;
   } else if (ui.tab==="dps") {
     const sec = k => { const ps = D.parts.filter(p=>p.cat===k); return ps.length ? `<h3>${METRIC[k][0]} ${METRIC[k][1].replace("/s","")} · ${Math.round(val(D,k))}/s</h3>` + ps.map(p=>`<div class="dpsrow"><div>${p.sid?`<span data-sid="${p.sid}">${esc(p.name)}</span>`:esc(p.name)}<div class="dim sm">${esc(p.detail)}</div></div><b>${p.dps.toFixed(1)}</b></div>`).join("") : ""; };
     body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="mut sm">Dauerwerte pro Sekunde</div>${targetSeg()}</div>

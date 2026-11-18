@@ -215,15 +215,20 @@
   function slotPref(k) { return typeof k === "string" ? PREF[k] : (k.pref || []); }
   function heroProf(n) { const h = HEROES.find(x => x[0] === n); return h ? h[1] : -1; }
 
-  function areaChecks(bar, slots, area) {
+  function areaChecks(bar, slots, area, size) {
     const out = [];
     const all = [bar.skills, ...slots.map(k => decode(slotCode(k)).skills)].flat().filter(Boolean).map(skill).filter(Boolean);
     const cnt = t => all.filter(s => s.tags.has(t));
     const names = arr => [...new Set(arr.map(s => s.de || s.n))].join(", ");
     const flags = area ? area.flags : [];
     const rez = cnt("rez");
-    const need = flags.includes("norez") ? 3 : 2;
-    out.push([rez.length >= need ? "ok" : "warn", "Wiederbelebung: " + rez.length + (rez.length ? " (" + names(rez) + ")" : "") + (flags.includes("norez") ? ". Keine Wiederbelebungs-Schreine, Ziel mindestens 3." : "")]);
+    const sz = size || 8;
+    const need = flags.includes("norez") ? 3 : sz >= 6 ? 2 : 1;
+    out.push([rez.length >= need ? "ok" : "warn", "Wiederbelebung: " + rez.length + (rez.length ? " (" + names(rez) + ")" : "") + (flags.includes("norez") ? ". Keine Wiederbelebungs-Schreine, Ziel mindestens 3." : rez.length < need ? ". Für " + sz + " Spieler mindestens " + need + "." : "")]);
+    if (sz < 8 && !flags.length) {
+      const sup = slots.filter(k => { const d = decode(slotCode(k)); const top = d.attrs.slice().sort((a, b) => b[1] - a[1])[0] || [0]; return d.pri === 3 || [33, 32, 4, 13, 15].includes(top[0]); }).length;
+      out.push([sup >= (sz >= 6 ? 2 : 1) ? "ok" : "warn", "Heiler und Schützer im Team: " + sup + ". Bei " + sz + " Spielern " + (sz >= 6 ? "mindestens 2." : "mindestens 1.")]);
+    }
     if (flags.includes("hex")) { const x = cnt("hexrem"); out.push([x.length >= 3 ? "ok" : x.length ? "warn" : "bad", "Verhexungs-Entfernung: " + x.length + (x.length ? " (" + names(x) + ")" : "") + ". Laut Wiki viele gefährliche Verhexungen."]); }
     if (flags.includes("cond")) { const x = cnt("condrem"); out.push([x.length >= 2 ? "ok" : x.length ? "warn" : "bad", "Zustands-Entfernung: " + x.length + (x.length ? " (" + names(x) + ")" : "") + (x.length < 2 ? ". Knapp für dieses Gebiet, nimm selbst eine mit." : ".")]); }
     if (flags.includes("ench")) { const x = cnt("ench"); out.push([x.length > 4 ? "warn" : "ok", "Verzauberungen im Team: " + x.length + (x.length ? " (" + names(x) + ")" : "") + ". Gegner entfernen dort oft Verzauberungen."]); }
@@ -398,16 +403,28 @@
     EXPL.forEach(([re, t]) => { if (re.test(text) && !out.includes(t)) out.push(t); });
     return out;
   };
-  GW.equipFor = function (bar, EQ) {
+  GW.equipFor = function (bar, EQ, url) {
     const ids = new Set(bar.skills.filter(Boolean));
-    let best = null, bestOv = 0;
+    let best = null, bestOv = 0, own = null, ownOv = -1;
     EQ.forEach(e => {
-      if (e.pri !== bar.pri) return;
       const ov = e.s.filter(x => ids.has(x)).length;
+      // Einträge der eigenen PvX-Seite des Builds gehen vor (auch bei "für jede Klasse")
+      if (url && e.url === url && e.eq.length && ov > ownOv) { ownOv = ov; own = e; }
+      if (e.pri !== bar.pri) return;
       if (ov > bestOv) { bestOv = ov; best = e; }
     });
     const need = Math.min(5, Math.max(3, ids.size - 2));
     const runes = [];
+    if (own && ownOv >= 2) {
+      let headUsed = false;
+      // Runen gelten nur für Attribute der eigenen Primärklasse
+      if (own.pri === bar.pri) own.r.forEach(([a, add]) => {
+        if (add === 1 && !headUsed) { headUsed = true; runes.push({ item: "Kopfteil +1", attr: a, why: "Das Kopfteil gibt +1 auf ein Attribut deiner Primärklasse und kostet keine Lebenspunkte." }); return; }
+        const R = RUNE[add];
+        if (R) runes.push({ item: R[0], attr: a, why: R[1] + ". Attributrunen derselben Art stapeln nicht, der Lebenspunkte-Malus aber schon." });
+      });
+      return { src: own, overlap: ownOv, items: own.eq, runes, derived: false, own: true };
+    }
     if (best && bestOv >= need) {
       let headUsed = false;
       best.r.forEach(([a, add]) => {
@@ -466,6 +483,8 @@
       [/\bfull\b/gi, "5×"], [/(\d+)\^ench(anted)?/gi, "+$1 Lebenspunkte (verzaubert)"], [/(\d+)\s?% ench\b/gi, "$1 % längere Verzauberungen"],
       [/\+(\d+) vs\.? (blunt|piercing|slashing|physical|elemental|fire|cold|lightning|earth)\b/gi, (m, n, t) => "+" + n + " Rüstung gegen " + ({ blunt: "stumpfen ", piercing: "Stich-", slashing: "Hieb-", physical: "physischen ", elemental: "Elementar-", fire: "Feuer-", cold: "Kälte-", lightning: "Blitz-", earth: "Erd-" }[t.toLowerCase()]) + "Schaden"],
       [/\+(\d+) energy\b/gi, "+$1 Energie"], [/\bwhile enchanted\b/gi, "solange verzaubert"], [/\bwhile hexed\b/gi, "solange verhext"], [/\bench\b/gi, "Verzauberung"],
+      [/\blongbow\b/gi, "Langbogen"], [/\bshortbow\b/gi, "Kurzbogen"], [/\bflatbow\b/gi, "Flachbogen"], [/\brecurve bow\b/gi, "Recurvebogen"], [/\bhornbow\b/gi, "Hornbogen"],
+      [/\bmartial (weapon|waffe)\b/gi, "Nahkampfwaffe"], [/\bcontaining\b/gi, "mit"], [/\barmor\b/gi, "Rüstung"], [/\bhammer\b/gi, "Hammer"],
       [/\bwith an?\b/gi, "mit"], [/\bwith\b/gi, "mit"], [/\bor\b/gi, "oder"], [/\band\b/gi, "und"], [/\bon the headpiece\b/gi, "auf dem Kopfteil"], [/\bbest vigor rune you can afford\b/gi, "die beste bezahlbare"],
       [/\bany\b/gi, "beliebig"], [/\binscription as you see fit\b/gi, "Inschrift nach Wahl"], [/^\s*a\s+/i, " "]
     ];
@@ -537,9 +556,10 @@
     }
     let attackRate = 0;
     if (w) {
-      const r = rank(wAttr), avg = (w[1] + w[2]) / 2, crit = Math.min(1, (r + (bar.pri === 7 ? rank(35) : 0)) / 100);
+      const r = rank(wAttr), avg = (w[1] + w[2]) / 2, wc = r <= 4 ? 0.01 + 0.0105 * r : 0.052 + 0.01575 * (r - 4), cs = bar.pri === 7 ? rank(35) / 100 : 0, crit = Math.min(1, 1 - (1 - Math.min(wc, 0.3)) * (1 - cs));
       let per = ((1 - crit) * avg + crit * w[2] * Math.SQRT2) * strikeFactor(r);
       if (w[0] === "Dolche") per *= 1 + (0.02 + 0.02 * r);
+      notes.push("Kritische Treffer: Chance nach Spieler-Messung im Wiki (etwa 18 % bei Rang 12), bei Assassinen plus 1 % je Rang Kritische Stöße.");
       attackRate = 1 / w[3];
       const hits = Math.min(n, w[4]);
       out.push({ name: "Normale Angriffe (" + w[0] + ")", dps: per * attackRate * hits, kind: "Waffe", detail: Math.round(per) + " je Treffer, alle " + w[3] + " s" + (hits > 1 ? ", " + hits + " Ziele" : "") });
@@ -547,7 +567,7 @@
     // Energie
     let pips = REGEN[bar.pri] || 2;
     const income = pips / 3;
-    const uses = [];
+    const uses = []; let usedTitle = false;
     for (const [i, s] of sk) {
       const dRaw = (s.d || "").toLowerCase(), dd = (s.dd || "");
       // Schaden an eigenen Geistern und Verstärkungen für Verbündete zählen nicht als Schaden am Gegner
@@ -557,7 +577,9 @@
       const T = Math.max(0.25, rc + ac + (/spell/i.test(s.t) ? 0.75 : 0));
       const durM = d.match(/\((\d+(?:\.\.\.\d+)?) seconds?(?:\[s\])?\.?\)/);
       const dur = durM ? at(durM[1], rank(s.aid)) : 0;
-      const r = rank(s.aid);
+      const title = /rank$/.test(s.a || "");
+      const r = title ? 15 : rank(s.aid);
+      if (title) usedTitle = true;
       const c = String(s.cost || "");
       let cost = /E$/.test(c) ? parseFloat(c) : 0, adr = /A$/.test(c) ? parseFloat(c) : 0;
       if (cost && bar.pri === 2 && (/attack|ritual|touch/i.test(s.t + " " + d) || s.p === 2)) cost *= 1 - 0.04 * rank(23);
@@ -658,6 +680,7 @@
     const deg = out.filter(o => /Zustand|Degeneration/.test(o.kind)).reduce((a, o) => a + o.dps, 0);
     const cap = 20 * n;
     if (deg > cap) { const k = cap / deg; out.forEach(o => { if (/Zustand|Degeneration/.test(o.kind)) o.dps *= k; }); notes.push("Degeneration auf 10 Pips je Ziel begrenzt."); }
+    if (usedTitle) notes.push("Titel-Fertigkeiten sind mit maximalem Titelrang gerechnet.");
     out.forEach(o => { if (!o.cat) o.cat = "dmg"; });
     const sum = c => out.filter(o => o.cat === c).reduce((a, o) => a + o.dps, 0);
     const total = sum("dmg"), heal = sum("heal"), prot = sum("prot");
@@ -668,7 +691,8 @@
     const m = new Map(bar.attrs.filter(a => a[1] > 0));
     const add = { "Kopfteil +1": 1, "Überlegene Rune (+3)": 3, "Höhere Rune (+2)": 2, "Kleinere Rune (+1)": 1 };
     const seen = new Set();
-    (runes || []).forEach(r => { const k = r.attr + "|" + (r.item === "Kopfteil +1" ? "h" : "r"); if (seen.has(k)) return; seen.add(k); m.set(r.attr, (m.get(r.attr) || 0) + (add[r.item] || 0)); });
+    const prim = new Set(GW.PROF_ATTRS[bar.pri] || []);
+    (runes || []).forEach(r => { if (!prim.has(r.attr)) return; const k = r.attr + "|" + (r.item === "Kopfteil +1" ? "h" : "r"); if (seen.has(k)) return; seen.add(k); m.set(r.attr, (m.get(r.attr) || 0) + (add[r.item] || 0)); });
     return m;
   };
   // Gruppengröße: Wichtigste Helden zuerst behalten (Heilung/Schutz, dann Mesmer-Schaden, dann Rest)
@@ -688,5 +712,20 @@
     const sec = d.sec === pri ? 0 : d.sec;
     const skills = d.skills.map(id => { const s = GW.skill(id); return s && (!s.p || s.p === pri || s.p === sec) ? id : 0; });
     return GW.encode(pri, sec, d.attrs.filter(a => GW.allowedAttrs(pri, sec).has(a[0])), skills);
+  };
+})(typeof window !== "undefined" ? window : globalThis);
+
+// ---------- Voraussetzungen: Titel und Verbrauchsgüter ----------
+(function (G) {
+  const GW = G.GW;
+  const TITLE = { "Deldrimor rank": "Deldrimor-Titel", "Asura rank": "Asura-Titel", "Norn rank": "Norn-Titel", "Ebon Vanguard rank": "Ebon-Vorhut-Titel", "Sunspear rank": "Sonnenspeer-Titel", "Lightbringer rank": "Lichtbringer-Titel", "Allegiance rank": "Kurzick- oder Luxon-Titel" };
+  GW.needs = function (bar, pageCons) {
+    const sk = bar.skills.map(GW.skill).filter(Boolean);
+    const titles = {};
+    sk.forEach(s => { const t = TITLE[s.a]; if (t) (titles[t] = titles[t] || []).push(s.de || s.n); });
+    const cons = new Map();
+    sk.forEach(s => { if (/while drunk|if you are drunk|drunk/i.test(s.d || "")) cons.set("Alkohol", (s.de || s.n) + " wirkt nur voll, wenn du betrunken bist"); });
+    (pageCons || []).forEach(c => { if (!cons.has(c)) cons.set(c, "laut PvX-Seite des Builds"); });
+    return { titles: Object.entries(titles).map(([t, l]) => ({ title: t, skills: l })), cons: [...cons].map(([name, why]) => ({ name, why })) };
   };
 })(typeof window !== "undefined" ? window : globalThis);
