@@ -164,6 +164,7 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
 .dpsrow b{font-family:var(--head);color:#f3dfb0}
 .meter{height:4px;border-radius:2px;background:rgba(255,255,255,.06);margin-top:4px;overflow:hidden}
 .meter i{display:block;height:100%;background:linear-gradient(90deg,var(--lacq2),var(--gold))}
+.meter.sup i{background:linear-gradient(90deg,#2f7d6e,#7cc59a)}
 
 /* Menü */
 .menu{position:fixed;z-index:45;min-width:240px;max-width:340px;padding:6px;border-radius:12px;background:#22130e;border:1px solid var(--gold);box-shadow:0 12px 30px rgba(0,0,0,.5)}
@@ -399,8 +400,9 @@ function computeDps(){
   const n = state.dpsN;
   const eff = TEAM.map(m=>{ let r=[]; try{ r=GW.equipFor(m.bar, EQ).runes; }catch(e){} return GW.effRanks(m.bar, r); });
   const wOf = m => { const aw=m.build && m.build.annWeapon; return aw ? (ANN_W[aw.split(" ")[0]]||null) : null; };
-  const first = GW.dps(TEAM[0].bar, eff[0], { targets:n, weapon:wOf(TEAM[0]), foeRate:0.5 });
-  return TEAM.map((m,i)=> i===0 ? first : GW.dps(m.bar, eff[i], { targets:n, foeRate:0.5, physRate:first.physical }));
+  const allies = Math.max(TEAM.length, 1);
+  const first = GW.dps(TEAM[0].bar, eff[0], { targets:n, weapon:wOf(TEAM[0]), foeRate:0.5, allies });
+  return TEAM.map((m,i)=> i===0 ? first : GW.dps(m.bar, eff[i], { targets:n, foeRate:0.5, physRate:first.physical, allies }));
 }
 function compute(){
   EXACT = syncBase();
@@ -430,6 +432,15 @@ function compute(){
 }
 
 // ---------- Darstellung ----------
+const METRIC = { dmg:["⚔","Schaden/s","total"], heal:["✚","Heilung/s","heal"], prot:["🛡","Schutz/s","prot"] };
+const val = (D,k) => D ? D[METRIC[k][2]] || 0 : 0;
+function mainMetric(D){ if(!D) return "dmg"; const s=D.heal+D.prot; return s > D.total*1.2 && s > 2 ? (D.heal>=D.prot?"heal":"prot") : "dmg"; }
+function metricHTML(D){
+  if (!D) return "";
+  const list = ["dmg","heal","prot"].filter(k=>val(D,k)>=0.5).sort((a,b)=>val(D,b)-val(D,a)).slice(0,2);
+  if (!list.length) return `<span class="dim">kein Schaden, keine Heilung</span>`;
+  return list.map(k=>`${METRIC[k][0]} <b>${Math.round(val(D,k))}</b>/s`).join(" · ");
+}
 function render(){
   compute();
   renderSide(); renderMain();
@@ -461,7 +472,11 @@ function renderMain(){
   // Kennzahlen
   const pills = [];
   if (PLAN && CAT==="team") pills.push(`<button class="pill" id="p-team" aria-haspopup="menu">${esc(PLAN.def.name)} ▾</button>`);
-  if (CAT!=="run" && DPS.length) pills.push(`<button class="pill" data-open="dps">⚔ <b>${Math.round(DPS.reduce((a,d)=>a+d.total,0))}</b> Schaden/s</button>`);
+  if (CAT!=="run" && DPS.length) {
+    const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
+    pills.push(`<button class="pill" data-open="dps">⚔ <b>${sum("dmg")}</b> Schaden/s</button>`);
+    if (sum("heal")+sum("prot") > 0) pills.push(`<button class="pill" data-open="dps">✚ <b>${sum("heal")}</b> Heilung/s${sum("prot")?` · 🛡 <b>${sum("prot")}</b> Schutz/s`:""}</button>`);
+  }
   if (CHECKS.length) { const n=k=>CHECKS.filter(c=>c[0]===k).length; pills.push(`<button class="pill" data-open="info" data-tab="check">Prüfung <span class="ok">✓ ${n("ok")}</span>${n("warn")?`<span class="warn">⚠ ${n("warn")}</span>`:""}${n("bad")?`<span class="bad">✕ ${n("bad")}</span>`:""}</button>`); }
   if (hasGuide()) pills.push(`<button class="pill" data-open="info" data-tab="guide">☰ Ablauf</button>`);
   $("pills").innerHTML = pills.join("");
@@ -481,7 +496,7 @@ function renderMain(){
   $("notice").innerHTML = note;
   // Karten
   if (!pb.skills.some(Boolean)) { $("cards").innerHTML = ""; return; }
-  const maxD = Math.max(1, ...DPS.map(d=>d.total));
+  const maxOf = k => Math.max(1, ...DPS.map(d=>val(d,k)));
   $("cards").innerHTML = TEAM.map((m,i)=>{
     const d = m.bar, D = DPS[i];
     const ai = m.hero && d.skills.some(id=>{ const s=GW.skill(id); return s && GW.heroai[s.n] && GW.heroai[s.n][0]>=2; });
@@ -490,8 +505,8 @@ function renderMain(){
       <div class="nm"><span class="dot" style="color:${PCOL[d.pri]};background:${PCOL[d.pri]}"></span>${who}<span class="n">${esc(pname(d.pri,d.sec))}</span></div>
       <div class="rl">${esc(m.you ? "Deine Leiste · antippen zum Bearbeiten" : m.role)}</div>
       <div class="bar8">${d.skills.map(id=>ico(id)).join("")}</div>
-      <div class="ft"><span>${CAT!=="run" && D ? `⚔ <b>${Math.round(D.total)}</b>/s` : ""}</span>${ai?`<span class="flag" title="Die Helden-KI nutzt eine Fertigkeit schlecht">⚠ KI</span>`:""}</div>
-      ${CAT!=="run" && D ? `<div class="meter"><i style="width:${Math.round(D.total/maxD*100)}%"></i></div>` : ""}
+      <div class="ft"><span>${CAT!=="run" ? metricHTML(D) : ""}</span>${ai?`<span class="flag" title="Die Helden-KI nutzt eine Fertigkeit schlecht">⚠ KI</span>`:""}</div>
+      ${CAT!=="run" && D ? (k=>`<div class="meter${k!=="dmg"?" sup":""}"><i style="width:${Math.round(val(D,k)/maxOf(k)*100)}%"></i></div>`)(mainMetric(D)) : ""}
     </button>`;
   }).join("") + FIXED.map(h=>`<div class="card"><div class="nm">${esc(h.fixed)}<span class="n">fester Begleiter</span></div><div class="rl">${esc(h.role)}</div></div>`).join("");
 }
@@ -581,7 +596,7 @@ function drawMember(body){
   const d = m.bar, D = DPS[ui.idx];
   const C = sdata.chg || {};
   const chg = d.skills.map(id=>GW.skill(id)).filter(s=>s && C[s.n.replace(/ \((Kurzick|Luxon|PvP)\)$/,"")]);
-  tabs([["bar","Leiste"],["eq","Ausrüstung"],["dps","Schaden",CAT==="run"],["code","Code"],["chg",`Änderungen${chg.length?" "+chg.length:""}`,!chg.length]]);
+  tabs([["bar","Leiste"],["eq","Ausrüstung"],["dps","Werte",CAT==="run"],["code","Code"],["chg",`Änderungen${chg.length?" "+chg.length:""}`,!chg.length]]);
   $("dtitle").innerHTML = `${m.you?"Deine Leiste":esc(m.name||"Kein Held frei")}<small>${esc(pname(d.pri,d.sec))}${m.you?"":" · "+esc(m.role)}</small>`;
   const attrs = d.attrs.filter(a=>a[1]>0).map(a=>`<div class="kv"><span>${esc(attrDe(a[0]))}</span><b>${a[1]}</b></div>`).join("");
   if (ui.tab==="bar") {
@@ -611,8 +626,9 @@ function drawMember(body){
       <details class="more"><summary>Warum?</summary><ul>${why.join("")||"<li>Keine Erklärung hinterlegt.</li>"}</ul></details>
       <p class="dim sm" style="margin-top:12px">${e.derived ? "Herleitung aus den Wiki-Regeln." : `PvX: <a href="${esc(e.src.url)}" target="_blank" rel="noopener">${esc(e.src.page)}</a> (${e.overlap} von 8 Fertigkeiten gleich)`}</p>`;
   } else if (ui.tab==="dps") {
-    body.innerHTML = `<div class="row" style="justify-content:space-between"><div><div class="mut sm">Schaden pro Sekunde, Dauerwert</div><div class="hd" style="font-size:28px;color:#f3dfb0">${Math.round(D.total)}</div></div>${targetSeg()}</div>
-      ${D.parts.map(p=>`<div class="dpsrow"><div>${p.sid?`<span data-sid="${p.sid}">${esc(p.name)}</span>`:esc(p.name)}<div class="dim sm">${esc(p.detail)}</div></div><b>${p.dps.toFixed(1)}</b></div>`).join("") || `<p class="mut">Kein eigener Schaden.</p>`}
+    const sec = k => { const ps = D.parts.filter(p=>p.cat===k); return ps.length ? `<h3>${METRIC[k][0]} ${METRIC[k][1].replace("/s","")} · ${Math.round(val(D,k))}/s</h3>` + ps.map(p=>`<div class="dpsrow"><div>${p.sid?`<span data-sid="${p.sid}">${esc(p.name)}</span>`:esc(p.name)}<div class="dim sm">${esc(p.detail)}</div></div><b>${p.dps.toFixed(1)}</b></div>`).join("") : ""; };
+    body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="mut sm">Dauerwerte pro Sekunde</div>${targetSeg()}</div>
+      ${["dmg","heal","prot"].map(sec).join("") || `<p class="mut">Keine berechenbaren Werte.</p>`}
       ${D.notes.length?`<p class="dim sm" style="margin-top:10px">${D.notes.map(esc).join(" ")}</p>`:""}`;
   } else if (ui.tab==="code") {
     let html = `<h3>Vorlagen-Code</h3><div class="code"><input readonly value="${esc(m.code)}" aria-label="Code"><button class="btn s" data-copy="${esc(m.code)}">Kopieren</button></div>`;
@@ -632,15 +648,18 @@ function drawMember(body){
 function targetSeg(){ return `<div><div class="mut sm" style="text-align:right">Ziele</div><div class="seg" style="width:130px">${[1,3,5].map(k=>`<button class="${state.dpsN===k?"on":""}" data-dpsn="${k}">${k}</button>`).join("")}</div></div>`; }
 function drawDps(body){
   $("dtabs").hidden = true; $("dtabs").innerHTML = "";
-  const total = DPS.reduce((a,d)=>a+d.total,0), max = Math.max(1,...DPS.map(d=>d.total));
-  $("dtitle").innerHTML = `Schaden pro Sekunde<small>Dauerwert gegen 60 Rüstung</small>`;
-  body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="hd" style="font-size:30px;color:#f3dfb0">${Math.round(total)}</div>${targetSeg()}</div>
-    ${TEAM.map((m,i)=>`<button class="opt" style="margin-top:6px" data-member="${i}"><div class="t"><span class="nm">${m.you?"Du":esc(m.name||"–")}</span><span class="sp" style="flex:1"></span><b class="hd">${Math.round(DPS[i].total)}</b></div><div class="meter"><i style="width:${Math.round(DPS[i].total/max*100)}%"></i></div></button>`).join("")}
+  const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
+  const maxOf = k => Math.max(1, ...DPS.map(d=>val(d,k)));
+  $("dtitle").innerHTML = `Team-Werte<small>Dauerwerte pro Sekunde</small>`;
+  body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="row">${["dmg","heal","prot"].map(k=>`<div><div class="mut sm">${METRIC[k][1]}</div><div class="hd" style="font-size:24px;color:#f3dfb0">${METRIC[k][0]} ${sum(k)}</div></div>`).join("")}</div>${targetSeg()}</div>
+    ${TEAM.map((m,i)=>{ const k=mainMetric(DPS[i]); return `<button class="opt" style="margin-top:6px" data-member="${i}"><div class="t"><span class="nm">${m.you?"Du":esc(m.name||"–")}</span><span style="flex:1"></span><span class="sm">${metricHTML(DPS[i])}</span></div><div class="meter${k!=="dmg"?" sup":""}"><i style="width:${Math.round(val(DPS[i],k)/maxOf(k)*100)}%"></i></div></button>`; }).join("")}
     <details class="more"><summary>So wird gerechnet</summary><ul class="sm">
       <li>Jede Fertigkeit so oft, wie Aufladen, Aktivierung und 0,75 s Nachwirkzeit erlauben. Reicht die Energie nicht, sinkt die Nutzung anteilig (1 Pip = 1 Energie alle 3 s).</li>
       <li>Attributränge inklusive empfohlener Runen. Waffen nach Wiki-Werten, kritische Treffer mit Rang als Prozent-Chance.</li>
       <li>Brennen −7, Gift und Krankheit −4, Blutung −3 Pips (1 Pip = 2 Lebenspunkte/s), höchstens 10 Pips je Ziel.</li>
       <li>Nicht drin: Diener, Geister, Tiere, Energie aus Seelensammlung, kritischen Treffern und Führung. Auslöser durch Gegner-Aktionen: eine Aktion alle 2 s angenommen.</li>
+      <li>Heilung: direkte Heilung, Regeneration und ausgelöste Heilung, Mönchszauber mit Gunst der Götter (3,2 je Rang). Gruppenheilung zählt für jedes Gruppenmitglied.</li>
+      <li>Schutz ist eine Schätzung: Jedes geschützte Gruppenmitglied wird alle 2 s für 80 Schaden getroffen und hat 480 Lebenspunkte. Gezählt werden Schadensgrenzen, Schadensminderung, Blocken und Rüstungsboni.</li>
     </ul></details>`;
 }
 function drawInfo(body){
@@ -724,6 +743,40 @@ document.addEventListener("keydown", e=>{
 document.addEventListener("paste", e=>{ if(e.target.id==="codein") setTimeout(()=>loadCode(e.target.value),0); });
 document.addEventListener("keydown", e=>{ if(e.target.id==="codein" && e.key==="Enter") loadCode(e.target.value); });
 
+// ---------- Vorschläge für Rush- und Farm-Leisten ----------
+// Grundlage: wie oft eine Fertigkeit in den PvX-Builds dieser Art vorkommt, plus ihre Rolle laut Beschreibung
+const ROLE_RX = [[/move \d+% faster|moves? \d+% faster|33% faster|25% faster/i,"Tempo"],[/cannot be knocked down|knock-?down/i,"gegen Niederschlag"],[/shadow ?step|teleport/i,"Schattenschritt"],[/block|blocks/i,"Blocken"],[/cannot be crippled|crippled/i,"gegen Verkrüppeln"],[/heal|health regeneration|gain \d+(\.\.\.\d+)? health/i,"Selbstheilung"],[/damage.*reduc|reduced to|lose no more|cannot lose more/i,"Schadensschutz"],[/remove.*hex|hexes? (are|is) removed/i,"entfernt Verhexungen"],[/remove.*condition|conditions? (are|is) removed/i,"entfernt Zustände"],[/energy/i,"Energie"]];
+const CAT_FREQ = {};
+function catFreq(cat){
+  if (CAT_FREQ[cat]) return CAT_FREQ[cat];
+  const f = new Map(); let n = 0;
+  for (const k in BUILDS) for (const b of BUILDS[k]) if ((b.cat||"team")===cat) { n++; try{ new Set(GW.decode(b.code).skills.filter(Boolean)).forEach(id=>f.set(id,(f.get(id)||0)+1)); }catch(e){} }
+  return CAT_FREQ[cat] = { f, n };
+}
+function catSuggest(pb, limit){
+  const { f, n } = catFreq(CAT);
+  const have = new Set(pb.skills.filter(Boolean));
+  const spotB = SPOT ? new Set(Object.values(SPOT.byClass).flat().flatMap(b=>{ try{ return GW.decode(b.code).skills; }catch(e){ return []; } })) : new Set();
+  const hasElite = pb.skills.some(id=>{ const s=GW.skill(id); return s && s.e; });
+  const roles = s => ROLE_RX.filter(([rx])=>rx.test(s.d||"")).map(x=>x[1]);
+  const haveRoles = new Set(pb.skills.flatMap(id=>{ const s=GW.skill(id); return s && id!==pb.skills[pickSlot] ? roles(s) : []; }));
+  const out = [];
+  for (const [id, c] of f) {
+    const s = GW.skill(id);
+    if (!s || have.has(id) || s.pvp) continue;
+    if (s.p && s.p!==pb.pri && s.p!==pb.sec) continue;
+    if (s.e && hasElite && !(GW.skill(pb.skills[pickSlot])||{}).e) continue;
+    const r = roles(s);
+    let score = c / n * 100 + (spotB.has(id) ? 25 : 0) + r.filter(x=>!haveRoles.has(x)).length * 8;
+    const why = [];
+    if (spotB.has(id)) why.push("in Builds für dieses Ziel");
+    why.push(`in ${c} von ${n} ${CAT==="run"?"Rush":"Farm"}-Builds`);
+    if (r.length) why.push(r.slice(0,2).join(", ") + (r.some(x=>!haveRoles.has(x)) ? " (fehlt dir noch)" : ""));
+    out.push({ id, score, why });
+  }
+  return out.sort((a,b)=>b.score-a.score).slice(0, limit);
+}
+
 // ---------- Fertigkeitsauswahl ----------
 let pickSlot=0, pickFilter="fit";
 function openPicker(i){ pickSlot=i; $("mslot").textContent=i+1; $("msearch").value=""; $("modal").classList.add("open"); renderPicker(); setTimeout(()=>$("msearch").focus(),30); }
@@ -746,12 +799,12 @@ function renderPicker(){
   const rank = s => s.p===state.pri ? 0 : s.p && s.p===state.sec ? 1 : 2;
   list.sort((a,b)=> (rank(a)-rank(b)) || (a.p-b.p) || sattr(a).localeCompare(sattr(b),"de") || dname(a).localeCompare(dname(b),"de"));
   const pb = playerBar(), allowed = new Set(list.map(s=>s.id));
-  const sug = pickFilter==="all" ? [] : GW.suggest(pb, pickSlot, SYN, 12).filter(r=>allowed.has(r.id));
+  const sug = pickFilter==="all" ? [] : (CAT==="team" ? GW.suggest(pb, pickSlot, SYN, 12) : catSuggest(pb, 14)).filter(r=>allowed.has(r.id));
   const sugIds = new Set(sug.map(r=>r.id));
   const shown = list.filter(s=>!sugIds.has(s.id)).slice(0, 400);
   const card = (s, r) => `<button class="sk${r?" sug":""}" data-pick="${s.id}" data-sid="${s.id}"><span class="ic" style="${iconStyle(s,40)}"></span><span class="tx"><div>${esc(dname(s))}${s.e?" ★":""}${s.id===pb.skills[pickSlot]?" (aktuell)":""}</div><div class="s">${esc(sattr(s)||"ohne Attribut")}</div>${r?`<div class="why">${esc(r.why.slice(0,2).join(" · "))}</div>`:""}</span></button>`;
   let out = "";
-  if (sug.length) out += `<div class="mhd">Passt zu deiner Leiste</div>` + sug.map(r=>card(GW.skill(r.id), r)).join("") + `<div class="mhd">Alle</div>`;
+  if (sug.length) out += `<div class="mhd">${CAT==="run"?"Passt zum Rushen":CAT==="farm"?"Passt zum Farmen":"Passt zu deiner Leiste"}</div>` + sug.map(r=>card(GW.skill(r.id), r)).join("") + `<div class="mhd">Alle</div>`;
   out += shown.map(s=>card(s)).join("");
   $("mlist").innerHTML = (sug.length || shown.length) ? out : `<div class="empty">Nichts gefunden.</div>`;
 }

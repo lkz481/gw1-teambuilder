@@ -156,57 +156,6 @@
 ]
 },
 {
-"key": "urgoz",
-"name": "7 Hero Urgoz",
-"desc": "PvX \"Great\", eigens für Urgoz' Bau mit Helden gebaut: drei Mönche (UA und zwei Strahl-des-Urteils), zwei Ritualisten, Panik- und Unfähigkeit-Mesmer.",
-"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz",
-"area": "urgoz",
-"slots": [
-{
-"code": "OACjEyiM5MXzyJAAAwMlmTuhJ",
-"role": "Siegel der Geister-Heiler",
-"why": "Geisterwand vorne, Heilung und Energie über Geist abzapfen.",
-"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
-},
-{
-"code": "OAKkYhgcoQqD206FOfcQHqpz8iB",
-"role": "Seelenverflechtung-Schutz mit Rand der Auslöschung",
-"why": "Schutz plus Rand der Auslöschung als Hauptschaden gegen Urgoz. Fesselnde Ketten hält Gegner zusammen.",
-"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
-},
-{
-"code": "OwUTMwGDVihoBcj4u5ioLa5LDA",
-"role": "Unnachgiebige Aura-Heiler",
-"why": "Wiederbelebung ohne Schreine: belebt Tote sofort wieder.",
-"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
-},
-{
-"code": "OwAT44XCzx67zo+uEAAAoecXB",
-"role": "Strahl des Urteils-Mönch 1",
-"why": "Flächenschaden gegen geballte Gegner, reinigt mit Zustand zerschlagen und Verhexung zerschlagen.",
-"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
-},
-{
-"code": "Owkj4wQopOWffG13lcRqx+4dM",
-"role": "Strahl des Urteils-Mönch 2",
-"why": "Zweiter Strahl, dazu \"Haltet Eure Stellung!\" und \"Ergebt Euch nicht!\".",
-"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
-},
-{
-"code": "OQlkAgC8AaeDNY6lDMdNhcaGYHD",
-"role": "Panik-Mesmer",
-"why": "Panik und Chaossturm, wichtig gegen geballte Blutsauger.",
-"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
-},
-{
-"code": "OQRUAwAPyTRAAIgrAkA2BAA5UZAA",
-"role": "Unbeholfenheit-Mesmer",
-"why": "Wanderndes Auge, Ungeschick und Arkanes Rätsel gegen Nahkämpfer und Zauberer.",
-"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
-}
-]
-},
-{
 "key": "doa",
 "name": "DoA mit Helden (Spielerbericht)",
 "desc": "Aus einem Guild Wars Guru Thread: Damit meldet ein Spieler alle vier Bereiche und Mallyx im Normalen Modus ohne Verbrauchsgüter. Panik, Unfähigkeit, Energiewelle, Dienerbeschwörer, Seelenverflechtung, Nekro-Heiler und UA-Mönch.",

@@ -549,7 +549,9 @@
     const income = pips / 3;
     const uses = [];
     for (const [i, s] of sk) {
-      const d = (s.d || "").toLowerCase(), dd = (s.dd || "");
+      const dRaw = (s.d || "").toLowerCase(), dd = (s.dd || "");
+      // Schaden an eigenen Geistern und Verstärkungen für Verbündete zählen nicht als Schaden am Gegner
+      const d = dRaw.replace(/(this spirit|the spirit) (takes|loses) \d+(\.\.\.\d+)? (damage|health)/g, "").replace(/(target (other )?ally|allies|party members)[^.]*deals? (\+)?\d+(\.\.\.\d+)? (more )?damage[^.]*/g, "");
       const ac = frac(s.ac), rc = frac(s.rc);
       const spell = /spell|signet|ritual|chant|shout|echo|well|glyph/i.test(s.t) && !/attack/i.test(s.t);
       const T = Math.max(0.25, rc + ac + (/spell/i.test(s.t) ? 0.75 : 0));
@@ -593,6 +595,41 @@
           parts.push({ kind: "Direkt", per: tot, dur: 0, aoe: aoeMul(d, n), label: /attack/i.test(s.t) ? "Angriffsbonus" : "Direktschaden" });
         }
       }
+      // ---- Unterstützung: Heilung und verhinderter Schaden (Texte von guildwiki.de) ----
+      const HIT = 80, HITRATE = 0.5, MAXHP = 480;
+      const allies = opts.allies || 8;
+      const many = /(gesamte Gruppe|alle Gruppenmitglieder|Gruppenmitglieder in|Verbündete in (Reichweite|Hörweite)|alle Verbündeten|Verbündeten in (Reichweite|Hörweite))/i.test(dd) || /(party members|allies in (earshot|range)|within range|entire party|all allies)/.test(d);
+      const lifeM = d.match(/\((\d+(?:\.\.\.\d+)?) second lifespan\)/);
+      let sdur = dur || (lifeM ? at(lifeM[1], r) : 0);
+      const enchant = /enchantment|echo|ritual/i.test(s.t);
+      if (!sdur && enchant && !/spell\.\s/i.test(s.t)) sdur = 0;
+      const mult = many ? allies : 1;
+      const hpReg = dd.match(/\+?(\d+(?:\.\.\.\d+)?) Lebenspunktregeneration/);
+      if (hpReg && !/hex/i.test(s.t)) { const p = Math.abs(at(hpReg[1], r)); const D = sdur || (/echo/i.test(s.t) ? 15 : 60); parts.push({ kind: "Heilung", per: p * 2 * D, dur: D, aoe: mult, label: "Regeneration +" + p }); }
+      const trig = dd.match(/[Hh]eilt jedes Mal um (\d+(?:\.\.\.\d+)?)/) || dd.match(/[Hh]eilt[^.]*?jedes Mal um (\d+(?:\.\.\.\d+)?)/);
+      const healM = dd.match(/[Hh]eilt (?:die gesamte Gruppe |alle Gruppenmitglieder |alle Verbündeten |Euch |den Verbündeten )?um (\d+(?:\.\.\.\d+)?)/);
+      const endHeal = dd.match(/Wirkung am Ende: Heilt (?:um )?(\d+(?:\.\.\.\d+)?)/);
+      const conv = dd.match(/in Heilung um/) && dd.match(/maximal (\d+(?:\.\.\.\d+)?)/);
+      if (trig) { const v = at(trig[1], r), D = sdur || 8, k = (d.match(/ends after (\d+)/) || [0, 99])[1]; const rate = /angreift oder einen Zauber/.test(dd) ? 0.67 : /mehr als 50/.test(dd) ? HITRATE * 0.8 : HITRATE; parts.push({ kind: "Heilung", per: v * Math.min(rate * D, +k), dur: D, aoe: mult, label: "Heilung bei Auslösung " + v }); }
+      else if (endHeal) { const v = at(endHeal[1], r); parts.push({ kind: "Heilung", per: v, dur: 0, aoe: mult, label: "Heilung am Ende " + v }); }
+      else if (conv) { const v = Math.min(HIT, at(conv[1], r)); parts.push({ kind: "Heilung", per: v, dur: 0, aoe: 1, label: "Schaden wird Heilung " + v }); }
+      else if (healM && !/Diener|Geist verliert/.test(dd)) { const v = at(healM[1], r); if (v > 0) parts.push({ kind: "Heilung", per: v, dur: 0, aoe: mult, label: "Heilung " + v }); }
+      // verhinderter Schaden
+      const D2 = sdur || (enchant ? 60 : 0);
+      if (D2) {
+        const capM = /auf 10% der maximalen Lebenspunkte/.test(dd) || /more than 10% maximum health/i.test(d);
+        const redM = dd.match(/[Rr]eduziert erlittenen Schaden[^.]*?um (\d+(?:\.\.\.\d+)?)/) || d.match(/reduced by (\d+(?:\.\.\.\d+)?)/) || dd.match(/um (\d+(?:\.\.\.\d+)?) Punkte reduziert/);
+        const blkM = d.match(/(\d+)% chance to block/);
+        const armM = d.match(/\+(\d+(?:\.\.\.\d+)?) armor/);
+        let perHit = 0, lab = "";
+        if (capM) { perHit = Math.max(0, HIT - 0.1 * MAXHP); lab = "Schadensgrenze 10 %"; }
+        else if (redM) { perHit = Math.min(HIT, at(redM[1], r)); lab = "−" + at(redM[1], r) + " je Treffer"; }
+        else if (blkM) { perHit = HIT * (+blkM[1]) / 100; lab = blkM[1] + " % Blocken"; }
+        else if (armM && !/hex/i.test(s.t)) { const a = at(armM[1], r); perHit = HIT * (1 - Math.pow(2, -a / 40)); lab = "+" + a + " Rüstung"; }
+        if (perHit > 0) parts.push({ kind: "Schutz", per: perHit * HITRATE * D2, dur: D2, aoe: mult, label: lab });
+      }
+      // Gunst der Götter: Mönchszauber auf Verbündete heilen zusätzlich 3,2 je Rang (Wiki "Divine Favor")
+      if (bar.pri === 3 && s.p === 3 && /spell/i.test(s.t) && /Verbündete/.test(dd) && rank(16) > 0) parts.push({ kind: "Heilung", per: Math.round(3.2 * rank(16)), dur: 0, aoe: 1, label: "Gunst der Götter " + Math.round(3.2 * rank(16)) });
       if (!parts.length) continue;
       // Wie oft wird die Fertigkeit genutzt? Effekte mit Dauer werden nur gehalten, nicht gestapelt.
       const holds = parts.every(p => p.dur > 0 && p.kind !== "Direkt");
@@ -612,14 +649,19 @@
         else if (p.dur > 0) { const up = Math.min(1, p.dur * rate); const v = (p.per / p.dur) * up * p.aoe; dps += v; det.push(p.label + " " + Math.round(up * 100) + " % Laufzeit"); }
         else { const v = p.per * rate * p.aoe; dps += v; det.push(p.label + " " + Math.round(p.per) + " alle " + (1 / rate).toFixed(1) + " s"); }
       }
-      out.push({ name: u.s.de || u.s.n, sid: u.s.id, dps, kind: u.parts.map(p => p.kind).join("/"), detail: det.join(", ") });
+      // nach Art aufteilen
+      const by = { dmg: 0, heal: 0, prot: 0 };
+      u.parts.forEach((p, j) => { const v = p.kind === "Pro Angriff" ? p.perAttack * attackRate * Math.min(1, p.dur * rate) * p.aoe : p.dur > 0 ? (p.per / p.dur) * Math.min(1, p.dur * rate) * p.aoe : p.per * rate * p.aoe; by[p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg"] += v; });
+      for (const k of ["dmg", "heal", "prot"]) if (by[k] > 0.05) out.push({ name: u.s.de || u.s.n, sid: u.s.id, dps: by[k], cat: k, kind: u.parts.filter(p => (p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg") === k).map(p => p.kind).join("/"), detail: det.filter((x, j) => (u.parts[j].kind === "Heilung" ? "heal" : u.parts[j].kind === "Schutz" ? "prot" : "dmg") === k).join(", ") });
     }
     // Degenerationsgrenze: höchstens 10 Pips (20 Lebenspunkte/s) je Ziel
     const deg = out.filter(o => /Zustand|Degeneration/.test(o.kind)).reduce((a, o) => a + o.dps, 0);
     const cap = 20 * n;
     if (deg > cap) { const k = cap / deg; out.forEach(o => { if (/Zustand|Degeneration/.test(o.kind)) o.dps *= k; }); notes.push("Degeneration auf 10 Pips je Ziel begrenzt."); }
-    const total = out.reduce((a, o) => a + o.dps, 0);
-    return { total, parts: out.filter(o => o.dps > 0.05).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0 };
+    out.forEach(o => { if (!o.cat) o.cat = "dmg"; });
+    const sum = c => out.filter(o => o.cat === c).reduce((a, o) => a + o.dps, 0);
+    const total = sum("dmg"), heal = sum("heal"), prot = sum("prot");
+    return { total, heal, prot, parts: out.filter(o => o.dps > 0.05).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0 };
   };
   // Effektive Ränge aus Grundwerten plus Runen der Ausrüstungsempfehlung
   GW.effRanks = function (bar, runes) {

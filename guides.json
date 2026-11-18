@@ -1,17 +1,15 @@
 {
 "urgoz": {
-"title": "Urgoz' Bau mit 7 Helden",
-"intro": "Das Team ist das PvX-Team \"7 Hero Urgoz\" (Bewertung Great, für Helden gebaut). Urgoz' Bau ist eine Elite-Mission ohne Wiederbelebungs-Schreine. Ein Wipe schickt dich zurück ins Outpost, deshalb trägt der UA-Mönch die Wiederbelebung.",
-"team": "urgoz",
+"title": "Urgoz' Bau mit Helden",
+"intro": "Urgoz' Bau ist eine Elite-Mission ohne Wiederbelebungs-Schreine. Ein Wipe schickt dich zurück ins Outpost, deshalb braucht das Team genug Wiederbelebung. Das Tool stellt dafür das Standardteam mit Wiederbelebern zusammen.",
+"team": "std",
 "sections": [
 {
 "t": "Heldensteuerung vorher einstellen",
 "b": [
-"Rand der Auslöschung beim Ritualisten deaktivieren und selbst auslösen, wenn ihr eine Gruppe spikt.",
-"Schutzgeist und Schild der Absorption beim Pullen deaktivieren und gezielt selbst setzen.",
-"Strahl des Urteils bei Bedarf deaktivieren: Helden rennen sonst in die Gruppe und spammen es.",
-"Vereinigung deaktivieren und gezielt gegen Blutsauger einsetzen.",
-"Fesselnde Ketten von Hand mit Strahl des Urteils kombinieren, damit die Gegner nicht auseinanderlaufen."
+"Flächenfertigkeiten der Helden beim Pullen deaktivieren und erst beim Spike freigeben.",
+"Schutzzauber der Heiler-Helden gezielt selbst setzen, wenn ein Zauberwirker angesprungen wird.",
+"Vereinigung deaktivieren und gezielt gegen Blutsauger einsetzen."
 ]
 },
 {
@@ -24,8 +22,8 @@
 {
 "t": "Abschnitt 1 (Schwäche)",
 "b": [
-"Direkt am Start kommen Selbstmord-Bomber. Der Seelenverflechtungs-Ritualist stellt seine Geister hinter die Gruppe, der Siegel-der-Geister-Ritualist vor die Gruppe. Helden dazwischen flaggen.",
-"Nach vorne laufen, damit die Bomber spawnen und an den Geistern explodieren. Der UA-Mönch belebt Tote wieder.",
+"Direkt am Start kommen Selbstmord-Bomber. Der Seelenverflechtungs-Ritualist stellt seine Geister vor die Gruppe. Die anderen Helden dahinter flaggen.",
+"Nach vorne laufen, damit die Bomber spawnen und an den Geistern explodieren. Die Wiederbeleber im Team holen Tote zurück.",
 "Kurz dahinter rennen die Dredge-Gruppen zur Mitte. Mit \"Zieht Euch zurück!\" an der rechten Wand entlang laufen, um die Gruppe von dort knapp zu umgehen. Ziehst du sie doch, kommt im SM meist ein Wipe: einfach neu starten.",
 "Im engen Gang danach spawnen Große Blutsauger. Über die Brücke, Dredge töten. Vor dem letzten Raum kommen nochmal Blutsauger.",
 "Im letzten Raum beide Dredge-Gruppen zusammenziehen und gemeinsam töten, dann die Wächterschlange (Guardian Serpent)."
@@ -35,7 +33,7 @@
 "t": "Abschnitt 2 (Lebenspunkte-Degeneration)",
 "b": [
 "Helden knapp außerhalb des Effekts an der Wand flaggen.",
-"Die patrouillierende Wardens-Gruppe pullen. Hinter der Tür spawnen Blutsauger, meist ziehst du beide. Bei Unsicherheit den Siegel-der-Geister-Ritualisten vorflaggen und Geister setzen.",
+"Die patrouillierende Wardens-Gruppe pullen. Hinter der Tür spawnen Blutsauger, meist ziehst du beide. Bei Unsicherheit den Seelenverflechtungs-Ritualisten vorflaggen und Geister setzen.",
 "Eine zweite Warden-Gruppe läuft nah an der Twisted Bark vorbei. Die Bark zurückziehen, wenn die Patrouille weg ist, oder direkt stürmen.",
 "Unter den Klippen spawnen mehrere Blutsauger-Gruppen. Helden zurückflaggen und die Gegner um die Klippe herum ballen. Panik hält sie vom Zaubern ab.",
 "Zur Wächterschlange runterlaufen, nachkommende Blutsauger töten, wenn sie sich hinter euch ballen."
@@ -89,18 +87,11 @@
 "b": [
 "Twisted Bark töten, über die Mittelbrücke. Die Gruppe am Ende täuscht: Beim Angreifen spawnen weitere Gegner. Brennende Büsche und Uproot Malices ballen und spiken, dann die Waldläufer.",
 "Wächterschlange töten, in Urgoz' Bereich links den Hügel runter. Die andere Seite des Raums hat Energieentzug.",
-"Den Helden mit Rand der Auslöschung knapp in Geisterreichweite zu Urgoz stellen. Zu nah, und Held plus Geist werden von Spawns und Urgoz getroffen. Guter Platz: eine Spalte in der Wand am Weg, den ihr gekommen seid. Urgoz muss erst unter 90 % Lebenspunkte, dann tötet ihn Edge of Extinction.",
-"Seelenverflechtungs-Ritualist und UA-Mönch weiter hinten flaggen, sie halten die Nuker am Leben.",
-"Mit der Gruppenflagge die Helden außerhalb der Wachstumszone stellen und Strahl des Urteils, Chaossturm und Alptraum beschwören vorbereiten. \"Zieht Euch zurück!\" zünden, nur die Gruppenflagge aufheben und mit den Nukes auf Urgoz.",
-"Sobald die Helden gezaubert haben, diagonal zurückflaggen, damit sie nicht von Wurzeln eingesperrt werden. Der UA-Mönch belebt eingesperrte Helden. Wiederholen, bis Edge of Extinction auslöst. Unterschlupf hält getroffene Helden am Leben."
+"Den Helden mit Rand der Auslöschung knapp in Geisterreichweite zu Urgoz stellen. Zu nah, und Held plus Geist werden von Spawns und Urgoz getroffen. Guter Platz: eine Spalte in der Wand am Weg, den ihr gekommen seid. Urgoz muss erst unter 90 % Lebenspunkte, dann tötet ihn Edge of Extinction."
 ]
 }
 ],
 "sources": [
-[
-"PvX: Team - 7 Hero Urgoz (inoffiziell)",
-"https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
-],
 [
 "Guild Wars Wiki: Urgoz's Warren",
 "https://wiki.guildwars.com/wiki/Urgoz's_Warren"
