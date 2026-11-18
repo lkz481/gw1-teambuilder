@@ -292,5 +292,275 @@
 "https://wiki.guildwars.com/wiki/Domain_of_Anguish"
 ]
 ]
+},
+"fow": {
+"title": "Riss des Kummers mit Helden",
+"intro": "Der Riss des Kummers hat keine Wiederbelebungs-Schreine. Ein Wipe wirft dich raus, der Tod eines verbündeten NPC ebenfalls. Alle 11 Quests müssen in einem Besuch fallen, laut Wiki dauert das rund 2 Stunden und im Schweren Modus deutlich länger. Die Reihenfolge unten folgt dem Wiki-Leitfaden: Erst der Weg zur Obsidianrüstung, dann der Rest bis zur Kummer-Truhe.",
+"team": "std",
+"sections": [
+{
+"t": "Vor dem Start",
+"b": [
+"Zugang: 1 Platin beim Champion des Balthasar an einer Balthasar-Statue (z. B. im Tempel der Zeitalter) oder eine Zugangsschriftrolle zum Riss des Kummers. Alle müssen aufgestiegen sein. Helden dürfen mit, Gefolgsleute nicht.",
+"Für die Obsidianrüstung Materialien und Gold vorher ins Inventar legen. Verlässt du das Gebiet, ist der Fortschritt weg.",
+"Dienermeister-Held: Diener greifen den Herrn der Klagen an. Stirbt er, fliegt die Gruppe raus. Vor diesem Abschnitt die Diener-Fertigkeiten beim Helden deaktivieren.",
+"Bindungs-Mönche leiden in der Nebelhöhle: Die Zweifler-Dryder entfernen laut Wiki viele Verzauberungen.",
+"Offene Truhen geben einen violetten Gegenstand an ein zufälliges Gruppenmitglied. Helden vorher außer Kompassreichweite flaggen, sonst bekommt ihn ein Held.",
+"Schwerer Modus: Gegner haben dauerhaft 7 Pips Lebenspunkte-Regeneration."
+]
+},
+{
+"t": "1. Turm der Tapferkeit",
+"b": [
+"Am Startpunkt laufen Patrouillen dicht vorbei. Die Quest von Rastigan dem Ewigen noch nicht annehmen, sie läuft auch ohne Annahme ab.",
+"Erst alles nördlich und vor allem südlich des Startpunkts töten, ohne eine Gruppe aus Abgrund und zwei Schatten-Waldläufern zu ziehen. Sonst rennt Rastigan vor und stirbt.",
+"Laut Wiki bleibt Rastigan stehen, solange die Gruppe weit genug von ihm weg kämpft. Helden also weit vorflaggen.",
+"Dann die Gruppe südwestlich des Turms töten und danach die übrigen Gruppen um den Turm. Auf Schatten-Bestien achten, die aus dem Boden kommen.",
+"Rastigan öffnet das Tor, innen erscheint Vogris, Herr der Schatten mit zwei Abgründen. Helden ins Tor flaggen: So blocken sie den Eingang und die Gegner ballen sich für Flächenschaden.",
+"Belohnung holen (Quest 1) und die Folgequest \"Der Herr der Klagen\" für später annehmen."
+]
+},
+{
+"t": "2. Schlachtfeld, Lager und Tempel des Krieges",
+"b": [
+"Optional das Große Schlachtfeld im Norden von Ost nach West räumen. Dort tauchen immer wieder Knochige Aufspießer aus dem Boden auf.",
+"Das Schattenlager westlich des Schlachtfelds räumen. Danach erscheinen Kromril der Ewige und der Ewige Waffenschmied. \"Armee der Finsternis\" für später und \"Der Herr der ewigen Schmiede\" annehmen.",
+"Zum Tempel des Krieges auf dem Hügel in der Mitte. Die Gruppe vor dem Tor töten und auf nachrückende Gegner im Rücken achten.",
+"Im Tempel die erste Patrouille zum Tor ziehen, weg von den Schatten-Mönchen. Dann rundherum Gruppe für Gruppe räumen und zuletzt die Plattform oben (Quest 2).",
+"\"Verteidigt den Tempel des Krieges\" erst annehmen, wenn alle bereit sind. Es kommen 8 Paare Schatten-Bestien und danach 4 Paare Abgründe, immer zu zweit.",
+"Die Wellen laufen um den Amboss und greifen den Herrn der Ewigen Schmiede von den Seiten an. Zwei Helden direkt neben ihn flaggen, dann kommen die Gegner laut Wiki nicht an ihn heran (Quest 3)."
+]
+},
+{
+"t": "3. Nebelhöhle und Obsidianrüstung",
+"b": [
+"Im Tempel beide Quests vom Herrn der Ewigen Schmiede und die vom Ewigen Lord Taeres annehmen. Taeres darf vorher nicht sterben, sonst gibt es am Ende keine Kummer-Truhe.",
+"\"Die Jagd\" bei Nimros dem Jäger annehmen: 7 Scherbenwölfe erscheinen verteilt im Gebiet, der erste direkt hinter dir. Die übrigen fallen nebenbei bei den anderen Quests.",
+"Für \"Stellt den Tempel des Krieges wieder her\" in die Nebelhöhle im Süden. Jeder Samen der Fäulnis steht bei einem Zweifler-Dryder mit Gepanzerten Höhlenspinnen, die aus dem Boden kommen. Langsam vorgehen.",
+"Am Wasserfall zum Zerklüfteten Strand spawnen viele Gruppen. Dort steht auch der zweite Scherbenwolf.",
+"Zurück zum Herrn der Ewigen Schmiede (Quest 4). Ab jetzt fertigt er Obsidianrüstung."
+]
+},
+{
+"t": "4. Turm der Stärke und Khobay",
+"b": [
+"Zum Turm der Stärke: Mehrere Patrouillen überlappen sich und viele Schatten-Bestien sind versteckt. Nah an der rechten Wand bleiben und immer nur eine Gruppe ziehen.",
+"Alle 5 Schattenpatrouillen töten, dazu den dritten Scherbenwolf. Laut Wiki stehen Zauberwirker am besten auf dem Grat neben dem Weg, während die Gegner darunter geballt werden.",
+"Danach muss ein Spieler zurück zum Tempel, denn der Turmmagier läuft erst los, wenn ein Spieler in Kompassreichweite kommt.",
+"In der Zwischenzeit zum Feuersee im Südosten für \"Khobay der Verräter\". Lord Khobay steht neben einem Höllenwurm. Khobay in die Schlucht ziehen, durch die ihr gekommen seid: Dort hat der Wurm keine Sichtlinie (Quest 5).",
+"Zurück am Turm öffnet der Turmmagier das Tor. Innen erscheint ein einzelner Herr der Schatten (Quest 6)."
+]
+},
+{
+"t": "5. Brennender Wald und Menzies' Priester",
+"b": [
+"Nördlich steht Miko der Entfesselte. Erst den Brennenden Wald räumen, dann seine Quest annehmen. Sonst kämpfst du gegen die alten und die neuen Gruppen zugleich.",
+"Im Wald überlappen sich die Patrouillen und scheinbar einzelne Gegner gehören zu gemischten Gruppen. Wird es zu viel, weit zurücklaufen. Der vierte Scherbenwolf steht hier.",
+"\"Sklaven von Menzies\" annehmen und die 4 neuen Gruppen hinten im Wald töten, jede mit einem Oberherrn der Schatten (Quest 7).",
+"Für \"Armee der Finsternis\" zum Lager am Großen Schlachtfeld. Beide Rampen bewacht je ein Drachen-Lich, der Zauberwirker mit zwei Treffern töten kann. Einen Lich vom Lager wegziehen und dort töten.",
+"Die Gruppe im Lager vom Priester wegziehen, damit er sie nicht heilt. Dann Menzies' Priester töten. Er nutzt Wort der Heilung.",
+"Den Gottlosen Text aufheben und zu Kromril tragen (Quest 8). Der fünfte Scherbenwolf steht auf dem Weg."
+]
+},
+{
+"t": "6. Herr der Klagen, Greifen und Truhe",
+"b": [
+"Im Wald des Heulerlords den Hauptweg und den Süden räumen, ohne die Brücke zu betreten. Der sechste Scherbenwolf steht im Nordteil.",
+"Die Brücke bewachen viele Skelette, auch aus dem Boden. Banshees und Skelette einzeln über die Brücke zu euch ziehen.",
+"Den Herrn der Klagen nicht angreifen. Er gilt als Gegner und bekommt Flächenschaden ab. Helden weit hinten flaggen, er selbst greift dich nicht an.",
+"Sind alle Banshees tot, wird er freundlich und Schatten-Bestien erscheinen (Quest 9). \"Ein Greifen-Geschenk\" erst annehmen, wenn alle bereit sind.",
+"Sicherer Weg laut Wiki: Erst ohne die Wald-Greife zum Turm der Tapferkeit zurück und alle neuen Gruppen töten. Dann die Greife abholen. Stirbt ein einziger, fliegt die Gruppe raus.",
+"Die Greife folgen jedem, der sich in Kompassreichweite bewegt. Bei Rastigan abgeben (Quest 10).",
+"Der siebte Scherbenwolf steht südlich des Turms (Quest 11). Danach erscheint die Kummer-Truhe im Tempel des Krieges beim Herrn der Ewigen Schmiede."
+]
+}
+],
+"sources": [
+[
+"Guild Wars Wiki: The Fissure of Woe",
+"https://wiki.guildwars.com/wiki/The_Fissure_of_Woe"
+],
+[
+"Guild Wars Wiki: Guide to The Fissure of Woe",
+"https://wiki.guildwars.com/wiki/Guide_to_The_Fissure_of_Woe"
+],
+[
+"Guild Wars Wiki: Questseiten (Tower of Courage bis The Hunt)",
+"https://wiki.guildwars.com/wiki/Tower_of_Courage"
+]
+]
+},
+"deep": {
+"title": "Die Tiefe mit Helden",
+"intro": "Achtung: Die Tiefe ist für 12 Spieler gebaut, mit dir und 7 Helden seid ihr 8. Der Wiki-Ablauf geht von 12 aus. Die Engstellen für eine 8er-Gruppe sind die vier Portale am Start und die fünf Druckplatten in Raum 3. Wo das Wiki einen Helden-Tipp gibt, steht er dabei. Der Rest ist aus dem Wiki-Ablauf auf 8 übertragen und nicht als Heldenlauf belegt. Kein Wipe-Schutz: Im ganzen Gebiet gibt es keine Schreine.",
+"team": "std",
+"sections": [
+{
+"t": "Pflicht im Team",
+"b": [
+"Niederschlag: Aspekte und Kanaxai nehmen an festen Schwellen keinen Schaden mehr, bis sie niedergeschlagen werden. \"Ihr bewegt Euch wie ein Zwerg!\" passt auf jede Klasse, wirkt sofort und unterbricht dabei.",
+"Lebensraub wirkt laut Wiki auch ohne Niederschlag weiter.",
+"Gegen Kanaxais Alptraumzuflucht: Verzauberungen entfernen oder unterbrechen. Das Wiki nennt Enthüllte Verzauberung, weil es gegen Monster-Verzauberungen sofort wieder bereit ist.",
+"Gruppenheilung wie Gruppe heilen für den letzten Raum (dauerhaft 8 Pips Lebenspunkte-Degeneration).",
+"Geister und Diener als Mauer: Das Wiki beschreibt durchgehend die Taktik, Gegner in eine Wand aus Geistern oder Dienern zu ziehen."
+]
+},
+{
+"t": "Raum 0 und 1 (Start)",
+"b": [
+"Im Startraum gibt es alle 30 Sekunden Überzaubern. Nicht trödeln.",
+"Vier Portale öffnen sich nacheinander von ganz rechts nach ganz links. Das Wiki teilt 12 Spieler in vier Dreiergruppen, jede mit einem Niederschlag.",
+"Helden-Tipp aus dem Wiki: Drei Helden zum ersten Portal ganz rechts flaggen und die übrigen hinten am Holztor. Bist du durch, die Flaggen lösen. Die Helden kommen dann nach kurzer Zeit zu dir.",
+"Hinter den Portalen liegen vier Räume mit je einem Effekt: Kein Blocken (ganz links), Niederschlag bei jedem Treffer (links), 20 % weniger Heilung (rechts), halbes Adrenalin (ganz rechts). Der rechte Raum gilt als der leichteste.",
+"Die Aspekte musst du nicht töten. Die Tore öffnen sich, sobald die Fische im Raum tot sind."
+]
+},
+{
+"t": "Raum 2 (Degeneration)",
+"b": [
+"Effekt: 2 Pips Lebenspunkte-Degeneration und weniger Heilung.",
+"Drei große Patrouillen aus Killer-Karpfen, Geißelmantas, Gesegneten Mantas und Düsteren Irukandji. Geduldig warten und eine Gruppe zurück in einen der Starträume ziehen.",
+"Die Irukandji setzen Wiederherstellung: Der Geist belebt jeden Gegner wieder, der in seiner Reichweite gestorben ist. Den Geist töten oder weit weg von den Leichen kämpfen.",
+"Sind alle Gegner außer dem Aspekt tot, öffnen sich alle Tore."
+]
+},
+{
+"t": "Raum 3 und 4 (Druckplatten)",
+"b": [
+"Raum 3: 50 % langsamer. Nicht in die Mitte laufen, sonst kommen die Leviathan-Teile von beiden Seiten. Eine Seite wählen und von dort durcharbeiten.",
+"Leviathanköpfe nutzen Würgegas gegen Zauberwirker. Die Feuerblume einmal berühren, dann ist sie aus. Ein zweites Berühren schaltet sie wieder ein.",
+"Das Tor öffnet sich nur, solange fünf Körper auf den fünf Holzplatten stehen. Bei 12 Spielern gehen sieben durch und fünf bleiben zurück.",
+"Mit 8 bedeutet das: Fünf Helden einzeln auf die Platten flaggen, du gehst mit zwei Helden durch. Keine Heiler auf die Platten stellen. Das ist aus dem Wiki-Ablauf abgeleitet und die schwerste Stelle für eine Heldengruppe.",
+"Dahinter stehen drei Geächteten-Gruppen. Nähert sich jemand dem kleinen Stein am Boden, spawnen Anzapfende Nachtmahre und Gefrierende Alpträume und laufen zu den fünf Zurückgebliebenen.",
+"Raum 4: Alle 30 Sekunden 10 Energie Verlust und 8 Schaden je verlorenem Punkt. Den patrouillierenden Aspekt mit einem Langbogen einzeln herausziehen und töten, dann ist der Effekt weg.",
+"Geächteten-Gruppen einzeln töten. Geächteten-Zaubersturm nutzt Böe und Strudel, Geächteten-Todeshand nutzt Explosion der Verwesung. Sind alle tot, öffnen sich die hinteren Tore und die Gruppe ist wieder vereint."
+]
+},
+{
+"t": "Raum 5 und 6 (keine Zauber, keine Verzauberungen)",
+"b": [
+"Raum 5: Alle Zauber schlagen fehl. Die Patrouillen in den Eingang ziehen, denn dort wirkt der Effekt nicht. Geister oder Diener quer ins Tor stellen.",
+"Danach stehen nur noch Geächteten-Plünderer und der Aspekt auf der oberen Ebene. Du kannst sie ignorieren, wenn du an der gegenüberliegenden Wand entlang läufst.",
+"Raum 6: Keine Verzauberungen möglich. In der Mitte sitzt der Leviathan. Kommst du ihm zu nah, bricht er aus. Ihn und die Wiedergeborenen Irukandji ignorieren, sie spawnen endlos neu.",
+"Die ersten Oni-Gruppen aus dem Raum zurück ins Tor ziehen. Dann der linken Wand folgen bis zum Aspekt und zum Ausgang. Vor dem Tor tauchen noch Oni auf."
+]
+},
+{
+"t": "Raum 7 und 8 (Teleport, Schaden beim Laufen)",
+"b": [
+"Raum 7 gilt als der schwerste: Alle 30 Sekunden wirst du zum nächsten Gegner teleportiert und niedergeschlagen.",
+"Helden oben an der Treppe flaggen. Allein hineingehen, Oni-Patrouillen holen und sie an der Treppe ballen.",
+"Gehst du an der Feuerblume vorbei, spricht der Aspekt und ein bis drei weitere Oni-Gruppen erscheinen. Wieder herausziehen.",
+"Die Geächteten-Patrouillen danach müssen unter dem Effekt fallen. Kurz zurück in den Raum davor gehen setzt laut Wiki den Takt des Teleports zurück. Nach jedem Teleport sofort wieder sammeln.",
+"Raum 8: 10 % schneller, dafür 25 Schaden pro Sekunde Bewegung. Hinter der ersten Ecke starten sieben Wellen aus Oni und Alpträumen von hinten.",
+"Sicherer Weg laut Wiki: An der Treppe vor der ersten Holzbrücke stehen bleiben, Geister davor und die Wellen dort abwarten. Das Wiki merkt an, dass Helden diese kleinen Gruppen meist allein schaffen."
+]
+},
+{
+"t": "Raum 9 bis 11",
+"b": [
+"Raum 9: Fällt deine Energie auf 0, nimmst du 50 Schaden. Anzapfende Nachtmahre patrouillieren gegen den Uhrzeigersinn und leeren die Energie mit Chaossturm.",
+"Im Normalen Modus wirken sie Chaossturm laut Wiki nicht auf Ziele mit Nahkampf- oder Bogenwaffe. Im Schweren Modus schon.",
+"Wieder eine Wand am Eingang bauen und die Patrouillen hineinziehen. Der Aspekt in der Mitte hilft den Nachtmahren nicht, an der Wand entlang kommst du an ihm vorbei.",
+"Raum 10: Wer vergiftet ist oder blutet, bekommt 4 Pips Degeneration zusätzlich. Die Blumen am Weg durch Berühren abschalten, 7 außen und 4 innen.",
+"Linker und rechter Weg führen beide zum Ende. An der Gabelung tauchen zwei Oni-Gruppen auf. Gehst du auf den Hügel in der Mitte, kommen die Oni vom anderen Weg dazu.",
+"Raum 11: 50 Schaden alle 3 Sekunden, wenn du keine Fertigkeit nutzt. Den Aspekt von der Geächteten-Gruppe wegziehen, sie gehören nicht zusammen."
+]
+},
+{
+"t": "Kanaxai",
+"b": [
+"Im letzten Raum gelten dauerhaft 8 Pips Lebenspunkte-Degeneration, auch nach Kanaxais Tod.",
+"Kanaxai schlägt schnell und hart zu, jeder Treffer wirft das Ziel nieder. Alptraumzuflucht (1 Sekunde Wirkzeit, alle 10 Sekunden): 50 % Blocken, 50 % Fehlschlag für Zauber auf ihn und 1.000 Heilung, wenn sie volle 10 Sekunden hält.",
+"Bei 80, 60, 40 und 20 % nimmt er keinen Schaden mehr, bis er niedergeschlagen wird. Jeder dieser Niederschläge ruft 12 Gegner herbei, höchstens 24 zugleich.",
+"Ablauf laut Wiki: Team am Eingang außerhalb des Effekts flaggen, auch die Heiler. Du ziehst Kanaxai an eine Seitenwand und schlägst ihn zweimal nacheinander nieder. Vor dem zweiten Niederschlag warten, bis er wieder steht.",
+"Dann läuft die ganze Gruppe auf die andere Raumseite. Kanaxai folgt, seine Gegner bleiben stehen, wo sie erschienen sind.",
+"Keine der herbeigerufenen Kreaturen töten, solange Kanaxai lebt: Für jede tote spawnt eine neue.",
+"Keine Bindungen auf dem Köder: Anzapfende Nachtmahre entfernen Verzauberungen. Rückruf oder Schattenverschmelzung bringen ihn schnell zurück zur Gruppe.",
+"Kanaxais Truhe erscheint in der Raummitte. Erst prüfen, ob dort noch Gegner stehen."
+]
+}
+],
+"sources": [
+[
+"Guild Wars Wiki: The Deep",
+"https://wiki.guildwars.com/wiki/The_Deep"
+]
+]
+},
+"slavers": {
+"title": "Exil des Sklavenhändlers mit Helden",
+"intro": "Der einzige Elite-Dungeon: Eine Eingangsebene, drei Zwischenebenen in beliebiger Reihenfolge und Duncans Ebene am Ende. Anders als in den anderen Elite-Gebieten gibt es Wiederbelebung an den Signallichtern von Droknar. Der Fortschritt der Quest \"Der letzte Hierophant\" bleibt beim Verlassen erhalten. Du kannst also nach jedem Boss raus und die Helden für den nächsten umbauen.",
+"team": "std",
+"sections": [
+{
+"t": "Grundsätzliches",
+"b": [
+"Der Eingang liegt im Südosten der Grünen Kaskaden. Mindestens ein Gruppenmitglied muss \"Eine Zeit für Helden\" abgeschlossen haben.",
+"Duncans Ebene öffnet sich erst, wenn jedes Gruppenmitglied Justiziar Thommis, Rand Sturmweber, Selvetarm und Schmiedewicht getötet hat.",
+"Für den Eintrag im Schweren Modus zählt nur Duncan. Die vier anderen dürfen im Normalen Modus fallen.",
+"Fast alle Steingipfel-Zwerge haben eine Wiederbelebung. Das Wiki empfiehlt Eisboden.",
+"Die Zwerge kommen in großen Gruppen, die oft gemeinsam angreifen. Einzeln ziehen und notfalls zurückweichen.",
+"Stirbst du vor dem Öffnen der Truhe des Hierophanten oder gehst vorher raus, musst du von vorn anfangen."
+]
+},
+{
+"t": "Ebene von Justiziar Thommis",
+"b": [
+"Zwei Bosse auf einer Ebene: Justiziar Thommis und Rand Sturmweber. Beide im selben Lauf töten, sonst ist der Ausgang blockiert.",
+"Thommis ist Krieger mit Hundert Klingen. Zustände und Verhexungen laufen auf ihm 50 % schneller ab.",
+"Rand Sturmweber steht in der Nordostecke von Thommis' Raum und nutzt Sperrfeuer. Eine Patrouille Ausgemergelter Wölfe kommt dort vorbei.",
+"Bei Rands Tod erscheinen fünf Gegner: Zwei Steingipfel-Zwerge, dazu Steinwölfe und Modniir-Jäger. Die Gruppe nicht direkt auf ihm stehen lassen."
+]
+},
+{
+"t": "Selvetarms Ebene",
+"b": [
+"Ketten-Kleriker und weitere Untote tauchen mitten im Kampf aus dem Boden auf. Gruppen deshalb zu euch ziehen.",
+"An der Tür vor dem Boss: Jede getötete Gruppe ruft eine größere nach, bis der Vorrat erschöpft ist. Diese Gegner rauben Lebenspunkte. Weit zurückziehen, damit die nächste Gruppe nicht auf euch erscheint.",
+"Selvetarm ist Nekromant mit Schmaus der Verdorbenheit. Er und seine Gruppe erzeugen mit Versplitterte Knochen und Todesnova immer neue Untoten-Bomben.",
+"Das Wiki rät, ihm die Diener zu stehlen oder die Bomben mit Flächenschaden zu töten.",
+"Schaden von Geistern trifft Selvetarm nur zu 50 %. Ein Team, das stark auf Angriffsgeister baut, ist hier schwächer.",
+"Nach seinem Tod erscheinen vier Restless Dead mit Schattengefängnis um die Truhe."
+]
+},
+{
+"t": "Schmiedewichts Ebene",
+"b": [
+"Große Gruppen Feuer-Elementare und Steingipfel-Zwerge.",
+"Schmiedewicht ist Elementarmagier mit Versengende Flammen, Meteorschauer und Tiefgefrieren. Das Wiki rät, die Gruppe mit den Heldenflaggen zu verteilen.",
+"Unterbrecher mitnehmen.",
+"Wütendes Starren entfernt gegnerische Geister, wenn sie stören."
+]
+},
+{
+"t": "Duncan der Schwarze",
+"b": [
+"Auf dem Weg nur Steingipfel-Zwerge und Restless Dead, die aus dem Boden kommen. Sie nutzen Vampir-Berührung und Vampirbiss. Das Wiki nennt \"Darf nicht angerührt werden!\" als Konter.",
+"Vor dem Kampf den großen Raum abgehen, damit alle Restless Dead erscheinen und tot sind.",
+"Duncan hat im Normalen Modus rund 19.000 Lebenspunkte. Duncans Verteidigung wirft 100 % jedes Schadens auf die Quelle zurück. Weil Dungeon-Bosse doppelten Schaden machen, kommt das Doppelte an.",
+"Lebensraub löst Duncans Verteidigung laut Wiki nicht aus. Sieger plündern lohnt sich wegen seiner vielen Lebenspunkte.",
+"Schutz wie Schutzgeist senkt den zurückgeworfenen Schaden.",
+"Neben ihm erscheinen 16 Geister: Schmerz, Schattenlied, Erholung und Entzauberung. Getötete Geister kommen schnell an derselben Stelle wieder. Tauschen bringt sie vor dem Kampf von ihm weg.",
+"Nicht passiv tanken: Geisterriss macht über 450 Flächenschaden. Besser unterbrechen, niederschlagen oder benommen machen.",
+"Zauberwirker stehen laut Wiki in der Ecke bei der Treppe sicherer.",
+"Belohnung danach bei Veth dem Geschichtenerzähler auf der Eingangsebene."
+]
+}
+],
+"sources": [
+[
+"Guild Wars Wiki: Slavers' Exile",
+"https://wiki.guildwars.com/wiki/Slavers'_Exile"
+],
+[
+"Guild Wars Wiki: The Last Hierophant",
+"https://wiki.guildwars.com/wiki/The_Last_Hierophant"
+],
+[
+"Guild Wars Wiki: Duncan the Black",
+"https://wiki.guildwars.com/wiki/Duncan_the_Black"
+]
+]
 }
 }
