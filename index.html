@@ -696,6 +696,19 @@ function pvCard(b, fmt){
   const vrow = x => { const dx=pvDec(x.code); return dx ? `<div class="pvm" style="grid-template-columns:minmax(0,1fr) auto"><div class="bar8">${dx.skills.map(id=>ico(id)).join("")}</div><button class="btn s" data-copy="${esc(x.code)}">Code</button></div>` : ""; };
   return `<article class="pvc" style="--pc:${PCOL[d.pri]}"><div class="pvh">${ico(el?m.elite:(d.skills.find(Boolean)||0))}<div style="min-width:0"><div class="nm">${esc(el?dname(el):(()=>{ const f=GW.skill(d.skills.find(Boolean)); return (f?dname(f):"Leiste")+" (ohne Elite)"; })())}</div><div class="rl">${esc(pname(d.pri,d.sec))}</div></div></div>${tags}<div class="bar8">${d.skills.map(id=>ico(id)).join("")}</div>${whyl}${pvAttr(d)}${d.skills.some(x=>!x)?`<div class="pvattr">Leere Plätze sind frei wählbar. Vorschläge stehen auf der PvX-Seite.</div>`:""}${pvChg(m)}<div class="code"><input readonly value="${esc(m.code)}" aria-label="Vorlagen-Code"><button class="btn s" data-copy="${esc(m.code)}">Kopieren</button></div>${vars.length?`<details class="more"><summary>${vars.length} ${vars.length===1?"Variante":"Varianten"} ansehen</summary>${vars.map(vrow).join("")}</details>`:""}${foot}</article>`;
 }
+// Stärkste GvG-Aufstellung aus den Leisten der ersten Wahl. Für den Läufer gibt es dort keine Leiste, deshalb der beste verfügbare.
+function pvLineup(){
+  const G = PVP.builds.filter(b=>b.fmt.includes("GvG") && !b.team).map(b=>({ b, d:pvDec(b.m[0].code), s:b.rank.GvG.s, el:GW.skill(b.m[0].elite) })).filter(x=>x.d).sort((a,b)=>b.s-a.s);
+  const used = new Set(), take = (f, n) => { const out=[]; for (const x of G) { if (out.length>=n) break; const key = x.el ? x.el.id : x.b.t; if (!x.el || used.has(x.b.t) || used.has("e"+key) || !f(x)) continue; used.add(x.b.t); used.add("e"+key); out.push(x); } return out; };
+  const wAttr = x => x.el ? x.el.aid : -1;
+  const front = take(x=>x.d.pri===1 && x.b.rank.GvG.t==="A", 1); const fa = front[0] ? wAttr(front[0]) : -1;
+  front.push(...take(x=>x.d.pri===1 && x.b.rank.GvG.t==="A" && wAttr(x)!==fa, 1), ...take(x=>[9,7,10].includes(x.d.pri) && x.b.rank.GvG.t==="A", 1));
+  const mid = take(x=>x.d.pri===5 && x.b.rank.GvG.t==="A", 2), back = take(x=>x.d.pri===3 && !/Runner/.test(x.b.t) && x.b.rank.GvG.t==="A", 2), run = take(x=>/Runner/.test(x.b.t), 1);
+  const row = (x, pos, note) => `<div class="pvm"><div class="who"><b>${esc(x.el?dname(x.el):"Ohne Elite")}</b><span>${esc(pname(x.d.pri,x.d.sec))} · ${pos}</span></div><div class="bar8">${x.d.skills.map(id=>ico(id)).join("")}</div><button class="btn s" data-copy="${esc(x.b.m[0].code)}">Code</button>${note?`<div class="pvattr" style="grid-column:1/-1;color:#f0a58f">${note}</div>`:""}</div>`;
+  const all = [...front.map(x=>[x,"Front"]), ...mid.map(x=>[x,"Mitte"]), ...back.map(x=>[x,"Hinten"]), ...run.map(x=>[x,"Flaggenläufer","Kein Läufer hat es in die erste Wahl geschafft. Das ist der einzige mit eigener Leiste, seine Elite Heilsalve wurde abgeschwächt."])];
+  if (all.length < 6) return "";
+  return `<article class="pvc team" style="border-color:var(--gold)"><div class="pvh"><div style="min-width:0;flex:1"><div class="nm">Stärkste Aufstellung nach unserer Rechnung</div><div class="rl">${front.length} Front, ${mid.length} Mitte, ${back.length} Mönche, ${run.length} Läufer. Je Platz die Leiste mit den meisten Punkten, keine Elite doppelt.</div></div><button class="btn s" data-copy="${esc(all.map(a=>a[0].b.m[0].code).join("\n"))}">Alle Codes</button></div><div class="pvattr">Hergeleitet, nicht im Spiel erprobt. Leere Plätze in den Leisten füllt ihr nach Absprache, Vorschläge stehen auf den PvX-Seiten.</div>${all.map(a=>row(...a)).join("")}</article>`;
+}
 function pvGuide(){
   const G = PVP.guide, src = s => s && s.length ? `<div class="gsrc">Quelle: ${s.map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener">${esc(x[0])}</a>`).join(" · ")}</div>` : "";
   return `<div class="guide"><p class="mut" style="margin:0;max-width:70ch">${esc(G.lead)}</p>${G.sections.map(S=>`<section><h2>${esc(S.h)}</h2>${S.items?`<ul>${S.items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}${S.steps?`<ol class="steps">${S.steps.map(x=>`<li><div><b>${esc(x[0])}</b>${esc(x[1])}</div></li>`).join("")}</ol>`:""}${S.roles?`<div class="roles">${S.roles.map(x=>`<div class="role"><b>${esc(x[0])}</b>${esc(x[1])}<div class="err">Typischer Fehler: ${esc(x[2])}</div></div>`).join("")}</div>`:""}${src(S.src)}</section>`).join("")}</div>`;
@@ -704,7 +717,10 @@ function drawPvp(){
   const root = $("pvp"); if (!PVP) { root.innerHTML = `<div class="pvempty">Die PvP-Daten konnten nicht geladen werden. Lade die Seite neu.</div>`; return; }
   const F = PVP.fmt[pv.tab], src = (pv.tab==="CA" ? "RA" : pv.tab);
   const isMeta = pv.tab==="meta"; if (isMeta && !pv.mfmt) pv.mfmt = "GvG";
+  const gvgTop = b => b.rank.GvG && b.rank.GvG.t==="A";
   let list = PVP.builds.filter(b => isMeta ? b.fmt.includes(pv.mfmt) : b.fmt.includes(src));
+  const gvgAll = (isMeta ? pv.mfmt==="GvG" : pv.tab==="GvG") ? list.length : 0;
+  if (gvgAll) list = list.filter(gvgTop);
   const hasTeam = list.some(b=>b.team), profs = [...new Set(list.filter(b=>!b.team).map(b=>{ const d=pvDec(b.m[0].code); return d?d.pri:0; }))].filter(Boolean).sort((a,b)=>a-b);
   if (pv.prof && !profs.includes(pv.prof)) pv.prof = 0;
   if (!hasTeam) pv.kind = "all";
@@ -728,7 +744,7 @@ function drawPvp(){
         + (grp("C").length ? `<details class="more" style="margin-top:18px"><summary>Zurückgefallen ansehen (${grp("C").length})</summary>${sec("C","Zurückgefallen","Elite oder Kernfertigkeiten abgeschwächt oder schon vorher nur zweite Reihe.")}</details>` : "")
         + (cand.length ? `<h2 style="font-family:var(--head);font-size:18px;color:#f3dfb0;margin:26px 0 4px">Beobachten</h2><p class="dim sm" style="margin:0 0 10px;max-width:75ch">Diese Eliten hat das Update verstärkt. Sie stehen in keinem PvX-PvP-Build. Eine erprobte Leiste gibt es dafür noch nicht, deshalb hier nur die Änderung.</p><div class="pvgrid">${cand.map(c=>{ const s=GW.skill(c.id); return `<div class="pvc" style="--pc:${PCOL[s.p]||"var(--gold)"}"><div class="pvh">${ico(c.id)}<div style="min-width:0"><div class="nm">${esc(dname(s))}</div><div class="rl">${esc(s.p?GW.PROF_DE[s.p]:"")}</div></div></div><div class="pvchg"><div><span class="up">${esc(c.t)}</span></div></div></div>`; }).join("")}</div>` : "");
     } else
-    body = filt + head + `<p class="dim sm" style="margin:0 0 10px">${list.length} Builds: ${n.ok} unberührt, ${n.chg} mit geänderten Werten, ${n.weak} mit schwächerer Elite.</p>` + (list.length ? `<div class="pvgrid">${list.map(b=>pvCard(b, pv.tab==="CA"?"RA":pv.tab)).join("")}</div>` : `<div class="pvempty">Kein Build für diese Auswahl. Wähle oben "Alle Klassen".</div>`);
+    body = (pv.tab==="GvG" ? `<p class="mut sm" style="margin:0 0 12px;max-width:80ch">Hier stehen nur Leisten der ersten Wahl. ${gvgAll-list.length>0?`${gvgAll-list.length} schwächere GvG-Builds sind aussortiert.`:""} Die Einstufung ist hergeleitet, die Rechnung steht unter "Meta nach dem Update".</p><div style="margin-bottom:14px">${pvLineup()}</div>` : "") + filt + head + `<p class="dim sm" style="margin:0 0 10px">${list.length} Builds: ${n.ok} unberührt, ${n.chg} mit geänderten Werten, ${n.weak} mit schwächerer Elite.</p>` + (list.length ? `<div class="pvgrid">${list.map(b=>pvCard(b, pv.tab==="CA"?"RA":pv.tab)).join("")}</div>` : `<div class="pvempty">Kein Build für diese Auswahl. Wähle oben "Alle Klassen".</div>`);
   }
   root.innerHTML = tabs + intro + sub + body;
 }

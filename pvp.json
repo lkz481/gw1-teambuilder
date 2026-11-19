@@ -3841,7 +3841,7 @@
 "GvG"
 ],
 "tier": {},
-"team": false,
+"team": true,
 "ts": "2020-06-10",
 "weak": true,
 "chg": true,
@@ -4007,13 +4007,18 @@
 ],
 "rank": {
 "GvG": {
-"s": 2.5,
-"t": "B",
-"d": -0.5
+"s": 3.5,
+"t": "A",
+"d": 0.5
 }
 },
 "why": [
-"Zerreißende Aura schwächer"
+"Blitzwelle schwächer",
+"Zerreißende Aura schwächer",
+"Bis ans Limit! stärker",
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt",
+"Heilsalve wurde abgeschwächt, diese Elite nicht",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4163,7 +4168,7 @@
 "GvG"
 ],
 "tier": {},
-"team": false,
+"team": true,
 "ts": "2023-06-03",
 "weak": true,
 "chg": true,
@@ -4423,12 +4428,14 @@
 ],
 "rank": {
 "GvG": {
-"s": 3.0,
-"t": "A",
-"d": 0.0
+"s": 2.25,
+"t": "B",
+"d": -0.75
 }
 },
 "why": [
+"Geistesstärke stärker",
+"Böe schwächer",
 "Gezackter Stoß schwächer",
 "Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
@@ -4443,7 +4450,7 @@
 "GvG"
 ],
 "tier": {},
-"team": false,
+"team": true,
 "ts": "2020-09-07",
 "weak": true,
 "chg": true,
@@ -4566,13 +4573,17 @@
 ],
 "rank": {
 "GvG": {
-"s": 2.5,
+"s": 2.56,
 "t": "B",
-"d": -0.5
+"d": -0.44
 }
 },
 "why": [
-"Zerreißende Aura schwächer"
+"Energiewelle schwächer",
+"Heilsalve schwächer",
+"Zerreißende Aura schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4585,7 +4596,7 @@
 "GvG"
 ],
 "tier": {},
-"team": false,
+"team": true,
 "ts": "2023-06-03",
 "weak": true,
 "chg": true,
@@ -4709,12 +4720,18 @@
 ],
 "rank": {
 "GvG": {
-"s": 3.0,
-"t": "A",
-"d": 0.0
+"s": 2.57,
+"t": "B",
+"d": -0.43
 }
 },
-"why": []
+"why": [
+"Blitzwelle schwächer",
+"Heilsalve schwächer",
+"Trugbild beschwören stärker",
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt",
+"Heilsalve wurde abgeschwächt, diese Elite nicht"
+]
 },
 {
 "t": "GvG RNE Split",
@@ -5279,7 +5296,7 @@
 "tier": {
 "HA": "gut"
 },
-"team": false,
+"team": true,
 "ts": "2023-01-13",
 "weak": true,
 "chg": true,
@@ -5413,13 +5430,17 @@
 ],
 "rank": {
 "HA": {
-"s": 0.5,
+"s": 1.69,
 "t": "C",
-"d": -0.5
+"d": 0.69
 }
 },
 "why": [
-"Zerreißende Aura schwächer"
+"Migräne stärker",
+"Bleibender Fluch stärker",
+"Heilsalve schwächer",
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt",
+"Heilsalve wurde abgeschwächt, diese Elite nicht"
 ]
 },
 {
