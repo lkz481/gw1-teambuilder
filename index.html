@@ -1114,7 +1114,7 @@ function refPool(){
 function refTeams(){
   if (CAT!=="team" || !DPS.length || TEAM.length<2) return null;
   const n = state.dpsN, heroes = TEAM.length-1, phys = DPS[0].physical, allies = TEAM.length;
-  const key = [n, heroes, Math.round((phys||0)*100), playerCode(), armorNow()].join("|");
+  const key = [n, heroes, Math.round((phys||0)*100), playerCode(), armorNow(), foeDpsNow(), state.area||""].join("|");
   if (REFCACHE.key===key) return REFCACHE.val;
   const aiBadBar = o => o.bar.skills.some(id=>{ const s=GW.skill(id); return s && GW.heroai[s.n] && GW.heroai[s.n][0]>=2; });
   const meleeBar = o => [1,7,10].includes(o.bar.pri) && o.bar.skills.filter(id=>{ const s=GW.skill(id); return s && /attack/i.test(s.t); }).length>=3;
@@ -1213,13 +1213,15 @@ function refHTML(){
   h += `<p class="dim sm">Vergleich aus ${R.poolSize} Heldenleisten (PvX „Great“, „Good“ und „Meta“, dazu die Teams im Tool), mit deiner Leiste und denselben Zielen gerechnet. Das Vergleichsteam ist das stärkste nach unserer Rechnung, nicht nach Spielerfahrung. Es bekommt nur so viel Heilung und Schutz, wie zum Überleben nötig ist. Annahme dafür: Jeder Gegner macht 40 Schaden pro Sekunde, in Elite-Gebieten 60. Ausgeschaltete Gegner machen keinen. Heilung muss mindestens die Hälfte davon decken, Heilung und Schutz zusammen 150 %. Leisten, die die Helden-KI schlecht spielt, sowie Nahkampf- und Tier-Helden sind ausgeschlossen. Die übrigen Plätze gehen an die schadensstärksten Leisten: höchstens ein Dienermeister, ein Splitterwaffe-Helfer und zwei Helden mit derselben Elite. Kein Geist kommt doppelt vor, weil sich gleiche Geister verdrängen. Gezählt wird Dauerschaden. Kontrolle zählt über den Schaden mit, den ausgeschaltete Gegner nicht machen.</p>`;
   return h;
 }
-function takeRef(kind){
+// Hat der Spieler das berechnete Team gewählt, wird es nach einem Wechsel von Gebiet, Zielen, Rüstung oder Gruppengröße für die neue Lage neu berechnet
+function renderKeepRef(change){ const was = state.team==="ref_play"; change(); if (was) state.team = null; render(); if (was) takeRef("play", true); }
+function takeRef(kind, quiet){
   const R = refTeams(); if (!R) return; const L = kind==="play" ? R.play : R.max; if (!L) return;
   const key = "ref_"+kind, name = kind==="play" ? "Stärkstes Team, das überlebt (berechnet)" : "Rechnerisches Maximum (berechnet)";
   const def = { key, name, ref:true, desc: kind==="play" ? "Von uns berechnet: So viel Schaden wie möglich, mit gerade genug Heilung und Schutz zum Überleben. Die Annahmen stehen unter Schaden/s." : "Von uns berechnet: Nur die Heldenleisten mit dem höchsten Dauerschaden, ohne Heiler und Schutz. Als Vergleichswert gedacht, im Spiel kaum haltbar.",
     slots: L.map(o=>({ code:o.code, role:`${dname(o.elite)}-${GW.PROF_DE[o.bar.pri]}`, why:`${Math.round(o.D.total)} Schaden/s nach unserer Rechnung. Quelle der Leiste: ${o.src}.`, src:o.url||undefined })) };
   const i = TEAMS.findIndex(T=>T.key===key); if (i>=0) TEAMS[i]=def; else TEAMS.push(def);
-  state.team = key; state.over = {}; toast("Team übernommen"); render();
+  state.team = key; state.over = {}; if (!quiet) toast("Team übernommen"); render();
 }
 function drawDps(body){
   $("dtabs").hidden = true; $("dtabs").innerHTML = "";
@@ -1311,10 +1313,10 @@ document.addEventListener("click", e=>{
   const cp = t.closest("[data-copy]"); if (cp) { copy(cp.dataset.copy); return; }
   const vr = t.closest("[data-variant]"); if (vr) { state.variant=+vr.dataset.variant; state.over={}; render(); return; }
   const rt = t.closest("[data-reftake]"); if (rt) { takeRef(rt.dataset.reftake); return; }
-  const arm = t.closest("[data-armor]"); if (arm) { state.armor=+arm.dataset.armor; render(); return; }
-  const dn = t.closest("[data-dpsn]"); if (dn) { state.dpsN=+dn.dataset.dpsn; render(); return; }
+  const arm = t.closest("[data-armor]"); if (arm) { renderKeepRef(()=>{ state.armor=+arm.dataset.armor; }); return; }
+  const dn = t.closest("[data-dpsn]"); if (dn) { renderKeepRef(()=>{ state.dpsN=+dn.dataset.dpsn; }); return; }
   const sl = t.closest("[data-slot]"); if (sl) { openPicker(+sl.dataset.slot); return; }
-  const ar = t.closest("[data-area]"); if (ar) { state.area=ar.dataset.area; state.team=null; store.set("area",state.area); closeDrawer(); render(); return; }
+  const ar = t.closest("[data-area]"); if (ar) { renderKeepRef(()=>{ state.area=ar.dataset.area; state.team=null; store.set("area",state.area); closeDrawer(); }); return; }
   const sp = t.closest("[data-spot]"); if (sp) { state.spot=sp.dataset.spot; state.forceTeam=false; closeDrawer(); render(); return; }
   const ck = t.closest("[data-cmpk]"); if (ck) { ui.cmpK=ck.dataset.cmpk; drawMember($("dbody")); return; }
   const ct = t.closest("[data-cmptake]"); if (ct) { const mm=TEAM[ui.idx]; if (mm && mm.key) { state.over[mm.key]=ct.dataset.cmptake; toast("Leiste übernommen"); render(); } return; }
@@ -1340,7 +1342,7 @@ $("clsgrid").addEventListener("click", e=>{ const b=e.target.closest("[data-cls]
 $("pk-build").addEventListener("click", ()=>openDrawer("build"));
 $("pk-target").addEventListener("click", ()=>openDrawer("target"));
 $("pk-heroes").addEventListener("click", ()=>openDrawer("heroes"));
-$("party").addEventListener("click", e=>{ const b=e.target.closest("[data-party]"); if(!b||b.disabled) return; state.party=+b.dataset.party; store.set("party",state.party); render(); });
+$("party").addEventListener("click", e=>{ const b=e.target.closest("[data-party]"); if(!b||b.disabled) return; renderKeepRef(()=>{ state.party=+b.dataset.party; store.set("party",state.party); }); });
 document.addEventListener("change", e=>{
   const t = e.target;
   if (t.dataset.hero) { t.checked?state.owned.add(t.dataset.hero):state.owned.delete(t.dataset.hero); store.set("owned",[...state.owned]); render(); }
