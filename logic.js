@@ -792,7 +792,9 @@
       const ward = dRaw.match(/allies in this ward deal \+(\d+(?:\.\.\.\d+)?) damage/);
       if (ward) { const D = dur || 20, hr = (opts.physRate || 0) + attackRate; if (hr) parts.push({ kind: "Verbündeten-Bonus", per: at(ward[1], r) * hr * D, dur: D, aoe: 1, label: "+" + at(ward[1], r) + " je Treffer in der Abwehr" }); }
       const ab = dRaw.match(/target ally deals (\d+(?:\.\.\.\d+)?) more damage in melee/) || dRaw.match(/(\d+(?:\.\.\.\d+)?) more damage whenever these party members hit with physical/);
-      if (ab && opts.physRate) { const D = dur || 60; parts.push({ kind: "Verbündeten-Bonus", per: at(ab[1], r) * opts.physRate * D, dur: D, aoe: 1, label: "+" + at(ab[1], r) + " je Treffer des Nahkämpfers" }); }
+      // "in melee" (Wiki, Strength of Honor): wirkt nur auf Nahkampf-Treffer. Ohne Nahkämpfer im Team (Speer und Bogen zählen nicht) bringt die Verzauberung nichts.
+      if (ab && /in melee/.test(dRaw) && opts.meleeAlly === false) notes.push((s.de || s.n) + " wirkt nur im Nahkampf. Im Team kämpft niemand im Nahkampf, deshalb nicht gezählt.");
+      else if (ab && opts.physRate) { const D = dur || 60; parts.push({ kind: "Verbündeten-Bonus", per: at(ab[1], r) * opts.physRate * D, dur: D, aoe: 1, label: "+" + at(ab[1], r) + " je Treffer des Nahkämpfers" }); }
       // ---- Unterstützung: Heilung und verhinderter Schaden (Texte von guildwiki.de) ----
       const HIT = 80, MAXHP = 480;
       const allies = opts.allies || 8;
@@ -1056,7 +1058,7 @@
     { const hs = out.filter(o => o.cat === "heal" && o.dps > 0), raw = hs.reduce((a, o) => a + o.dps, 0); if (raw > INC) { hs.forEach(o => { o.dps *= INC / raw; }); notes.push("Heilung auf den ankommenden Schaden begrenzt (" + Math.round(INC) + "/s). Die Leiste könnte " + Math.round(raw) + "/s heilen."); } }
     const total = sum("dmg"), heal = sum("heal"), prot = sum("prot"), ctrl = Math.min(n, sum("ctrl"));
     if (ctrl > 0.05) notes.push("Kontrolle: Im Schnitt " + ctrl.toFixed(1).replace(".", ",") + " von " + n + " Gegnern ausgeschaltet. Je die Hälfte des Gegnerschadens kommt aus Angriffen und aus Fertigkeiten. Eine Unterbrechung kostet einen Angriff (1 s) oder einen Zauber (2 s).");
-    return { total, heal, prot, ctrl, incoming: INC, parts: out.filter(o => o.dps > (o.cat === "ctrl" ? 0.005 : 0.05)).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0, energyF: f, protFx: fxOut, protExtra };
+    return { total, heal, prot, ctrl, incoming: INC, parts: out.filter(o => o.dps > (o.cat === "ctrl" ? 0.005 : 0.05)).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0, meleeW: !!w && !/Bogen|Speer|Stab/.test(w[0]), energyF: f, protFx: fxOut, protExtra };
   };
   // Effektive Ränge aus Grundwerten plus Runen der Ausrüstungsempfehlung
   // ---------- Schutz: Reihenfolge der Schadensminderung nach Wiki "Order of damage modifiers" ----------
@@ -1115,9 +1117,11 @@
     const hexSeen = new Map(), scales = bars.map(b=>{ const m = new Map(); SK(b).forEach(s=>{ if (!/hex/i.test(s.t)) return; const j = hexSeen.get(s.id)||0; hexSeen.set(s.id, j+1); const aoe = /also hexes|adjacent|nearby|in the area/i.test(s.d); if (aoe ? j>0 : j>=n) m.set(s.id, 0); }); return m; });
     // Gleiche Leiste unter gleichen Bedingungen nur einmal rechnen (die Suche nach dem Vergleichsteam fragt dieselben Fälle sehr oft ab)
     const run = (i, phys, bp) => { const cs = cu>1 && corpseUser(bars[i]) ? 1/cu : 1;
-      const key = [(env.wmods && env.wmods[i]) || "-", death.toFixed(3), crackT.toFixed(3), i===0 ? "S" : "H", bars[i].skills.join(","), [...eff[i]].join(";"), i===0 ? "w"+JSON.stringify(weapon0||0) : "p"+(Math.round(phys*1000)), bp, [...skips[i]].join(","), [...scales[i]].join(";"), cs, n, base.armor, base.foeDps, allies, snare?1:0, base.hold||0, JSON.stringify(team)].join("|");
+      const key = [(env.wmods && env.wmods[i]) || "-", death.toFixed(3), crackT.toFixed(3), i===0 ? "S" : "H", bars[i].skills.join(","), [...eff[i]].join(";"), i===0 ? "w"+JSON.stringify(weapon0||0) : "p"+(Math.round(phys*1000)), bp, [...skips[i]].join(","), [...scales[i]].join(";"), cs, n, base.armor, base.foeDps, allies, snare?1:0, base.hold||0, base.meleeAlly===false?"nm":"", JSON.stringify(team)].join("|");
       let v = RUNMEMO.get(key); if (!v) { if (RUNMEMO.size > 6000) RUNMEMO.clear(); v = GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys, hero:true }, { wmod: (env.wmods && env.wmods[i]) || null, bipPips:bp, skip:skips[i], scale:scales[i], corpseShare: cs })); RUNMEMO.set(key, v); } return v; };
     const first0 = run(0, 0, 0); let pass = bars.map((b,i)=> i===0 ? first0 : run(i, first0.physical, 0));
+    // Kein Nahkämpfer im Team: Verstärkungen, die nur Nahkampf-Treffer verbessern, zählen nicht
+    if (!pass.some(D=>D.meleeW)) { base.meleeAlly = false; pass = bars.map((b,i)=> i===0 ? run(0, 0, 0) : run(i, first0.physical, 0)); }
     // Verstärkungen für Angreifer stapeln sich nicht: Ein Verbündeter trägt nur einen Waffenzauber, dieselbe Verzauberung oder derselbe Orden wirkt nur einmal
     const physCount = Math.max(1, pass.filter(D=>D.physical>0).length); let ws = 0; const buffSeen = new Map(); let changed = false;
     pass.forEach((D,i)=>{ const seen = new Set(); D.parts.forEach(p=>{ if (!p.sid || seen.has(p.sid) || !/Verbündeten-Bonus|Waffenzauber/.test(p.kind||"")) return; seen.add(p.sid); const s = GW.skill(p.sid); if (!s) return;

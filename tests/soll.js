@@ -210,4 +210,10 @@ const tpart = (D, name, cat) => D.parts.filter(p => p.sid === id(name) && p.cat 
 { const b = bar(ME, 0, { 0: 16, 2: 16 }, ['Psychic Instability']), r = run(b, { targets: 3 }), p = r.parts.find(x => x.cat === 'ctrl' && /Niederschlag/.test(x.detail));
   T('Labilität: Flächen-Niederschlag mit Liegezeit', p && p.kdUp > 0 && p.kdUp <= 1 && /4 s/.test(p.detail) ? 1 : 0, 1, 0); }
 
+// Strength of Honor (Wiki): "+5...25 Schaden im Nahkampf". Mit einem Speer-Paragon und ohne Nahkämpfer im Team zählt sie nicht, mit einem Sensen-Derwisch schon.
+{ const soh = bar(RT, MO, { 34: 12, 15: 10 }, ['Strength of Honor']), para = bar(P, 0, { 37: 12 }, []), derv = bar(D, 0, { 41: 12 }, []);
+  const X = team([para, soh], 3, [17, 'Speer']), Y = team([derv, soh], 3, [6, 'Sense']);
+  T('Stärke der Ehre ohne Nahkämpfer: 0', part(X[1], 'Strength of Honor'), 0, 0);
+  T('Stärke der Ehre mit Nahkämpfer: zählt', part(Y[1], 'Strength of Honor') > 3 ? 1 : 0, 1, 0); }
+
 console.log(ok + ' von ' + (ok + bad) + ' Fällen bestanden'); fails.forEach(f => console.log('  FEHLER  ' + f)); process.exit(bad ? 1 : 0);
