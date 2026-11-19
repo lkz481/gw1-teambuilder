@@ -574,7 +574,10 @@ function teamDps(bars, eff, weapon0, n){
   const seenSp = new Set(), skips = bars.map(b=>{ const mine = GW.spiritIds(b), sk2 = new Set(mine.filter(id=>seenSp.has(id))); mine.forEach(id=>seenSp.add(id)); return sk2; });
   // gleiche Verhexung von mehreren: Flächen-Verhexungen zählen einmal, Einzel-Verhexungen so oft, wie es Ziele gibt
   const hexSeen = new Map(), scales = bars.map(b=>{ const m = new Map(); SK(b).forEach(s=>{ if (!/hex/i.test(s.t)) return; const j = hexSeen.get(s.id)||0; hexSeen.set(s.id, j+1); const aoe = /also hexes|adjacent|nearby|in the area/i.test(s.d); if (aoe ? j>0 : j>=n) m.set(s.id, 0); }); return m; });
-  const run = (i, phys, bp) => GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys }, { bipPips:bp, skip:skips[i], scale:scales[i], corpseShare: cu>1 && corpseUser(bars[i]) ? 1/cu : 1 }));
+  // Gleiche Leiste unter gleichen Bedingungen nur einmal rechnen (die Suche nach dem Vergleichsteam fragt dieselben Fälle sehr oft ab)
+  const run = (i, phys, bp) => { const cs = cu>1 && corpseUser(bars[i]) ? 1/cu : 1;
+    const key = [bars[i].skills.join(","), [...eff[i]].join(";"), i===0 ? "w"+JSON.stringify(weapon0||0) : "p"+(Math.round(phys*1000)), bp, [...skips[i]].join(","), [...scales[i]].join(";"), cs, n, base.armor, base.foeDps, allies, snare?1:0, JSON.stringify(team)].join("|");
+    let v = RUNMEMO.get(key); if (!v) { if (RUNMEMO.size > 6000) RUNMEMO.clear(); v = GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys }, { bipPips:bp, skip:skips[i], scale:scales[i], corpseShare: cs })); RUNMEMO.set(key, v); } return v; };
   const first0 = run(0, 0, 0); let pass = bars.map((b,i)=> i===0 ? first0 : run(i, first0.physical, 0));
   // Verstärkungen für Angreifer stapeln sich nicht: Ein Verbündeter trägt nur einen Waffenzauber, dieselbe Verzauberung oder derselbe Orden wirkt nur einmal
   const physCount = Math.max(1, pass.filter(D=>D.physical>0).length); let ws = 0; const buffSeen = new Map(); let changed = false;
@@ -609,6 +612,13 @@ const foeDpsNow = () => ELITE_AREA(state.area) ? 60 : 40;
 // Schutz mehrerer Leisten überlappt: zusammen nie mehr als der ankommende Schaden
 const protSum = (list, n) => { const inc = n * foeDpsNow(); return inc * (1 - list.reduce((a,d)=>a*(1-Math.min(0.95, ((d&&d.prot)||0)/inc)),1)); };
 const armorNow = () => state.armor || (ELITE_AREA(state.area) ? 80 : 60);
+// Klassische Aufstellung: Frontlinie (Nahkampf) oben, Mittellinie (Schaden aus der Distanz) in der Mitte, Hinterlinie (Heilung, Schutz, Energie) unten
+const RUNMEMO = new Map();
+const lineOf = bar => { const S = bar.skills.map(id=>GW.skill(id)).filter(Boolean), top = (bar.attrs.slice().sort((a,b)=>b[1]-a[1])[0]||[-1])[0];
+  if ([1,7,10].includes(bar.pri) || S.filter(s=>/(melee|sword|axe|hammer|scythe|dagger|lead|off-hand|dual) attack/i.test(s.t)).length>=3) return 0;
+  if (S.some(s=>s.n==="Blood is Power") || [13,15,33,32,16].includes(top) || S.some(s=>s.n==="Soul Twisting")) return 2;
+  return 1; };
+const lineCmp = (a, b) => lineOf(a.bar)-lineOf(b.bar) || (a.code < b.code ? -1 : a.code > b.code ? 1 : 0);
 const hasBip = bar => bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Blood is Power"; });
 const bipShare = (effMap, others) => { const r = Math.min(effMap.get(4)||0, 21); return Math.round(3 + 3*r/15) * Math.min(1, 3/Math.max(1,others)); };
 function compute(){
@@ -637,6 +647,7 @@ function compute(){
     });
     if (slots.length) { const hs = GW.assignHeroes(slots, state.owned, state.mercs); slots.forEach((s,i)=>TEAM.push({ hero:true, name:hs[i].name, merc:hs[i].merc, role:s.role, why:s.why, code:s.code, bar:GW.decode(s.code) })); }
   }
+  TEAM = TEAM.slice(0,1).concat(TEAM.slice(1).sort(lineCmp));
   DPS = computeDps();
 }
 
@@ -1181,7 +1192,7 @@ function refTeams(){
     const cands = [build([])]; if (bipBar && heroes>=2) cands.push(build([bipBar]));
     { const top = cands.filter(c=>c.E.ok).sort((a,b)=>b.E.dmg-a.E.dmg)[0] || [...cands].sort((a,b)=>a.E.gap-b.E.gap)[0]; cands.push(improve(top)); }
     const good = cands.filter(c=>c.E.ok).sort((a,b)=>b.E.dmg-a.E.dmg)[0] || cands.sort((a,b)=>a.E.gap-b.E.gap)[0];
-    play = good.L.map((o,i)=>Object.assign({}, o, { D:good.E.TD[i+1] })).sort((a,b)=>isSup(b)-isSup(a) || b.D.total-a.D.total);
+    play = good.L.map((o,i)=>Object.assign({}, o, { D:good.E.TD[i+1] })).sort(lineCmp);
     // in genau der Reihenfolge noch einmal rechnen, in der das Team übernommen wird: Dann stimmt die Zahl nach dem Übernehmen überein
     playEval = evalTeam(play); play = play.map((o,i)=>Object.assign({}, o, { D:playEval.TD[i+1] })); playSum = Math.round(playEval.dmg);
   }
@@ -1241,18 +1252,20 @@ function drawDps(body){
       <li>Tiergefährte: Stufe 20, im Schnitt 24,4 je Treffer bei Tierbeherrschung 12 (Wiki), plus 33 % in PvE, ein Angriff alle 2 s. Die Umrechnung auf andere Ränge ist eine Annahme.</li>
       <li>Stärke der Ehre, Splitterwaffe und ähnliche Helfer zählen beim Helden, der sie wirkt, über die Angriffe des Spielers.</li>
       <li>Rüstung der Gegner: Je 40 Rüstung halbiert sich Waffen-, Diener-, Tier- und Elementarschaden (Wiki). Rüstungsignorierender Schaden wie bei Mesmern, Peinigungsgebeten und Angriffsboni bleibt voll. In normalen Gebieten rechnet das Tool mit 60, in Elite-Gebieten mit 80. Laut Wiki gilt 3 mal Stufe plus Klassenbonus, bei Stufe 28 also ab 84.</li>
-      <li>Kontrolle ("Gegner aus"): Niederschlag, Unterbrechung, Benommenheit, Blindheit, gesperrte Fertigkeiten, verlangsamte Angriffe und Zauber sowie Panik zählen als Zeit, in der ein Gegner nichts tun kann. 1,0 heißt: Im Schnitt ist ständig ein Gegner ausgeschaltet. Annahmen: Die Hälfte der Gegner zaubert, die Hälfte greift an. Eine Unterbrechung kostet 2 Sekunden und jede zweite sitzt.</li>
+      <li>Kontrolle ("Gegner aus"): Niederschlag, Unterbrechung, Benommenheit, Blindheit, gesperrte Fertigkeiten, verlangsamte Angriffe und Zauber sowie Panik zählen als Zeit, in der ein Gegner nichts tun kann. 1,0 heißt: Im Schnitt ist ständig ein Gegner ausgeschaltet. Eine Unterbrechung kostet den Gegner einen Angriff (1 s) oder einen Zauber (2 s). Helden unterbrechen laut Wiki ohne Verzögerung und warten nur auf die Gelegenheit: Je mehr Gegner, desto kürzer die Wartezeit. Blindheit im Team zählt nur einmal.</li>
       <li>Nebeneffekte der Erstattribute (Wiki): Schnellwirkung verkürzt Wirk- und Aufladezeit. Stärke gibt je Rang 1 % Rüstungsdurchdringung bei Angriffsfertigkeiten. Fachkenntnis und Mystik senken Energiekosten. Gunst der Götter heilt je Rang 3,2 zusätzlich. Seelensammlung, Kritische Stöße und Führung geben Energie. Macht des Herbeirufens verlängert Waffenzauber und gibt Dienern mehr Lebenspunkte. Energiespeicherung erhöht nur die Höchstenergie und ändert Dauerwerte nicht.</li>
       <li>Was sich im Team nicht stapelt, zählt nur einmal: gleiche Geister, dieselbe Flächen-Verhexung, derselbe Orden oder Schrei. Ein Verbündeter trägt nur einen Waffenzauber. Leichen teilen sich alle, die welche brauchen. Degeneration ist im ganzen Team auf 10 Pips je Ziel begrenzt.</li>
       <li>Vorbedingungen am Ziel: Zwietracht und ähnliche Fertigkeiten zählen nur, wenn im Team jemand die nötige Verhexung oder den Zustand liefert.</li>
       <li>Heilung kann nie größer sein als der Schaden, der ankommt.</li>
-      <li>Schutz: Gerechnet wird mit dem Schaden, der auf die Gruppe einprasselt (je Gegner 40/s, in Elite-Gebieten 60/s, Annahme). Schutz kann nie mehr verhindern, als ankommt. Mehrere Schutz-Effekte überlappen und werden nicht einfach addiert.</li>
+      <li>Gegner: Gerechnet wird der schwere Modus. Nach Wiki ("Hard mode", "Damage calculation") greifen Gegner dort 33 % öfter an und ihre Fertigkeiten treffen je Stufe rund 5 % härter. Daraus: Ein Angriff trifft einen Zauberer mit Rüstung 60 für rund 28, eine Fertigkeit für rund 95, in Elite-Gebieten 34 und 125. Je Gegner kommen 40 Schaden/s an, in Elite-Gebieten 60, je zur Hälfte aus Angriffen und aus Fertigkeiten. Ein Gegner greift im Schnitt 0,55-mal je Sekunde an und nutzt alle 4 s eine Fertigkeit. Die Aufteilung halb und halb ist eine Annahme.</li>
+      <li>Schutz: Schadensgrenzen wie Unterschlupf und Schutzgeist greifen nur bei großen Treffern, Blocken nur bei Angriffen, feste Abzüge wirken bei kleinen Treffern stärker. Schutz kann nie mehr verhindern, als ankommt, und mehrere Effekte überlappen. Schutzgeister halten nur so lange, wie ihre Lebenspunkte reichen (Wiki "Spirit": Stufe mal 20, plus 4 % je Rang Macht des Herbeirufens). Unterschlupf, Vereinigung und Verschiebung zahlen jede Wirkung mit Lebenspunkten, Rüstung der Gefühllosigkeit halbiert das. Seelenverflechtung lädt die Rituale sofort wieder auf.</li>
       <li>Flächenschaden über Zeit (Strahl des Urteils, Feuersturm, Chaossturm und ähnliche): Gegner laufen nach zwei bis drei Schadenspulsen auseinander (guildwiki.de, "Künstliche Intelligenz"). Gezählt werden 3 Pulse. Wirft der Zauber selbst um oder hat das Team eine Flächen-Verlangsamung wie Geistige Erfrierung, zählen alle Pulse. Einzelne Schadenspakete lösen kein Auseinanderlaufen aus (Wiki "Scatter").</li>
       <li>Stab und Zauberstab: 11-22 Schaden alle 1,75 Sekunden (Wiki), nur in der Zeit ohne Zauber.</li>
-      <li>Auslöser durch Gegner-Aktionen: Eine Aktion alle 2 Sekunden angenommen.</li>
+      <li>Auslöser durch Gegner-Aktionen: Angriffe 0,55-mal je Sekunde, Fertigkeiten 0,25-mal, Zauber 0,15-mal (nur die Hälfte der Gegner zaubert).</li>
+      <li>Gruppenheilung zählt für die halbe Gruppe, weil selten alle zugleich verletzt sind (Annahme). Verjüngung und Todesqual geben insgesamt so viel ab, wie der Geist Lebenspunkte hat (Wiki). Aufrechterhaltene Verzauberungen kosten je 1 Pip Energieregeneration.</li>
       <li>Weiter Annahmen, weil das Wiki dazu nichts misst: Diener leben im Kampf halb so lange wie ihre Zerfallszeit. Geister stehen fest und zählen deshalb nur zu 70 %. Der Tierschaden ist im Wiki nur für Tierbeherrschung 12 gemessen und wird auf andere Ränge wie Waffenschaden umgerechnet.</li>
       <li>Heilung: direkte Heilung, Regeneration und ausgelöste Heilung, Mönchszauber mit Gunst der Götter (3,2 je Rang). Gruppenheilung zählt für jedes Gruppenmitglied.</li>
-      <li>Schutz ist eine Schätzung: Jedes geschützte Gruppenmitglied wird alle 2 s für 80 Schaden getroffen und hat 480 Lebenspunkte. Gezählt werden Schadensgrenzen, Schadensminderung, Blocken und Rüstungsboni.</li>
+      
     </ul></details>`;
 }
 function drawInfo(body){
