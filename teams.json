@@ -420,57 +420,57 @@
 },
 {
 "key": "yt_doa",
-"name": "DoA, 7 Helden (YouTube 11/2024)",
+"name": "DoA SM, 7 Helden (YouTube 11/2026)",
 "area": "doa",
 "yt": true,
-"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo",
-"desc": "YouTube, inoffiziell: Heldenteam von Péter Kádár vom 21.11.2024. Video-Leitfaden für alle vier Bereiche und Mallyx ohne Verbrauchsgüter, für jede Klasse. Die Leisten stammen aus der Videobeschreibung und sind hier nur auf gültige Codes geprüft.",
+"src": "https://www.youtube.com/watch?v=dvt29plOCBQ",
+"desc": "YouTube, inoffiziell: Heldenteam von MeteorJack vom 04.11.2026. Fünfteilige Reihe vom 10. und 11.2026, also nach der Änderung an Energiewelle: Alle vier Bereiche und Mallyx im Schweren Modus mit Helden. Die Leisten stammen aus der Videobeschreibung und sind hier nur auf gültige Codes geprüft.",
 "player": {
-"label": "Beliebige Klasse",
-"code": "OQcR4ZaBqtMmcXEAAAAAAAA"
+"label": "Derwisch mit Schwur der Stärke",
+"code": "Ogek8Jp4Kzqk5F313mMYb5Fn2VzF"
 },
 "slots": [
 {
-"code": "OQljAkCsZOngcw0bIY6KC40dMA",
+"code": "OQhDArwjJnw0nDaQTY6ExFD",
 "role": "Energiewelle-Mesmer",
-"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
-"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von MeteorJack (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=dvt29plOCBQ"
 },
 {
-"code": "OQhkAsC8gFKyJkDT/QY6FRGcxA",
+"code": "OQhkAsC8gFKyJM95gGY67QGcxA",
 "role": "Energiewelle-Mesmer",
-"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
-"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von MeteorJack (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=dvt29plOCBQ"
 },
 {
-"code": "OQhkAsC8gFKENwBYOw0zQgpTGwFD",
+"code": "OQREArwjcmQDDRO4CNhpnB2B",
 "role": "Panik-Mesmer",
-"why": "Legt ganze Gruppen lahm und unterbricht. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
-"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+"why": "Legt ganze Gruppen lahm und unterbricht. Leiste aus dem Video von MeteorJack (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=dvt29plOCBQ"
 },
 {
-"code": "OAhjQoGYIP3hqqwbYexkmTuxJA",
+"code": "Owgj4wQooO+MXC1vL6NxYLk5BA",
+"role": "Strahl des Urteils-Mönch",
+"why": "Flächenschaden über Peinigungsgebete, entfernt Verhexungen. Leiste aus dem Video von MeteorJack (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=dvt29plOCBQ"
+},
+{
+"code": "OAhkQkG5xEy0dQCYV1wk00kT004E",
 "role": "Blut ist Kraft-Nekromant",
-"why": "Gibt dem Team Energie und heilt über Wiederherstellungsmagie. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
-"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+"why": "Gibt dem Team Energie und heilt über Wiederherstellungsmagie. Leiste aus dem Video von MeteorJack (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=dvt29plOCBQ"
 },
 {
-"code": "OwUTMwmC5Zjc38IXkuYGoHwQAA",
-"role": "Unnachgiebige Aura-Mönch",
-"why": "Heiler mit Wiederbelebung über Unnachgiebige Aura. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
-"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+"code": "OAhjUwGW4OyhqwXYYKNncRzxJA",
+"role": "Aura des Lich-Nekromant",
+"why": "Dienermeister, heilt nebenbei über Wiederherstellungsmagie. Leiste aus dem Video von MeteorJack (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=dvt29plOCBQ"
 },
 {
-"code": "OACiAyk8gNDnWvHH00yZNdmA",
+"code": "OAmkAyhCZamD20694CnQTr5FrGD",
 "role": "Seelenverflechtung-Ritualist",
-"why": "Schutz über Geister: Unterschlupf, Vereinigung und Verschiebung. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
-"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
-},
-{
-"code": "OgljgwMpZOGjxx3QHSLCH14dMA",
-"role": "Schimmerndes Zeichen-Elementarmagier",
-"why": "Blitzschaden mit Blindheit, dazu Rufe. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
-"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+"why": "Schutz über Geister: Unterschlupf, Vereinigung und Verschiebung. Leiste aus dem Video von MeteorJack (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=dvt29plOCBQ"
 }
 ]
 },
