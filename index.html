@@ -1121,8 +1121,10 @@ function refTeams(){
   const meleeBar = o => [1,7,10].includes(o.bar.pri) && o.bar.skills.filter(id=>{ const s=GW.skill(id); return s && /attack/i.test(s.t); }).length>=3;
   // Tier-Leisten stammen aus reinen Tier-Teams (Petway) und taugen einzeln nicht als Vergleich
   const petBar = o => o.bar.skills.some(id=>{ const s=GW.skill(id); return s && ["Heal as One","Charm Animal","Comfort Animal"].includes(s.n); });
-  const base = refPool().filter(o=>!aiBadBar(o) && !meleeBar(o) && !petBar(o)).map(o=>{ let r=[]; try{ r=GW.equipFor(o.bar, EQ, null).runes; }catch(e){} return Object.assign(o, { eff:GW.effRanks(o.bar, r), bip:hasBip(o.bar), splinter:o.bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Splinter Weapon"; }) }); });
-  const evalPool = bp => base.map(o=>{ const D = GW.dps(o.bar, o.eff, { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), physRate:phys, allies, bipPips:o.bip?0:bp }); return Object.assign({}, o, { D, minion:D.parts.some(p=>p.kind==="Diener") }); });
+  const baseAll = refPool().filter(o=>!aiBadBar(o) && !petBar(o)).map(o=>{ let r=[]; try{ r=GW.equipFor(o.bar, EQ, null).runes; }catch(e){} return Object.assign(o, { eff:GW.effRanks(o.bar, r), bip:hasBip(o.bar), melee:meleeBar(o), splinter:o.bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Splinter Weapon"; }) }); });
+  // Nahkampf-Helden bleiben aus dem stärksten Team heraus, das Zufallsteam darf sie nehmen
+  const base = baseAll.filter(o=>!o.melee);
+  const evalPool = (bp, list) => (list||base).map(o=>{ const D = GW.dps(o.bar, o.eff, { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), physRate:phys, allies, bipPips:o.bip?0:bp }); return Object.assign({}, o, { D, minion:D.parts.some(p=>p.kind==="Diener") }); });
   // Elite, die Verzauberungen vom Gegner nehmen, nur einmal: Die zweite findet nichts mehr zum Entfernen
   const once = o => { const s=GW.skill(o.elite.id); return !!s && /(foes?|target)[^.]{0,20}loses? \S+ enchantment|removes? [^.]*enchantments? from (target|foe)|for each enchantment removed/i.test(s.d||""); };
   const pick = (pool, cnt, taken) => { const res=[], el={}; let mm=0, sp=0;
@@ -1172,7 +1174,7 @@ function refTeams(){
       const mk = (code, bar) => { try { const f = byNorm.get(normCode(code)); if (f) return f; const sk = bar.skills.map(id=>GW.skill(id)), elite = sk.find(s=>s && s.e) || sk.find(Boolean); if (!elite) return null; let r=[]; try{ r=GW.equipFor(bar, EQ, null).runes; }catch(e){} const eff = GW.effRanks(bar, r), bip = hasBip(bar);
           const D = GW.dps(bar, eff, { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), physRate:phys, allies, bipPips:bip?0:bp });
           return { code, bar, elite, eff, bip, splinter:sk.some(s=>s && s.n==="Splinter Weapon"), D, minion:D.parts.some(p=>p.kind==="Diener"), src:"bisheriges Team", url:null }; } catch(e){ return null; } };
-      ctx = { P1, mk, evalTeam, isSup, spOf, mySp }; }
+      ctx = { P1:P1.concat(evalPool(bp, baseAll.filter(o=>o.melee))), mk, evalTeam, isSup, spOf, mySp }; }
     const cands = [build([])]; if (bipBar && heroes>=2) cands.push(build([bipBar]));
     { const top = cands.filter(c=>c.E.ok).sort((a,b)=>b.E.dmg-a.E.dmg)[0] || [...cands].sort((a,b)=>a.E.gap-b.E.gap)[0]; cands.push(improve(top)); }
     // Zweiter Weg, weil Einzeltausch in Sackgassen laufen kann: den besten Kern aus bis zu drei Leisten vollständig durchrechnen, dann Platz für Platz die beste Ergänzung anfügen und am Ende nachbessern
