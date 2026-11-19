@@ -673,7 +673,7 @@ function closeDrawer(){ $("dtabs").hidden=false; ui.drawer=null; $("drawer").cla
 
 // ---------- PvP-Bereich ----------
 const pv = { tab:"meta", sub:"builds", prof:0, kind:"all" };
-const PV_TABS = [["meta","Aktuelle Meta"],["RA","Zufallsarena"],["CA","Kodex-Arena"],["GvG","GvG"],["HA","Aufstieg der Helden"]];
+const PV_TABS = [["meta","Meta nach dem Update"],["RA","Zufallsarena"],["CA","Kodex-Arena"],["GvG","GvG"],["HA","Aufstieg der Helden"]];
 const PV_POS = p => [1,7,10].includes(p) ? "Front" : p===3 ? "Hinten" : p===8 ? "Hinten oder Läufer" : "Mitte";
 const pvState = b => b.weak ? ["weak","Elite seit Update schwächer"] : b.chg ? ["chg","Werte seit Update geändert"] : ["ok","vom Update unberührt"];
 const pvDec = code => { try { return GW.decode(code); } catch(e) { return null; } };
@@ -681,17 +681,20 @@ function pvChg(m){ return m.chg.length ? `<div class="pvchg">${m.chg.map(h=>{ co
 function pvAttr(d){ return `<div class="pvattr">${d.attrs.map(a=>`${esc(attrDe(a[0]))} ${a[1]}`).join(" · ")}</div>`; }
 function pvCard(b, fmt){
   const st = pvState(b), f = fmt==="meta" ? b.meta.map(x=>PVP.fmt[x].name).join(", ") : "";
-  const tags = `<div class="pvtags">${b.meta.length && (fmt==="meta" || b.meta.includes(fmt)) ? `<span class="tag rec">Meta</span>` : ""}${Object.entries(b.tier).filter(([k])=>fmt==="meta"||k===fmt).slice(0,1).map(([k,v])=>`<span class="tag">PvX: ${esc(v)}</span>`).join("")}<span class="tag ${st[0]}">${st[1]}</span></div>`;
+  const rk = b.rank && b.rank[fmt==="meta"?(pv.mfmt||"GvG"):fmt], RT = {A:["rec","Erste Wahl"],B:["","Spielbar"],C:["weak","Zurückgefallen"]};
+  const rtag = rk ? `<span class="tag ${RT[rk.t][0]}" title="${rk.s} Punkte">${RT[rk.t][1]}${rk.d>0.2?" ▲":rk.d<-0.2?" ▼":""}</span>` : "";
+  const whyl = fmt==="meta" && b.why && b.why.length ? `<div class="pvattr">Seit dem Update: ${esc(b.why.join(". "))}.</div>` : "";
+  const tags = `<div class="pvtags">${fmt==="meta"?rtag:""}${b.meta.length && (fmt==="meta" || b.meta.includes(fmt)) ? `<span class="tag rec">Meta</span>` : ""}${Object.entries(b.tier).filter(([k])=>fmt==="meta"||k===fmt).slice(0,1).map(([k,v])=>`<span class="tag">PvX: ${esc(v)}</span>`).join("")}<span class="tag ${st[0]}">${st[1]}</span></div>`;
   const foot = `<div class="pvfoot"><span class="dim">PvX-Stand ${esc(b.ts.split("-").reverse().join("."))}${f?" · "+esc(f):""}</span><a href="${esc(b.u)}" target="_blank" rel="noopener">PvX-Seite (inoffiziell)</a></div>`;
   if (b.team) {
     const main = b.m.slice(0,8), extra = b.m.slice(8);
     const row = m => { const d=pvDec(m.code); if(!d) return ""; const el=GW.skill(m.elite); return `<div class="pvm"><div class="who"><b>${esc(el?dname(el):"Ohne Elite")}</b><span>${esc(pname(d.pri,d.sec))} · ${PV_POS(d.pri)}</span></div><div class="bar8">${d.skills.map(id=>ico(id)).join("")}</div><button class="btn s" data-copy="${esc(m.code)}">Code</button>${m.chg.length?`<div style="grid-column:1/-1">${pvChg(m)}</div>`:""}</div>`; };
-    return `<article class="pvc team"><div class="pvh"><div style="min-width:0;flex:1"><div class="nm">${esc(b.t)}</div><div class="rl">Team mit ${main.length} Leisten${extra.length?` und ${extra.length} Varianten`:""}</div></div><button class="btn s" data-copy="${esc(main.map(m=>m.code).join("\n"))}">Alle Codes</button></div>${tags}${main.map(row).join("")}${extra.length?`<details class="more"><summary>Varianten ansehen</summary>${extra.map(row).join("")}</details>`:""}${foot}</article>`;
+    return `<article class="pvc team"><div class="pvh"><div style="min-width:0;flex:1"><div class="nm">${esc(b.t)}</div><div class="rl">Team mit ${main.length} Leisten${extra.length?` und ${extra.length} Varianten`:""}</div></div><button class="btn s" data-copy="${esc(main.map(m=>m.code).join("\n"))}">Alle Codes</button></div>${tags}${whyl}${main.map(row).join("")}${extra.length?`<details class="more"><summary>Varianten ansehen</summary>${extra.map(row).join("")}</details>`:""}${foot}</article>`;
   }
   const m = b.m[0], d = pvDec(m.code); if (!d) return "";
   const el = GW.skill(m.elite), vars = b.m.slice(1);
   const vrow = x => { const dx=pvDec(x.code); return dx ? `<div class="pvm" style="grid-template-columns:minmax(0,1fr) auto"><div class="bar8">${dx.skills.map(id=>ico(id)).join("")}</div><button class="btn s" data-copy="${esc(x.code)}">Code</button></div>` : ""; };
-  return `<article class="pvc" style="--pc:${PCOL[d.pri]}"><div class="pvh">${ico(el?m.elite:(d.skills.find(Boolean)||0))}<div style="min-width:0"><div class="nm">${esc(el?dname(el):(()=>{ const f=GW.skill(d.skills.find(Boolean)); return (f?dname(f):"Leiste")+" (ohne Elite)"; })())}</div><div class="rl">${esc(pname(d.pri,d.sec))}</div></div></div>${tags}<div class="bar8">${d.skills.map(id=>ico(id)).join("")}</div>${pvAttr(d)}${d.skills.some(x=>!x)?`<div class="pvattr">Leere Plätze sind frei wählbar. Vorschläge stehen auf der PvX-Seite.</div>`:""}${pvChg(m)}<div class="code"><input readonly value="${esc(m.code)}" aria-label="Vorlagen-Code"><button class="btn s" data-copy="${esc(m.code)}">Kopieren</button></div>${vars.length?`<details class="more"><summary>${vars.length} ${vars.length===1?"Variante":"Varianten"} ansehen</summary>${vars.map(vrow).join("")}</details>`:""}${foot}</article>`;
+  return `<article class="pvc" style="--pc:${PCOL[d.pri]}"><div class="pvh">${ico(el?m.elite:(d.skills.find(Boolean)||0))}<div style="min-width:0"><div class="nm">${esc(el?dname(el):(()=>{ const f=GW.skill(d.skills.find(Boolean)); return (f?dname(f):"Leiste")+" (ohne Elite)"; })())}</div><div class="rl">${esc(pname(d.pri,d.sec))}</div></div></div>${tags}<div class="bar8">${d.skills.map(id=>ico(id)).join("")}</div>${whyl}${pvAttr(d)}${d.skills.some(x=>!x)?`<div class="pvattr">Leere Plätze sind frei wählbar. Vorschläge stehen auf der PvX-Seite.</div>`:""}${pvChg(m)}<div class="code"><input readonly value="${esc(m.code)}" aria-label="Vorlagen-Code"><button class="btn s" data-copy="${esc(m.code)}">Kopieren</button></div>${vars.length?`<details class="more"><summary>${vars.length} ${vars.length===1?"Variante":"Varianten"} ansehen</summary>${vars.map(vrow).join("")}</details>`:""}${foot}</article>`;
 }
 function pvGuide(){
   const G = PVP.guide, src = s => s && s.length ? `<div class="gsrc">Quelle: ${s.map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener">${esc(x[0])}</a>`).join(" · ")}</div>` : "";
@@ -700,13 +703,14 @@ function pvGuide(){
 function drawPvp(){
   const root = $("pvp"); if (!PVP) { root.innerHTML = `<div class="pvempty">Die PvP-Daten konnten nicht geladen werden. Lade die Seite neu.</div>`; return; }
   const F = PVP.fmt[pv.tab], src = (pv.tab==="CA" ? "RA" : pv.tab);
-  let list = PVP.builds.filter(b => pv.tab==="meta" ? b.meta.length : b.fmt.includes(src));
+  const isMeta = pv.tab==="meta"; if (isMeta && !pv.mfmt) pv.mfmt = "GvG";
+  let list = PVP.builds.filter(b => isMeta ? b.fmt.includes(pv.mfmt) : b.fmt.includes(src));
   const hasTeam = list.some(b=>b.team), profs = [...new Set(list.filter(b=>!b.team).map(b=>{ const d=pvDec(b.m[0].code); return d?d.pri:0; }))].filter(Boolean).sort((a,b)=>a-b);
   if (pv.prof && !profs.includes(pv.prof)) pv.prof = 0;
   if (!hasTeam) pv.kind = "all";
   list = list.filter(b => (pv.kind==="all" || (pv.kind==="team")===!!b.team) && (!pv.prof || (!b.team && (pvDec(b.m[0].code)||{}).pri===pv.prof)));
   const rank = b => (b.weak?2:b.chg?1:0)*10 + (b.meta.length?0:1)*3 + (Object.values(b.tier).includes("sehr gut")?0:1);
-  list.sort((a,b)=> (b.team-a.team) || rank(a)-rank(b) || a.t.localeCompare(b.t));
+  if (isMeta) list.sort((a,b)=> b.rank[pv.mfmt].s-a.rank[pv.mfmt].s || a.t.localeCompare(b.t)); else list.sort((a,b)=> (b.team-a.team) || rank(a)-rank(b) || a.t.localeCompare(b.t));
   const n = { ok:list.filter(b=>!b.chg).length, chg:list.filter(b=>b.chg&&!b.weak).length, weak:list.filter(b=>b.weak).length };
   const tabs = `<div class="pvtabs" role="tablist">${PV_TABS.map(([k,l])=>`<button role="tab" aria-selected="${pv.tab===k}" class="${pv.tab===k?"on":""}" data-pvtab="${k}">${l}</button>`).join("")}</div>`;
   const intro = `<div class="pvintro"><div><h1>${esc(F.name)}</h1>${F.intro.map(p=>`<p>${esc(p)}</p>`).join("")}<div class="gsrc sm dim">${F.src.map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener" style="color:var(--muted)">${esc(x[0])}</a>`).join(" · ")}</div></div><div class="pvlegend"><div><span class="tag ok">vom Update unberührt</span> Keine Fertigkeit der Leiste wurde am 24.06.2026 geändert.</div><div><span class="tag chg">Werte seit Update geändert</span> Die Leiste funktioniert weiter. Was sich geändert hat, steht am Build.</div><div><span class="tag weak">Elite seit Update schwächer</span> Die Elite wurde abgeschwächt. PvX hat den Build noch nicht neu bewertet.</div><div>Fahre mit der Maus über eine Fertigkeit oder tippe sie an: Du siehst die PvP-Werte.</div></div></div>`;
@@ -716,6 +720,14 @@ function drawPvp(){
   else {
     const filt = `<div class="pvfilter">${hasTeam?`<button class="chip${pv.kind==="all"?" on":""}" data-pvkind="all">Alle</button><button class="chip${pv.kind==="team"?" on":""}" data-pvkind="team">Teams</button><button class="chip${pv.kind==="solo"?" on":""}" data-pvkind="solo">Einzelne Leisten</button><span class="dim">|</span>`:""}<button class="chip${!pv.prof?" on":""}" data-pvprof="0">Alle Klassen</button>${profs.map(p=>`<button class="chip${pv.prof===p?" on":""}" data-pvprof="${p}" style="${pv.prof===p?"":`border-color:${PCOL[p]}55`}">${esc(GW.PROF_DE[p])}</button>`).join("")}</div>`;
     const head = pv.tab==="CA" ? `<p class="mut sm" style="margin:0 0 10px">Vorlagen aus der Zufallsarena. Prüfe im Spiel, welche Fertigkeiten gerade im Kodex sind.</p>` : "";
+    if (isMeta) {
+      const grp = k => list.filter(b=>b.rank[pv.mfmt].t===k), sec = (k,h,sub) => { const L=grp(k); return L.length ? `<h2 style="font-family:var(--head);font-size:18px;color:#f3dfb0;margin:18px 0 4px">${h} <span class="dim" style="font-size:13px">${L.length}</span></h2><p class="dim sm" style="margin:0 0 10px">${sub}</p><div class="pvgrid">${L.map(b=>pvCard(b,"meta")).join("")}</div>` : ""; };
+      const cand = (PVP.cand||[]).filter(c=>GW.skill(c.id));
+      body = `<div class="seg" style="width:min(100%,420px);margin-bottom:14px">${["GvG","HA","RA"].map(f=>`<button class="${pv.mfmt===f?"on":""}" data-pvmfmt="${f}">${esc(PVP.fmt[f].name)}</button>`).join("")}</div>` + filt
+        + sec("A","Erste Wahl","Vor dem Update stark und vom Update verschont oder verstärkt.") + sec("B","Spielbar","Solide, aber nicht vorn.")
+        + (grp("C").length ? `<details class="more" style="margin-top:18px"><summary>Zurückgefallen ansehen (${grp("C").length})</summary>${sec("C","Zurückgefallen","Elite oder Kernfertigkeiten abgeschwächt oder schon vorher nur zweite Reihe.")}</details>` : "")
+        + (cand.length ? `<h2 style="font-family:var(--head);font-size:18px;color:#f3dfb0;margin:26px 0 4px">Beobachten</h2><p class="dim sm" style="margin:0 0 10px;max-width:75ch">Diese Eliten hat das Update verstärkt. Sie stehen in keinem PvX-PvP-Build. Eine erprobte Leiste gibt es dafür noch nicht, deshalb hier nur die Änderung.</p><div class="pvgrid">${cand.map(c=>{ const s=GW.skill(c.id); return `<div class="pvc" style="--pc:${PCOL[s.p]||"var(--gold)"}"><div class="pvh">${ico(c.id)}<div style="min-width:0"><div class="nm">${esc(dname(s))}</div><div class="rl">${esc(s.p?GW.PROF_DE[s.p]:"")}</div></div></div><div class="pvchg"><div><span class="up">${esc(c.t)}</span></div></div></div>`; }).join("")}</div>` : "");
+    } else
     body = filt + head + `<p class="dim sm" style="margin:0 0 10px">${list.length} Builds: ${n.ok} unberührt, ${n.chg} mit geänderten Werten, ${n.weak} mit schwächerer Elite.</p>` + (list.length ? `<div class="pvgrid">${list.map(b=>pvCard(b, pv.tab==="CA"?"RA":pv.tab)).join("")}</div>` : `<div class="pvempty">Kein Build für diese Auswahl. Wähle oben "Alle Klassen".</div>`);
   }
   root.innerHTML = tabs + intro + sub + body;
@@ -731,6 +743,7 @@ $("pvp").addEventListener("click", e=>{
   const t = e.target;
   const a = t.closest("[data-pvtab]"); if (a) { pv.tab=a.dataset.pvtab; pv.prof=0; pv.kind="all"; drawPvp(); return; }
   const s = t.closest("[data-pvsub]"); if (s) { pv.sub=s.dataset.pvsub; drawPvp(); return; }
+  const mf = t.closest("[data-pvmfmt]"); if (mf) { pv.mfmt=mf.dataset.pvmfmt; pv.prof=0; pv.kind="all"; drawPvp(); return; }
   const k = t.closest("[data-pvkind]"); if (k) { pv.kind=k.dataset.pvkind; drawPvp(); return; }
   const p = t.closest("[data-pvprof]"); if (p) { pv.prof=+p.dataset.pvprof; drawPvp(); return; }
   const sk = t.closest("[data-sid]"); if (sk && !t.closest("[data-copy]")) { const r=sk.getBoundingClientRect(); showTip({clientX:r.left, clientY:r.bottom-8}, GW.skill(+sk.dataset.sid)); clearTimeout(tip._t); tip._t=setTimeout(hideTip, 6000); }

@@ -1,12 +1,17 @@
 {
 "fmt": {
 "meta": {
-"name": "Aktuelle Meta",
+"name": "Meta nach dem Update",
 "intro": [
-"Hier stehen die Builds, die PvX in der Kategorie \"Meta\" führt, also das, was im jeweiligen Format am häufigsten gespielt wird.",
-"Die PvX-Seiten stammen fast alle aus der Zeit vor dem Update vom 24.06.2026. Jede Leiste ist deshalb gegen die Update-Notizen geprüft. Die Markierung am Build zeigt das Ergebnis."
+"Diese Rangliste ist hergeleitet, nicht gemessen. Seit dem Update vom 24.06.2026 gibt es weder ausgewertete Spiele noch neu bewertete PvX-Seiten.",
+"So wird gerechnet: Ausgangspunkt ist die PvX-Bewertung von vor dem Update (Meta 3 Punkte, sehr gut 2, gut 1). Dazu kommt, was das Update an der Leiste geändert hat: Die Elite zählt 1,5 Punkte, jede andere Fertigkeit 0,5. Dazu je ein halber Punkt für drei Verschiebungen im Umfeld: Wächter lädt langsamer auf, das hilft Angreifern. Verhexung heilen und Verhexungen umleiten sind schwächer, das hilft Verhexern. Heilsalve ist schwächer, das hilft Mönchen mit anderer Elite.",
+"Ab 3 Punkten \"Erste Wahl\", ab 1,75 \"Spielbar\", darunter \"Zurückgefallen\". Die Zahl ersetzt keine Erfahrung im Spiel. Sie zeigt, wohin sich das Kräfteverhältnis laut Update-Notizen verschoben hat."
 ],
 "src": [
+[
+"Wiki: Update vom 24.06.2026",
+"https://wiki.guildwars.com/wiki/Feedback:Game_updates/20260624"
+],
 [
 "PvX: Meta working PvP builds",
 "https://gwpvx.fandom.com/wiki/Category:Meta_working_PvP_builds"
@@ -272,6 +277,18 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 0.5,
+"t": "C",
+"d": -0.5
+}
+},
+"why": [
+"Böe schwächer",
+"Fallender Lotus-Stoß stärker",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -303,6 +320,17 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 1.0
+}
+},
+"why": [
+"Fallender Lotus-Stoß stärker",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -342,6 +370,27 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+},
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+},
+"HA": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": [
+"Gezackter Stoß schwächer",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -373,6 +422,17 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": 1.0
+}
+},
+"why": [
+"Fallender Lotus-Stoß stärker",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -404,6 +464,16 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 0.5,
+"t": "C",
+"d": -0.5
+}
+},
+"why": [
+"Zerreißende Aura schwächer"
 ]
 },
 {
@@ -429,7 +499,15 @@
 "elite": 1126,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 1.0,
+"t": "C",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "D/Mo RA Life Sheath",
@@ -454,7 +532,15 @@
 "elite": 1123,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 1.0,
+"t": "C",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "D/N PvP March Signet of Suffering",
@@ -481,7 +567,20 @@
 "elite": 1364,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+},
+"GvG": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "D/any GvG Zurrie Dervish",
@@ -516,7 +615,15 @@
 "elite": 1521,
 "chg": []
 }
-]
+],
+"rank": {
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "D/any PvP Avatar of Balthazar",
@@ -555,6 +662,26 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 2.5,
+"t": "B",
+"d": -0.5
+},
+"GvG": {
+"s": 2.5,
+"t": "B",
+"d": -0.5
+},
+"HA": {
+"s": 2.5,
+"t": "B",
+"d": -0.5
+}
+},
+"why": [
+"Zerreißende Aura schwächer"
 ]
 },
 {
@@ -582,7 +709,15 @@
 "elite": 1520,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "D/any PvP May Scythe",
@@ -615,6 +750,22 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+},
+"HA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": [
+"Zerreißende Aura schwächer",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -640,7 +791,15 @@
 "elite": 1499,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 1.0,
+"t": "C",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "D/any RA Avatar of Lyssa",
@@ -665,6 +824,16 @@
 "elite": 1521,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -696,6 +865,16 @@
 }
 ]
 }
+],
+"rank": {
+"HA": {
+"s": 2.5,
+"t": "B",
+"d": -0.5
+}
+},
+"why": [
+"Teinais Wind schwächer"
 ]
 },
 {
@@ -734,6 +913,22 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 0.0,
+"t": "C",
+"d": -1.0
+},
+"GvG": {
+"s": 0.0,
+"t": "C",
+"d": -1.0
+}
+},
+"why": [
+"Teinais Wind schwächer",
+"Blitzschlag schwächer"
 ]
 },
 {
@@ -761,7 +956,20 @@
 "elite": 185,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+},
+"GvG": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "E/N RA Blinding Surge",
@@ -786,7 +994,15 @@
 "elite": 1367,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "E/any GvG Lightning Surge",
@@ -846,6 +1062,17 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 1.0,
+"t": "C",
+"d": -2.0
+}
+},
+"why": [
+"Blitzwelle schwächer",
+"Blitzschlag schwächer"
 ]
 },
 {
@@ -873,6 +1100,21 @@
 "elite": 1098,
 "chg": []
 }
+],
+"rank": {
+"GvG": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+},
+"HA": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+}
+},
+"why": [
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt"
 ]
 },
 {
@@ -906,6 +1148,21 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 3.5,
+"t": "A",
+"d": 1.5
+},
+"HA": {
+"s": 3.5,
+"t": "A",
+"d": 1.5
+}
+},
+"why": [
+"Doppeldrache stärker"
 ]
 },
 {
@@ -939,7 +1196,15 @@
 "elite": 1378,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "E/any PvP Gust",
@@ -980,6 +1245,22 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 1.0,
+"t": "C",
+"d": -2.0
+},
+"HA": {
+"s": 1.0,
+"t": "C",
+"d": -2.0
+}
+},
+"why": [
+"Böe schwächer",
+"Blitzschlag schwächer"
 ]
 },
 {
@@ -1013,6 +1294,21 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 1.5,
+"t": "C",
+"d": -0.5
+},
+"GvG": {
+"s": 1.5,
+"t": "C",
+"d": -0.5
+}
+},
+"why": [
+"Blitzschlag schwächer"
 ]
 },
 {
@@ -1051,6 +1347,17 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 1.0,
+"t": "C",
+"d": -2.0
+}
+},
+"why": [
+"Blitzwelle schwächer",
+"Blitzschlag schwächer"
 ]
 },
 {
@@ -1080,7 +1387,25 @@
 "elite": 1662,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+},
+"GvG": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+},
+"HA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "E/any PvP Stone Sheath",
@@ -1107,7 +1432,20 @@
 "elite": 1373,
 "chg": []
 }
-]
+],
+"rank": {
+"GvG": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+},
+"HA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "E/any PvP Stoning",
@@ -1132,7 +1470,15 @@
 "elite": 0,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "E/any RA Mind Shock",
@@ -1163,6 +1509,16 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 1.5,
+"t": "C",
+"d": -0.5
+}
+},
+"why": [
+"Blitzschlag schwächer"
 ]
 },
 {
@@ -1196,6 +1552,16 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 1.5,
+"t": "C",
+"d": -1.5
+}
+},
+"why": [
+"Energiewelle schwächer"
 ]
 },
 {
@@ -1221,7 +1587,15 @@
 "elite": 0,
 "chg": []
 }
-]
+],
+"rank": {
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "Me/any GvG May Domination Magic",
@@ -1246,7 +1620,15 @@
 "elite": 0,
 "chg": []
 }
-]
+],
+"rank": {
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "Me/any GvG November Energy Surge",
@@ -1277,6 +1659,16 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 1.5,
+"t": "C",
+"d": -1.5
+}
+},
+"why": [
+"Energiewelle schwächer"
 ]
 },
 {
@@ -1302,7 +1694,15 @@
 "elite": 5,
 "chg": []
 }
-]
+],
+"rank": {
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "Me/any HA Panic",
@@ -1342,10 +1742,20 @@
 {
 "id": 1335,
 "t": "Aufladezeit 3 → 5 s",
-"k": 1
+"k": -1
 }
 ]
 }
+],
+"rank": {
+"HA": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+}
+},
+"why": [
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt"
 ]
 },
 {
@@ -1376,6 +1786,21 @@
 "elite": 1656,
 "chg": []
 }
+],
+"rank": {
+"GvG": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+},
+"HA": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+}
+},
+"why": [
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt"
 ]
 },
 {
@@ -1403,7 +1828,7 @@
 {
 "id": 1335,
 "t": "Aufladezeit 3 → 5 s",
-"k": 1
+"k": -1
 },
 {
 "id": 898,
@@ -1412,6 +1837,18 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 0.5,
+"t": "C",
+"d": -0.5
+}
+},
+"why": [
+"Ableben des Verschwenders schwächer",
+"Überlastung schwächer",
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt"
 ]
 },
 {
@@ -1439,7 +1876,20 @@
 "elite": 5,
 "chg": []
 }
-]
+],
+"rank": {
+"GvG": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+},
+"HA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "Me/any RA Energy Surge",
@@ -1472,6 +1922,17 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": -1.0
+}
+},
+"why": [
+"Energiewelle schwächer",
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt"
 ]
 },
 {
@@ -1503,6 +1964,17 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 4.0,
+"t": "A",
+"d": 2.0
+}
+},
+"why": [
+"Migräne stärker",
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt"
 ]
 },
 {
@@ -1530,10 +2002,20 @@
 {
 "id": 1335,
 "t": "Aufladezeit 3 → 5 s",
-"k": 1
+"k": -1
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 1.5,
+"t": "C",
+"d": -0.5
+}
+},
+"why": [
+"Ableben des Verschwenders schwächer"
 ]
 },
 {
@@ -1561,10 +2043,21 @@
 {
 "id": 1335,
 "t": "Aufladezeit 3 → 5 s",
-"k": 1
+"k": -1
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 1.0,
+"t": "C",
+"d": 0.0
+}
+},
+"why": [
+"Ableben des Verschwenders schwächer",
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt"
 ]
 },
 {
@@ -1608,6 +2101,18 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 0.5,
+"t": "C",
+"d": -2.5
+}
+},
+"why": [
+"Heilsalve schwächer",
+"Wächter schwächer",
+"Verhexung heilen schwächer"
 ]
 },
 {
@@ -1649,6 +2154,18 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 0.5,
+"t": "C",
+"d": -2.5
+}
+},
+"why": [
+"Heilsalve schwächer",
+"Wächter schwächer",
+"Verhexung heilen schwächer"
 ]
 },
 {
@@ -1685,6 +2202,17 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 1.0,
+"t": "C",
+"d": -2.0
+}
+},
+"why": [
+"Heilsalve schwächer",
+"Verhexung heilen schwächer"
 ]
 },
 {
@@ -1798,6 +2326,27 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+},
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+},
+"HA": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": [
+"Wächter schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht"
 ]
 },
 {
@@ -1834,6 +2383,17 @@
 }
 ]
 }
+],
+"rank": {
+"HA": {
+"s": 1.0,
+"t": "C",
+"d": -2.0
+}
+},
+"why": [
+"Heilsalve schwächer",
+"Verhexung heilen schwächer"
 ]
 },
 {
@@ -1865,6 +2425,17 @@
 }
 ]
 }
+],
+"rank": {
+"HA": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": [
+"Wächter schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht"
 ]
 },
 {
@@ -1926,6 +2497,17 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": [
+"Wächter schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht"
 ]
 },
 {
@@ -1964,6 +2546,17 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 1.0,
+"t": "C",
+"d": -2.0
+}
+},
+"why": [
+"Heilsalve schwächer",
+"Verhexung heilen schwächer"
 ]
 },
 {
@@ -1997,6 +2590,17 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": [
+"Verhexung heilen schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht"
 ]
 },
 {
@@ -2022,6 +2626,16 @@
 "elite": 266,
 "chg": []
 }
+],
+"rank": {
+"HA": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+}
+},
+"why": [
+"Heilsalve wurde abgeschwächt, diese Elite nicht"
 ]
 },
 {
@@ -2084,6 +2698,18 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 0.5,
+"t": "C",
+"d": -2.5
+}
+},
+"why": [
+"Heilsalve schwächer",
+"Wächter schwächer",
+"Verhexung heilen schwächer"
 ]
 },
 {
@@ -2113,7 +2739,25 @@
 "elite": 1364,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+},
+"GvG": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+},
+"HA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "N/any PvP Corrupt Enchantment",
@@ -2138,6 +2782,16 @@
 "elite": 1362,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+}
+},
+"why": [
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt"
 ]
 },
 {
@@ -2176,6 +2830,22 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 1.0
+},
+"HA": {
+"s": 3.0,
+"t": "A",
+"d": 1.0
+}
+},
+"why": [
+"Bis ans Limit! stärker",
+"Aggressiver Refrain stärker"
 ]
 },
 {
@@ -2217,6 +2887,18 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 4.5,
+"t": "A",
+"d": 2.5
+}
+},
+"why": [
+"Betäubender Schlag stärker",
+"Bis ans Limit! stärker",
+"Aggressiver Refrain stärker"
 ]
 },
 {
@@ -2258,6 +2940,19 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 4.0,
+"t": "A",
+"d": 3.0
+}
+},
+"why": [
+"Grausamer Speer stärker",
+"Bis ans Limit! stärker",
+"Aggressiver Refrain stärker",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2291,6 +2986,17 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 4.0,
+"t": "A",
+"d": 1.0
+}
+},
+"why": [
+"Aggressiver Refrain stärker",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2322,6 +3028,17 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": [
+"Gezackter Stoß schwächer",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2347,7 +3064,15 @@
 "elite": 1726,
 "chg": []
 }
-]
+],
+"rank": {
+"HA": {
+"s": 2.0,
+"t": "B",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "R/E HA Melandru's Shot",
@@ -2372,6 +3097,16 @@
 "elite": 853,
 "chg": []
 }
+],
+"rank": {
+"HA": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2405,6 +3140,21 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 0.5,
+"t": "C",
+"d": -0.5
+},
+"HA": {
+"s": 0.5,
+"t": "C",
+"d": -0.5
+}
+},
+"why": [
+"Teinais Wind schwächer"
 ]
 },
 {
@@ -2430,6 +3180,16 @@
 "elite": 0,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2455,6 +3215,16 @@
 "elite": 1466,
 "chg": []
 }
+],
+"rank": {
+"GvG": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2480,7 +3250,15 @@
 "elite": 1468,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 1.0,
+"t": "C",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "R/P PvP Stunning Strike",
@@ -2511,6 +3289,17 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 3.0,
+"t": "A",
+"d": 2.0
+}
+},
+"why": [
+"Betäubender Schlag stärker",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2542,6 +3331,17 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 1.0,
+"t": "C",
+"d": 0.0
+}
+},
+"why": [
+"Unterbrechender Hieb schwächer",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2601,6 +3401,21 @@
 "elite": 428,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+},
+"GvG": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2626,6 +3441,16 @@
 "elite": 1465,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2651,6 +3476,16 @@
 "elite": 404,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -2682,6 +3517,16 @@
 }
 ]
 }
+],
+"rank": {
+"HA": {
+"s": 3.5,
+"t": "A",
+"d": 1.5
+}
+},
+"why": [
+"Geistesstärke stärker"
 ]
 },
 {
@@ -2707,7 +3552,15 @@
 "elite": 1231,
 "chg": []
 }
-]
+],
+"rank": {
+"HA": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "Rt/any PvP Caretaker's Charge",
@@ -2740,7 +3593,15 @@
 "elite": 1744,
 "chg": []
 }
-]
+],
+"rank": {
+"RA": {
+"s": 1.0,
+"t": "C",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "Rt/any PvP Soul Twisting",
@@ -2767,7 +3628,20 @@
 "elite": 1240,
 "chg": []
 }
-]
+],
+"rank": {
+"GvG": {
+"s": 1.0,
+"t": "C",
+"d": 0.0
+},
+"HA": {
+"s": 1.0,
+"t": "C",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "Rt/any RA Channeling Magic Pressure",
@@ -2945,6 +3819,16 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+}
+},
+"why": [
+"Blutgesang stärker"
 ]
 },
 {
@@ -3039,8 +3923,8 @@
 "chg": [
 {
 "id": 62,
-"t": "geändert",
-"k": 0
+"t": "Eigene Sperre 10 → 4 s",
+"k": 1
 }
 ]
 },
@@ -3054,7 +3938,7 @@
 {
 "id": 1335,
 "t": "Aufladezeit 3 → 5 s",
-"k": 1
+"k": -1
 }
 ]
 },
@@ -3120,6 +4004,16 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 2.5,
+"t": "B",
+"d": -0.5
+}
+},
+"why": [
+"Zerreißende Aura schwächer"
 ]
 },
 {
@@ -3243,6 +4137,20 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 1.86,
+"t": "B",
+"d": -0.14
+}
+},
+"why": [
+"Ausweiden stärker",
+"Heilsalve schwächer",
+"Blitzschlag schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -3405,8 +4313,8 @@
 "chg": [
 {
 "id": 62,
-"t": "geändert",
-"k": 0
+"t": "Eigene Sperre 10 → 4 s",
+"k": 1
 },
 {
 "id": 39,
@@ -3445,8 +4353,8 @@
 },
 {
 "id": 62,
-"t": "geändert",
-"k": 0
+"t": "Eigene Sperre 10 → 4 s",
+"k": 1
 }
 ]
 },
@@ -3512,6 +4420,17 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": [
+"Gezackter Stoß schwächer",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -3644,6 +4563,16 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 2.5,
+"t": "B",
+"d": -0.5
+}
+},
+"why": [
+"Zerreißende Aura schwächer"
 ]
 },
 {
@@ -3777,7 +4706,15 @@
 }
 ]
 }
-]
+],
+"rank": {
+"GvG": {
+"s": 3.0,
+"t": "A",
+"d": 0.0
+}
+},
+"why": []
 },
 {
 "t": "GvG RNE Split",
@@ -3921,6 +4858,20 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 1.81,
+"t": "B",
+"d": -0.19
+}
+},
+"why": [
+"Blitzwelle schwächer",
+"Heilsalve schwächer",
+"Zerreißende Aura schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4038,6 +4989,20 @@
 }
 ]
 }
+],
+"rank": {
+"GvG": {
+"s": 1.64,
+"t": "C",
+"d": -0.36
+}
+},
+"why": [
+"Heilsalve schwächer",
+"Zerreißende Aura schwächer",
+"Wächter schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4153,6 +5118,20 @@
 }
 ]
 }
+],
+"rank": {
+"HA": {
+"s": 2.25,
+"t": "B",
+"d": 0.25
+}
+},
+"why": [
+"Ausweiden stärker",
+"Heilsalve schwächer",
+"Unterbrechender Hieb schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4274,6 +5253,20 @@
 }
 ]
 }
+],
+"rank": {
+"HA": {
+"s": 2.31,
+"t": "B",
+"d": 0.31
+}
+},
+"why": [
+"Ausweiden stärker",
+"Doppeldrache stärker",
+"Energiewelle schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4320,7 +5313,7 @@
 {
 "id": 1335,
 "t": "Aufladezeit 3 → 5 s",
-"k": 1
+"k": -1
 }
 ]
 },
@@ -4333,8 +5326,8 @@
 "chg": [
 {
 "id": 62,
-"t": "geändert",
-"k": 0
+"t": "Eigene Sperre 10 → 4 s",
+"k": 1
 },
 {
 "id": 53,
@@ -4352,8 +5345,8 @@
 "chg": [
 {
 "id": 62,
-"t": "geändert",
-"k": 0
+"t": "Eigene Sperre 10 → 4 s",
+"k": 1
 },
 {
 "id": 53,
@@ -4417,6 +5410,16 @@
 }
 ]
 }
+],
+"rank": {
+"HA": {
+"s": 0.5,
+"t": "C",
+"d": -0.5
+}
+},
+"why": [
+"Zerreißende Aura schwächer"
 ]
 },
 {
@@ -4459,10 +5462,22 @@
 {
 "id": 1335,
 "t": "Aufladezeit 3 → 5 s",
-"k": 1
+"k": -1
 }
 ]
 }
+],
+"rank": {
+"HA": {
+"s": 2.75,
+"t": "B",
+"d": -0.25
+}
+},
+"why": [
+"Schrei der Frustration schwächer",
+"Ableben des Verschwenders schwächer",
+"Verhexung heilen und Verhexungen umleiten wurden abgeschwächt"
 ]
 },
 {
@@ -4548,6 +5563,19 @@
 "elite": 1377,
 "chg": []
 }
+],
+"rank": {
+"HA": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+}
+},
+"why": [
+"Unterbrechender Hieb schwächer",
+"Wilder Hieb stärker",
+"Heilsalve wurde abgeschwächt, diese Elite nicht",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4711,6 +5739,19 @@
 }
 ]
 }
+],
+"rank": {
+"HA": {
+"s": 0.31,
+"t": "C",
+"d": -0.69
+}
+},
+"why": [
+"Heilsalve schwächer",
+"Blitzschlag schwächer",
+"Teinais Wind schwächer",
+"Heilsalve wurde abgeschwächt, diese Elite nicht"
 ]
 },
 {
@@ -4788,6 +5829,19 @@
 "elite": 1377,
 "chg": []
 }
+],
+"rank": {
+"HA": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+}
+},
+"why": [
+"Unterbrechender Hieb schwächer",
+"Geist abzapfen stärker",
+"Heilsalve wurde abgeschwächt, diese Elite nicht",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4821,6 +5875,22 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 3.0,
+"t": "A",
+"d": 1.0
+},
+"HA": {
+"s": 3.0,
+"t": "A",
+"d": 1.0
+}
+},
+"why": [
+"Fallender Lotus-Stoß stärker",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4848,6 +5918,21 @@
 "elite": 889,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+},
+"GvG": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4878,6 +5963,21 @@
 "elite": 993,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+},
+"GvG": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4905,6 +6005,21 @@
 "elite": 869,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+},
+"HA": {
+"s": 1.5,
+"t": "C",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4930,6 +6045,16 @@
 "elite": 1095,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4970,6 +6095,28 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 3.5,
+"t": "A",
+"d": 1.5
+},
+"GvG": {
+"s": 3.5,
+"t": "A",
+"d": 1.5
+},
+"HA": {
+"s": 3.5,
+"t": "A",
+"d": 1.5
+}
+},
+"why": [
+"Ausweiden stärker",
+"Unterbrechender Hieb schwächer",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -4997,6 +6144,21 @@
 "elite": 888,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+},
+"GvG": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -5022,6 +6184,16 @@
 "elite": 869,
 "chg": []
 }
+],
+"rank": {
+"GvG": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -5055,6 +6227,16 @@
 "elite": 0,
 "chg": []
 }
+],
+"rank": {
+"GvG": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -5086,6 +6268,17 @@
 }
 ]
 }
+],
+"rank": {
+"RA": {
+"s": 3.0,
+"t": "A",
+"d": 2.0
+}
+},
+"why": [
+"Betäubender Schlag stärker",
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -5113,6 +6306,16 @@
 "elite": 993,
 "chg": []
 }
+],
+"rank": {
+"GvG": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -5146,6 +6349,26 @@
 "elite": 355,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+},
+"GvG": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+},
+"HA": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -5171,6 +6394,16 @@
 "elite": 354,
 "chg": []
 }
+],
+"rank": {
+"HA": {
+"s": 2.5,
+"t": "B",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 },
 {
@@ -5204,6 +6437,26 @@
 "elite": 0,
 "chg": []
 }
+],
+"rank": {
+"RA": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+},
+"GvG": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+},
+"HA": {
+"s": 3.5,
+"t": "A",
+"d": 0.5
+}
+},
+"why": [
+"Wächter lädt langsamer auf, Angriffe kommen öfter durch"
 ]
 }
 ],
@@ -5560,5 +6813,119 @@
 ]
 }
 },
+"cand": [
+{
+"id": 799,
+"t": "Energiekosten 15 → 10"
+},
+{
+"id": 1030,
+"t": "Wirkzeit 1 → 0.5 s"
+},
+{
+"id": 1034,
+"t": "Energiekosten 15 → 10, Aufladezeit 12 → 10 s"
+},
+{
+"id": 1372,
+"t": "Aufladezeit 25 → 20 s, Schaden 10...30 → 20...40"
+},
+{
+"id": 228,
+"t": "Trifft jetzt Gegner in der Nähe statt nur direkt daneben"
+},
+{
+"id": 54,
+"t": "Energiekosten 15 → 10, Heilung 1...5 → 2...6"
+},
+{
+"id": 285,
+"t": "Aufladezeit 25 → 15 s"
+},
+{
+"id": 830,
+"t": "Wirkzeit 2 → 1 s, Aufladezeit 20 → 15 s, Schaden 5...45 → 10...50"
+},
+{
+"id": 259,
+"t": "Aufladezeit 10 → 5 s"
+},
+{
+"id": 261,
+"t": "Energiekosten 15 → 10"
+},
+{
+"id": 832,
+"t": "Wirkzeit 3 → 1 s"
+},
+{
+"id": 151,
+"t": "Aufladezeit 20 → 15 s"
+},
+{
+"id": 862,
+"t": "Heilung 15...30 → 20...40"
+},
+{
+"id": 121,
+"t": "Dauer 8...20 → 10...25 s, Schaden 5...35 → 15...45"
+},
+{
+"id": 819,
+"t": "Wirkzeit 2 → 1 s, Heilung 5...50 → 15...60"
+},
+{
+"id": 764,
+"t": "Dauer 1...4 → 2...6 s"
+},
+{
+"id": 1782,
+"t": "Dauer 3 → 2...4 s"
+},
+{
+"id": 1771,
+"t": "Aufladezeit 30 → 20 s"
+},
+{
+"id": 1198,
+"t": "Energiekosten 15 → 10, Aufladezeit 15 → 10 s"
+},
+{
+"id": 1257,
+"t": "Heilung 1...15 → 5...25"
+},
+{
+"id": 913,
+"t": "Energiekosten 10 → 5, Aufladezeit 20 → 15 s"
+},
+{
+"id": 790,
+"t": "Aufladezeit 20 → 15 s, Heilung 5...35 → 10...45"
+},
+{
+"id": 1268,
+"t": "Energiekosten 10 → 5"
+},
+{
+"id": 335,
+"t": "Schaden 10...30 → 10...40, trifft zusätzlich umstehende Gegner"
+},
+{
+"id": 907,
+"t": "Adrenalinkosten 10 → 8"
+},
+{
+"id": 372,
+"t": "Aufladezeit 30 → 20 s"
+},
+{
+"id": 1406,
+"t": "Aufladezeit 15 → 10 s, Energiekosten 15 → 10, Dauer 5 → 10 s"
+},
+{
+"id": 892,
+"t": "Dauer 10 → 10...40. s"
+}
+],
 "stand": "19.11.2026"
 }
