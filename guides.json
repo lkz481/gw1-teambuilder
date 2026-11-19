@@ -211,7 +211,7 @@
 "doa": {
 "title": "Domäne der Pein (Start am Tor der Pein) mit Helden",
 "intro": "Auch für die Domäne der Pein gibt es auf PvX kein bewertetes 7-Helden-Team. Das Team hier stammt aus einem Guild Wars Guru Thread: Ein Spieler meldet damit alle vier Bereiche plus Mallyx im Normalen Modus ohne Verbrauchsgüter. Laut dem Thread gibt es keinen \"goldenen\" Build für ganz DoA. Ein Spieler fasst es so zusammen: Es kommt zur Hälfte aufs Team und zur Hälfte auf deine Taktik an (Pullen, Aggro-Kontrolle). Die Bereichsabläufe stammen vom PvX-Team \"DoA Schnablonskiway\" (8 Spieler) und vom Wiki.",
-"team": "doa",
+"team": "std",
 "sections": [
 {
 "t": "Für alle Bereiche",
