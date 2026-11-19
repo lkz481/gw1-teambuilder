@@ -104,6 +104,9 @@
 
   // ---------- Heldenleisten (aus den geprüften Teams) ----------
   const BARS = {
+    PANIC_SE: { code: "OQBSAYBP0gcw0z0NEwpXgiA", role: "Panik-Mesmer", why: "Panik legt ganze Gruppen lahm: Jede Fertigkeit eines Gegners unterbricht die Gegner um ihn herum. Seit dem Update vom 24.06.2026 führt PvX im Mesmerway Panik auf dem ersten Mesmer, weil Energiewelle rund ein Fünftel Schaden verloren hat." },
+    PANIC_SE_MO: { code: "OQNTAYB3mhGkDmemuhAO9CUEA", role: "Panik-Mesmer", why: "Panik legt ganze Gruppen lahm: Jede Fertigkeit eines Gegners unterbricht die Gegner um ihn herum. Seit dem Update vom 24.06.2026 führt PvX im Mesmerway Panik auf dem ersten Mesmer, weil Energiewelle rund ein Fünftel Schaden verloren hat." },
+    INEPT: { code: "OQhkAoB8AGK0LACIHUeGJQGARwFD", role: "Unbeholfenheit-Mesmer", why: "Lässt Angreifer danebenschlagen und macht dabei Flächenschaden. In unserer Rechnung kommt diese Leiste auf fast doppelt so viel Dauerschaden wie eine Energiewellen-Leiste. Bringt mit Fleisch von meinem Fleisch eine Wiederbelebung mit." },
     ES_SE_X: { code: "OQBSAYBPngcw0z0NEwpXgiA", role: "Energiewelle mit Verzauberung brechen", why: "Energiewelle und Geisterschmerz sind der Hauptschaden der Heldengruppe. Verzauberung brechen nimmt Gegnern ihre Schutz-Verzauberungen, Verhexung brechen befreit dich von Verhexungen." },
     ES_FOMF: { code: "OQhjAwCc4Mngcw0z0NEwpXgLG", role: "Energiewelle, Wiederbelebung mit Fleisch von meinem Fleisch", why: "Gleicher Schaden wie die anderen Energiewellen-Mesmer. Fleisch von meinem Fleisch ist die schnelle Wiederbelebung der Gruppe." },
     ES_RC: { code: "OQNTAYB3m5EkDmemuhAO9CgGB", role: "Energiewelle, Wiederbelebung mit Gesang der Wiederbelebung", why: "Energiewelle und Geisterschmerz als Schaden. Gesang der Wiederbelebung belebt wieder, ohne Lebenspunkte zu kosten." },
@@ -135,6 +138,7 @@
   ];
   // Wunsch-Helden je Leiste (in dieser Reihenfolge), danach jeder passende Held, dann Razah, dann Mercs
   const PREF = {
+    PANIC_SE: ["Gwen", "Norgu"], PANIC_SE_MO: ["Gwen", "Norgu"], INEPT: ["Razah", "Ghost of Althea", "Norgu"],
     ES_SE_X: ["Gwen", "Norgu"], ES_FOMF: ["Ghost of Althea", "Razah"], ES_RC: ["Gwen", "Norgu"], ES_SE_MO: ["Ghost of Althea", "Razah"],
     ZEI_SPLINTER: ["Zei Ri"], XANDRA_ST_MELEE: ["Xandra"], XANDRA_ST_MELEE_NOSOH: ["Xandra"], XANDRA_ST_CASTER: ["Xandra"], XANDRA_ST_CONVERT: ["Xandra", "Zei Ri"],
     BIP_FF: ["Olias", "Master of Whispers", "Livia"], BIP_BB: ["Olias", "Master of Whispers"], BIP_PARA: ["Olias", "Master of Whispers"],
@@ -161,14 +165,14 @@
     const reasons = [];
     let slots;
     if (a.hr) {
-      slots = ["ES_RC", "ES_RC", "ES_SE_MO", "ES_SE_MO", "LIVIA_MM_PARA", "XANDRA_ST_CONVERT", "BIP_PARA"];
+      slots = ["PANIC_SE_MO", "ES_RC", "ES_SE_MO", "INEPT", "LIVIA_MM_PARA", "XANDRA_ST_CONVERT", "BIP_PARA"];
       reasons.push("Deine Leiste hat Heroischen Refrain. Das Team ist auf Echos und Rufe ausgelegt und nutzt deine Refrains mit.");
     } else if (a.attacker) {
-      slots = ["ES_SE_X", "ES_SE_X", "ES_FOMF", "ES_FOMF", "ZEI_SPLINTER", a.soh ? "XANDRA_ST_MELEE_NOSOH" : "XANDRA_ST_MELEE", "BIP_FF"];
+      slots = ["PANIC_SE", "ES_SE_X", "ES_FOMF", "INEPT", "ZEI_SPLINTER", a.soh ? "XANDRA_ST_MELEE_NOSOH" : "XANDRA_ST_MELEE", "BIP_FF"];
       reasons.push("Deine Leiste ist auf Angriffe ausgelegt (" + a.atk + " Angriffs-Fertigkeiten" + (a.weapon ? ", Waffenattribut auf " + a.weapon : "") + "). Deshalb kommen Splitterwaffe, Einblick des Richters und Widerliches Gelage für die Frontlinie ins Team.");
     } else {
-      slots = ["ES_RC", "ES_RC", "ES_SE_MO", "ES_SE_MO", a.minion ? "ZEI_SOS" : "LIVIA_MM", "XANDRA_ST_CASTER", "BIP_BB"];
-      reasons.push("Deine Leiste ist eine Zauber- oder Unterstützungsleiste. Das Team setzt auf Energiewellen-Schaden, Geister als Schutz und einen Dienerbeschwörer" + (a.minion ? ". Weil du selbst Diener mitbringst, heilt Zei Ri statt eines zweiten Dienerbeschwörers." : "."));
+      slots = ["PANIC_SE_MO", "ES_RC", "ES_SE_MO", "INEPT", a.minion ? "ZEI_SOS" : "LIVIA_MM", "XANDRA_ST_CASTER", "BIP_BB"];
+      reasons.push("Deine Leiste ist eine Zauber- oder Unterstützungsleiste. Das Team setzt auf Panik, Energiewelle und Unbeholfenheit im Mittelfeld, Geister als Schutz und einen Dienerbeschwörer" + (a.minion ? ". Weil du selbst Diener mitbringst, heilt Zei Ri statt eines zweiten Dienerbeschwörers." : "."));
     }
     const area = areas.find(x => x.key === areaKey);
     // Gebietsanpassung: ohne Shrines mindestens 3 Rez-Skills
@@ -183,6 +187,7 @@
         }
       }
     }
+    reasons.push("Stand nach dem Update vom 24.06.2026: Energiewelle macht 7 statt 9 Schaden je Energiepunkt und trifft Umstehende nur noch mit 75 %. Deshalb stehen im Mittelfeld jetzt ein Panik-Mesmer, zwei Energiewellen-Mesmer und ein Unbeholfenheit-Mesmer. So führt es auch PvX im aktuellen Mesmerway (Stand 30.10.2026).");
     return { analysis: a, slots, reasons, area };
   }
 

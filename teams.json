@@ -2,13 +2,13 @@
 {
 "key": "std",
 "name": "Mesmerway (Standard)",
-"desc": "Unser durchgerechnetes Team: Energiewellen-Mesmer, Seelenverflechtung-Schutz und Blut-ist-Kraft-Heiler, angepasst an deine Leiste. Laut Steam-Diskussionen nach dem Energiewellen-Nerf vom 24.06.2026 weiterhin das Standard-Meta.",
+"desc": "Unser durchgerechnetes Team, angepasst an deine Leiste und an das Update vom 24.06.2026: Panik-Mesmer, zwei Energiewellen-Mesmer, Unbeholfenheit-Mesmer, Seelenverflechtung-Schutz und Blut-ist-Kraft-Heiler. Entspricht dem aktuellen PvX-Mesmerway (Stand 30.10.2026).",
 "slots": null
 },
 {
 "key": "discord",
 "name": "Dual Mesmer Discord",
-"desc": "PvX \"Great\": Zwei Zwietracht-Nekromanten mit Dienern, Panik- und Unfähigkeit-Mesmer, Splitterwaffe-Support, Heiler und Schutz. Mehr Verhexungs- und Zustandsschaden statt Energiewelle.",
+"desc": "PvX \"Great\": Zwei Zwietracht-Nekromanten mit Dienern, Panik- und Unfähigkeit-Mesmer, Splitterwaffe-Support, Heiler und Schutz. Mehr Verhexungs- und Zustandsschaden statt Energiewelle. Stand: PvX-Seite zuletzt am 23.08.2026 angepasst, also nach dem Update. Unsere Leisten stimmen damit überein.",
 "src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Dual_Mesmer_Discord",
 "slots": [
 {
@@ -58,7 +58,7 @@
 {
 "key": "keystone",
 "name": "Keystone Discordway",
-"desc": "PvX \"Great\": Zwei Schlussstein-Siegel-Mesmer, zwei Zwietracht-Nekromanten, Heiler und Heilstoß-Mönch. Am stärksten mit einer \"Assassin's Promise\"-Leiste.",
+"desc": "PvX-Team mit Schlussstein-Siegel-Mesmer und zwei Zwietracht-Nekromanten, von uns an das Update vom 24.06.2026 angepasst. PvX hat die Seite selbst noch nicht umgebaut, nennt dort aber die nötigen Änderungen: Ein Schlussstein-Mesmer weicht einem Dienermeister, weil Diener billiger und schneller geworden sind. Der Heilsalve-Mönch weicht einem Ritualisten-Heiler, weil Heilsalve abgeschwächt wurde. Am stärksten mit einer \"Assassin's Promise\"-Leiste.",
 "src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway",
 "slots": [
 {
@@ -74,10 +74,7 @@
 "src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
 },
 {
-"code": "OQRUAYhMkCPTVuGyvH8D4pVB0A",
-"role": "Schlussstein-Siegel-Mesmer 2",
-"why": "Zweiter Siegel-Mesmer mit Blutsauger-Siegel.",
-"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
+"own": "LIVIA_MM"
 },
 {
 "code": "OAlkUwG4RZmUMjC4OWN2uzWYVgdA",
@@ -98,17 +95,14 @@
 "src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
 },
 {
-"code": "OwAT02HCXyLaj4upe4ua6DC0oB",
-"role": "Heilsalve-Mönch",
-"why": "Starke Flächenheilung mit Schutz. Hinweis: Heilsalve wurde am 24.06.2026 abgeschwächt.",
-"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Keystone_Discordway"
+"own": "ZEI_SOS"
 }
 ]
 },
 {
 "key": "soultaker",
 "name": "Soul Taker Mesmerway",
-"desc": "PvX \"Great\": Gebaut für einen Seelengreifer-Nekromanten als Spieler. Panik-Mesmer, Siegel der Illusionen, Dunkle Aura und doppelte Heilung.",
+"desc": "PvX \"Great\": Gebaut für einen Seelengreifer-Nekromanten als Spieler. Panik-Mesmer, Siegel der Illusionen, Dunkle Aura und doppelte Heilung. Stand: PvX-Seite am 15.08. und 21.10.2026 an das Update angepasst. Unsere Leisten stimmen damit überein.",
 "src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Soul_Taker_Mesmerway",
 "slots": [
 {
