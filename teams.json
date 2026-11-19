@@ -193,5 +193,397 @@
 "src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Urgoz"
 }
 ]
+},
+{
+"key": "yt_urgoz",
+"name": "Urgoz SM, 7 Helden (YouTube 07/2026)",
+"area": "urgoz",
+"yt": true,
+"src": "https://www.youtube.com/watch?v=-3YUdAaS2Ic",
+"desc": "YouTube, inoffiziell: Heldenteam von sd_korsakoff vom 16.07.2026. Schwerer Modus in 56 Minuten ohne Verbrauchsgüter. Die Leisten stammen aus der Videobeschreibung und sind hier nur auf gültige Codes geprüft.",
+"player": {
+"label": "Krieger mit Hundert Klingen",
+"code": "OQASEZKT8V9FTN7gXF5iGW0k"
+},
+"slots": [
+{
+"code": "OAKjYhgMpOYTnp17xFOhmUToDA",
+"role": "Seelenverflechtung-Ritualist",
+"why": "Schutz über Geister: Unterschlupf, Vereinigung und Verschiebung. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=-3YUdAaS2Ic"
+},
+{
+"code": "OwQT0YXCzRjUV3IfEqvLpSPPAA",
+"role": "Wort der Heilung-Mönch",
+"why": "Hauptheiler, verstärkt den Nahkämpfer mit Stärke der Ehre. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=-3YUdAaS2Ic"
+},
+{
+"code": "OAhjQoGYIP3hqq0cyNM3XjzhGA",
+"role": "Blut ist Kraft-Nekromant",
+"why": "Gibt dem Team Energie und heilt über Wiederherstellungsmagie. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=-3YUdAaS2Ic"
+},
+{
+"code": "OAlkUsG2BaqEPmC4XgdQ92nQN2OG",
+"role": "\"Schon unterwegs!\"-Nekromant",
+"why": "Rufe für Rüstung und Tempo, dazu Flächenschaden an Leichen. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=-3YUdAaS2Ic"
+},
+{
+"code": "OQhkAgBqAHKzLY6lDMdkgiae+iB",
+"role": "Unbeholfenheit-Mesmer",
+"why": "Lässt Angreifer danebenschlagen und macht dabei Flächenschaden. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=-3YUdAaS2Ic"
+},
+{
+"code": "OQhkAoC8AGKDNY6lDMdZghAO9iB",
+"role": "Panik-Mesmer",
+"why": "Legt ganze Gruppen lahm und unterbricht. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=-3YUdAaS2Ic"
+},
+{
+"code": "OQhCAcwkQ10TOQeWGACIOFGD",
+"role": "Siegel der Illusionen-Mesmer",
+"why": "Nutzt fremde Zauber über Illusionsmagie, hier Splitterwaffe für den Nahkämpfer. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=-3YUdAaS2Ic"
+}
+]
+},
+{
+"key": "yt_deep",
+"name": "Die Tiefe SM, 7 Helden (YouTube 09/2026)",
+"area": "deep",
+"yt": true,
+"src": "https://www.youtube.com/watch?v=WABBk_mVxQA",
+"desc": "YouTube, inoffiziell: Heldenteam von sd_korsakoff vom 28.09.2026. Video-Leitfaden: Schwerer Modus ohne Verbrauchsgüter, laut Beschreibung unter 45 Minuten, mit viel Flaggen und Handsteuerung. Ein Code in der Beschreibung ist fehlerhaft, dafür steht hier der Unbeholfenheit-Mesmer aus seinem Lauf vom 06.09.2026. Die Leisten stammen aus der Videobeschreibung und sind hier nur auf gültige Codes geprüft.",
+"player": {
+"label": "Schwert-Krieger",
+"code": "OQcTEZK7HSrovYqZH0mUihmszBA"
+},
+"slots": [
+{
+"code": "OAmjAykpZOYTnp17xFOhm34dMA",
+"role": "Seelenverflechtung-Ritualist",
+"why": "Schutz über Geister: Unterschlupf, Vereinigung und Verschiebung. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=WABBk_mVxQA"
+},
+{
+"code": "OwAT0YnCRqu6upBEMi6zlw6beAA",
+"role": "Licht der Erlösung-Mönch",
+"why": "Gruppenheilung, verstärkt den Nahkämpfer mit Stärke der Ehre. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=WABBk_mVxQA"
+},
+{
+"code": "OAhjQoGYIP3hqq0cyNMfEjzhGA",
+"role": "Blut ist Kraft-Nekromant",
+"why": "Gibt dem Team Energie und heilt über Wiederherstellungsmagie. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=WABBk_mVxQA"
+},
+{
+"code": "OAlkQsFohZqjXrQA2eD17vQNeHD",
+"role": "Heißhungriger Blick-Nekromant",
+"why": "Lebensraub als Schaden, dazu Rufe für Rüstung und Tempo. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=WABBk_mVxQA"
+},
+{
+"code": "OQhkAsBrAGO0Lw0TOACIJQRFH0FD",
+"role": "Unbeholfenheit-Mesmer",
+"why": "Lässt Angreifer danebenschlagen und macht dabei Flächenschaden. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=WABBk_mVxQA"
+},
+{
+"code": "OQhkAoC8AGKDNY6lDMdZghAO9iB",
+"role": "Panik-Mesmer",
+"why": "Legt ganze Gruppen lahm und unterbricht. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=WABBk_mVxQA"
+},
+{
+"code": "OQhkAoC8AGKzJY6lDMdZghAO9iB",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von sd_korsakoff (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=WABBk_mVxQA"
+}
+]
+},
+{
+"key": "yt_uw",
+"name": "Unterwelt, 7 Helden (YouTube 11/2026)",
+"area": "uw",
+"yt": true,
+"src": "https://www.youtube.com/watch?v=kzHJ_ydLIEc",
+"desc": "YouTube, inoffiziell: Heldenteam von Eric vom 06.11.2026. Video-Leitfaden mit Erklärung zu jeder Quest. Die Leisten stammen aus der Videobeschreibung und sind hier nur auf gültige Codes geprüft.",
+"player": {
+"label": "Dolch-Assassine",
+"code": "OwFi0xjM5wwwcwo/EnFTGDSTCA"
+},
+"slots": [
+{
+"code": "OAmjIykpZOYsrZ50buMvY14dMA",
+"role": "Siegel der Geister-Ritualist",
+"why": "Angriffsgeister und Splitterwaffe. Leiste aus dem Video von Eric (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=kzHJ_ydLIEc"
+},
+{
+"code": "OACiAyk8gNtehzHH08b6MRuA",
+"role": "Seelenverflechtung-Ritualist",
+"why": "Schutz über Geister: Unterschlupf, Vereinigung und Verschiebung. Leiste aus dem Video von Eric (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=kzHJ_ydLIEc"
+},
+{
+"code": "OQBDAswzMngcw0z0NEwpygeA",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Eric (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=kzHJ_ydLIEc"
+},
+{
+"code": "OQhDAswzMngcw0z0NEwpXMNA",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Eric (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=kzHJ_ydLIEc"
+},
+{
+"code": "Owkj4wQjJP+sFC8wlY9p3745BA",
+"role": "Strahl des Urteils-Mönch",
+"why": "Flächenschaden über Peinigungsgebete, entfernt Verhexungen. Leiste aus dem Video von Eric (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=kzHJ_ydLIEc"
+},
+{
+"code": "OwAT0U3C1xnhSgHuErP1PMeRAA",
+"role": "Strahl des Urteils-Mönch",
+"why": "Flächenschaden über Peinigungsgebete, entfernt Verhexungen. Leiste aus dem Video von Eric (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=kzHJ_ydLIEc"
+},
+{
+"code": "OAhjQkGZIP3hq64MaK8kmTuhJA",
+"role": "Blut ist Kraft-Nekromant",
+"why": "Gibt dem Team Energie und heilt über Wiederherstellungsmagie. Leiste aus dem Video von Eric (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=kzHJ_ydLIEc"
+}
+]
+},
+{
+"key": "yt_uw2",
+"name": "Unterwelt, 7 Helden (YouTube 01/2026)",
+"area": "uw",
+"yt": true,
+"src": "https://www.youtube.com/watch?v=BBP131ho4FM",
+"desc": "YouTube, inoffiziell: Heldenteam von Emberstone vom 05.01.2026. Video-Leitfaden für alle Quests und Dhuum. Die Leisten stammen aus der Videobeschreibung und sind hier nur auf gültige Codes geprüft.",
+"player": {
+"label": "Dolch-Paragon",
+"code": "OQek0xm05hqkDDDzBj9mFGQ4MpqI"
+},
+"slots": [
+{
+"code": "OAmjIyks5MXzyp3cZixqmOTcMA",
+"role": "Siegel der Geister-Ritualist",
+"why": "Angriffsgeister und Splitterwaffe. Leiste aus dem Video von Emberstone (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=BBP131ho4FM"
+},
+{
+"code": "OQlkAkC8QaOzJIHM9MdXghQGAHD",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Emberstone (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=BBP131ho4FM"
+},
+{
+"code": "OwAS4YIP+M8qLpLqGt+wj5B",
+"role": "Strahl des Urteils-Mönch",
+"why": "Flächenschaden über Peinigungsgebete, entfernt Verhexungen. Leiste aus dem Video von Emberstone (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=BBP131ho4FM"
+},
+{
+"code": "OAhjQYGbIT3BVVCPSTTODTciVPA",
+"role": "Blut ist Kraft-Nekromant",
+"why": "Gibt dem Team Energie und heilt über Wiederherstellungsmagie. Leiste aus dem Video von Emberstone (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=BBP131ho4FM"
+},
+{
+"code": "OAhjYoHboO5BLRZoqO5kmDzLGA",
+"role": "Boshafter Geist-Nekromant",
+"why": "Bestraft Angriffe und Fertigkeiten ganzer Gruppen. Leiste aus dem Video von Emberstone (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=BBP131ho4FM"
+},
+{
+"code": "OQBDAqwDKnQOM9m+FMEZgMA",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Emberstone (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=BBP131ho4FM"
+},
+{
+"code": "OACjAuiKpOYTr3jLcCNdmfzLGA",
+"role": "Seelenverflechtung-Ritualist",
+"why": "Schutz über Geister: Unterschlupf, Vereinigung und Verschiebung. Leiste aus dem Video von Emberstone (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=BBP131ho4FM"
+}
+]
+},
+{
+"key": "yt_doa",
+"name": "DoA, 7 Helden (YouTube 11/2024)",
+"area": "doa",
+"yt": true,
+"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo",
+"desc": "YouTube, inoffiziell: Heldenteam von Péter Kádár vom 21.11.2024. Video-Leitfaden für alle vier Bereiche und Mallyx ohne Verbrauchsgüter, für jede Klasse. Die Leisten stammen aus der Videobeschreibung und sind hier nur auf gültige Codes geprüft.",
+"player": {
+"label": "Beliebige Klasse",
+"code": "OQcR4ZaBqtMmcXEAAAAAAAA"
+},
+"slots": [
+{
+"code": "OQljAkCsZOngcw0bIY6KC40dMA",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+},
+{
+"code": "OQhkAsC8gFKyJkDT/QY6FRGcxA",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+},
+{
+"code": "OQhkAsC8gFKENwBYOw0zQgpTGwFD",
+"role": "Panik-Mesmer",
+"why": "Legt ganze Gruppen lahm und unterbricht. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+},
+{
+"code": "OAhjQoGYIP3hqqwbYexkmTuxJA",
+"role": "Blut ist Kraft-Nekromant",
+"why": "Gibt dem Team Energie und heilt über Wiederherstellungsmagie. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+},
+{
+"code": "OwUTMwmC5Zjc38IXkuYGoHwQAA",
+"role": "Unnachgiebige Aura-Mönch",
+"why": "Heiler mit Wiederbelebung über Unnachgiebige Aura. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+},
+{
+"code": "OACiAyk8gNDnWvHH00yZNdmA",
+"role": "Seelenverflechtung-Ritualist",
+"why": "Schutz über Geister: Unterschlupf, Vereinigung und Verschiebung. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+},
+{
+"code": "OgljgwMpZOGjxx3QHSLCH14dMA",
+"role": "Schimmerndes Zeichen-Elementarmagier",
+"why": "Blitzschaden mit Blindheit, dazu Rufe. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=DtFyxtpoaPo"
+}
+]
+},
+{
+"key": "yt_slavers",
+"name": "Sklavenhändler-Exil, 7 Helden (YouTube 04/2024)",
+"area": "slavers",
+"yt": true,
+"src": "https://www.youtube.com/watch?v=wRPbSfTYjJk",
+"desc": "YouTube, inoffiziell: Heldenteam von Péter Kádár vom 20.04.2024. Video-Leitfaden: Vier Zwischenbosse im Normalen Modus, Duncan im Schweren Modus. Die Leisten stammen aus der Videobeschreibung und sind hier nur auf gültige Codes geprüft.",
+"player": {
+"label": "Nekromant",
+"code": "OAhjYMgsITVTXTlT+gfTtlQT0gA"
+},
+"slots": [
+{
+"code": "OQhjAwCc4Mngcw0bIY6KC40LGA",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=wRPbSfTYjJk"
+},
+{
+"code": "OQlkAcB8gZm0LACYeGJAHUGARwOG",
+"role": "Unbeholfenheit-Mesmer",
+"why": "Lässt Angreifer danebenschlagen und macht dabei Flächenschaden. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=wRPbSfTYjJk"
+},
+{
+"code": "OQhjAwCc4Mngcw0bIY6KC40LGA",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=wRPbSfTYjJk"
+},
+{
+"code": "OgljgwMpZSGDjDfDLg6QhD0C7YA",
+"role": "Schimmerndes Zeichen-Elementarmagier",
+"why": "Blitzschaden mit Blindheit, dazu Rufe. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=wRPbSfTYjJk"
+},
+{
+"code": "OghjgwMW4SGDXVfDLg6QhDciTOA",
+"role": "Blendende Welle-Elementarmagier",
+"why": "Blendet Nahkämpfer und macht Blitzschaden. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=wRPbSfTYjJk"
+},
+{
+"code": "OACiAyk8gNDnWvHH00a6MRuA",
+"role": "Seelenverflechtung-Ritualist",
+"why": "Schutz über Geister: Unterschlupf, Vereinigung und Verschiebung. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=wRPbSfTYjJk"
+},
+{
+"code": "OAhjQoGYIP3hq6QbYK8kmTuxJA",
+"role": "Blut ist Kraft-Nekromant",
+"why": "Gibt dem Team Energie und heilt über Wiederherstellungsmagie. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=wRPbSfTYjJk"
+}
+]
+},
+{
+"key": "yt_sf",
+"name": "Hochofen, 7 Helden (YouTube 01/2025)",
+"area": "sf",
+"yt": true,
+"src": "https://www.youtube.com/watch?v=nWIbyaOatUk",
+"desc": "YouTube, inoffiziell: Heldenteam von Péter Kádár vom 14.01.2025. Video-Leitfaden für alle Quests ohne Verbrauchsgüter, für jede Klasse. Die Leisten stammen aus der Videobeschreibung und sind hier nur auf gültige Codes geprüft.",
+"player": {
+"label": "Dolch-Leiste",
+"code": "OQiiAyiMVNdNVO9N5DCN1WSDCA"
+},
+"slots": [
+{
+"code": "OQhkAoC8AGKyJkDT/QY6FRGcxA",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=nWIbyaOatUk"
+},
+{
+"code": "OQhkAoC8AGKyJkDT/QY6FRGcxA",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=nWIbyaOatUk"
+},
+{
+"code": "OQlkAgC8QZm0JQOwB40zQgpTGwOG",
+"role": "Energiewelle-Mesmer",
+"why": "Flächenschaden und Energieentzug, dazu Unterbrechungen. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=nWIbyaOatUk"
+},
+{
+"code": "OgljgwMpZOGjxx3QHSLCH14dMA",
+"role": "Schimmerndes Zeichen-Elementarmagier",
+"why": "Blitzschaden mit Blindheit, dazu Rufe. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=nWIbyaOatUk"
+},
+{
+"code": "OACiAyk8gNDnWvHH00yZNdmA",
+"role": "Seelenverflechtung-Ritualist",
+"why": "Schutz über Geister: Unterschlupf, Vereinigung und Verschiebung. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=nWIbyaOatUk"
+},
+{
+"code": "OAhjQoGYIP3hq6QbYexkmTuxJA",
+"role": "Blut ist Kraft-Nekromant",
+"why": "Gibt dem Team Energie und heilt über Wiederherstellungsmagie. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=nWIbyaOatUk"
+},
+{
+"code": "OwUTMwmC5Zjc38IXkuYGoHwQAA",
+"role": "Unnachgiebige Aura-Mönch",
+"why": "Heiler mit Wiederbelebung über Unnachgiebige Aura. Leiste aus dem Video von Péter Kádár (YouTube, inoffiziell).",
+"src": "https://www.youtube.com/watch?v=nWIbyaOatUk"
+}
+]
 }
 ]

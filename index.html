@@ -237,11 +237,14 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
 .chip{padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid var(--line2)}
 .chip.on{background:linear-gradient(180deg,var(--lacq2),var(--lacq));border-color:var(--gold);color:#fbe7b8}
 
+.pvrow{flex-direction:row;align-items:center;gap:10px}.pvi{flex:none;width:36px;height:36px;border-radius:6px;border:1px solid var(--line);display:block}.pvrow .pvt{display:flex;flex-direction:column;gap:2px;min-width:0}.pvrow small{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pvq{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0;background:rgba(255,255,255,.03)}.pvq h3{margin:0 0 8px}.pvq .kv{display:flex;gap:10px;padding:3px 0;font-size:13px}.pvq .kv span{flex:none;width:110px;color:var(--muted)}.pvq ol{margin:10px 0 8px;padding-left:20px}.pvq ol li{margin:3px 0}
+.inp{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:inherit;font:inherit}
 #tip{position:fixed;z-index:70;pointer-events:none;max-width:320px;background:linear-gradient(180deg,#1d120d,#0d0806);border:1px solid var(--gold);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.45;box-shadow:0 8px 24px rgba(0,0,0,.5);display:none}
 #tip b{font-size:15px;font-family:var(--head);color:#f3dfb0}
 #tip .meta{color:var(--muted);margin:2px 0 4px}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#24150f;border:1px solid var(--line2);padding:8px 14px;border-radius:999px;display:none;z-index:80}
-@media (max-width:600px){.topbar .btn span.l{display:none}.attrs,.heroes{grid-template-columns:1fr}.mainhead h1{font-size:19px}}
+@media (max-width:600px){.topbar{gap:6px;padding:8px 10px}.topbar .btn{padding:7px 9px}#rnd{display:none}.topbar .btn span.l{display:none}.attrs,.heroes{grid-template-columns:1fr}.mainhead h1{font-size:19px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -250,6 +253,7 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
   <div class="logo">GW-Reinfickmaschine</div>
   <div class="sp"></div>
   <button class="btn" id="rnd" title="Zufälligen Build laden"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r=".8" fill="currentColor"/><circle cx="15" cy="15" r=".8" fill="currentColor"/><circle cx="15" cy="9" r=".8" fill="currentColor"/><circle cx="9" cy="15" r=".8" fill="currentColor"/></svg> <span class="l">Überrasch mich</span></button>
+  <button class="btn" id="pvebtn" title="Woher bekomme ich eine PvE-Fertigkeit?"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6"/></svg> <span class="l">PvE-Fertigkeiten</span></button>
   <button class="btn" id="copyall" title="Alle Codes kopieren"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> <span class="l">Codes kopieren</span></button>
   <button class="btn pri" id="zip" hidden title="Alle Leisten als Vorlagen herunterladen"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg> <span class="l">Vorlagen (ZIP)</span></button>
 </div>
@@ -324,6 +328,7 @@ const store = { get(k,d){ try{ const v=localStorage.getItem("gwbw."+k); return v
 
 // ---------- Daten ----------
 const [sdata, adata, BUILDS, SYN, EQ, TEAMS, GUIDES, SPD] = await Promise.all(["skills.json","areas.json","builds.json","synergy.json","equip.json","teams.json","guides.json","spots.json"].map(f=>fetch(f).then(r=>r.json())));
+const PVE = await fetch("pve.json").then(r=>r.json()).catch(()=>({}));
 GW.loadSkills(sdata);
 const SPOTS = SPD.spots;
 const normCode = c => { try{ const d=GW.decode(c); return GW.encode(d.pri,d.sec,d.attrs,d.skills); }catch(e){ return c; } };
@@ -432,8 +437,11 @@ function syncSpot(cat){
 function myNeeds(){ const b=currentBuild(); return GW.needs(playerBar(), b && EXACT && b.url ? (SPD.cons||{})[b.url] : null); }
 // ---------- Team berechnen ----------
 let TEAM = [], PLAN = null, CHECKS = [], DPS = [], FIXED = [], CAT = "team", SPOT = null, EXACT = false;
+const teamFits = T => !T.area || T.area===state.area;
+function areaTeam(){ const y = TEAMS.find(T=>T.yt && T.area===state.area); return y ? y.key : (GUIDES[state.area] && GUIDES[state.area].team) || "std"; }
 function teamSlotsFor(pb, size){
-  const teamKey = state.team || (GUIDES[state.area] && GUIDES[state.area].team) || "std";
+  const chosen = state.team && TEAMS.find(T=>T.key===state.team);
+  const teamKey = (chosen && teamFits(chosen)) ? state.team : areaTeam();
   const plan = GW.resolveTeam(teamKey, pb, state.area, AREAS, TEAMS);
   if (size < 8) {
     const keep = GW.trimSlots(plan.slots, size-1);
@@ -587,10 +595,10 @@ function openDrawer(kind, opt={}){
   renderDrawer(); renderMain();
   setTimeout(()=>$("dclose").focus(), 50);
 }
-function closeDrawer(){ ui.drawer=null; $("drawer").classList.remove("on"); $("scrim").classList.remove("on"); hideTip(); renderMain(); }
+function closeDrawer(){ $("dtabs").hidden=false; ui.drawer=null; $("drawer").classList.remove("on"); $("scrim").classList.remove("on"); hideTip(); renderMain(); }
 $("dclose").addEventListener("click", closeDrawer);
 $("scrim").addEventListener("click", closeDrawer);
-function tabs(list){ // [key,label,disabled]
+function tabs(list){ $("dtabs").hidden=false; // [key,label,disabled]
   if (!list.some(t=>t[0]===ui.tab && !t[2])) ui.tab = (list.find(t=>!t[2])||list[0])[0];
   $("dtabs").hidden = list.length<2;
   $("dtabs").innerHTML = list.map(([k,l,dis])=>`<button role="tab" aria-selected="${ui.tab===k}" class="${ui.tab===k?"on":""}" data-tab="${k}"${dis?" disabled":""}>${esc(l)}</button>`).join("");
@@ -604,6 +612,48 @@ function renderDrawer(){
   if (k==="member") return drawMember(body);
   if (k==="info") return drawInfo(body);
   if (k==="dps") return drawDps(body);
+  if (k==="pve") return drawPve(body);
+}
+// ---------- PvE-Fertigkeiten: Woher? ----------
+const PVE_HOW = { quest:"Quest", trainer:"Trainer", capture:"Erbeuten", title:"Titel", faction:"Belohnungspunkte" };
+function pveShort(e){ if (e.how==="quest") { const q=e.quests[0]; return `Quest „${q.q}“ · ${q.at}`; } return e.text.split(":")[0].split(",")[0]; }
+function pveDetail(id){
+  const e = PVE[id], s = GW.skill(+id); if (!e || !s) return "";
+  let h = `<div class="row" style="gap:12px;align-items:center;margin-bottom:10px"><span class="pvi" style="width:48px;height:48px;${iconStyle(s,48)}"></span><div style="flex:1"><b style="font-family:var(--head);font-size:18px;color:#f3dfb0">${esc(dname(s))}</b><div class="dim sm">${esc(s.p?GW.PROF_DE[s.p]:"Alle Klassen")}${e.track?" · Titel: "+esc(e.track):""} · ${PVE_HOW[e.how]}</div></div></div>`;
+  h += `<p class="dim sm">${esc(s.dd||s.d)}</p>`;
+  if (e.how==="quest") {
+    if (e.quests.length>1) h += `<p><b>${e.quests.length} Wege</b>, einer reicht:</p>`;
+    h += e.quests.map(q=>`<div class="pvq"><h3>Quest: ${esc(q.q)}</h3>
+      <div class="kv"><span>Auftraggeber</span><b>${esc(q.by)}</b></div><div class="kv"><span>Ort</span><b>${esc(q.at)}</b></div>
+      ${q.chain.length?`<div class="kv"><span>Vorher nötig</span><b>${q.chain.map(esc).join(" → ")}</b></div>`:""}
+      ${q.story.length?`<div class="kv"><span>Ab Hauptquest</span><b>${q.story.map(esc).join(", ")}</b></div>`:""}
+      ${!q.chain.length&&!q.story.length?`<div class="kv"><span>Vorher nötig</span><b>Keine Vorquest</b></div>`:""}
+      <ol${q.zde?"":' lang="en"'}>${q.ziele.map(z=>`<li>${esc(z)}</li>`).join("")}</ol>
+      ${q.tipp?`<p class="sm"><b>Tipp:</b> ${esc(q.tipp)}</p>`:""}
+      <p class="dim sm"><a href="${esc(q.url)}" target="_blank" rel="noopener">Wiki: ${esc(q.en)}</a></p></div>`).join("");
+  } else h += `<div class="pvq"><p>${esc(e.text)}</p></div>`;
+  if (e.notes && e.notes.length) h += `<ul class="msgs">${e.notes.map(n=>`<li class="info">${esc(n)}</li>`).join("")}</ul>`;
+  h += `<p class="dim sm" style="margin-top:12px">Die Fertigkeit ist die Belohnung der Quest. <a href="${esc(e.url)}" target="_blank" rel="noopener">Fertigkeit im Wiki</a></p>`.replace("Die Fertigkeit ist die Belohnung der Quest. ", e.how==="quest"?"Die Fertigkeit ist die Belohnung der Quest. ":"");
+  return h;
+}
+function drawPve(body){
+  $("dtabs").innerHTML = ""; $("dtabs").hidden = true;
+  if (ui.pveId && PVE[ui.pveId]) {
+    $("dtitle").innerHTML = `So bekommst du sie<small>PvE-Fertigkeit</small>`;
+    body.innerHTML = `<button class="btn s" data-pveback style="margin-bottom:12px">‹ Alle PvE-Fertigkeiten</button>` + pveDetail(ui.pveId);
+    return;
+  }
+  $("dtitle").innerHTML = `PvE-Fertigkeiten<small>Woher bekomme ich sie?</small>`;
+  const q = (ui.pveQ||"").toLowerCase();
+  const rows = Object.keys(PVE).map(id=>[GW.skill(+id), PVE[id], id]).filter(([s])=>s && !/ \(Luxon\)$/.test(s.n));
+  const groups = [["Norn","Norn"],["Deldrimor","Deldrimor"],["Asura","Asura"],["Ebon-Vorhut","Ebon-Vorhut"],["Sonnenspeer","Sonnenspeer"],["Lichtbringer","Lichtbringer"],["Kurzick oder Luxon","Kurzick und Luxon"],["","Klassen-Fertigkeiten und Sonstige"]];
+  const list = groups.map(([k,l])=>{
+    const r = rows.filter(([s,e])=>e.track===k && (!q || (dname(s)+" "+s.n+" "+pveShort(e)).toLowerCase().includes(q))).sort((a,b)=>dname(a[0]).localeCompare(dname(b[0]),"de"));
+    return r.length ? `<div class="grp">${esc(l)}</div><div class="list">${r.map(([s,e,id])=>`<button class="opt pvrow" data-pve="${id}"><span class="pvi" style="${iconStyle(s,36)}"></span><span class="pvt"><span class="nm">${esc(dname(s).replace(/ \(Kurzick\)$/,""))}</span><small>${esc(pveShort(e))}</small></span></button>`).join("")}</div>` : "";
+  }).join("");
+  const had = document.activeElement && document.activeElement.id==="pveq";
+  body.innerHTML = `<label class="sm dim" for="pveq">Suchen</label><input id="pveq" class="inp" type="search" placeholder="z. B. Zwergenstabilität" value="${esc(ui.pveQ||"")}" style="width:100%;margin:4px 0 6px">` + (list || `<p class="dim">Nichts gefunden.</p>`);
+  if (had) { const i=$("pveq"); i.focus(); i.setSelectionRange(i.value.length,i.value.length); }
 }
 function drawBuild(body){
   const all = BUILDS[state.pri] || [];
@@ -676,6 +726,8 @@ function drawMember(body){
       if (nd.titles.length || nd.cons.length) html += `<h3>Das brauchst du</h3><ul class="msgs">` +
         nd.titles.map(x=>`<li class="info"><b>${esc(x.title)}</b> für ${esc(x.skills.join(", "))}. Die Werte steigen mit dem Titelrang.</li>`).join("") +
         nd.cons.map(x=>`<li class="info"><b>${esc(x.name)}</b>: ${esc(x.why)}.</li>`).join("") + `</ul>`;
+      const pvs = d.skills.map(id=>GW.skill(id)).filter(s=>s && s.pve && PVE[s.id]);
+      if (pvs.length) html += `<h3>Woher bekomme ich die PvE-Fertigkeiten?</h3><div class="list">${pvs.map(s=>`<button class="opt pvrow" data-pve="${s.id}"><span class="pvi" style="${iconStyle(s,36)}"></span><span class="pvt"><span class="nm">${esc(dname(s))}</span><small>${esc(pveShort(PVE[s.id]))}</small></span></button>`).join("")}</div>`;
     } else {
       if (m.key) html += `<div class="row" style="margin:8px 0 0"><span class="dim sm" style="flex:1">Antippen zum Tauschen, ziehen zum Umsortieren.</span>${m.changed?`<button class="btn s" data-reset="${esc(m.key)}">Original wiederherstellen</button>`:""}</div>`;
       const v = GW.validate(d, true), msgs = v.msgs.filter(x=>x[0]!=="ok").map(x=>[x[0],deText(x[1])]);
@@ -748,7 +800,7 @@ function drawInfo(body){
   const a = AREAS.find(x=>x.key===state.area);
   $("dtitle").innerHTML = CAT==="team" ? `${esc(a?a.name:"")}<small>${esc(PLAN?PLAN.def.name:"")}</small>` : `${esc(SPOT?SPOT.name:"")}<small>${CAT==="run"?"Rush":"Farm"}</small>`;
   if (ui.tab==="check") body.innerHTML = `<ul class="msgs">${CHECKS.map(([c,t])=>`<li class="${c}">${esc(t)}</li>`).join("")}</ul>`;
-  else if (ui.tab==="why") body.innerHTML = `<p>${esc(PLAN.def.desc)}${PLAN.def.src?` <a href="${esc(PLAN.def.src)}" target="_blank" rel="noopener">Quelle</a>`:""}</p><ul>${PLAN.reasons.map(x=>`<li>${esc(deText(x))}</li>`).join("")}</ul>`;
+  else if (ui.tab==="why") body.innerHTML = `<p>${esc(PLAN.def.desc)}${PLAN.def.src?` <a href="${esc(PLAN.def.src)}" target="_blank" rel="noopener">Quelle</a>`:""}</p>${PLAN.def.player?`<div class="row" style="margin:10px 0"><span style="flex:1">Im Video spielt der Spieler: <b>${esc(PLAN.def.player.label)}</b></span><button class="btn s" data-ytload="${esc(PLAN.def.player.code)}">Diese Leiste laden</button></div>`:""}<ul>${PLAN.reasons.filter(x=>x!==PLAN.def.desc).map(x=>`<li>${esc(deText(x))}</li>`).join("")}</ul>`;
   else if (CAT!=="team" && SPOT) {
     const sp = SPOT;
     body.innerHTML = (sp.route.length>1 ? `<div class="route">${sp.route.map(x=>`<span>${esc(x)}</span>`).join("→")}</div>` : "") + (sp.time?`<p class="mut sm">Dauer: ${esc(sp.time)}</p>`:"") +
@@ -789,8 +841,12 @@ document.addEventListener("click", e=>{
   const ar = t.closest("[data-area]"); if (ar) { state.area=ar.dataset.area; state.team=null; store.set("area",state.area); closeDrawer(); render(); return; }
   const sp = t.closest("[data-spot]"); if (sp) { state.spot=sp.dataset.spot; state.forceTeam=false; closeDrawer(); render(); return; }
   const rs = t.closest("[data-reset]"); if (rs) { delete state.over[rs.dataset.reset]; render(); return; }
+  if (t.closest("#pvebtn")) { ui.pveId=null; openDrawer("pve"); render(); return; }
+  if (t.closest("[data-pveback]")) { ui.pveId=null; renderDrawer(); return; }
+  const pv = t.closest("[data-pve]"); if (pv) { ui.pveId=pv.dataset.pve; if (ui.drawer!=="pve") openDrawer("pve"); renderDrawer(); $("dbody").scrollTop=0; return; }
+  const yl = t.closest("[data-ytload]"); if (yl) { baseBuild={pri:0,idx:-1}; if (loadCode(yl.dataset.ytload)) toast("Leiste geladen"); return; }
   if (t.closest("#forceteam")) { state.forceTeam=!state.forceTeam; render(); return; }
-  if (t.closest("#p-team")) { openMenu(t.closest("#p-team"), TEAMS.map(T=>`<button class="${PLAN&&T.key===PLAN.def.key?"on":""}" data-team="${T.key}">${esc(T.name)}${GUIDES[state.area]&&GUIDES[state.area].team===T.key?" ★":""}<small>${esc(T.desc).slice(0,90)}…</small></button>`).join("") + (state.team?`<button data-team="">Automatisch wählen</button>`:"")); return; }
+  if (t.closest("#p-team")) { openMenu(t.closest("#p-team"), TEAMS.filter(teamFits).map(T=>`<button class="${PLAN&&T.key===PLAN.def.key?"on":""}" data-team="${T.key}">${esc(T.name)}${state.area&&areaTeam()===T.key?" ★":""}<small>${esc(T.desc).slice(0,90)}…</small></button>`).join("") + (state.team?`<button data-team="">Automatisch wählen</button>`:"")); return; }
   if (t.closest("#hall")) { state.owned=new Set(GW.HEROES.map(h=>h[0])); store.set("owned",[...state.owned]); render(); return; }
   if (t.closest("#hnone")) { state.owned=new Set(); store.set("owned",[]); render(); return; }
   if (t.closest("#codeload")) { if(loadCode($("codein").value)) toast("Geladen"); return; }
@@ -882,6 +938,7 @@ $("mclose").addEventListener("click", closePicker);
 $("modal").addEventListener("click", e=>{ if(e.target.id==="modal") closePicker(); });
 $("mclear").addEventListener("click", ()=>{ const c=editCtx(), sk=c.bar.skills.slice(); sk[pickSlot]=0; closePicker(); applySkills(c, sk); });
 $("msearch").addEventListener("input", renderPicker);
+document.addEventListener("input", e=>{ if (e.target.id==="pveq") { ui.pveQ=e.target.value; drawPve($("dbody")); } });
 $("mchips").addEventListener("click", e=>{ const c=e.target.closest("[data-f]"); if(c){ pickFilter=c.dataset.f; renderPicker(); } });
 $("mlist").addEventListener("click", e=>{ const b=e.target.closest("[data-pick]"); if(!b) return; const id=+b.dataset.pick; const c=editCtx(), sk=c.bar.skills.slice(); const j=sk.indexOf(id); if(j>=0 && j!==pickSlot) sk[j]=0; sk[pickSlot]=id; closePicker(); applySkills(c, sk); });
 function renderPicker(){

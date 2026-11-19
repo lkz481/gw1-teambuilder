@@ -392,7 +392,7 @@
 },
 "deep": {
 "title": "Die Tiefe mit Helden",
-"intro": "Achtung: Die Tiefe ist für 12 Spieler gebaut, mit dir und 7 Helden seid ihr 8. Der Wiki-Ablauf geht von 12 aus. Die Engstellen für eine 8er-Gruppe sind die vier Portale am Start und die fünf Druckplatten in Raum 3. Wo das Wiki einen Helden-Tipp gibt, steht er dabei. Der Rest ist aus dem Wiki-Ablauf auf 8 übertragen und nicht als Heldenlauf belegt. Kein Wipe-Schutz: Im ganzen Gebiet gibt es keine Schreine.",
+"intro": "Die Tiefe ist für 12 Spieler gebaut, mit dir und 7 Helden seid ihr 8. Dass es trotzdem geht, zeigt ein Video-Leitfaden von sd_korsakoff vom 28.09.2026: Schwerer Modus mit 7 Helden ohne Verbrauchsgüter in unter 45 Minuten, mit viel Flaggen und Handsteuerung. Sein Team ist hier als Vorschlag hinterlegt. Der Ablauf unten folgt dem Wiki, das von 12 Spielern ausgeht. Die Engstellen für 8 sind die vier Portale am Start und die fünf Druckplatten in Raum 3. Wie das Video sie löst, konnte ich nicht auslesen, denn die Taktik steht nur im Video selbst. Im ganzen Gebiet gibt es keine Schreine.",
 "team": "std",
 "sections": [
 {
@@ -411,6 +411,7 @@
 "Im Startraum gibt es alle 30 Sekunden Überzaubern. Nicht trödeln.",
 "Vier Portale öffnen sich nacheinander von ganz rechts nach ganz links. Das Wiki teilt 12 Spieler in vier Dreiergruppen, jede mit einem Niederschlag.",
 "Helden-Tipp aus dem Wiki: Drei Helden zum ersten Portal ganz rechts flaggen und die übrigen hinten am Holztor. Bist du durch, die Flaggen lösen. Die Helden kommen dann nach kurzer Zeit zu dir.",
+"Dasselbe beschreibt Krschkr in seinem Video: Helden hinter die Felsen flaggen, selbst durchs Portal gehen, Flagge lösen. Das Spiel holt festsitzende Helden dann nach. Kommt einer nicht mit, die anderen im Raum flaggen und es mit Einzelflaggen wiederholen. Ob man diese Mechanik nutzen will, lässt er ausdrücklich offen.",
 "Hinter den Portalen liegen vier Räume mit je einem Effekt: Kein Blocken (ganz links), Niederschlag bei jedem Treffer (links), 20 % weniger Heilung (rechts), halbes Adrenalin (ganz rechts). Der rechte Raum gilt als der leichteste.",
 "Die Aspekte musst du nicht töten. Die Tore öffnen sich, sobald die Fische im Raum tot sind."
 ]
@@ -485,6 +486,14 @@
 [
 "Guild Wars Wiki: The Deep",
 "https://wiki.guildwars.com/wiki/The_Deep"
+],
+[
+"YouTube: sd_korsakoff, Guide: The Deep HM 7 heroes (28.09.2026, inoffiziell)",
+"https://www.youtube.com/watch?v=WABBk_mVxQA"
+],
+[
+"YouTube: Krschkr, The Deep without Shadow Steps (09.02.2025, inoffiziell)",
+"https://www.youtube.com/watch?v=oBS7dzH3Yqg"
 ]
 ]
 },
@@ -528,7 +537,7 @@
 "t": "Schmiedewichts Ebene",
 "b": [
 "Große Gruppen Feuer-Elementare und Steingipfel-Zwerge.",
-"Schmiedewicht ist Elementarmagier mit Versengende Flammen, Meteorschauer und Tiefgefrieren. Das Wiki rät, die Gruppe mit den Heldenflaggen zu verteilen.",
+"Schmiedewicht ist Elementarmagier. Seine gefährlichsten Zauber: Versengende Flammen und Meteorschauer. Das Wiki rät, die Gruppe mit den Heldenflaggen zu verteilen.",
 "Unterbrecher mitnehmen.",
 "Wütendes Starren entfernt gegnerische Geister, wenn sie stören."
 ]
