@@ -1917,7 +1917,13 @@
 "pri": 7,
 "sec": 6,
 "cat": "run",
-"any": false
+"any": false,
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt."
+]
+}
 },
 "Build:A/D Bloodstone Caves Runner#0": {
 "id": "Build:A/D Bloodstone Caves Runner#0",
@@ -1937,7 +1943,14 @@
 "pri": 7,
 "sec": 5,
 "cat": "run",
-"any": false
+"any": false,
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s)."
+]
+}
 },
 "Build:R/A Arachni's Haunt Runner#0": {
 "id": "Build:R/A Arachni's Haunt Runner#0",
@@ -1957,7 +1970,14 @@
 "pri": 7,
 "sec": 5,
 "cat": "run",
-"any": false
+"any": false,
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s)."
+]
+}
 },
 "Build:E/Me Imperial Sanctum Runner#0": {
 "id": "Build:E/Me Imperial Sanctum Runner#0",
@@ -1977,7 +1997,14 @@
 "pri": 7,
 "sec": 3,
 "cat": "run",
-"any": false
+"any": false,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 "Build:W/N Raptor Farmer#0": {
 "id": "Build:W/N Raptor Farmer#0",
@@ -1987,7 +2014,13 @@
 "pri": 1,
 "sec": 4,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 "Build:N/W Raptor Farmer#0": {
 "id": "Build:N/W Raptor Farmer#0",
@@ -1997,7 +2030,13 @@
 "pri": 4,
 "sec": 1,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 "Build:D/N Raptor Farmer#0": {
 "id": "Build:D/N Raptor Farmer#0",
@@ -2007,7 +2046,14 @@
 "pri": 10,
 "sec": 4,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Trugbild-Umhang (Aufladezeit 10 → 15 s, Blockchance 40...80% → 30...60%).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 "Build:Mo/A 55hp Vaettir Farmer#0": {
 "id": "Build:Mo/A 55hp Vaettir Farmer#0",
@@ -2017,7 +2063,13 @@
 "pri": 3,
 "sec": 7,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Balthasars Aura (Energiekosten 25 → 15, Wirkzeit 2 → 1 s, Aufladezeit 25 → 20 s, Schaden 10...25 → 10...30); Symbol des Zorns (Wirkzeit 2 → 1 s, Aufladezeit 30 → 20 s, Schaden 8...32 → 10...40)."
+]
+}
 },
 "Build:Me/A Vaettir Farm#0": {
 "id": "Build:Me/A Vaettir Farm#0",
@@ -2027,7 +2079,14 @@
 "pri": 5,
 "sec": 7,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 "Build:A/Me Vaettir Farm#0": {
 "id": "Build:A/Me Vaettir Farm#0",
@@ -2037,7 +2096,14 @@
 "pri": 7,
 "sec": 5,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 "Build:E/Me Obsidian Flesh Vaettir Farmer#0": {
 "id": "Build:E/Me Obsidian Flesh Vaettir Farmer#0",
@@ -2047,7 +2113,14 @@
 "pri": 6,
 "sec": 5,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Verschwendung (Aufladezeit 1 → 4 s, Flächenschaden 100% → 75%); Ableben des Verschwenders (Aufladezeit 3 → 5 s)."
+]
+}
 },
 "Build:D/N Vaettir Farmer#0": {
 "id": "Build:D/N Vaettir Farmer#0",
@@ -2057,7 +2130,14 @@
 "pri": 10,
 "sec": 4,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Mystische Regeneration (Energiekosten 10 → 15).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 "Build:N/Me Superb Charr Carving Farmer#0": {
 "id": "Build:N/Me Superb Charr Carving Farmer#0",
@@ -2067,7 +2147,14 @@
 "pri": 4,
 "sec": 5,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Schrei der Frustration wurde abgeschwächt, ob der Schaden noch reicht, ist dort offen.",
+"Abgeschwächt: Schrei der Frustration (Aufladezeit 15 → 20 s, Flächenschaden 100% → 75%)."
+]
+}
 },
 "Build:D/any General Vow of Strength Farmer#7": {
 "id": "Build:D/any General Vow of Strength Farmer#7",
@@ -2077,7 +2164,14 @@
 "pri": 10,
 "sec": 0,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Trugbild-Umhang (Aufladezeit 10 → 15 s, Blockchance 40...80% → 30...60%); Mystische Regeneration (Energiekosten 10 → 15).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 "Build:Any/R MA Dire Pet Leveler#0": {
 "id": "Build:Any/R MA Dire Pet Leveler#0",
@@ -2097,7 +2191,13 @@
 "pri": 2,
 "sec": 7,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Rand der Auslöschung (Wirkzeit 3 → 2 s)."
+]
+}
 },
 "Build:A/R Mantid Farmer#0": {
 "id": "Build:A/R Mantid Farmer#0",
@@ -2107,7 +2207,13 @@
 "pri": 7,
 "sec": 2,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Rand der Auslöschung (Wirkzeit 3 → 2 s)."
+]
+}
 },
 "Build:R/A Whirling Defense Farmer#4": {
 "id": "Build:R/A Whirling Defense Farmer#4",
@@ -2117,7 +2223,13 @@
 "pri": 2,
 "sec": 7,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Rand der Auslöschung (Wirkzeit 3 → 2 s)."
+]
+}
 },
 "Build:R/any Temple Guardian Farmer#0": {
 "id": "Build:R/any Temple Guardian Farmer#0",
@@ -2137,7 +2249,14 @@
 "pri": 2,
 "sec": 4,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "warn",
+"t": [
+"Hinweis von PvX (Update 28.04.2026): Brunnen ohne Leichen können diesen Farm stören.",
+"Verstärkt: Zerfetzen (Wirkzeit 3 → 2 s); Giftigkeit (Wirkzeit 3 → 2 s); Rand der Auslöschung (Wirkzeit 3 → 2 s)."
+]
+}
 },
 "Build:Mo/W 105hp Halcyon Farmer#0": {
 "id": "Build:Mo/W 105hp Halcyon Farmer#0",
@@ -2147,7 +2266,13 @@
 "pri": 3,
 "sec": 1,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 "Build:Mo/Me 55hp Dragon Moss Farmer#0": {
 "id": "Build:Mo/Me 55hp Dragon Moss Farmer#0",
@@ -2157,7 +2282,14 @@
 "pri": 3,
 "sec": 5,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s); Verschwendung (Aufladezeit 1 → 4 s, Flächenschaden 100% → 75%)."
+]
+}
 },
 "Build:E/Me Obsidian Flesh Caster Farmer#0": {
 "id": "Build:E/Me Obsidian Flesh Caster Farmer#0",
@@ -2167,7 +2299,14 @@
 "pri": 6,
 "sec": 5,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s); Verschwendung (Aufladezeit 1 → 4 s, Flächenschaden 100% → 75%)."
+]
+}
 },
 "Build:R/A Whirling Defense Farmer#1": {
 "id": "Build:R/A Whirling Defense Farmer#1",
@@ -2187,7 +2326,15 @@
 "pri": 5,
 "sec": 4,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Schrei der Frustration (Aufladezeit 15 → 20 s, Flächenschaden 100% → 75%).",
+"Verstärkt: Kadaver verzehren (Energiekosten 10 → 5).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 "Build:E/any Dust and Feather Farmer#0": {
 "id": "Build:E/any Dust and Feather Farmer#0",
@@ -2197,7 +2344,13 @@
 "pri": 6,
 "sec": 0,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Feuerball (Trifft jetzt Gegner in der Nähe statt nur direkt daneben)."
+]
+}
 },
 "Build:D/any General Vow of Strength Farmer#1": {
 "id": "Build:D/any General Vow of Strength Farmer#1",
@@ -2207,7 +2360,14 @@
 "pri": 10,
 "sec": 0,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Mystische Regeneration (Energiekosten 10 → 15).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 "Build:E/Mo Undercity Kappa Farmer#0": {
 "id": "Build:E/Mo Undercity Kappa Farmer#0",
@@ -2247,7 +2407,13 @@
 "pri": 7,
 "sec": 1,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s); Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 "Build:Any/W Ministerial Commendation Farmer#1": {
 "id": "Build:Any/W Ministerial Commendation Farmer#1",
@@ -2257,7 +2423,13 @@
 "pri": 1,
 "sec": 0,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s); Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 "Build:Any/W Ministerial Commendation Farmer#2": {
 "id": "Build:Any/W Ministerial Commendation Farmer#2",
@@ -2267,7 +2439,13 @@
 "pri": 2,
 "sec": 1,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s); Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 "Build:Any/W Ministerial Commendation Farmer#3": {
 "id": "Build:Any/W Ministerial Commendation Farmer#3",
@@ -2277,7 +2455,13 @@
 "pri": 3,
 "sec": 1,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s); Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 "Build:Any/W Ministerial Commendation Farmer#4": {
 "id": "Build:Any/W Ministerial Commendation Farmer#4",
@@ -2287,7 +2471,13 @@
 "pri": 4,
 "sec": 1,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s); Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 "Build:Any/W Ministerial Commendation Farmer#5": {
 "id": "Build:Any/W Ministerial Commendation Farmer#5",
@@ -2297,7 +2487,13 @@
 "pri": 8,
 "sec": 1,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s); Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 "Build:D/any General Vow of Strength Farmer#5": {
 "id": "Build:D/any General Vow of Strength Farmer#5",
@@ -2307,7 +2503,14 @@
 "pri": 10,
 "sec": 0,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Mystische Regeneration (Energiekosten 10 → 15).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 "Build:R/A Moddok Crevice Corsair Farmer#0": {
 "id": "Build:R/A Moddok Crevice Corsair Farmer#0",
@@ -2327,7 +2530,13 @@
 "pri": 4,
 "sec": 7,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Boshafter Geist (Dauer 8...20 → 10...25 s, Schaden 5...35 → 15...45)."
+]
+}
 },
 "Build:Me/A Zelnehlun Fastfoot Farmer#0": {
 "id": "Build:Me/A Zelnehlun Fastfoot Farmer#0",
@@ -2347,7 +2556,13 @@
 "pri": 1,
 "sec": 4,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 "Build:D/any General Vow of Strength Farmer#3": {
 "id": "Build:D/any General Vow of Strength Farmer#3",
@@ -2357,7 +2572,14 @@
 "pri": 10,
 "sec": 0,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Mystische Regeneration (Energiekosten 10 → 15).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 "Build:R/D Escape Farmer#0": {
 "id": "Build:R/D Escape Farmer#0",
@@ -2397,7 +2619,13 @@
 "pri": 2,
 "sec": 4,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Trennung (Wirkzeit 3 → 2 s); Schlammiges Terrain (Wirkzeit 3 → 2 s)."
+]
+}
 },
 "Build:Me/A Stygian Farmer#0": {
 "id": "Build:Me/A Stygian Farmer#0",
@@ -2407,7 +2635,14 @@
 "pri": 5,
 "sec": 7,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s); Verschwendung (Aufladezeit 1 → 4 s, Flächenschaden 100% → 75%)."
+]
+}
 },
 "Build:E/any EA UW Wastes Farmer#0": {
 "id": "Build:E/any EA UW Wastes Farmer#0",
@@ -2447,7 +2682,13 @@
 "pri": 8,
 "sec": 5,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Nachtragend war Khanhei (Aufladezeit 20 → 15 s, Heilung 5...35 → 10...45)."
+]
+}
 },
 "Build:W/Mo Gates of Kryta Farmer#0": {
 "id": "Build:W/Mo Gates of Kryta Farmer#0",
@@ -2477,7 +2718,13 @@
 "pri": 3,
 "sec": 6,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Symbol des Zorns (Wirkzeit 2 → 1 s, Aufladezeit 30 → 20 s, Schaden 8...32 → 10...40)."
+]
+}
 },
 "Build:Mo/any Mark of Protection Farmer#0": {
 "id": "Build:Mo/any Mark of Protection Farmer#0",
@@ -2487,7 +2734,13 @@
 "pri": 3,
 "sec": 0,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt."
+]
+}
 },
 "Build:N/Mo 105hp Farmer#0": {
 "id": "Build:N/Mo 105hp Farmer#0",
@@ -2497,7 +2750,13 @@
 "pri": 4,
 "sec": 3,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Boshafter Geist (Dauer 8...20 → 10...25 s, Schaden 5...35 → 15...45)."
+]
+}
 },
 "Build:Me/Mo 105hp Farmer#0": {
 "id": "Build:Me/Mo 105hp Farmer#0",
@@ -2537,7 +2796,13 @@
 "pri": 8,
 "sec": 3,
 "cat": "farm",
-"any": false
+"any": false,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Nachtragend war Khanhei (Aufladezeit 20 → 15 s, Heilung 5...35 → 10...45)."
+]
+}
 },
 "Build:D/any General Vow of Silence Farmer#0": {
 "id": "Build:D/any General Vow of Silence Farmer#0",

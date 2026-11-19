@@ -1,8 +1,8 @@
 {
 "urgoz": {
 "title": "Urgoz' Bau mit Helden",
-"intro": "Urgoz' Bau ist eine Elite-Mission ohne Wiederbelebungs-Schreine. Ein Wipe schickt dich zurück ins Outpost, deshalb braucht das Team genug Wiederbelebung. Das Tool stellt dafür das Standardteam mit Wiederbelebern zusammen.",
-"team": "std",
+"intro": "Urgoz' Bau ist eine Elite-Mission ohne Wiederbelebungs-Schreine. Ein Wipe schickt dich zurück in den Außenposten. Das vorgeschlagene Team stammt aus einem Video von sd_korsakoff vom 16.07.2026 (Schwerer Modus, 56 Minuten, ohne Verbrauchsgüter). Es bringt zwei Wiederbelebungen mit: Fleisch von meinem Fleisch auf dem Panik- und dem Unbeholfenheit-Mesmer. Der Ritualist trägt Rand der Auslöschung für den Kampf gegen Urgoz.",
+"team": "yt_urgoz",
 "sections": [
 {
 "t": "Heldensteuerung vorher einstellen",
@@ -95,19 +95,23 @@
 [
 "Guild Wars Wiki: Urgoz's Warren",
 "https://wiki.guildwars.com/wiki/Urgoz's_Warren"
+],
+[
+"YouTube: sd_korsakoff, Urgoz's Warren HM 7 heroes (16.07.2026, inoffiziell)",
+"https://www.youtube.com/watch?v=-3YUdAaS2Ic"
 ]
 ]
 },
 "uw": {
 "title": "Unterwelt mit Helden",
-"intro": "Für die Unterwelt gibt es auf PvX kein bewertetes 7-Helden-Team, die Teams dort sind für 8 Spieler. Die Leitfäden stützen sich deshalb auf einen 7-Helden-Leitfaden aus dem Guild Wars Guru Archiv (2011, Normaler und Schwerer Modus ohne Verbrauchsgüter getestet) und auf den Quest-Ablauf des PvX-Teams \"UW Triple Melee\". Wichtig: \"The Four Horsemen\" verlangt eigentlich eine geteilte Gruppe und ist solo der schwerste Teil.",
-"team": "std",
+"intro": "Das vorgeschlagene Team stammt aus dem Video-Leitfaden von Eric vom 06.11.2026, der jede Quest einzeln erklärt. Die Abläufe unten stützen sich auf einen älteren 7-Helden-Leitfaden aus dem Guild Wars Guru Archiv (2011) und auf den Quest-Ablauf des PvX-Teams \"UW Triple Melee\". Die Taktik gilt weiter, die dort genannten Leisten sind aber älter als das Balance-Update vom 24.06.2026. Wichtig: \"The Four Horsemen\" verlangt eigentlich eine geteilte Gruppe und ist solo der schwerste Teil.",
+"team": "yt_uw",
 "sections": [
 {
 "t": "Team-Grundsatz (7-Helden-Leitfaden)",
 "b": [
-"Zwei reine Verteidigungshelden: Der Seelenverflechtungs-Ritualist gilt dort als \"fast unverzichtbar\", dazu ein Nekromant/Ritualist-Heiler über Seelensammlung. Das entspricht Xandra und dem Blut-ist-Kraft-Heiler im Standardteam.",
-"Schadenshelden nach Schema: 1 Elite (z. B. Energiewelle, Schmaus der Verdorbenheit, Siegel der Geister), 1 bis 3 Flächenschaden (Argwohn, Verhexung brechen, Wut der Vorfahren, Splitterwaffe), 1 bis 3 Einzelziel (Geisterschmerz, Unnatürliches Siegel), 1 bis 2 Werkzeug (\"Zieht Euch zurück!\", \"Haltet Eure Stellung!\", Schützend war Kaolai), 1 bis 2 Energie (Kraftentzug, Geist abzapfen).",
+"Zwei reine Verteidigungshelden: Der Seelenverflechtungs-Ritualist gilt dort als \"fast unverzichtbar\", dazu ein Nekromant/Ritualist-Heiler über Seelensammlung. Beides steckt auch im vorgeschlagenen Team: Seelenverflechtungs-Ritualist und Blut-ist-Kraft-Heiler.",
+"Schema des alten Leitfadens für Schadenshelden (Stand 2011, vor dem Update): 1 Elite (z. B. Energiewelle, Schmaus der Verdorbenheit, Siegel der Geister), 1 bis 3 Flächenschaden (Argwohn, Verhexung brechen, Wut der Vorfahren, Splitterwaffe), 1 bis 3 Einzelziel (Geisterschmerz, Unnatürliches Siegel), 1 bis 2 Werkzeug (\"Zieht Euch zurück!\", \"Haltet Eure Stellung!\", Schützend war Kaolai), 1 bis 2 Energie (Kraftentzug, Geist abzapfen).",
 "Unterschlupf vor Vereinigung setzen. Laut Leitfaden senkt Shelter bei 600 Lebenspunkten einen Treffer auf 60, Union danach auf 45.",
 "Für Dhuum brauchst du Entfernung von Todesmalus und mindestens eine Verhexungs-Entfernung (gegen Weight of Dhuum).",
 "Verbrauchsgüter laut Leitfaden: Rüstung der Erlösung für Grenths Diener, The Four Horsemen, Imprisoned Spirits und Dhuum aufheben. Eine Essenz der Schnelligkeit ersetzt doppeltes \"Zieht Euch zurück!\" bei den Reitern."
@@ -205,13 +209,17 @@
 [
 "Guild Wars Wiki: The Underworld",
 "https://wiki.guildwars.com/wiki/The_Underworld"
+],
+[
+"YouTube: Eric, The Underworld 7 Hero Guide (06.11.2026, inoffiziell)",
+"https://www.youtube.com/watch?v=kzHJ_ydLIEc"
 ]
 ]
 },
 "doa": {
 "title": "Domäne der Pein (Start am Tor der Pein) mit Helden",
-"intro": "Auch für die Domäne der Pein gibt es auf PvX kein bewertetes 7-Helden-Team. Das Team hier stammt aus einem Guild Wars Guru Thread: Ein Spieler meldet damit alle vier Bereiche plus Mallyx im Normalen Modus ohne Verbrauchsgüter. Laut dem Thread gibt es keinen \"goldenen\" Build für ganz DoA. Ein Spieler fasst es so zusammen: Es kommt zur Hälfte aufs Team und zur Hälfte auf deine Taktik an (Pullen, Aggro-Kontrolle). Die Bereichsabläufe stammen vom PvX-Team \"DoA Schnablonskiway\" (8 Spieler) und vom Wiki.",
-"team": "std",
+"intro": "Das vorgeschlagene Team stammt aus einer Videoreihe von MeteorJack (31.10. bis 04.11.2026): Alle vier Bereiche und Mallyx im Schweren Modus mit Helden. Die Abläufe unten stützen sich auf einen älteren Guild Wars Guru Thread, auf das PvX-Team \"DoA Schnablonskiway\" (8 Spieler) und auf das Wiki. Laut dem Thread gibt es keinen \"goldenen\" Build für ganz DoA: Es kommt zur Hälfte aufs Team und zur Hälfte auf die Taktik an (Pullen, Aggro-Kontrolle).",
+"team": "yt_doa",
 "sections": [
 {
 "t": "Für alle Bereiche",
@@ -271,6 +279,10 @@
 }
 ],
 "sources": [
+[
+"YouTube: MeteorJack, DoA Hardmode with Heroes, Teil 5 (04.11.2026, inoffiziell)",
+"https://www.youtube.com/watch?v=dvt29plOCBQ"
+],
 [
 "Guild Wars Guru Archiv: Domain of Anguish mit Helden (inoffiziell)",
 "https://archive.guildwarslegacy.com/thread?id=10502800"
@@ -569,6 +581,155 @@
 [
 "Guild Wars Wiki: Duncan the Black",
 "https://wiki.guildwars.com/wiki/Duncan_the_Black"
+]
+]
+},
+"sf": {
+"title": "Hochofen der Betrübnis mit Helden",
+"intro": "Der Hochofen besteht aus vier Aufträgen der Rahmenquest \"Zum Hochofen der Betrübnis\" und dem Abschluss \"Der letzte Angriff\" mit \"Das Herz der Schmiede\". Für jeden Auftrag suchst du einen Zwerg in Grenths Fußabdruck und führst ihn in den Hochofen, immer nur einen zugleich. Anders als in den Elite-Missionen gibt es hier Wiederbelebungs-Schreine. Stirbt aber der begleitete Zwerg, fliegt die Gruppe raus. Für dieses Gebiet habe ich kein Heldenteam aus der Zeit nach dem Update vom 24.06.2026 gefunden, deshalb schlägt das Tool das Standardteam vor.",
+"team": "std",
+"sections": [
+{
+"t": "Grundsätzliches",
+"b": [
+"Start im Deldrimor-Kriegslager. Der Eingang liegt nördlich in Grenths Fußabdruck, unterwegs stehen mehrere Steingipfel-Bosse.",
+"In Grenths Fußabdruck zuerst die Steingipfel-Knirscher töten. Sie überrennen die Gruppe sonst mit Knochenteufeln.",
+"Im Hochofen den Zwerg direkt hinter dem Tor ansprechen, erst dann beginnt sein Auftrag.",
+"Jeden Auftrag abschließen und die Belohnung abholen, bevor du den Hochofen verlässt. Sonst musst du den Zwerg draußen neu suchen.",
+"Die Reihenfolge der vier Aufträge ist frei.",
+"Priester der Betrübnis beleben tote Steingipfel-Zwerge wieder. Früh töten oder unterbrechen.",
+"Die Quetschfallen treffen nur Frost Golems und die Gruppe. Ein Tod dort gibt laut Wiki keinen Todesmalus."
+]
+},
+{
+"t": "Kilroy Steinsipp",
+"b": [
+"Kilroy steht südwestlich des Ausgangs vom Deldrimor-Kriegslager. Draußen kämpft er nicht mit und wird nicht angegriffen.",
+"Im Hochofen rennt er voraus. Stirbt er, ist der Auftrag gescheitert und die Gruppe landet im Kriegslager.",
+"Er läuft meist bis zum nächsten Haltepunkt und wartet dort. Vor jedem Haltepunkt kannst du die nächste Gruppe ansehen und Verzauberungen setzen.",
+"Beute während der Kämpfe aufheben: Kilroy läuft los, sobald alle Gegner um ihn tot sind.",
+"Am Ende stehen drei Gruppen. Bei Kilroy bleiben, er rennt auf den Mönch-Boss Gulnar Eisenzehe zu.",
+"Laut Wiki kannst du an einem Haltepunkt an ihm vorbeischleichen und die restlichen Gegner ohne ihn töten.",
+"Unterwegs erscheinen drei offene Truhen."
+]
+},
+{
+"t": "Gipfel-Sklaven (Galen Trask)",
+"b": [
+"Galen Trask belegt dich mit Ketten der Versklavung. Die meisten Steingipfel-Zwerge sind dadurch freundlich, deine Gegner sind vor allem aufständische Schaufler.",
+"Ziel: Fünf Orte auskundschaften. Das sind die Stone Basilica, Darkhaven, Sorrow's Belly, The Gap und The Iron Arch.",
+"Krak Flammenpeitsche bietet fünf freiwillige Nebenaufträge an. Jeder davon ruft zusätzliche Gegner herbei. Ohne sie ist der Hauptauftrag deutlich leichter.",
+"Der Auftrag besteht fast nur aus Laufen. Ein Tempo-Ruf für die Gruppe wie \"Zieht Euch zurück!\" spart viel Zeit.",
+"Die Questpfeile führen dich hin und her. Laut Wiki ist die Reihenfolge der Nummern auf der Wiki-Karte kürzer."
+]
+},
+{
+"t": "Unsäglich, unverständlich (Hohepriester Alkar)",
+"b": [
+"Alkar steht im Nordosten von Grenths Fußabdruck. Im Hochofen läuft er nach der ersten Gruppe selbstständig los. Stirbt er, fliegt die Gruppe raus.",
+"Teil 1: Hierophant Morlog steht zwischen vielen Gipfel-Zuchtmeistern. Erst die Gegner um ihn wegziehen, dann Morlog töten. Er lässt das Buch (Tome of the Rubicon) fallen.",
+"Das Buch sofort zu Alkar bringen und neben ihm ablegen. Auf seiner Plattform wird er angegriffen und braucht euch dort.",
+"Teil 2: Vier Balthasatkristalle holen. Sie fallen von vier Schaufler-Felsensprengern, die bei Schaufler-Gruppen stehen, aber nicht zu ihnen gehören.",
+"Beim ersten Angriff auf einen Felsensprenger greifen etwa drei Steingipfel-Zwerge Alkar an. Beim Tod des Felsensprengers kommen fünf bis sechs dazu.",
+"Mit Helden heißt das: Schutz- und Heilhelden bei Alkar flaggen, höchstens drei. Mit dem Rest den Felsensprenger holen und nach seinem Tod sofort zurücklaufen. Den Kristall notfalls später holen.",
+"Erst die Schaufler in der Nähe töten, dann den Felsensprenger angreifen. Ihn nicht zu schnell töten, sonst kommen beide Wellen fast gleichzeitig bei Alkar an.",
+"Der zweite Felsensprenger steht die Treppe wieder hinauf. Bei Nummer drei und vier überlappen sich Patrouillen."
+]
+},
+{
+"t": "Noble Absichten und Plan B (Orozar Hochstein)",
+"b": [
+"Orozar bleibt nach einem kurzen Gespräch an einer Stelle stehen. Dann kommen vier Wellen Steingipfel-Zwerge aus verschiedenen Richtungen, in der zweiten und vierten je ein zufälliger Boss.",
+"Alle Helden auf Orozars Platz flaggen und dort bleiben. Die Gegner greifen laut Wiki zuerst die Gruppe an, wenn du sie vor ihm in Kampfreichweite bekommst.",
+"Ein Wiederbelebungs-Schrein liegt direkt daneben. Das Wiki empfiehlt einen Dienermeister.",
+"Beute einsammeln, bevor du Orozar wieder ansprichst. Dann beginnt sofort Plan B.",
+"Plan B: Orozar rennt los zu seinem Bruder Ural Hochstein. Nach der Zwischensequenz ist Ural ein Gegenstand, den du trägst.",
+"Allein musst du Ural kurz ablegen und das Zahnrad (Master Gear) holen, um die Brücke zu senken. Es liegt dort, wo Ural stand.",
+"Sicherer Weg laut Wiki: Die Brücke noch nicht senken. Erst außen herum zur anderen Brückenseite laufen und die stehenden Gruppen dort töten. Danach geht der Weg zum Ausgang viel leichter.",
+"Das Senken der Brücke ruft große Patrouillen herbei, die von hinten kommen. Danach zügig weiter.",
+"Läufst du zu weit vor, geht Orozar nur noch im Schritt. Kurz zu ihm zurück, dann rennt er wieder.",
+"Bekannter Fehler: Orozar kann an einer Truhe hängen bleiben. Gegner zu ihm ziehen löst das meist."
+]
+},
+{
+"t": "Der letzte Angriff: Das Herz der Schmiede",
+"b": [
+"Erst möglich, wenn alle vier Aufträge erledigt sind. Ennis Granitschreiter wartet rechts vom Ausgang des Kriegslagers. Kurz vor dem Hochofen noch einmal ansprechen, sonst folgt er manchmal nicht.",
+"Budger Schwarzpulver begleitet dich und gibt Pulverfässer für die versiegelten Türen. Er kann nicht sterben. Fehlt er, hängt er oft hinter den Quetschfallen.",
+"Der Weg führt von oben links nach unten rechts. Gegen Ende stehen mehrere Gruppen dicht beieinander, also einzeln ziehen.",
+"Beim Iron Forgeman: Erst die Hochofen-Wächter töten, dann die Patrouille. Im ummauerten Bereich nicht stehen bleiben, der Forgeman kippt Lava auf stehende Ziele und trifft sie mit der Abrisskugel.",
+"Die drei Wuthalter müssen kurz nacheinander sterben. Ein toter Wuthalter kommt nach 30 bis 45 Sekunden wieder.",
+"Helden-Tipp aus dem Wiki: Den mittleren Wuthalter zuerst töten. Dann die halbe Heldengruppe zu einem der beiden anderen flaggen und mit der anderen Hälfte zum dritten gehen.",
+"Für den ersten Wuthalter keine Fertigkeiten mit langer Aufladezeit verbrauchen. Ihr Leben abzapfen lässt sich unterbrechen.",
+"Danach stehen drei Flame Djinn im Kreis. Sofort aus dem Kreis raus und immer nur einen herausziehen. Schmerztauscher wirkt laut Wiki sehr stark, während der Djinn Consuming Flames nutzt.",
+"Ein Schrein liegt in der Nähe. Die Belohnung bei Ennis am Eingang abholen, bevor du den Hochofen verlässt. Danach \"Der letzte Angriff\" beim Zwergen-Schürfer abgeben."
+]
+}
+],
+"sources": [
+[
+"Guild Wars Wiki: Sorrow's Furnace",
+"https://wiki.guildwars.com/wiki/Sorrow's_Furnace"
+],
+[
+"Guild Wars Wiki: To Sorrow's Furnace",
+"https://wiki.guildwars.com/wiki/To_Sorrow's_Furnace"
+],
+[
+"Guild Wars Wiki: The Forge Heart",
+"https://wiki.guildwars.com/wiki/The_Forge_Heart"
+]
+]
+},
+"topk": {
+"title": "Grab der altehrwürdigen Könige mit Helden",
+"intro": "Das Wiki hat für dieses Gebiet keinen Ablauf Schritt für Schritt, nur die Regeln und die Gegnerlisten. Entsprechend kurz ist dieser Leitfaden. Das Gebiet besteht aus vier Karten hintereinander. Auf jeder müssen alle Gegner sterben, dann geht es automatisch weiter. Es gibt keine Wiederbelebungs-Schreine: Ein Wipe schickt die Gruppe zurück in den Außenposten. Das vorgeschlagene Team stammt aus einem Video von YoungSomalia vom 29.09.2026 (Schwerer Modus in 32 Minuten).",
+"team": "yt_topk",
+"sections": [
+{
+"t": "Zugang und Regeln",
+"b": [
+"Der Außenposten ist über das Portal in der Drachenhöhle erreichbar. Dafür muss der Charakter Augury Rock abgeschlossen haben.",
+"Im Außenposten den Chaosriss betreten.",
+"Drei Phantom-Truhen verteilen sich zufällig auf die Karten zwei bis vier, im Schweren Modus sind es verschlossene Truhen.",
+"Im Schweren Modus haben einige Gegner dauerhaft 7 Pips Lebenspunkte-Regeneration und dafür weniger Lebenspunkte."
+]
+},
+{
+"t": "Karte 1: Die Unterwelt",
+"b": [
+"Gegner: Griff des Wahnsinns (Krieger), Sense des Chaos (Mesmer) und Angekettete Seele (Nekromant).",
+"Alle Gegner töten, dann geht es weiter zur Vernarbten Erde."
+]
+},
+{
+"t": "Karte 2 und 3: Vernarbte Erde und The Courtyard",
+"b": [
+"Zu den Gegnern der ersten Karte kommen Schrecknetz-Dryder (Elementarmagier), Alptraumreiter (Mesmer) und Chaoswürmer (Krieger).",
+"Auf beiden Karten müssen wieder alle Gegner sterben."
+]
+},
+{
+"t": "Karte 4: Die Halle der Helden",
+"b": [
+"Dieselben Gegner wie zuvor, dazu drei Bosse namens The Darkness. Es sind Mesmer mit Energiewelle.",
+"Sind alle drei tot, läuft ein Countdown und die Gruppe kommt zurück in den Außenposten.",
+"Die Darkness lassen die grünen Waffen des Gebiets fallen, zum Beispiel Victos Waffen."
+]
+}
+],
+"sources": [
+[
+"Guild Wars Wiki: Ruins of the Tomb of the Primeval Kings",
+"https://wiki.guildwars.com/wiki/Ruins_of_the_Tomb_of_the_Primeval_Kings"
+],
+[
+"Guild Wars Wiki: The Hall of Heroes",
+"https://wiki.guildwars.com/wiki/The_Hall_of_Heroes"
+],
+[
+"YouTube: YoungSomalia, Tomb of the Primeval Kings HM in 32 minutes (29.09.2026, inoffiziell)",
+"https://www.youtube.com/watch?v=my2iVOl7bKA"
 ]
 ]
 }

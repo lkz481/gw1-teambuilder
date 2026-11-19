@@ -237,6 +237,7 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
 .chip{padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid var(--line2)}
 .chip.on{background:linear-gradient(180deg,var(--lacq2),var(--lacq));border-color:var(--gold);color:#fbe7b8}
 
+.tag.warnt{border-color:#b5533c;color:#f0a58f}.need.warnn{color:#f0a58f}
 .pvrow{flex-direction:row;align-items:center;gap:10px}.pvi{flex:none;width:36px;height:36px;border-radius:6px;border:1px solid var(--line);display:block}.pvrow .pvt{display:flex;flex-direction:column;gap:2px;min-width:0}.pvrow small{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pvq{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0;background:rgba(255,255,255,.03)}.pvq h3{margin:0 0 8px}.pvq .kv{display:flex;gap:10px;padding:3px 0;font-size:13px}.pvq .kv span{flex:none;width:110px;color:var(--muted)}.pvq ol{margin:10px 0 8px;padding-left:20px}.pvq ol li{margin:3px 0}
 .inp{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:inherit;font:inherit}
@@ -342,7 +343,8 @@ for (const sp of SPOTS) {
       const list = BUILDS[cls] = BUILDS[cls] || [];
       const nc = normCode(code);
       let b = list.find(x => (x.norm || (x.norm = normCode(x.code))) === nc);
-      if (!b) { b = { name: o.name, code, src:"pvx", url:o.url, cat:o.cat, any:o.any, norm:nc }; list.push(b); }
+      if (!b) { b = { name: o.name, code, src:"pvx", url:o.url, cat:o.cat, any:o.any, norm:nc, upd:o.upd }; list.push(b); }
+      if (o.upd && !b.upd) b.upd = o.upd;
       (b.spots = b.spots || []).includes(sp.key) || b.spots.push(sp.key);
       (b.optIds = b.optIds || []).includes(oid) || b.optIds.push(oid);
       (sp.byClass[cls] = sp.byClass[cls] || []).push(b);
@@ -575,6 +577,7 @@ function renderMain(){
       <div class="nm"><span class="dot" style="color:${PCOL[d.pri]};background:${PCOL[d.pri]}"></span>${who}<span class="n">${esc(pname(d.pri,d.sec))}</span>${CAT!=="run"&&hasVal?`<span class="rolechip ${mk}">${{dmg:"Schaden",heal:"Heilung",prot:"Schutz"}[mk]}</span>`:""}</div>
       <div class="rl">${esc(m.you ? "Deine Leiste · antippen zum Bearbeiten" : (m.changed ? "Angepasst · " : "") + m.role)}</div>
       <div class="bar8">${d.skills.map(id=>ico(id)).join("")}</div>
+      ${m.you && EXACT && currentBuild() && currentBuild().upd ? `<div class="need${currentBuild().upd.l==="warn"?" warnn":""}">Update 24.06.2026: ${currentBuild().upd.l==="warn"?"Build fraglich":currentBuild().upd.l==="up"?"Build stärker geworden":"Build schwächer geworden"}</div>` : ""}
       ${m.you ? (nd=>{ const l=nd.titles.map(x=>x.title).concat(nd.cons.map(x=>x.name)); return l.length?`<div class="need">Braucht: ${esc(l.slice(0,3).join(" · "))}${l.length>3?" …":""}</div>`:""; })(myNeeds()) : ""}
       <div class="ft"><span>${CAT!=="run" ? metricHTML(D) : ""}</span>${ai?`<span class="flag" title="Die Helden-KI nutzt eine Fertigkeit schlecht">${ICN.warn} KI</span>`:""}</div>
       ${CAT!=="run" && D ? (k=>`<div class="meter${k!=="dmg"?" sup":""}"><i style="width:${Math.round(val(D,k)/maxOf(k)*100)}%"></i></div>`)(mainMetric(D)) : ""}
@@ -661,11 +664,13 @@ function drawBuild(body){
   ui.tab = ui.bcat; tabs(cats); ui.bcat = ui.tab;
   $("dtitle").innerHTML = `Build wählen<small>${esc(GW.PROF_DE[state.pri])}</small>`;
   const cur = playerCode();
-  body.innerHTML = `<div class="list">` + all.map((b,i)=>[b,i]).filter(([b])=>(b.cat||"team")===ui.tab).map(([b,i])=>{
+  const UPD_TAG = { warn:`<span class="tag warnt">seit Update fraglich</span>`, note:`<span class="tag">seit Update schwächer</span>`, up:`<span class="tag fit">seit Update stärker</span>` };
+  const wv = b => b.upd && b.upd.l==="warn" ? 1 : 0;
+  body.innerHTML = `<div class="list">` + all.map((b,i)=>[b,i]).filter(([b])=>(b.cat||"team")===ui.tab).sort((x,y)=>wv(x[0])-wv(y[0])).map(([b,i])=>{
     const d = GW.decode(b.code), on = b.norm===cur;
-    const tags = (b.src==="team"?`<span class="tag rec">Empfohlen</span>`:"") + (b.meta?`<span class="tag">Meta</span>`:"") + (b.anniv?`<span class="tag ann">Jubiläum</span>`:"") + (b.test?`<span class="tag test">Test</span>`:"") + (SPOT && (b.spots||[]).includes(SPOT.key)?`<span class="tag fit">passt zum Ziel</span>`:"");
+    const tags = (b.src==="team"?`<span class="tag rec">Empfohlen</span>`:"") + (b.meta?`<span class="tag">Meta</span>`:"") + (b.anniv?`<span class="tag ann">Jubiläum</span>`:"") + (b.test?`<span class="tag test">Test</span>`:"") + (SPOT && (b.spots||[]).includes(SPOT.key)?`<span class="tag fit">passt zum Ziel</span>`:"") + (b.upd ? UPD_TAG[b.upd.l]||"" : "");
     return `<button class="opt${on?" on":""}" data-take="${i}"><div class="t"><span class="nm">${esc(bname(b))}</span>${tags}</div><div class="s">${esc(pname(d.pri,d.sec))}${b.any?" · für jede Klasse":""}${b.annWeapon?" · Jubiläumswaffe":""}</div><div class="mini">${d.skills.map(id=>ico(id)).join("")}</div></button>`;
-  }).join("") + `</div><p class="dim sm" style="margin-top:14px">Empfohlen = unsere durchgerechneten Teams. Alle anderen: PvX-Wiki, inoffiziell.</p>`;
+  }).join("") + `</div><p class="dim sm" style="margin-top:14px">Empfohlen = unsere durchgerechneten Teams. Alle anderen: PvX-Wiki, inoffiziell. Die Update-Marken beziehen sich auf das Balance-Update vom 24.06.2026.</p>`;
 }
 function drawTarget(body){
   $("dtabs").hidden = true; $("dtabs").innerHTML = "";
@@ -722,6 +727,8 @@ function drawMember(body){
       const v = GW.validate(playerBar(), false);
       const msgs = v.msgs.filter(x=>x[0]!=="ok").map(x=>[x[0],deText(x[1])]);
       if (msgs.length) html += `<h3>Hinweise</h3><ul class="msgs">${msgs.map(([c,t])=>`<li class="${c}">${esc(t)}</li>`).join("")}</ul>`;
+      const cb = currentBuild();
+      if (EXACT && cb && cb.upd) html += `<h3>Balance-Update vom 24.06.2026</h3><ul class="msgs">${cb.upd.t.map(x=>`<li class="${cb.upd.l==="warn"?"warn":"info"}">${esc(x)}</li>`).join("")}</ul>`;
       const nd = myNeeds();
       if (nd.titles.length || nd.cons.length) html += `<h3>Das brauchst du</h3><ul class="msgs">` +
         nd.titles.map(x=>`<li class="info"><b>${esc(x.title)}</b> für ${esc(x.skills.join(", "))}. Die Werte steigen mit dem Titelrang.</li>`).join("") +

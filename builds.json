@@ -4,7 +4,13 @@
 "name": "Hundred Blades mit Whirlwind Attack und \"Save Yourselves!\"",
 "code": "OQASEZKT9F7gTN8V5iGWXFxgA",
 "src": "team",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 {
 "name": "Warrior's Endurance Daggers",
@@ -12,7 +18,14 @@
 "code": "OQcSE5OPOMG2BDAAAAAFW7C",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:W/A_Warrior's_Endurance_Daggers",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Charging Strike Axe",
@@ -28,7 +41,14 @@
 "code": "OQASEZKT9F7gTNAAAAAAXFxgA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:W/any_Hundred_Blades",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Hundert Klingen wurde verstärkt. PvX bewertet den Build deshalb neu.",
+"Verstärkt: Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 {
 "name": "Seven Weapons Stance",
@@ -50,7 +70,13 @@
 "cat": "team",
 "anniv": true,
 "annElite": true,
-"annWeapon": "Spear \"Arbalest\""
+"annWeapon": "Spear \"Arbalest\"",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s)."
+]
+}
 },
 {
 "name": "Warrior's Endurance Axe",
@@ -77,7 +103,13 @@
 "cat": "team",
 "anniv": true,
 "annElite": true,
-"annWeapon": "Spear \"Arbalest\""
+"annWeapon": "Spear \"Arbalest\"",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s)."
+]
+}
 },
 {
 "name": "Seven Weapons Stance Spear",
@@ -88,7 +120,13 @@
 "cat": "team",
 "anniv": true,
 "annElite": true,
-"annWeapon": "Spear \"Arbalest\""
+"annWeapon": "Spear \"Arbalest\"",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s); Mächtiger Wurf (Wirkzeit 3 → 1 s)."
+]
+}
 },
 {
 "name": "Shadow Form Runner",
@@ -97,8 +135,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:W/A_Shadow_Form_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Gates of Kryta Farmer",
@@ -107,8 +144,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:W/Mo_Gates_of_Kryta_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Hundred Blades MoP Farmer",
@@ -118,7 +154,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:W/N_Hundred_Blades_MoP_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 {
 "name": "Raptor Farmer",
@@ -128,7 +169,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:W/N_Raptor_Farmer",
 "cat": "farm",
 "meta": true,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 {
 "name": "Seven Weapons Stance Daggers",
@@ -138,11 +184,17 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:W/A_Seven_Weapons_Stance_Daggers",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
-"annWeapon": "Spear \"Arbalest\""
+"annWeapon": "Spear \"Arbalest\"",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Seven Weapons Stance Axe",
@@ -152,7 +204,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:W/any_Seven_Weapons_Stance_Axe",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
@@ -166,7 +217,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:W/D_Seven_Weapons_Stance_Scythe_Farmer",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
@@ -180,7 +230,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:W/R_Seven_Weapons_Stance_Beast_Mastery",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": true,
@@ -194,7 +243,13 @@
 "src": "team",
 "cat": "team",
 "anniv": true,
-"annElite": true
+"annElite": true,
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s)."
+]
+}
 },
 {
 "name": "Together as One Daggers",
@@ -205,7 +260,14 @@
 "cat": "team",
 "anniv": true,
 "annElite": true,
-"annWeapon": ""
+"annWeapon": "",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Expert's Dexterity Bow",
@@ -221,7 +283,13 @@
 "code": "OggScVMS7iAAAAAAAA0gbHpiA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:R/Rt_QZ_Ural's_Support",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Beschleunigender Zephyr (Wirkzeit 3 → 2 s)."
+]
+}
 },
 {
 "name": "Flail Turret",
@@ -240,8 +308,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:R/A_Arachni's_Haunt_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "MA Dire Pet Leveler",
@@ -250,8 +317,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Any/R_MA_Dire_Pet_Leveler",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Mantid Farmer",
@@ -261,7 +327,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/A_Mantid_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Rand der Auslöschung (Wirkzeit 3 → 2 s)."
+]
+}
 },
 {
 "name": "Moddok Crevice Corsair Farmer",
@@ -271,7 +342,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/A_Moddok_Crevice_Corsair_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false,
 "anniv": true,
 "annElite": true,
 "annWeapon": "Sword \"Prominence\""
@@ -283,8 +353,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:R/A_Whirling_Defense_City_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Whirling Defense Farmer",
@@ -293,8 +362,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:R/A_Whirling_Defense_Farmer",
 "cat": "farm",
-"meta": true,
-"upd": false
+"meta": true
 },
 {
 "name": "Temple Guardian Farmer",
@@ -304,7 +372,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/any_Temple_Guardian_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false,
 "anniv": true,
 "annElite": true,
 "annWeapon": ""
@@ -316,8 +383,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:R/D_Escape_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "HM Stygian Veil Trapper",
@@ -327,7 +393,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/N_HM_Stygian_Veil_Trapper",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Trennung (Wirkzeit 3 → 2 s); Schlammiges Terrain (Wirkzeit 3 → 2 s)."
+]
+}
 },
 {
 "name": "Lacerate Outcast Farmer",
@@ -337,7 +408,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/N_Lacerate_Outcast_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": true
+"upd": {
+"l": "warn",
+"t": [
+"Hinweis von PvX (Update 28.04.2026): Brunnen ohne Leichen können diesen Farm stören.",
+"Verstärkt: Zerfetzen (Wirkzeit 3 → 2 s); Giftigkeit (Wirkzeit 3 → 2 s); Rand der Auslöschung (Wirkzeit 3 → 2 s)."
+]
+}
 },
 {
 "name": "Pre-Searing Charr Farmer",
@@ -346,8 +423,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:R/W_Pre-Searing_Charr_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Escape Runner",
@@ -356,8 +432,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:R/any_Escape_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Together as One Bow Spam",
@@ -367,7 +442,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/any_Together_as_One_Bow_Spam",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
@@ -381,7 +455,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/W_Anniversary_Beastmaster",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
@@ -395,7 +468,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/D_Together_as_One_Scythe",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": true,
@@ -409,7 +481,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/E_Anniversary_Star_Burst_Hero",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": false,
@@ -423,7 +494,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/P_Together_as_One_Midline_Spear",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": true,
@@ -437,11 +507,16 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:R/W_Anniversary_Tactics_Sword",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": true,
-"annWeapon": "Sword \"Prominence\""
+"annWeapon": "Sword \"Prominence\"",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s)."
+]
+}
 }
 ],
 "3": [
@@ -449,7 +524,14 @@
 "name": "Dolch-Mönch mit Way of the Empty Palm und eigenem Strength of Honor",
 "code": "OwcT42O7Nyhhh5gx6LXc7RVceA",
 "src": "team",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s).",
+"Geändert: Weg der leeren Handfläche (Dauer 5...20 → 5...15 s, dafür laden Nebenhand- und Doppelangriffe schneller auf)."
+]
+}
 },
 {
 "name": "PvE Aura of Faith Prot",
@@ -473,7 +555,14 @@
 "code": "OwAT04XCTyLCAAAIH8ua67mAAA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Mo/any_PvE_Healing_Burst",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Heilsalve wurde abgeschwächt.",
+"Abgeschwächt: Heilsalve (Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120); Verhexung heilen (Heilung 30...120 → 30...100)."
+]
+}
 },
 {
 "name": "55hp Vaettir Farmer",
@@ -483,7 +572,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Mo/A_55hp_Vaettir_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Balthasars Aura (Energiekosten 25 → 15, Wirkzeit 2 → 1 s, Aufladezeit 25 → 20 s, Schaden 10...25 → 10...30); Symbol des Zorns (Wirkzeit 2 → 1 s, Aufladezeit 30 → 20 s, Schaden 8...32 → 10...40)."
+]
+}
 },
 {
 "name": "Mark of Protection Farmer",
@@ -493,7 +587,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Mo/any_Mark_of_Protection_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": true
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt."
+]
+}
 },
 {
 "name": "Pre-Searing Farmer",
@@ -503,7 +602,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Mo/E_Pre-Searing_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Symbol des Zorns (Wirkzeit 2 → 1 s, Aufladezeit 30 → 20 s, Schaden 8...32 → 10...40)."
+]
+}
 },
 {
 "name": "55hp Dragon Moss Farmer",
@@ -513,7 +617,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Mo/Me_55hp_Dragon_Moss_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": true
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s); Verschwendung (Aufladezeit 1 → 4 s, Flächenschaden 100% → 75%)."
+]
+}
 },
 {
 "name": "105hp Halcyon Farmer",
@@ -523,7 +633,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Mo/W_105hp_Halcyon_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 {
 "name": "Judgment Scythe",
@@ -533,7 +648,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Mo/D_Judgment_Scythe",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": true,
@@ -547,11 +661,16 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Mo/W_Judgment_Strike_Hammer",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": true,
-"annWeapon": "Hammer \"Verdict\""
+"annWeapon": "Hammer \"Verdict\"",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Fürchtet mich! (Aufladezeit 6 → 4 s)."
+]
+}
 }
 ],
 "4": [
@@ -559,7 +678,13 @@
 "name": "Assassin's Promise mit Minions",
 "code": "OAdTUYD6VSBcXcBKmkKIX80ZLE",
 "src": "team",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Knochenteufel beleben (Energiekosten 25 → 15, Wirkzeit 3 → 1 s)."
+]
+}
 },
 {
 "name": "Assassin's Promise Death Magic",
@@ -567,7 +692,13 @@
 "code": "OAdTUYD6VSBcXcBKmkKAAAAYLE",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:N/A_Assassin's_Promise_Death_Magic",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Knochenteufel beleben (Energiekosten 25 → 15, Wirkzeit 3 → 1 s)."
+]
+}
 },
 {
 "name": "Soul Taker Dagger Spam",
@@ -578,7 +709,14 @@
 "cat": "team",
 "anniv": true,
 "annElite": true,
-"annWeapon": ""
+"annWeapon": "",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Cultist's Fervor Orders",
@@ -594,7 +732,13 @@
 "code": "OABSUYTS0Bbhri0lAAAAAAAAA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:N/any_Dark_Aura_Support",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Diener-Fertigkeiten wurden deutlich verstärkt. PvX überarbeitet die Seite noch."
+]
+}
 },
 {
 "name": "Minion Bomber",
@@ -602,7 +746,14 @@
 "code": "OABSUYDTyBVBHVoBbhAAAAAAA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:N/any_Minion_Bomber",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Diener-Fertigkeiten wurden deutlich verstärkt. PvX überarbeitet die Seite noch.",
+"Verstärkt: Knochendiener beleben (Energiekosten 15 → 10, Wirkzeit 3 → 1 s); Schlurfschreck beleben (Energiekosten 15 → 10, Wirkzeit 3 → 1 s)."
+]
+}
 },
 {
 "name": "Order of Undeath",
@@ -610,7 +761,14 @@
 "code": "OABSUYDT5iIVUBbh4BAAAAAAA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:N/any_Order_of_Undeath",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Diener-Fertigkeiten wurden deutlich verstärkt. PvX überarbeitet die Seite noch.",
+"Verstärkt: Knochenteufel beleben (Energiekosten 25 → 15, Wirkzeit 3 → 1 s)."
+]
+}
 },
 {
 "name": "Supported Soul Taker",
@@ -629,7 +787,13 @@
 "code": "OANSY4HTEEzEaRAA3VbatEvgA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:N/Mo_Soul_Reaping_Prot",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Elite-Fertigkeiten der Schutzgebete wurden verstärkt. PvX hat die Seite noch nicht angepasst."
+]
+}
 },
 {
 "name": "Soul Reaping Healer",
@@ -637,7 +801,13 @@
 "code": "OAhiYwhMVVBAAAMMJNN5MOtWC",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:N/Rt_Soul_Reaping_Healer",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Schützend war Kaolai (Aufladezeit 25 → 20 s)."
+]
+}
 },
 {
 "name": "Zelnehlun Fastfoot Farmer",
@@ -647,7 +817,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:N/A_Zelnehlun_Fastfoot_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Boshafter Geist (Dauer 8...20 → 10...25 s, Schaden 5...35 → 15...45)."
+]
+}
 },
 {
 "name": "Superb Charr Carving Farmer",
@@ -657,7 +832,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:N/Me_Superb_Charr_Carving_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": true
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Schrei der Frustration wurde abgeschwächt, ob der Schaden noch reicht, ist dort offen.",
+"Abgeschwächt: Schrei der Frustration (Aufladezeit 15 → 20 s, Flächenschaden 100% → 75%)."
+]
+}
 },
 {
 "name": "105hp Farmer",
@@ -667,7 +848,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:N/Mo_105hp_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Boshafter Geist (Dauer 8...20 → 10...25 s, Schaden 5...35 → 15...45)."
+]
+}
 },
 {
 "name": "55hp Boss Farmer",
@@ -676,8 +862,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:N/Mo_55hp_Boss_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Raptor Farmer",
@@ -687,7 +872,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:N/W_Raptor_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 {
 "name": "Soul Taker Scythe",
@@ -697,7 +887,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:N/D_Soul_Taker_Scythe",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
@@ -711,11 +900,16 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:N/W_Soul_Taker_Axe",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
-"annWeapon": ""
+"annWeapon": "",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s)."
+]
+}
 }
 ],
 "5": [
@@ -723,7 +917,13 @@
 "name": "Simple Energy Surge mit Mind Wrack",
 "code": "OQJTAUBjRKGwG8Ew0BnKH4uE5A",
 "src": "team",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Energiewelle (Schaden 9 → 7, Flächenschaden 100% → 75%); Schrei der Frustration (Aufladezeit 15 → 20 s, Flächenschaden 100% → 75%)."
+]
+}
 },
 {
 "name": "Signet of Illusions Support",
@@ -731,7 +931,14 @@
 "code": "OQBTA4APGSoCBc6BAAAgEAAAAA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Me/any_Signet_of_Illusions_Support",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Siegel der Illusionen (Wirkt jetzt nur noch auf die nächsten 1...3 Zauber); Argwohn (Schaden 10...100 → 10...80, Flächenschaden 100% → 75%); Arkanes Rätsel (Aufladezeit 20 → 30 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Enchanter's Conundrum",
@@ -739,7 +946,14 @@
 "code": "OQZSAYBTIDBV2gmObAAAAAwlA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Me/E_Enchanter's_Conundrum",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Rätsel des Verzauberers (Flächenschaden 100% → 75%); Täuschungen brechen (Flächenschaden 100% → 75%).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Ineptitude",
@@ -747,7 +961,14 @@
 "code": "OQZSA4ATvAIg5ZkA2gAAAAIDA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Me/E_Ineptitude",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Arkanes Rätsel (Aufladezeit 20 → 30 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "PvE Panic",
@@ -755,7 +976,14 @@
 "code": "OQZSAYBTID0ATP2gmOAAAAAAA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Me/E_PvE_Panic",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Argwohn (Schaden 10...100 → 10...80, Flächenschaden 100% → 75%).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Simple Energy Surge",
@@ -763,7 +991,14 @@
 "code": "OQJTAUBjRKGwG8Ew0BnCA4uE5A",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Me/R_Simple_Energy_Surge",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Energiewelle (Schaden 9 → 7, Flächenschaden 100% → 75%).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Stygian Farmer",
@@ -773,7 +1008,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Me/A_Stygian_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": true
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s); Verschwendung (Aufladezeit 1 → 4 s, Flächenschaden 100% → 75%)."
+]
+}
 },
 {
 "name": "Vaettir Farm",
@@ -783,7 +1024,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Me/A_Vaettir_Farm",
 "cat": "farm",
 "meta": true,
-"upd": false
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Zelnehlun Fastfoot Farmer",
@@ -792,8 +1039,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Me/A_Zelnehlun_Fastfoot_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "105hp Farmer",
@@ -802,8 +1048,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Me/Mo_105hp_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Chkkr Brightclaw Farmer HM",
@@ -813,7 +1058,14 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Me/N_Chkkr_Brightclaw_Farmer_HM",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Schrei der Frustration (Aufladezeit 15 → 20 s, Flächenschaden 100% → 75%).",
+"Verstärkt: Kadaver verzehren (Energiekosten 10 → 5).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 }
 ],
 "6": [
@@ -822,7 +1074,13 @@
 "code": "OgJToYWaTiucIKXssCYjm0Wg2A",
 "src": "team",
 "url": "https://gwpvx.fandom.com/wiki/Build:E/R_Double_Dragon_Beastmaster",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Doppeldrache (Aufladezeit 20 → 15 s, Dauer 0...3 → 1...4 s)."
+]
+}
 },
 {
 "name": "Assassin's Promise",
@@ -846,7 +1104,14 @@
 "code": "OgJTgYmiRac4bwbAH8uE5wFMcA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:E/R_Glimmering_Mark",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Blitzschlag (Schaden 5...50 → 5...40).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Imperial Sanctum Runner",
@@ -855,8 +1120,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:E/Me_Imperial_Sanctum_Runner",
 "cat": "run",
-"meta": true,
-"upd": false
+"meta": true
 },
 {
 "name": "Dust and Feather Farmer",
@@ -866,7 +1130,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:E/any_Dust_and_Feather_Farmer",
 "cat": "farm",
 "meta": true,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Feuerball (Trifft jetzt Gegner in der Nähe statt nur direkt daneben)."
+]
+}
 },
 {
 "name": "EA UW Wastes Farmer",
@@ -875,8 +1144,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:E/any_EA_UW_Wastes_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Obsidian Flesh Caster Farmer",
@@ -886,7 +1154,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:E/Me_Obsidian_Flesh_Caster_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": true
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s); Verschwendung (Aufladezeit 1 → 4 s, Flächenschaden 100% → 75%)."
+]
+}
 },
 {
 "name": "Obsidian Flesh Vaettir Farmer",
@@ -896,7 +1170,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:E/Me_Obsidian_Flesh_Vaettir_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": true
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Verschwendung (Aufladezeit 1 → 4 s, Flächenschaden 100% → 75%); Ableben des Verschwenders (Aufladezeit 3 → 5 s)."
+]
+}
 },
 {
 "name": "Undercity Kappa Farmer",
@@ -905,8 +1185,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:E/Mo_Undercity_Kappa_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 }
 ],
 "7": [
@@ -914,7 +1193,14 @@
 "name": "Dagger Spammer mit Way of the Empty Palm",
 "code": "OwBj0xe24SOMMMHMvl1g6PbPykA",
 "src": "team",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s).",
+"Geändert: Weg der leeren Handfläche (Dauer 5...20 → 5...15 s, dafür laden Nebenhand- und Doppelangriffe schneller auf)."
+]
+}
 },
 {
 "name": "Dagger Spammer",
@@ -922,7 +1208,14 @@
 "code": "OwFi0xjM5wwwcw8WCAAAEnp/A",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/any_Dagger_Spammer",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Ooze Pit Runner",
@@ -931,8 +1224,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/D_Ooze_Pit_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Catacombs of Kathandrax Runner",
@@ -941,8 +1233,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/E_Catacombs_of_Kathandrax_Runner",
 "cat": "run",
-"meta": true,
-"upd": false
+"meta": true
 },
 {
 "name": "Frostmaw's Burrows Runner",
@@ -951,8 +1242,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/E_Frostmaw's_Burrows_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Rragar's Menagerie Runner",
@@ -961,8 +1251,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/E_Rragar's_Menagerie_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Sepulchre of Dragrimmar Runner",
@@ -971,8 +1260,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/E_Sepulchre_of_Dragrimmar_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Darkrime Delves Runner",
@@ -981,8 +1269,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Darkrime_Delves_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Oola's Lab Runner",
@@ -991,8 +1278,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/N_Oola's_Lab_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Shadow Form Runner",
@@ -1001,8 +1287,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/R_Shadow_Form_Runner",
 "cat": "run",
-"meta": true,
-"upd": false
+"meta": true
 },
 {
 "name": "Slaver's Exile Runner",
@@ -1012,7 +1297,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:A/any_Slaver's_Exile_Runner",
 "cat": "run",
 "meta": true,
-"upd": true
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s)."
+]
+}
 },
 {
 "name": "Focus of Hanaku Farmer",
@@ -1021,8 +1312,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/D_Focus_of_Hanaku_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Plains Farmer",
@@ -1031,8 +1321,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/D_Plains_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Margonite Gemstone Farm",
@@ -1041,8 +1330,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Margonite_Gemstone_Farm",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Vaettir Farm",
@@ -1052,7 +1340,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Vaettir_Farm",
 "cat": "farm",
 "meta": true,
-"upd": false
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Mantid Farmer",
@@ -1062,7 +1356,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:A/R_Mantid_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Rand der Auslöschung (Wirkzeit 3 → 2 s)."
+]
+}
 },
 {
 "name": "Ministerial Commendation Farmer",
@@ -1072,7 +1371,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Any/W_Ministerial_Commendation_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s); Hundert Klingen (Aufladezeit 25 → 20 s, Schaden 10...25 → 10...35)."
+]
+}
 },
 {
 "name": "Bloodstone Caves Runner",
@@ -1081,8 +1385,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:A/D_Bloodstone_Caves_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Heart of the Shiverpeaks Runner",
@@ -1092,7 +1395,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:A/E_Heart_of_the_Shiverpeaks_Runner",
 "cat": "run",
 "meta": false,
-"upd": true
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt."
+]
+}
 },
 {
 "name": "Shards of Orr Runner",
@@ -1102,7 +1410,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Shards_of_Orr_Runner",
 "cat": "run",
 "meta": false,
-"upd": true
+"upd": {
+"l": "warn",
+"t": [
+"PvX prüft diesen Build noch: Ableben des Verschwenders und Verschwendung wurden abgeschwächt.",
+"Abgeschwächt: Ableben des Verschwenders (Aufladezeit 3 → 5 s)."
+]
+}
 },
 {
 "name": "Imperial Sanctum Runner",
@@ -1112,7 +1426,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:A/Mo_Imperial_Sanctum_Runner",
 "cat": "run",
 "meta": false,
-"upd": false
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Shadow Theft Scythe",
@@ -1122,11 +1442,16 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:A/D_Shadow_Theft_Scythe",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
-"annWeapon": "Shortbow \"Whispers\""
+"annWeapon": "Shortbow \"Whispers\"",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Frommer Angriff (Schaden 10...30 → 15...40)."
+]
+}
 },
 {
 "name": "Shadow Theft Deadly Arts Caster",
@@ -1136,7 +1461,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:A/Me_Shadow_Theft_Deadly_Arts_Caster",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
@@ -1150,11 +1474,16 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:A/Rt_Shadow_Theft_Healer",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
-"annWeapon": ""
+"annWeapon": "",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Schützend war Kaolai (Aufladezeit 25 → 20 s); Geist abzapfen (Energiegewinn 15...50 % → 30...60 %)."
+]
+}
 }
 ],
 "8": [
@@ -1162,7 +1491,13 @@
 "name": "Spirit Spammer",
 "code": "OACiIykMdNVO5DWNRDyMtL6NB",
 "src": "team",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Geist abzapfen (Energiegewinn 15...50 % → 30...60 %)."
+]
+}
 },
 {
 "name": "Attuned Was Songkai Healer",
@@ -1210,7 +1545,13 @@
 "code": "OACiEyk8AAGnDTp5kDA8MBAA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Spirit_Channeling_Healer",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Schützend war Kaolai (Aufladezeit 25 → 20 s)."
+]
+}
 },
 {
 "name": "Spirit Spammer",
@@ -1218,7 +1559,13 @@
 "code": "OACiIykMdNVO5DWNRDyMBAAAA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Spirit_Spammer",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Geist abzapfen (Energiegewinn 15...50 % → 30...60 %)."
+]
+}
 },
 {
 "name": "QZ Ural's Support",
@@ -1226,7 +1573,13 @@
 "code": "OAKigtkGtLCAAAAAAAQDudkKC",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Rt/R_QZ_Ural's_Support",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Beschleunigender Zephyr (Wirkzeit 3 → 2 s)."
+]
+}
 },
 {
 "name": "Signet of Spirits Farmer",
@@ -1235,8 +1588,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Signet_of_Spirits_Farmer",
 "cat": "farm",
-"meta": true,
-"upd": false
+"meta": true
 },
 {
 "name": "Reed Stalker ToA Farmer",
@@ -1246,7 +1598,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Rt/Me_Reed_Stalker_ToA_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Nachtragend war Khanhei (Aufladezeit 20 → 15 s, Heilung 5...35 → 10...45)."
+]
+}
 },
 {
 "name": "330hp Vengeful Farmer",
@@ -1256,7 +1613,12 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Rt/Mo_330hp_Vengeful_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Nachtragend war Khanhei (Aufladezeit 20 → 15 s, Heilung 5...35 → 10...45)."
+]
+}
 },
 {
 "name": "Weapons of Three Forges Healer",
@@ -1266,7 +1628,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Rt/any_Weapons_of_Three_Forges_Healer",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
@@ -1280,11 +1641,16 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:Rt/R_Anniversary_Bow_Spirit's_Strength",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": false,
-"annWeapon": "Flatbow \"Oracle\""
+"annWeapon": "Flatbow \"Oracle\"",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Geistesstärke (Aufladezeit 30 → 20 s)."
+]
+}
 }
 ],
 "9": [
@@ -1294,7 +1660,13 @@
 "src": "team",
 "cat": "team",
 "anniv": true,
-"annElite": true
+"annElite": true,
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Arie des Eifers (Energiekosten 10 → 5, Wirkzeit 2 → 1 s, Aufladezeit 20 → 10 s); Arie der Wiederherstellung (Aufladezeit 20 → 10 s)."
+]
+}
 },
 {
 "name": "Heroic Refrain Daggers",
@@ -1305,7 +1677,14 @@
 "cat": "team",
 "anniv": true,
 "annElite": true,
-"annWeapon": "Daggers \"Vengeance\""
+"annWeapon": "Daggers \"Vengeance\"",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Gezackter Stoß (Aufladezeit 1 → 2 s).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Heroic Refrain Spear",
@@ -1316,7 +1695,13 @@
 "cat": "team",
 "anniv": true,
 "annElite": true,
-"annWeapon": ""
+"annWeapon": "",
+"upd": {
+"l": "up",
+"t": [
+"Mehrere Speer-Fertigkeiten wurden verstärkt. PvX hat die Seite noch nicht angepasst."
+]
+}
 },
 {
 "name": "Focused Anger Spear",
@@ -1324,7 +1709,13 @@
 "code": "OQGjUhlMqS8EpbLYhixgAhubqiA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:P/W_Focused_Anger_Spear",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Bis ans Limit! (Aufladezeit 15 → 10 s); Mächtiger Wurf (Wirkzeit 3 → 1 s); Aggressiver Refrain (Energiekosten 25 → 15, Wirkzeit 2 → 1 s)."
+]
+}
 },
 {
 "name": "Heroic Refrain Scythe",
@@ -1334,7 +1725,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:P/D_Heroic_Refrain_Scythe",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": true,
@@ -1348,7 +1738,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:P/W_Heroic_Refrain_Axe",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": true,
@@ -1362,7 +1751,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:P/W_Heroic_Refrain_Hammer",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": true,
@@ -1376,7 +1764,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:P/W_Heroic_Refrain_Sword",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": true,
 "annElite": true,
@@ -1388,7 +1775,14 @@
 "name": "Pious Renewal mit Eremite's Attack",
 "code": "OgCjkqrK7SbXSXRXPXNXihcXygA",
 "src": "team",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Trugbild-Umhang (Aufladezeit 10 → 15 s, Blockchance 40...80% → 30...60%).",
+"Verstärkt: Frommer Angriff (Schaden 10...30 → 15...40)."
+]
+}
 },
 {
 "name": "Pious Renewal",
@@ -1396,7 +1790,15 @@
 "code": "OgCjkyrG7SbXSXRXPXAAihcXygA",
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:D/any_Pious_Renewal",
-"cat": "team"
+"cat": "team",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Trugbild-Umhang (Aufladezeit 10 → 15 s, Blockchance 40...80% → 30...60%).",
+"Verstärkt: Frommer Angriff (Schaden 10...30 → 15...40).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Vow of Strength",
@@ -1421,8 +1823,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:D/A_Darkrime_Delves_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Outpost Runner",
@@ -1431,8 +1832,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:D/A_Outpost_Runner",
 "cat": "run",
-"meta": true,
-"upd": false
+"meta": true
 },
 {
 "name": "General Vow of Silence Farmer",
@@ -1441,8 +1841,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Silence_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "General Vow of Strength Farmer",
@@ -1451,8 +1850,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:D/any_General_Vow_of_Strength_Farmer",
 "cat": "farm",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Raptor Farmer",
@@ -1462,7 +1860,13 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:D/N_Raptor_Farmer",
 "cat": "farm",
 "meta": false,
-"upd": false
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Trugbild-Umhang (Aufladezeit 10 → 15 s, Blockchance 40...80% → 30...60%).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Vaettir Farmer",
@@ -1472,10 +1876,16 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:D/N_Vaettir_Farmer",
 "cat": "farm",
 "meta": true,
-"upd": false,
 "anniv": true,
 "annElite": true,
-"annWeapon": ""
+"annWeapon": "",
+"upd": {
+"l": "note",
+"t": [
+"Abgeschwächt: Mystische Regeneration (Energiekosten 10 → 15).",
+"PvX führt die Leiste trotzdem unverändert weiter."
+]
+}
 },
 {
 "name": "Oola's Lab Runner",
@@ -1484,8 +1894,7 @@
 "src": "pvx",
 "url": "https://gwpvx.fandom.com/wiki/Build:D/A_Oola's_Lab_Runner",
 "cat": "run",
-"meta": false,
-"upd": false
+"meta": false
 },
 {
 "name": "Vow of Revolution Prot",
@@ -1495,7 +1904,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:D/Mo_Vow_of_Revolution_Prot",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
@@ -1509,7 +1917,6 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:D/N_Soul_Taker_Scythe",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
@@ -1523,11 +1930,16 @@
 "url": "https://gwpvx.fandom.com/wiki/Build:D/Rt_Vow_of_Revolution_Healer",
 "cat": "team",
 "meta": false,
-"upd": false,
 "anniv": true,
 "test": false,
 "annElite": true,
-"annWeapon": "Staff \"Unveil\""
+"annWeapon": "Staff \"Unveil\"",
+"upd": {
+"l": "up",
+"t": [
+"Verstärkt: Schützend war Kaolai (Aufladezeit 25 → 20 s)."
+]
+}
 }
 ]
 }
