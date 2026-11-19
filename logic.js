@@ -836,8 +836,14 @@
     const titles = {};
     sk.forEach(s => { const t = TITLE[s.a]; if (t) (titles[t] = titles[t] || []).push(s.de || s.n); });
     const cons = new Map();
-    sk.forEach(s => { if (/while drunk|if you are drunk|drunk/i.test(s.d || "")) cons.set("Alkohol", (s.de || s.n) + " wirkt nur voll, wenn du betrunken bist"); });
-    (pageCons || []).forEach(c => { if (!cons.has(c)) cons.set(c, "laut PvX-Seite des Builds"); });
+    // Alkohol nur, wenn die Leiste eine Fertigkeit hat, die betrunken anders wirkt (Wiki-Texte).
+    const DRUNK = { "Drunken Master": "ohne Alkohol nur 10...15 % statt 25...33 % schneller", "Dwarven Stability": "ohne Alkohol verlängert sie nur Haltungen, der Schutz vor Niederschlag fehlt", "Feel No Pain": "die zusätzlichen Lebenspunkte gibt es nur betrunken" };
+    const dr = sk.filter(s => DRUNK[s.n]), pageReq = (pageCons || []).includes("Alkohol nötig");
+    if (dr.length) {
+      const must = pageReq || dr.some(s => s.n === "Feel No Pain");
+      cons.set(must ? "Alkohol" : "Alkohol (optional)", dr.map(s => (s.de || s.n) + ": " + DRUNK[s.n]).join("; ") + (pageReq ? ". Laut PvX-Seite Pflicht" : ""));
+    }
+    (pageCons || []).forEach(c => { if (c !== "Alkohol nötig" && c !== "Alkohol" && !cons.has(c)) cons.set(c, "laut PvX-Seite des Builds"); });
     return { titles: Object.entries(titles).map(([t, l]) => ({ title: t, skills: l })), cons: [...cons].map(([name, why]) => ({ name, why })) };
   };
 })(typeof window !== "undefined" ? window : globalThis);
