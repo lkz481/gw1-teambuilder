@@ -609,7 +609,7 @@ function compute(){
     PLAN = teamSlotsFor(pb, CAT==="team" ? partySize() : 8);
     const seenK = {};
     PLAN.slots.forEach(s=>{ const n = seenK[s.code] = (seenK[s.code]||0)+1; s.key = s.code + "#" + n; s.orig = s.code; const o = state.over[s.key]; if (o) { try { GW.decode(o); s.code = o; s.changed = true; } catch(e){} } });
-    const heroes = GW.assignHeroes(PLAN.slots, state.owned, state.mercs);
+    const heroes = fillMissing(PLAN.slots, GW.assignHeroes(PLAN.slots, state.owned, state.mercs));
     PLAN.slots.forEach((s,i)=>{ const h=heroes[i]; TEAM.push({ hero:true, key:s.key, changed:s.changed, name:h.name, merc:h.merc, role:deText(s.role), why:deText(s.why) + (h.merc?" Ein Söldner übernimmt, weil kein passender Held frei ist.":""), code:s.code, bar:GW.decode(s.code) }); });
     if (CAT==="team") CHECKS = GW.areaChecks(pb, PLAN.slots, PLAN.area, partySize());
   } else if (SPOT) {
@@ -1102,12 +1102,40 @@ function drawMember(body){
   }
 }
 function targetSeg(){ return `<div class="row" style="gap:10px"><div><div class="mut sm" style="text-align:right">Ziele</div><div class="seg" style="width:112px">${[1,3,5].map(k=>`<button class="${state.dpsN===k?"on":""}" data-dpsn="${k}">${k}</button>`).join("")}</div></div><div><div class="mut sm" style="text-align:right" title="Rüstung der Gegner">Rüstung</div><div class="seg" style="width:128px">${[60,80,100].map(k=>`<button class="${armorNow()===k?"on":""}" data-armor="${k}">${k}</button>`).join("")}</div></div></div>`; }
+// ---------- Verfügbare Helden ----------
+// Wie viele Leisten einer Aufstellung bekämen keinen Helden? Jede Klasse braucht einen eigenen Helden. Razah und Söldner können jede Klasse übernehmen.
+function heroShort(bars){ const have = {}; GW.HEROES.forEach(([n,p])=>{ if (state.owned.has(n) && n!=="Razah") have[p] = (have[p]||0)+1; });
+  const need = {}; bars.forEach(b=>{ need[b.pri] = (need[b.pri]||0)+1; });
+  const miss = Object.keys(need).reduce((a,p)=>a+Math.max(0, need[p]-(have[p]||0)), 0);
+  return Math.max(0, miss - (state.owned.has("Razah")?1:0) - state.mercs); }
+const ownedKey = () => [...state.owned].sort().join(",") + "#" + state.mercs;
+// Ersatz für Plätze, für die kein Held frei ist: die stärkste Leiste derselben Reihe (Schaden oder Heilung und Schutz) aus dem Vorrat, für deren Klasse noch ein Held da ist
+const SOLOC = new Map();
+function soloOf(o){ const k = o.code+"|"+state.dpsN+"|"+armorNow()+"|"+foeDpsNow(); if (!SOLOC.has(k)) { let v = { total:0, heal:0, prot:0 }; try { let r=[]; try{ r=GW.equipFor(o.bar, EQ, null).runes; }catch(e){} const D = GW.dps(o.bar, GW.effRanks(o.bar, r), { targets:state.dpsN, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), allies:8, hero:true }); v = { total:D.total, heal:D.heal, prot:D.prot }; } catch(e){} SOLOC.set(k, v); } return SOLOC.get(k); }
+function fillMissing(slots, heroes){
+  if (!heroes.some(h=>!h.name)) return heroes;
+  const usedN = new Set(heroes.filter(h=>h.name && !h.merc).map(h=>h.name));
+  const free = () => GW.HEROES.filter(([n,p])=>state.owned.has(n) && !usedN.has(n) && n!=="Razah");
+  const bad = o => o.bar.skills.some(id=>{ const s=GW.skill(id); return s && (GW.heroai[s.n] && GW.heroai[s.n][0]>=2 || ["Heal as One","Charm Animal","Comfort Animal"].includes(s.n)); });
+  const pool = refPool().filter(o=>!bad(o));
+  heroes.forEach((h,i)=>{ if (h.name) return; const profs = new Set(free().map(x=>x[1])); if (!profs.size) return;
+    const old = GW.decode(slots[i].code), line = lineOf(old), sup = line===2, score = o => { const v = soloOf(o); return sup ? v.heal*2+v.prot : v.total; };
+    const el = new Set(slots.filter((s,j)=>j!==i).map(s=>{ const e = GW.decode(s.code).skills.map(id=>GW.skill(id)).find(k=>k && k.e); return e ? e.id : 0; }));
+    const spir = new Set(slots.filter((s,j)=>j!==i).flatMap(s=>GW.spiritIds(GW.decode(s.code))));
+    const cand = pool.filter(o=>profs.has(o.bar.pri) && lineOf(o.bar)===line && !slots.some(s=>normCode(s.code)===normCode(o.code)) && !GW.spiritIds(o.bar).some(id=>spir.has(id)) && !(hasBip(o.bar) && slots.some((s,j)=>j!==i && hasBip(GW.decode(s.code)))));
+    const best = cand.filter(o=>!el.has(o.elite.id)).sort((a,b)=>score(b)-score(a))[0] || cand.sort((a,b)=>score(b)-score(a))[0]; if (!best) return;
+    const hero = free().find(x=>x[1]===best.bar.pri); usedN.add(hero[0]);
+    slots[i].why = `Ersatz: Für „${deText(slots[i].role)}“ (${GW.PROF_DE[old.pri]}) ist kein Held frei. Stattdessen die stärkste Leiste derselben Reihe, für die du einen Helden hast. Quelle: ${best.src}.`;
+    slots[i].role = `Ersatz: ${dname(best.elite)}-${GW.PROF_DE[best.bar.pri]}`; slots[i].code = best.code; slots[i].src = best.url||undefined;
+    heroes[i] = { name:hero[0], merc:false }; });
+  return heroes;
+}
 // ---------- Vergleich: stärkstes Team nach unserer Rechnung ----------
 let REFCACHE = { key:"", val:null };
 function refPool(){
   const seen = new Set(), out = [];
   const add = (code, src, url) => { let nc; try { nc = normCode(code); const d = GW.decode(code); const sk = d.skills.map(id=>GW.skill(id)); if (!d.pri || sk.some(s=>!s || s.pve) || sk.filter(s=>s.e).length!==1) return; if (seen.has(nc)) return; seen.add(nc); out.push({ code, src, url, bar:d, elite:sk.find(s=>s.e) }); } catch(e){} };
-  REF.forEach(o=>{ if (!/Farm|AFK/i.test(o.p)) add(o.c, "PvX: "+o.p, o.u); });
+  REF.forEach(o=>{ if (!/Farm|AFK/i.test(o.p)) add(o.c, o.own ? "Eigene Rechnung, im Spiel ungetestet. Ausgangsleiste: "+o.from+". Getauscht: "+o.log.map(l=>l.split(" -> ").map(n=>{ const k=GW.allSkills().find(x=>x.n===n); return k ? dname(k) : n; }).join(" → ")).join("; ") : "PvX: "+o.p, o.u); });
   TEAMS.forEach(T=>(T.variants ? T.variants.flatMap(v=>v.slots) : (T.slots||[])).forEach(s=>{ if (s.code && !T.ref) add(s.code, T.yt ? "YouTube-Team: "+T.name : "PvX-Team: "+T.name, s.src||T.src); }));
   Object.keys(GW.BARS).forEach(k=>add(GW.BARS[k].code, "Standardteam", null));
   return out;
@@ -1115,7 +1143,7 @@ function refPool(){
 function refTeams(){
   if (CAT!=="team" || !DPS.length || TEAM.length<2) return null;
   const n = state.dpsN, heroes = TEAM.length-1, phys = DPS[0].physical, allies = TEAM.length;
-  const key = [n, heroes, Math.round((phys||0)*100), playerCode(), armorNow(), foeDpsNow(), state.area||""].join("|");
+  const key = [n, heroes, Math.round((phys||0)*100), playerCode(), armorNow(), foeDpsNow(), state.area||"", ownedKey()].join("|");
   if (REFCACHE.key===key) return REFCACHE.val;
   const aiBadBar = o => o.bar.skills.some(id=>{ const s=GW.skill(id); return s && GW.heroai[s.n] && GW.heroai[s.n][0]>=2; });
   const meleeBar = o => [1,7,10].includes(o.bar.pri) && o.bar.skills.filter(id=>{ const s=GW.skill(id); return s && /attack/i.test(s.t); }).length>=3;
@@ -1131,7 +1159,7 @@ function refTeams(){
     const spir = new Set(GW.spiritIds(TEAM[0].bar)); const clash = o => GW.spiritIds(o.bar).some(id=>spir.has(id));
     taken.forEach(o=>{ el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; GW.spiritIds(o.bar).forEach(id=>spir.add(id)); });
     for (const o of [...pool].sort((a,b)=>b.D.total-a.D.total)) { if (res.length>=cnt) break; if (taken.some(x=>x.code===o.code)) continue; if (o.bip) continue;
-      if (o.minion && mm>=1) continue; if (o.splinter && sp>=1) continue; if ((el[o.elite.id]||0)>=(once(o)?1:2)) continue; if (clash(o)) continue;
+      if (o.minion && mm>=1) continue; if (o.splinter && sp>=1) continue; if ((el[o.elite.id]||0)>=(once(o)?1:2)) continue; if (clash(o)) continue; if (heroShort(taken.concat(res, [o]).map(x=>x.bar))) continue;
       res.push(o); GW.spiritIds(o.bar).forEach(id=>spir.add(id)); el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; }
     return res; };
   const eff0 = (()=>{ let r=[]; try{ r=GW.equipFor(TEAM[0].bar, EQ, TEAM[0].build && TEAM[0].build.url).runes; }catch(e){} return GW.effRanks(TEAM[0].bar, r); })();
@@ -1147,7 +1175,8 @@ function refTeams(){
   const incoming = c => n * foeDpsNow() * Math.max(0, 1 - c/n);
   const evalTeam = L => { const TD = teamDps([TEAM[0].bar].concat(L.map(o=>o.bar)), [eff0].concat(L.map(o=>o.eff)), aw, n, [wmodOf(TEAM[0].bar, TEAM[0].build && TEAM[0].build.url)].concat(L.map(o=>wmodOf(o.bar))));
     const tot = k => k==="prot" ? protSum(TD, n) : k==="heal" ? healSum(TD, n) : TD.reduce((a,d)=>a+(d[k]||0),0), c = n*(1-TD.reduce((a,d)=>a*(1-Math.min(1,(d.ctrl||0)/n)),1)), inc = incoming(c);
-    return { TD, dmg:tot("total"), heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, sv: survive(TD, n, c), ok: survive(TD, n, c).ok, gap: survive(TD, n, c).gap }; };
+    const short = heroShort(L.map(o=>o.bar)); // Aufstellungen ohne passende Helden gelten als nicht spielbar
+    return { TD, dmg:tot("total"), heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, sv: survive(TD, n, c), ok: survive(TD, n, c).ok && !short, gap: survive(TD, n, c).gap + 1000*short, short }; };
   let play = null, playSum = 0, playEval = null, ctx = null;
   DEATH_HINT = (DPS && DPS.death) || 0.3;
   if (heroes>=1) {
@@ -1161,7 +1190,7 @@ function refTeams(){
       return { L, E }; };
     // Nachbessern: Jeden Platz einzeln gegen die besten Leisten aus dem Pool tauschen und behalten, was bei gesicherter Verteidigung mehr Schaden bringt. Die erste Auswahl geht nur nach Einzelschaden und übersieht sonst Kontrolle und Zusammenspiel.
     const spOf = o => GW.spiritIds(o.bar), mySp = new Set(GW.spiritIds(TEAM[0].bar));
-    const valid = L => { const el={}, sp=new Set(mySp); let mm=0, sw=0, bi=0; for (const o of L) { if (o.minion) mm++; if (o.splinter) sw++; if (o.bip) bi++; el[o.elite.id]=(el[o.elite.id]||0)+1; if (el[o.elite.id] > (once(o)?1:2)) return false; for (const id of spOf(o)) { if (sp.has(id)) return false; sp.add(id); } } return mm<=1 && sw<=1 && bi<=1 && new Set(L.map(o=>o.code)).size===L.length; };
+    const valid = L => { const el={}, sp=new Set(mySp); let mm=0, sw=0, bi=0; for (const o of L) { if (o.minion) mm++; if (o.splinter) sw++; if (o.bip) bi++; el[o.elite.id]=(el[o.elite.id]||0)+1; if (el[o.elite.id] > (once(o)?1:2)) return false; for (const id of spOf(o)) { if (sp.has(id)) return false; sp.add(id); } } return mm<=1 && sw<=1 && bi<=1 && new Set(L.map(o=>o.code)).size===L.length && !heroShort(L.map(o=>o.bar)); };
     const byD = [...P1].filter(o=>!o.bip).sort((a,b)=>b.D.total-a.D.total), swapPool = [...new Set(byD.slice(0,18).concat([...P1].sort((a,b)=>(b.D.ctrl||0)-(a.D.ctrl||0)).slice(0,6), sup.slice(0,8), bipBar ? [P1.find(o=>o.code===bipBar.code)||bipBar] : []))];
     const better = (A, B) => A.ok !== B.ok ? A.ok : A.ok ? A.dmg > B.dmg + 0.5 : A.gap < B.gap - 0.5;
     const improve = c => { let { L, E } = c; for (let round=0; round<3; round++) { let changed = false;
@@ -1247,13 +1276,13 @@ function randTeam(){
   const R = refTeams(); if (!R || !R.ctx) { info("Dafür braucht es ein Team mit Helden."); return; }
   const C = R.ctx, n = state.dpsN, cur = TEAM.slice(1).map(m=>C.mk(m.code, m.bar));
   if (cur.some(o=>!o)) { info("Im Team steht eine leere Heldenleiste. Damit lässt sich nicht rechnen."); return; }
-  const key = [n, TEAM.length, playerCode(), armorNow(), foeDpsNow(), state.area||""].join("|");
+  const key = [n, TEAM.length, playerCode(), armorNow(), foeDpsNow(), state.area||"", ownedKey()].join("|");
   DEATH_HINT = null;
   if (!(state.team==="ref_rand" && RANDBASE && RANDBASE.key===key)) { const E = C.evalTeam(cur); RANDBASE = { key, dmg:E.dmg, hp:E.heal+E.prot, ok:E.ok, gap:E.gap, name:PLAN ? PLAN.def.name : "bisheriges Team", codes:cur.map(o=>normCode(o.code)) }; }
   const B = RANDBASE, good = E => (B.ok ? E.ok : E.gap <= B.gap + 0.5) && E.dmg >= 0.9*B.dmg && E.heal+E.prot >= 0.9*B.hp;
   const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
   // passt eine Leiste zu den übrigen? Keine Elite doppelt, kein Geist doppelt, höchstens ein Dienermeister, ein Splitterwaffe-Helfer und ein Blut-ist-Kraft-Held
-  const fits = (rest, c) => { const sp = new Set(C.mySp); rest.forEach(x=>C.spOf(x).forEach(id=>sp.add(id))); return !rest.some(x=>x.code===c.code || x.elite.id===c.elite.id) && !(c.minion && rest.some(x=>x.minion)) && !(c.splinter && rest.some(x=>x.splinter)) && !(c.bip && rest.some(x=>x.bip)) && !C.spOf(c).some(id=>sp.has(id)); };
+  const fits = (rest, c) => { const sp = new Set(C.mySp); rest.forEach(x=>C.spOf(x).forEach(id=>sp.add(id))); return !rest.some(x=>x.code===c.code || x.elite.id===c.elite.id) && !(c.minion && rest.some(x=>x.minion)) && !(c.splinter && rest.some(x=>x.splinter)) && !(c.bip && rest.some(x=>x.bip)) && !C.spOf(c).some(id=>sp.has(id)) && !heroShort(rest.concat([c]).map(x=>x.bar)); };
   const similar = (o, c) => C.isSup(o) ? C.isSup(c) : !C.isSup(c) && !c.bip && Math.abs(c.D.total-o.D.total) <= Math.max(12, 0.25*o.D.total);
   let res = null;
   for (let attempt=0; attempt<5 && !res; attempt++) {
@@ -1269,7 +1298,7 @@ function randTeam(){
   if (!res) { info("Kein anderes Team gefunden, das höchstens 10 % schwächer ist und überlebt. Noch einmal versuchen oder ein anderes Ausgangsteam wählen."); return; }
   setRefTeam("ref_rand", "Zufallsteam (berechnet)", `Zufällig gewürfelt und als ganzes Team durchgerechnet. Maßstab: ${B.name} mit ${Math.round(B.dmg)} Schaden/s. Höchstens 10 % weniger Schaden und 10 % weniger Heilung und Schutz, die Überlebensprüfung hält.`, res.L);
   render();
-  info(`Zufallsteam: ${Math.round(res.E.dmg)} Schaden/s, ${Math.round(res.E.heal)} Heilung/s, ${Math.round(res.E.prot)} Schutz/s. Maßstab „${B.name}“: ${Math.round(B.dmg)} Schaden/s, ${Math.round(B.hp)} Heilung und Schutz/s. ${res.changed} von ${res.L.length} Helden weichen davon ab.`);
+  info(`Zufallsteam: ${Math.round(res.E.dmg)} Schaden/s, ${Math.round(res.E.heal)} Heilung/s, ${Math.round(res.E.prot)} Schutz/s. Maßstab „${B.name}“: ${Math.round(B.dmg)} Schaden/s, Heilung und Schutz zusammen ${Math.round(B.hp)}/s. ${res.changed} von ${res.L.length} Helden weichen davon ab.`);
 }
 function drawDps(body){
   $("dtabs").hidden = true; $("dtabs").innerHTML = "";
