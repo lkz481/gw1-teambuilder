@@ -35,7 +35,7 @@
 "CA": {
 "name": "Kodex-Arena",
 "intro": [
-"4 gegen 4 mit festem Team. Erlaubt sind nur Fertigkeiten aus dem Kodex. Er wechselt laut Wiki jeden Montag um 15:00 UTC. Pro Team ist jede Erstklasse nur einmal erlaubt, Eliten gibt es nur für die Erstklasse.",
+"4 gegen 4. Die meisten füllen das Team mit den sechs Kodex-Gefolgsleuten auf. Erlaubt sind nur Fertigkeiten aus dem Kodex. Er wechselt laut Wiki jeden Montag um 15:00 UTC. Pro Team ist jede Erstklasse nur einmal erlaubt, Eliten gibt es nur für die Erstklasse.",
 "Die Auswahl ist laut Entwickler zufällig und wiederholt sich nicht nach festem Muster. Sie wird nirgends veröffentlicht. Deshalb trägst du die Eliten der Woche einmal ein (im Spiel: Taste K im Außenposten). Die Seite merkt sich das bis zum nächsten Wechsel und fragt dann von selbst neu."
 ],
 "src": [
@@ -7760,5 +7760,104 @@
 "m": 0
 }
 },
+"hench": [
+{
+"k": "marin",
+"n": "Marin",
+"p": 3,
+"role": "Unterstützung",
+"sk": [
+296,
+252,
+288,
+299,
+2004,
+2
+],
+"pro": "Kommt einem Heiler am nächsten. Einzige mit Zustandsentfernung und Niederschlag.",
+"con": "Lange Wirkzeiten, leicht zu unterbrechen. Wer Verzauberungen entfernt, nimmt ihr fast die ganze Wirkung."
+},
+{
+"k": "paresh",
+"n": "Paresh",
+"p": 1,
+"role": "Front",
+"sk": [
+336,
+1,
+339,
+349,
+324,
+2
+],
+"pro": "Ordentlicher Schaden, bleibt mit Sprint am Ziel, höchste Rüstung aller Kodex-Gefolgsleute.",
+"con": "Blindheit schaltet ihn aus."
+},
+{
+"k": "vinson",
+"n": "Vinson",
+"p": 6,
+"role": "Stein",
+"sk": [
+180,
+169,
+167,
+200,
+172,
+171,
+2
+],
+"pro": "Gute Energieversorgung, Fertigkeiten gegen Nahkämpfer, für einen Gefolgsmann ordentlicher Schaden.",
+"con": "Lange Wirkzeiten, leicht zu unterbrechen."
+},
+{
+"k": "atu",
+"n": "Atu",
+"p": 5,
+"role": "Verhexer",
+"sk": [
+31,
+42,
+40,
+25,
+67,
+2
+],
+"pro": "Einziger mit Unterbrechung und Verhexungsentfernung. Wirkt das Wiederbelebungssiegel schneller.",
+"con": "Wenig Schaden."
+},
+{
+"k": "cardis",
+"n": "Cardis",
+"p": 2,
+"role": "Fernschütze",
+"sk": [
+396,
+391,
+433,
+392,
+446,
+2
+],
+"pro": "Einzige mit Verlangsamung (Festnageln).",
+"con": "Wenig Schaden. Blindheit schaltet sie aus."
+},
+{
+"k": "soheila",
+"n": "Soheila",
+"p": 4,
+"role": "Vampir",
+"sk": [
+115,
+109,
+102,
+108,
+153,
+2
+],
+"pro": "Hält sich einigermaßen selbst am Leben.",
+"con": "Lange Wirkzeiten, wenig Druck."
+}
+],
 "stand": "19.11.2026"
 }
