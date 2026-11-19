@@ -1298,7 +1298,7 @@ function randTeam(){
   if (!res) { info("Kein anderes Team gefunden, das höchstens 10 % schwächer ist und überlebt. Noch einmal versuchen oder ein anderes Ausgangsteam wählen."); return; }
   setRefTeam("ref_rand", "Zufallsteam (berechnet)", `Zufällig gewürfelt und als ganzes Team durchgerechnet. Maßstab: ${B.name} mit ${Math.round(B.dmg)} Schaden/s. Höchstens 10 % weniger Schaden und 10 % weniger Heilung und Schutz, die Überlebensprüfung hält.`, res.L);
   render();
-  info(`Zufallsteam: ${Math.round(res.E.dmg)} Schaden/s, ${Math.round(res.E.heal)} Heilung/s, ${Math.round(res.E.prot)} Schutz/s. Maßstab „${B.name}“: ${Math.round(B.dmg)} Schaden/s, Heilung und Schutz zusammen ${Math.round(B.hp)}/s. ${res.changed} von ${res.L.length} Helden weichen davon ab.`);
+  info(`Zufallsteam: ${Math.round(res.E.dmg)} Schaden/s, ${Math.round(res.E.heal)} Heilung/s, ${Math.round(res.E.prot)} Schutz/s. Maßstab „${B.name}“: ${Math.round(B.dmg)} Schaden/s, ${Math.round(B.hp)} Heilung und Schutz/s. ${res.changed} von ${res.L.length} Helden weichen davon ab.`);
 }
 function drawDps(body){
   $("dtabs").hidden = true; $("dtabs").innerHTML = "";
