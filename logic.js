@@ -653,6 +653,8 @@
     const uses = [], minions = []; let usedTitle = false;
     for (const [i, s] of sk) {
       // Zwei gleiche Geister können nicht nebeneinander stehen (Wiki "Spirit"): Was ein anderer im Team schon setzt, zählt hier nicht noch einmal
+      // "Fall Back!" ist ein Laufruf: Laut Wiki nutzen Helden ihn, um die Gruppe schneller zu machen, auch außerhalb des Kampfes beim Loslaufen. Annahme nach Spielbeobachtung: Im Kampf wird er nicht gerufen, also weder Heilung noch Energiekosten.
+      if (/^"Fall Back!"/.test(s.n)) { notes.push((s.de || s.n) + " ist ein Laufruf für den Weg zwischen den Kämpfen. Im Kampf nicht gezählt, auch nicht bei der Energie."); continue; }
       if (opts.skip && opts.skip.has(s.id)) { notes.push((s.de || s.n) + " setzt schon jemand anders im Team. Zwei gleiche Geister verdrängen sich, deshalb hier nicht gezählt."); continue; }
       const dRaw = (s.d || "").toLowerCase(), dd = (s.dd || "");
       // Schaden an eigenen Geistern und Verstärkungen für Verbündete zählen nicht als Schaden am Gegner
