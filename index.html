@@ -317,7 +317,6 @@ body.pvpmode .app,body.pvpmode #rnd,body.pvpmode #pvebtn,body.pvpmode #copyall,b
 </head>
 <body>
 <div class="topbar">
-  <div class="logo">GW-Reinfickmaschine</div>
   <div class="seg" id="mode" role="radiogroup" aria-label="Spielmodus"><button role="radio" aria-checked="true" class="on" data-mode="pve">PvE</button><button role="radio" aria-checked="false" data-mode="pvp">PvP</button></div>
   <div class="sp"></div>
   <button class="btn" id="rnd" title="Zufälligen Build laden"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r=".8" fill="currentColor"/><circle cx="15" cy="15" r=".8" fill="currentColor"/><circle cx="15" cy="9" r=".8" fill="currentColor"/><circle cx="9" cy="15" r=".8" fill="currentColor"/></svg> <span class="l">Überrasch mich</span></button>
@@ -345,6 +344,7 @@ body.pvpmode .app,body.pvpmode #rnd,body.pvpmode #pvebtn,body.pvpmode #copyall,b
     <div id="notice"></div>
     <div class="cards" id="cards"><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div><div class="sk8"></div></div>
     <div class="foot">
+      <div id="rndwrap" hidden style="margin-bottom:14px"><button class="btn" id="rndteam" title="Tauscht Helden zufällig gegen ähnlich starke und rechnet das ganze Team neu">Zufälliges Team</button><div class="sm" id="rndinfo" style="margin-top:6px"></div></div>
       <details><summary>Quellen und Hinweise</summary>
       Fertigkeitswerte, Fertigkeitsbilder, Heldenliste und Gebietsdaten: <a href="https://wiki.guildwars.com" target="_blank" rel="noopener">wiki.guildwars.com</a>. Deutsche Namen und Beschreibungen: <a href="https://www.guildwiki.de" target="_blank" rel="noopener">guildwiki.de</a>. Builds und Ausrüstung: PvX-Wiki (inoffiziell). Rush- und Farm-Abläufe: Laufanleitungen aus dem Guild Wars Wiki und PvX. Schadenswerte sind eine Rechnung nach Wiki-Regeln, kein Messwert aus dem Spiel.<br>
       © ArenaNet, LLC. All rights reserved. NCSOFT, the interlocking NC logo, ArenaNet, Guild Wars, Guild Wars Factions, Guild Wars Nightfall, Guild Wars: Eye of the North and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation. Nicht-kommerzielles Fanprojekt, nicht mit ArenaNet oder NCSOFT verbunden.
@@ -692,6 +692,7 @@ function renderMain(){
   if (hasGuide()) pills.push(`<button class="pill" data-open="info" data-tab="guide">${ICN.list} Ablauf</button>`);
   if (TEAM.length) pills.push(`<button class="pill" data-share="1">Teilen</button>`);
   $("pills").innerHTML = pills.join("");
+  $("rndwrap").hidden = !(CAT==="team" && TEAM.length>=2); if (state.team!=="ref_rand") $("rndinfo").textContent = "";
   // Hinweis nur wenn nötig
   let note = "";
   if (!pb.skills.some(Boolean)) note = ``;
@@ -1145,7 +1146,7 @@ function refTeams(){
   const evalTeam = L => { const TD = teamDps([TEAM[0].bar].concat(L.map(o=>o.bar)), [eff0].concat(L.map(o=>o.eff)), aw, n, [wmodOf(TEAM[0].bar, TEAM[0].build && TEAM[0].build.url)].concat(L.map(o=>wmodOf(o.bar))));
     const tot = k => k==="prot" ? protSum(TD, n) : k==="heal" ? healSum(TD, n) : TD.reduce((a,d)=>a+(d[k]||0),0), c = n*(1-TD.reduce((a,d)=>a*(1-Math.min(1,(d.ctrl||0)/n)),1)), inc = incoming(c);
     return { TD, dmg:tot("total"), heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, sv: survive(TD, n, c), ok: survive(TD, n, c).ok, gap: survive(TD, n, c).gap }; };
-  let play = null, playSum = 0, playEval = null;
+  let play = null, playSum = 0, playEval = null, ctx = null;
   DEATH_HINT = (DPS && DPS.death) || 0.3;
   if (heroes>=1) {
     const isSup = o => o.D.heal+o.D.prot >= 25 && o.D.total < 30;
@@ -1166,6 +1167,12 @@ function refTeams(){
           if (best) { L = best.L; E = best.E; changed = true; } }
         if (!changed) break; }
       return { L, E }; };
+    { const byNorm = new Map(P1.map(o=>[normCode(o.code), o]));
+      // Für das Zufallsteam: eine beliebige Heldenleiste so aufbereiten wie die Leisten im Vorrat
+      const mk = (code, bar) => { try { const f = byNorm.get(normCode(code)); if (f) return f; const sk = bar.skills.map(id=>GW.skill(id)), elite = sk.find(s=>s && s.e) || sk.find(Boolean); if (!elite) return null; let r=[]; try{ r=GW.equipFor(bar, EQ, null).runes; }catch(e){} const eff = GW.effRanks(bar, r), bip = hasBip(bar);
+          const D = GW.dps(bar, eff, { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), physRate:phys, allies, bipPips:bip?0:bp });
+          return { code, bar, elite, eff, bip, splinter:sk.some(s=>s && s.n==="Splinter Weapon"), D, minion:D.parts.some(p=>p.kind==="Diener"), src:"bisheriges Team", url:null }; } catch(e){ return null; } };
+      ctx = { P1, mk, evalTeam, isSup, spOf, mySp }; }
     const cands = [build([])]; if (bipBar && heroes>=2) cands.push(build([bipBar]));
     { const top = cands.filter(c=>c.E.ok).sort((a,b)=>b.E.dmg-a.E.dmg)[0] || [...cands].sort((a,b)=>a.E.gap-b.E.gap)[0]; cands.push(improve(top)); }
     // Zweiter Weg, weil Einzeltausch in Sackgassen laufen kann: den besten Kern aus bis zu drei Leisten vollständig durchrechnen, dann Platz für Platz die beste Ergänzung anfügen und am Ende nachbessern
@@ -1191,7 +1198,7 @@ function refTeams(){
   if (bipBar && heroes>=2) { const maxB = [bipBar].concat(pick(P1, heroes-1, [bipBar])), sumB = sum(maxB, youAt(bp)); if (sumB > sumA) { max = maxB; maxSum = sumB; } }
   const mine = Math.round(DPS.reduce((a,d)=>a+d.total,0));
   const own = (BUILDS[state.pri]||[]).map((b,i)=>[b,i]).filter(([b])=>(b.cat||"team")==="team").map(([b,i])=>{ try { const d=GW.decode(b.code); let r=[]; try{ r=GW.equipFor(d, EQ, b.url).runes; }catch(e){} const w2=b.annWeapon?(ANN_W[b.annWeapon.split(" ")[0]]||null):null; return { b, i, v:GW.dps(d, GW.effRanks(d,r), { targets:n, weapon:w2, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), allies, bipPips:DPS[0] && TEAM.some(m=>hasBip(m.bar)) ? bp : 0 }).total }; } catch(e){ return null; } }).filter(Boolean).sort((a,b)=>b.v-a.v)[0];
-  REFCACHE = { key, val:{ mine, max, maxSum, play, playSum, playCtrl, playEval, mineEval, own, poolSize:base.length } };
+  REFCACHE = { key, val:{ mine, max, maxSum, play, playSum, playCtrl, playEval, mineEval, own, poolSize:base.length, ctx } };
   return REFCACHE.val;
 }
 function refHTML(){
@@ -1218,10 +1225,49 @@ function renderKeepRef(change){ const was = state.team==="ref_play"; change(); i
 function takeRef(kind, quiet){
   const R = refTeams(); if (!R) return; const L = kind==="play" ? R.play : R.max; if (!L) return;
   const key = "ref_"+kind, name = kind==="play" ? "Stärkstes Team, das überlebt (berechnet)" : "Rechnerisches Maximum (berechnet)";
-  const def = { key, name, ref:true, desc: kind==="play" ? "Von uns berechnet: So viel Schaden wie möglich, mit gerade genug Heilung und Schutz zum Überleben. Die Annahmen stehen unter Schaden/s." : "Von uns berechnet: Nur die Heldenleisten mit dem höchsten Dauerschaden, ohne Heiler und Schutz. Als Vergleichswert gedacht, im Spiel kaum haltbar.",
+  setRefTeam(key, name, kind==="play" ? "Von uns berechnet: So viel Schaden wie möglich, mit gerade genug Heilung und Schutz zum Überleben. Die Annahmen stehen unter Schaden/s." : "Von uns berechnet: Nur die Heldenleisten mit dem höchsten Dauerschaden, ohne Heiler und Schutz. Als Vergleichswert gedacht, im Spiel kaum haltbar.", L);
+  if (!quiet) toast("Team übernommen"); render();
+}
+function setRefTeam(key, name, desc, L){
+  const def = { key, name, ref:true, desc,
     slots: L.map(o=>({ code:o.code, role:`${dname(o.elite)}-${GW.PROF_DE[o.bar.pri]}`, why:`${Math.round(o.D.total)} Schaden/s nach unserer Rechnung. Quelle der Leiste: ${o.src}.`, src:o.url||undefined })) };
   const i = TEAMS.findIndex(T=>T.key===key); if (i>=0) TEAMS[i]=def; else TEAMS.push(def);
-  state.team = key; state.over = {}; if (!quiet) toast("Team übernommen"); render();
+  state.team = key; state.over = {};
+}
+// ---------- Zufallsteam ----------
+// Tauscht Helden zufällig gegen ähnlich starke Leisten. Maßstab ist das Team, das vor dem ersten Würfeln gewählt war:
+// Der Gesamtschaden darf höchstens 10 % darunter liegen, Heilung und Schutz zusammen ebenso, und die Überlebensprüfung muss halten.
+// Jeder Tausch wird mit dem ganzen Team neu gerechnet, damit Zusammenspiel und Verdrängung stimmen.
+let RANDBASE = null;
+function randTeam(){
+  const info = t => { $("rndinfo").textContent = t; };
+  if (foeDpsNow() > 50) { info("In Elite-Gebieten gibt es kein Zufallsteam: Dort trägt nur die abgestimmte Aufstellung."); return; }
+  const R = refTeams(); if (!R || !R.ctx) { info("Dafür braucht es ein Team mit Helden."); return; }
+  const C = R.ctx, n = state.dpsN, cur = TEAM.slice(1).map(m=>C.mk(m.code, m.bar));
+  if (cur.some(o=>!o)) { info("Im Team steht eine leere Heldenleiste. Damit lässt sich nicht rechnen."); return; }
+  const key = [n, TEAM.length, playerCode(), armorNow(), foeDpsNow(), state.area||""].join("|");
+  DEATH_HINT = null;
+  if (!(state.team==="ref_rand" && RANDBASE && RANDBASE.key===key)) { const E = C.evalTeam(cur); RANDBASE = { key, dmg:E.dmg, hp:E.heal+E.prot, ok:E.ok, gap:E.gap, name:PLAN ? PLAN.def.name : "bisheriges Team", codes:cur.map(o=>normCode(o.code)) }; }
+  const B = RANDBASE, good = E => (B.ok ? E.ok : E.gap <= B.gap + 0.5) && E.dmg >= 0.9*B.dmg && E.heal+E.prot >= 0.9*B.hp;
+  const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+  // passt eine Leiste zu den übrigen? Keine Elite doppelt, kein Geist doppelt, höchstens ein Dienermeister, ein Splitterwaffe-Helfer und ein Blut-ist-Kraft-Held
+  const fits = (rest, c) => { const sp = new Set(C.mySp); rest.forEach(x=>C.spOf(x).forEach(id=>sp.add(id))); return !rest.some(x=>x.code===c.code || x.elite.id===c.elite.id) && !(c.minion && rest.some(x=>x.minion)) && !(c.splinter && rest.some(x=>x.splinter)) && !(c.bip && rest.some(x=>x.bip)) && !C.spOf(c).some(id=>sp.has(id)); };
+  const similar = (o, c) => C.isSup(o) ? C.isSup(c) : !C.isSup(c) && !c.bip && Math.abs(c.D.total-o.D.total) <= Math.max(12, 0.25*o.D.total);
+  let res = null;
+  for (let attempt=0; attempt<5 && !res; attempt++) {
+    let L = cur.slice(); DEATH_HINT = (DPS && DPS.death) || 0.3;
+    for (const i of shuffle(L.map((o,i)=>i))) { const rest = L.filter((x,j)=>j!==i);
+      const cand = shuffle(C.P1.filter(c=>c.code!==L[i].code && similar(L[i], c) && fits(rest, c))).slice(0,6);
+      for (const c of cand) { const L2 = L.slice(); L2[i] = c; if (good(C.evalTeam(L2))) { L = L2; break; } } }
+    DEATH_HINT = null; L = L.slice().sort(lineCmp);
+    const E = C.evalTeam(L), changed = L.filter(o=>!B.codes.includes(normCode(o.code))).length;
+    if (good(E) && changed >= 1 && L.map(o=>o.code).sort().join()!==cur.map(o=>o.code).sort().join()) res = { L:L.map((o,i)=>Object.assign({}, o, { D:E.TD[i+1] })), E, changed };
+  }
+  DEATH_HINT = null;
+  if (!res) { info("Kein anderes Team gefunden, das höchstens 10 % schwächer ist und überlebt. Noch einmal versuchen oder ein anderes Ausgangsteam wählen."); return; }
+  setRefTeam("ref_rand", "Zufallsteam (berechnet)", `Zufällig gewürfelt und als ganzes Team durchgerechnet. Maßstab: ${B.name} mit ${Math.round(B.dmg)} Schaden/s. Höchstens 10 % weniger Schaden und 10 % weniger Heilung und Schutz, die Überlebensprüfung hält.`, res.L);
+  render();
+  info(`Zufallsteam: ${Math.round(res.E.dmg)} Schaden/s, ${Math.round(res.E.heal)} Heilung/s, ${Math.round(res.E.prot)} Schutz/s. Maßstab „${B.name}“: ${Math.round(B.dmg)} Schaden/s, ${Math.round(B.hp)} Heilung und Schutz/s. ${res.changed} von ${res.L.length} Helden weichen davon ab.`);
 }
 function drawDps(body){
   $("dtabs").hidden = true; $("dtabs").innerHTML = "";
@@ -1403,6 +1449,7 @@ document.addEventListener("dragleave", e=>{ const s=e.target.closest && e.target
 document.addEventListener("drop", e=>{ const s=e.target.closest && e.target.closest("button.slotb"); if(!s || dragFrom==null) return; e.preventDefault(); const to=+s.dataset.slot; if(to!==dragFrom){ const c=editCtx(), a=c.bar.skills.slice(); [a[dragFrom],a[to]]=[a[to],a[dragFrom]]; applySkills(c, a); } dragFrom=null; });
 document.addEventListener("dragend", ()=>{ dragFrom=null; });
 $("cards").addEventListener("pointermove", e=>{ if(e.pointerType!=="mouse") return; const c=e.target.closest(".card"); if(!c) return; const r=c.getBoundingClientRect(); c.style.setProperty("--mx",(e.clientX-r.left)+"px"); c.style.setProperty("--my",(e.clientY-r.top)+"px"); });
+$("rndteam").addEventListener("click", randTeam);
 $("rnd").addEventListener("click", ()=>{
   const cls = 1 + Math.floor(Math.random()*10), list = BUILDS[cls] || []; if(!list.length) return;
   const i = Math.floor(Math.random()*list.length);
