@@ -539,7 +539,7 @@
   const frac = s => { if (!s) return 0; s = String(s).trim(); const m = { "¼": .25, "½": .5, "¾": .75 }; if (m[s] != null) return m[s];
     if (/^\d+\/\d+$/.test(s)) { const [a, b] = s.split("/"); return a / b; } const n = parseFloat(s.replace(",", ".")); return isNaN(n) ? 0 : n; };
   const at = (txt, r) => { const m = String(txt).match(/(-?\d+)\.\.\.(-?\d+)/); if (!m) { const n = parseFloat(txt); return isNaN(n) ? 0 : n; }
-    return Math.round(+m[1] + (+m[2] - +m[1]) * Math.min(r, 21) / 15); };
+    return Math.round(+m[1] + (+m[2] - +m[1]) * Math.min(r, 20) / 15); }; // Wiki "Attribute": Ränge enden bei 20
   const strikeFactor = r => Math.pow(2, ((5 * Math.min(r, 12) + 2 * Math.max(0, r - 12)) - 60) / 40);
 
   function aoeMul(d, n) {
@@ -551,6 +551,9 @@
   }
 
   // eff: Map Attribut -> Rang inkl. Runen; opts: {targets, weapon:[attr,typ], foeRate, physRate}
+  // Diener-Schaden je Treffer gegen Rüstung 60 nach Stufe: Mittelwerte der Messreihen im Wiki (Bone Horror, Bone Fiend, Bone Minion, Shambling Horror, Vampiric Horror, Flesh Golem, Jagged Horror)
+  const MINDMG = {"bone horror":{"1":1.0,"2":1.5,"3":3.5,"4":5.0,"5":6.0,"6":7.5,"7":8.5,"8":10.5,"10":15.0,"11":16.0,"12":18.5,"13":21.0,"14":23.0,"15":24.0,"16":27.0,"17":29.0,"18":33.0,"19":35.0,"20":38.0,"21":40.0,"22":43.5,"23":46.0},"bone fiend":{"1":1.0,"2":2.0,"3":3.0,"4":4.0,"5":6.0,"6":7.5,"7":9.0,"8":11.0,"10":15.0,"11":16.5,"12":19.0,"13":20.5,"14":23.5,"15":24.5,"16":27.5,"17":29.5,"18":33.0,"19":35.0,"20":38.0,"21":40.0,"22":43.5,"23":46.0},"bone minion":{"0":0.0,"1":1.0,"2":1.5,"3":2.0,"4":3.0,"5":4.0,"6":5.5,"7":6.0,"8":7.5,"9":8.5,"10":10.5,"11":11.0,"12":13.0,"13":14.0,"14":15.5,"15":17.0,"16":18.5,"17":20.0},"shambling horror":{"1":1.0,"2":1.5,"3":2.5,"4":3.0,"5":4.0,"6":4.5,"7":7.5,"8":8.5,"10":11.5,"11":13.5,"12":14.5,"13":18.0,"14":20.0,"15":22.5,"16":24.5,"17":27.0,"18":31.0,"19":34.5,"20":37.5,"21":41.0,"22":43.0,"23":46.5},"vampiric horror":{"1":1.0,"2":2.0,"3":3.5,"4":5.0,"5":6.0,"6":6.0,"7":7.5,"8":10.5,"10":15.5,"11":16.5,"12":18.5,"13":20.5,"14":21.5,"15":24.0,"16":28.5,"17":29.5,"18":32.0,"19":34.5,"20":38.5,"21":40.0,"22":43.5,"23":46.0},"flesh golem":{"3":7.5,"4":12.0,"6":14.5,"7":19.5,"9":25.0,"10":30.5,"12":34.5,"13":38.0,"15":50.5,"16":54.0,"18":64.0,"19":68.5,"21":77.5,"22":81.5,"24":89.0,"25":91.0,"26":94.5,"28":105.5,"29":112.5,"31":117.0,"32":128.0,"34":139.0},"jagged horror":{"0":0.0,"1":1.0,"2":1.5,"3":2.5,"4":3.5,"5":4.0,"6":5.0,"7":6.0,"8":6.5,"9":8.5,"10":11.5,"11":12.5,"12":15.0,"13":17.0,"14":18.5,"15":21.5,"16":24.0,"17":27.5,"18":29.5,"19":33.0,"20":36.5,"21":40.0}};
+  const minionMean = (kind, L) => { const t = MINDMG[kind]; if (!t) return 1.53 * L; const ks = Object.keys(t).map(Number).sort((a, b) => a - b); if (L <= ks[0]) return t[ks[0]]; if (L >= ks[ks.length - 1]) return t[ks[ks.length - 1]]; let lo = ks[0], hi = ks[ks.length - 1]; for (const k of ks) { if (k <= L) lo = k; if (k >= L) { hi = k; break; } } return lo === hi ? t[lo] : t[lo] + (t[hi] - t[lo]) * (L - lo) / (hi - lo); };
   GW.dps = function (bar, eff, opts) {
     const n = opts.targets || 1, out = [], notes = [];
     let fcUsed = false, fleeUsed = false, heldUsed = false, scatter = 0;
@@ -560,8 +563,8 @@
     const INC = n * (opts.foeDps || 40);
     // Zielrüstung (Wiki "Armor rating"): je 40 Rüstung halbiert sich rüstungsabhängiger Schaden, 60 ist die Basis
     const AR = opts.armor || 60, af = Math.pow(2, (60 - AR) / 40), afAir = Math.pow(2, (60 - AR * 0.75) / 40);
-    const armorOf = x => { const m = x.match(/\d (fire|cold|lightning|earth|slashing|piercing|blunt|physical|chaos|dark) damage/); return !m ? 1 : m[1] === "lightning" ? afAir : af; };
-    const boost = new Map(); const rank = a => (eff.get(a) || 0) + (boost.get(a) || 0);
+    const armorOf = (x, air) => { const m = x.match(/\d (fire|cold|lightning|earth|slashing|piercing|blunt|physical|chaos|dark) damage/); return !m ? 1 : m[1] === "lightning" && air ? afAir : af; }; // 25 % Rüstungsdurchdringung haben nur Luftmagie-Zauber (Wiki "Armor penetration")
+    const boost = new Map(); const rank = a => Math.min(20, (eff.get(a) || 0) + (boost.get(a) || 0));
     const sk = bar.skills.map((id, i) => [i, GW.skill(id)]).filter(x => x[1]);
     // Derwisch: Fertigkeiten, die eine eigene Derwisch-Verzauberung entfernen, wirken voll, solange genug Verzauberungen nachkommen. Fromme Erneuerung lädt sich beim Enden selbst wieder auf und liefert deshalb immer eine.
     const TEARRX = /(removes?|lose) (1|one|a) (of your )?dervish enchantments?/i;
@@ -628,7 +631,7 @@
     // Energie
     let pips = REGEN[bar.pri] || 2;
     // Aufrechterhaltene Verzauberungen (ohne Dauer und Aufladezeit) kosten je 1 Pip Energieregeneration (Wiki "Maintained enchantment")
-    const isMaint = x => /enchantment spell/i.test(x.t) && !frac(x.rc) && !/\(\d+(\.\.\.\d+)? seconds?\.?\)/.test(x.d || "");
+    const isMaint = x => /enchantment spell/i.test(x.t) && !/\d+(\.\.\.\d+)?\)? seconds?/.test(x.d || "") && !/next \d|ends after/i.test(x.d || "");
     const maint = sk.filter(x => isMaint(x[1])).length; if (maint) { pips -= maint; notes.push(maint + " aufrechterhaltene Verzauberung" + (maint > 1 ? "en kosten" : " kostet") + " zusammen " + maint + " Pip Energieregeneration."); }
     const income = pips / 3;
     const uses = [], minions = []; let usedTitle = false;
@@ -701,7 +704,7 @@
       const perAttack = perAttack0 && !onFoe;
       const onDeath = /if (target|this|that) (foe|ally|creature) dies|whenever [^.]* dies|exploits? (a|the|nearest) |corpse/.test(d);
       const endsK = d.match(/ends after (\d+(?:\.\.\.\d+)?) (?:hit|attack)/);
-      if (dm != null) dm = dm * armorOf(dmS);
+      if (dm != null) dm = dm * armorOf(dmS, s.aid === 8);
       const every = d.match(/(?:every|each) second \((\d+) seconds?\)/);
           // Flächenschaden über Zeit löst Auseinanderlaufen aus (Wiki "Scatter", "Area damage over time"). Laut guildwiki.de "Künstliche Intelligenz" verteilen sich NSC nach zwei bis drei Schadenspulsen: Gezählt werden 3 Pulse.
           // Ausnahme: Der Zauber wirft selbst um, oder im Team gibt es eine Flächen-Verlangsamung. Dann kommen die Gegner kaum vom Fleck (guildwiki.de, Beispiel Geistige Erfrierung).
@@ -816,7 +819,7 @@
       const lvM = d.match(/level (\d+\.\.\.\d+) (bone horror|bone fiend|vampiric horror|shambling horror|flesh golem|bone minion)/) || d.match(/creates? (?:two|2) level (\d+\.\.\.\d+) (bone minion)/) || d.match(/animates? a level (\d+\.\.\.\d+) (bone horror)/);
       if (lvM) {
         const L = at(lvM[1], r), kind = lvM[2];
-        const mean = (kind === "flesh golem" ? 3.5 : 1.53) * L, per = mean / (kind === "bone fiend" ? 1.86 : 3.10);
+        const mean = minionMean(kind, L), per = mean / (kind === "bone fiend" ? 1.86 : 3.10);
         minions.push({ s, per, count: /two|2 level/.test(d) || kind === "bone minion" ? 2 : 1, max: kind === "flesh golem" ? 1 : 99, rate: 1 / Math.max(1, rc + ac + 0.75), cost, L, kind, i });
       }
       const spA = dRaw.match(/(?:its attacks|these spirits|attacks) (?:deal|steal) (\d+(?:\.\.\.\d+)?) (?:damage|health)/);
@@ -844,7 +847,7 @@
       // Stirbt ein Schutzgeist vor Ablauf, wird er neu gerufen, sobald er aufgeladen ist
       const capBound = parts.some(p => p.capPer != null && p.dur > 0 && p.capPer < p.per * p.aoe * 0.9);
       let rate = 1 / (holds && !capBound ? Math.max(T, parts[0].dur) : T);
-      if (isMaint(s)) rate = Math.min(rate, 1 / 120);
+      const maintS = isMaint(s); if (maintS) { rate = Math.min(rate, 1 / 120); cost = 0; } // einmal wirken, danach zahlt der Pip-Abzug
       if (isMinion) rate = Math.min(rate, CORPSE);
       if (adr) rate = Math.min(rate, attackRate / adr);
       const lim = parts.find(p => p.limit != null); if (lim) rate = Math.min(rate, lim.limit);
@@ -859,7 +862,7 @@
         } }
       rate *= condP; // bedingte Fertigkeiten (Unterbrechung, Entfernung) werden nur halb so oft gewirkt und kosten dann auch nur halb so viel
       const isAtk = /attack/i.test(s.t) && !/pet attack/i.test(s.t);
-      uses.push({ s, i, rate, cost, gain, parts, holds, isAtk, time: isAtk ? 0 : ac + (/spell/i.test(s.t) ? 0.75 : 0), minion: isMinion });
+      uses.push({ s, i, rate, cost, gain, parts, holds, isAtk, time: isAtk ? 0 : ac + (/spell/i.test(s.t) ? 0.75 : 0), minion: isMinion, maint: maintS });
     }
     // Energie: Grundregeneration plus Seelensammlung, Kritische Stöße, Führung, eigene Energie-Fertigkeiten und Blut ist Kraft aus dem Team
     let extra = 0; const eNotes = [];
@@ -905,13 +908,13 @@
       if (sc < 1 && u.parts.some(p => p.dur > 0 || p.kind === "Pro Angriff")) notes.push((u.s.de || u.s.n) + " wirkt schon jemand anders im Team. Der Effekt stapelt sich nicht" + (sc > 0 ? " voll." : ", deshalb hier nicht gezählt."));
       let dps = 0; const det = [];
       for (const p of u.parts) {
-        if (p.kind === "Pro Angriff") { const up = Math.min(1, p.dur * rate); const v = p.perAttack * attackRate * up * p.aoe * sc; dps += v; det.push(p.label + " " + p.perAttack + (attackRate ? "" : " (keine Waffe erkannt)")); }
-        else if (p.dur > 0) { const up = Math.min(1, p.dur * rate); const v = (p.per / p.dur) * up * p.aoe * sc; dps += v; det.push(p.label + " " + Math.round(up * 100) + " % Laufzeit"); }
+        if (p.kind === "Pro Angriff") { const up = (u.maint ? 1 : Math.min(1, p.dur * rate)); const v = p.perAttack * attackRate * up * p.aoe * sc; dps += v; det.push(p.label + " " + p.perAttack + (attackRate ? "" : " (keine Waffe erkannt)")); }
+        else if (p.dur > 0) { const up = (u.maint ? 1 : Math.min(1, p.dur * rate)); const v = (p.per / p.dur) * up * p.aoe * sc; dps += v; det.push(p.label + " " + Math.round(up * 100) + " % Laufzeit"); }
         else { const v = p.per * rate * p.aoe; dps += v; det.push(p.label + " " + Math.round(p.per) + " alle " + (1 / rate).toFixed(1) + " s"); }
       }
       // nach Art aufteilen
       const by = { dmg: 0, heal: 0, prot: 0 };
-      u.parts.forEach((p, j) => { const v = p.kind === "Pro Angriff" ? p.perAttack * attackRate * Math.min(1, p.dur * rate) * p.aoe * sc : p.dur > 0 ? Math.min((p.per / p.dur) * Math.min(1, p.dur * rate) * p.aoe * sc, p.capPer != null ? p.capPer * rate : Infinity) : p.per * rate * p.aoe; by[p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg"] += v; });
+      u.parts.forEach((p, j) => { const v = p.kind === "Pro Angriff" ? p.perAttack * attackRate * (u.maint ? 1 : Math.min(1, p.dur * rate)) * p.aoe * sc : p.dur > 0 ? Math.min((p.per / p.dur) * (u.maint ? 1 : Math.min(1, p.dur * rate)) * p.aoe * sc, p.capPer != null ? p.capPer * rate : Infinity) : p.per * rate * p.aoe; by[p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg"] += v; });
       for (const k of ["dmg", "heal", "prot"]) if (by[k] > 0.05) out.push({ name: u.s.de || u.s.n, sid: u.s.id, dps: by[k], cat: k, kind: u.parts.filter(p => (p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg") === k).map(p => p.kind).join("/"), detail: det.filter((x, j) => (u.parts[j].kind === "Heilung" ? "heal" : u.parts[j].kind === "Schutz" ? "prot" : "dmg") === k).join(", ") });
     }
     // Stab oder Zauberstab (Wiki "Staff", "Wand"): 11-22 Schaden, ein Angriff alle 1,75 s, rüstungsabhängig. Nur in der Zeit ohne Zauber.
@@ -980,7 +983,10 @@
     const add = { "Kopfteil +1": 1, "Überlegene Rune (+3)": 3, "Höhere Rune (+2)": 2, "Kleinere Rune (+1)": 1 };
     const seen = new Set();
     const prim = new Set(GW.PROF_ATTRS[bar.pri] || []);
+    const hrSelf = bar.pri === 9 && bar.skills.some(id => { const x = GW.skill(id); return x && x.n === "Heroic Refrain"; });
     (runes || []).forEach(r => { if (!prim.has(r.attr)) return; const k = r.attr + "|" + (r.item === "Kopfteil +1" ? "h" : "r"); if (seen.has(k)) return; seen.add(k); m.set(r.attr, (m.get(r.attr) || 0) + (add[r.item] || 0)); });
+    // Heroischer Refrain auf sich selbst (Wiki): +1...3 auf alle Attribute nach Führung, ab Führung 19 sind es +4. Mit Führung 16 hebt der erste Refrain auf 19, der zweite gibt dann +4. Ränge enden bei 20.
+    if (hrSelf) { const hr = L => Math.round(1 + 2 * Math.min(20, L) / 15), L0 = m.get(40) || 0, b = hr(Math.min(20, L0 + hr(L0))); for (const [a, v] of [...m]) m.set(a, Math.min(20, v + b)); m.hrBonus = b; }
     return m;
   };
   // Gruppengröße: Wichtigste Helden zuerst behalten (Heilung/Schutz, dann Mesmer-Schaden, dann Rest)
