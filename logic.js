@@ -553,7 +553,7 @@
   // eff: Map Attribut -> Rang inkl. Runen; opts: {targets, weapon:[attr,typ], foeRate, physRate}
   GW.dps = function (bar, eff, opts) {
     const n = opts.targets || 1, out = [], notes = [];
-    let fcUsed = false;
+    let fcUsed = false, fleeUsed = false;
     // Zielrüstung (Wiki "Armor rating"): je 40 Rüstung halbiert sich rüstungsabhängiger Schaden, 60 ist die Basis
     const AR = opts.armor || 60, af = Math.pow(2, (60 - AR) / 40), afAir = Math.pow(2, (60 - AR * 0.75) / 40);
     const armorOf = x => { const m = x.match(/\d (fire|cold|lightning|earth|slashing|piercing|blunt|physical|chaos|dark) damage/); return !m ? 1 : m[1] === "lightning" ? afAir : af; };
@@ -623,7 +623,8 @@
       const spell = /spell|signet|ritual|chant|shout|echo|well|glyph/i.test(s.t) && !/attack/i.test(s.t);
       const T = Math.max(0.25, rc + ac + (/spell/i.test(s.t) ? 0.75 : 0));
       const durM = d.match(/\((\d+(?:\.\.\.\d+)?) seconds?(?:\[s\])?\.?\)/);
-      const dur = durM ? at(durM[1], rank(s.aid)) : 0;
+      // Macht des Herbeirufens (Wiki "Spawning Power"): Waffenzauber halten je Rang 4 % länger
+      const dur = (durM ? at(durM[1], rank(s.aid)) : 0) * (bar.pri === 8 && /weapon spell/i.test(s.t) ? 1 + 0.04 * rank(36) : 1);
       const title = /rank$/.test(s.a || "");
       const r = title ? 15 : rank(s.aid);
       if (title) usedTitle = true;
@@ -662,7 +663,9 @@
       const onDeath = /if (target|this|that) (foe|ally|creature) dies|whenever [^.]* dies|exploits? (a|the|nearest) |corpse/.test(d);
       const endsK = d.match(/ends after (\d+(?:\.\.\.\d+)?) (?:hit|attack)/);
       if (dm != null) dm = dm * armorOf(dmS);
-      const every = d.match(/every second \((\d+) seconds?\)/);
+      const every = d.match(/(?:every|each) second \((\d+) seconds?\)/);
+          // Flächenzauber am Boden: Gegner laufen heraus, im schweren Modus besonders schnell (Wiki "Hard mode"). Annahme: Die halbe Dauer trifft.
+          const flee = every && /initial location|to location of|your location/.test(d) && !/knock/.test(d) ? 0.5 : 1; if (flee < 1) fleeUsed = true;
       if (/allies in this ward deal/.test(dRaw)) dm = null;
       if (dm != null && dm > 0) {
         const allyW = /weapon spell/i.test(s.t) && d.match(/ends after (\d+(?:\.\.\.\d+)?) attack/);
@@ -682,7 +685,7 @@
         } else {
           const dual = /dual attack/i.test(s.t) ? 2 : 1;
           const deathP = /if (target|this|that) (foe|ally|creature) dies/.test(d) ? 0.5 : 1;
-          const tot = (every ? dm * +every[1] : dm) * deathP * (/pet attack/i.test(s.t) ? 1.33 : 1) * dual + (dual > 1 && w ? wPer : 0);
+          const tot = (every ? dm * +every[1] * flee : dm) * deathP * (/pet attack/i.test(s.t) ? 1.33 : 1) * dual + (dual > 1 && w ? wPer : 0);
           parts.push({ kind: "Direkt", per: tot, dur: 0, aoe: aoeAt(/(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:\w+ )?damage/), limit: onDeath ? DEATH : undefined, label: onDeath ? "beim Tod eines Gegners (eine Leiche alle 6 s)" : dual > 1 ? "Doppelangriff, zwei Treffer" : /pet attack/i.test(s.t) ? "Tierangriff" : /attack/i.test(s.t) ? "Angriffsbonus" : condP < 1 ? "Direktschaden, bedingt (halbe Trefferquote)" : "Direktschaden" });
         }
       }
@@ -785,6 +788,11 @@
     if (wIdx >= 0 && busy > 0.02) { out[wIdx].dps *= 1 - busy; out[wIdx].detail += ", " + Math.round(busy * 100) + " % der Zeit mit Zaubern belegt"; }
     const atkSum = uses.filter(u => u.isAtk).reduce((a, u) => a + u.rate, 0), atkCap = attackRate * (1 - busy);
     if (atkSum > atkCap && atkSum > 0) uses.forEach(u => { if (u.isAtk) u.rate *= atkCap / atkSum; });
+    // Stärke (Wiki "Strength"): 1 % Rüstungsdurchdringung je Rang, nur bei Angriffsfertigkeiten. Wirkt auf den Waffenschaden dieser Treffer.
+    if (bar.pri === 1 && rank(17) > 0 && wIdx >= 0 && attackRate > 0) {
+      const share = Math.min(1, uses.filter(u => u.isAtk).reduce((a, u) => a + u.rate, 0) / attackRate), fac = Math.pow(2, AR * rank(17) / 100 / 40) - 1, v = out[wIdx].dps * share * fac;
+      if (v > 0.05) out.push({ name: "Stärke", dps: v, cat: "dmg", kind: "Waffe", detail: rank(17) + " % Rüstungsdurchdringung bei " + Math.round(share * 100) + " % der Treffer (Angriffsfertigkeiten)" });
+    }
     for (const u of uses) {
       const rate = u.rate;
       let dps = 0; const det = [];
@@ -826,7 +834,7 @@
     // Diener im Dauerzustand: Erzeugungsrate mal Lebensdauer, höchstens 2 + halber Rang Todesmagie (Wiki "Minion")
     if (minions.length) {
       const cap = 2 + Math.floor(rank(5) / 2);
-      const life = L => { let hp = 80 + 20 * L, t = 0, p = 1; while (hp > 0 && t < 600) { const loss = p * 2 * 20; if (loss >= hp) { t += hp / (p * 2); hp = 0; } else { hp -= loss; t += 20; p++; } } return t; };
+      const life = L => { let hp = (80 + 20 * L) * (bar.pri === 8 ? 1 + 0.04 * rank(36) : 1), t = 0, p = 1; while (hp > 0 && t < 600) { const loss = p * 2 * 20; if (loss >= hp) { t += hp / (p * 2); hp = 0; } else { hp -= loss; t += 20; p++; } } return t; };
       let left = cap; const got = [];
       minions.sort((a, b) => a.max - b.max).forEach(m => { const u = uses.find(x => x.i === m.i); const want = Math.min(m.max, (u ? u.rate : 0) * m.count * life(m.L) / 2); const share = Math.min(want, left); left -= share; if (share > 0.05) { got.push(share); out.push({ name: m.s.de || m.s.n, sid: m.s.id, dps: share * m.per * af, cat: "dmg", kind: "Diener", detail: share.toFixed(1) + " Diener im Schnitt, Stufe " + m.L + ", je " + m.per.toFixed(1) + "/s" }); } });
       notes.push("Diener: Im Schnitt " + got.reduce((a, b) => a + b, 0).toFixed(1) + " von höchstens " + cap + ". Gerechnet mit einer Leiche alle 6 s. Lebensdauer: die Hälfte der Zerfallszeit laut Wiki, weil Diener im Kampf auch durch Gegner sterben (Annahme).");
@@ -837,6 +845,7 @@
       out.push({ name: "Tiergefährte", dps: per / iv, cat: "dmg", kind: "Tier", detail: Math.round(per) + " je Treffer, alle " + iv.toFixed(2) + " s" + (petIas ? " (Angriffstempo +" + Math.round(petIas) + " %)" : "") });
       notes.push("Tiergefährte: Wiki-Messwert für Tierbeherrschung 12, auf deinen Rang umgerechnet wie Waffenschaden. Diese Umrechnung ist eine Annahme.");
     }
+    if (fleeUsed) notes.push("Flächenzauber am Boden zählen mit halber Dauer, weil Gegner herauslaufen (Annahme).");
     if (fcUsed) notes.push("Schnellwirkung " + rank(0) + ": Wirkzeit " + Math.round(Math.pow(0.5, rank(0) / 15) * 100) + " %, Aufladezeit der Mesmer-Zauber " + Math.round(Math.max(0.4, 1 - 0.03 * rank(0)) * 100) + " %.");
     if (AR !== 60) notes.push("Zielrüstung " + AR + ": Waffen-, Diener-, Tier- und Elementarschaden zählen zu " + Math.round(af * 100) + " %. Rüstungsignorierender Schaden bleibt voll.");
     if (usedTitle) notes.push("Titel-Fertigkeiten sind mit maximalem Titelrang gerechnet.");
