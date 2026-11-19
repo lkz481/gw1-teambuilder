@@ -73,6 +73,7 @@
     });
     G.GW.heroai = data.heroai || {};
     G.GW.allSkills = () => [...SK.values()];
+    G.GW.spiritIds = bar => bar.skills.filter(id => { const x = SK.get(id); return x && (/ritual/i.test(x.t) || x.n === "Signet of Spirits"); });
     G.GW.ATTR = data.attr;
     G.GW.icon = { N: data.iconN, size: data.iconSize };
     return SK;
@@ -552,6 +553,7 @@
   // eff: Map Attribut -> Rang inkl. Runen; opts: {targets, weapon:[attr,typ], foeRate, physRate}
   GW.dps = function (bar, eff, opts) {
     const n = opts.targets || 1, out = [], notes = [];
+    let fcUsed = false;
     // Zielrüstung (Wiki "Armor rating"): je 40 Rüstung halbiert sich rüstungsabhängiger Schaden, 60 ist die Basis
     const AR = opts.armor || 60, af = Math.pow(2, (60 - AR) / 40), afAir = Math.pow(2, (60 - AR * 0.75) / 40);
     const armorOf = x => { const m = x.match(/\d (fire|cold|lightning|earth|slashing|piercing|blunt|physical|chaos|dark) damage/); return !m ? 1 : m[1] === "lightning" ? afAir : af; };
@@ -606,10 +608,18 @@
     const income = pips / 3;
     const uses = [], minions = []; let usedTitle = false;
     for (const [i, s] of sk) {
+      // Zwei gleiche Geister können nicht nebeneinander stehen (Wiki "Spirit"): Was ein anderer im Team schon setzt, zählt hier nicht noch einmal
+      if (opts.skip && opts.skip.has(s.id)) { notes.push((s.de || s.n) + " setzt schon jemand anders im Team. Zwei gleiche Geister verdrängen sich, deshalb hier nicht gezählt."); continue; }
       const dRaw = (s.d || "").toLowerCase(), dd = (s.dd || "");
       // Schaden an eigenen Geistern und Verstärkungen für Verbündete zählen nicht als Schaden am Gegner
       const d = dRaw.replace(/(this spirit|the spirit) (takes|loses) \d+(\.\.\.\d+)? (damage|health)/g, "").replace(/(its attacks|these spirits|attacks) deal \d+(\.\.\.\d+)? damage/g, "").replace(/(target (other )?ally|allies|party members)[^.]*deals? (\+)?\d+(\.\.\.\d+)? (more )?damage[^.]*/g, "");
-      const ac = frac(s.ac), rc = frac(s.rc);
+      let ac = frac(s.ac), rc = frac(s.rc);
+      // Schnellwirkung (Wiki "Fast Casting"): Wirkzeit von Zaubern und Siegeln halbiert sich bis Rang 15, fremde Fertigkeiten unter 2 s bleiben. In PvE laden Mesmer-Zauber je Rang 3 % schneller auf.
+      if (bar.pri === 5 && rank(0) > 0 && /spell|signet/i.test(s.t)) {
+        if (s.p === 5 || ac >= 2) ac *= Math.pow(0.5, rank(0) / 15);
+        if (s.p === 5 && /spell/i.test(s.t)) rc *= Math.max(0.4, 1 - 0.03 * rank(0));
+        fcUsed = true;
+      }
       const spell = /spell|signet|ritual|chant|shout|echo|well|glyph/i.test(s.t) && !/attack/i.test(s.t);
       const T = Math.max(0.25, rc + ac + (/spell/i.test(s.t) ? 0.75 : 0));
       const durM = d.match(/\((\d+(?:\.\.\.\d+)?) seconds?(?:\[s\])?\.?\)/);
@@ -630,7 +640,7 @@
       // Energiegewinn der Fertigkeit selbst
       let gain = 0;
       const gm = dRaw.match(/you gain (\d+(?:\.\.\.\d+)?) energy(?! (?:whenever|when|each time|for each|every))/) || dRaw.match(/health and (\d+(?:\.\.\.\d+)?) energy/);
-      if (gm) gain = at(gm[1], r) * (/ if |interrupt/.test(dRaw) ? 0.5 : 1);
+      if (gm) gain = at(gm[1], r) * (condP < 1 ? 1 : / if |interrupt/.test(dRaw) ? 0.5 : 1);
       const el2 = dRaw.match(/causes (\d+(?:\.\.\.\d+)?) energy loss\. you gain (\d+) energy for each/); if (el2) gain = at(el2[1], r) * +el2[2];
       if (bar.pri === 9 && /shout|chant/i.test(s.t)) gain += Math.min(2 * (opts.allies || 8), Math.floor(rank(40) / 2));
       // Zustände
@@ -672,7 +682,7 @@
         } else {
           const dual = /dual attack/i.test(s.t) ? 2 : 1;
           const deathP = /if (target|this|that) (foe|ally|creature) dies/.test(d) ? 0.5 : 1;
-          const tot = (every ? dm * +every[1] : dm) * condP * deathP * (/pet attack/i.test(s.t) ? 1.33 : 1) * dual + (dual > 1 && w ? wPer : 0);
+          const tot = (every ? dm * +every[1] : dm) * deathP * (/pet attack/i.test(s.t) ? 1.33 : 1) * dual + (dual > 1 && w ? wPer : 0);
           parts.push({ kind: "Direkt", per: tot, dur: 0, aoe: aoeAt(/(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:\w+ )?damage/), limit: onDeath ? DEATH : undefined, label: onDeath ? "beim Tod eines Gegners (eine Leiche alle 6 s)" : dual > 1 ? "Doppelangriff, zwei Treffer" : /pet attack/i.test(s.t) ? "Tierangriff" : /attack/i.test(s.t) ? "Angriffsbonus" : condP < 1 ? "Direktschaden, bedingt (halbe Trefferquote)" : "Direktschaden" });
         }
       }
@@ -738,6 +748,7 @@
       if (isMinion) rate = Math.min(rate, DEATH);
       if (adr) rate = Math.min(rate, attackRate / adr);
       const lim = parts.find(p => p.limit != null); if (lim) rate = Math.min(rate, lim.limit);
+      rate *= condP; // bedingte Fertigkeiten (Unterbrechung, Entfernung) werden nur halb so oft gewirkt und kosten dann auch nur halb so viel
       const isAtk = /attack/i.test(s.t) && !/pet attack/i.test(s.t);
       uses.push({ s, i, rate, cost, gain, parts, holds, isAtk, time: isAtk ? 0 : ac + (/spell/i.test(s.t) ? 0.75 : 0), minion: isMinion });
     }
@@ -747,19 +758,30 @@
     if (bar.pri === 7 && w && rank(35) >= 3) { const e = rank(35) >= 13 ? 3 : rank(35) >= 8 ? 2 : 1, v = attackRate * (critChance || 0) * e; extra += v; eNotes.push("Kritische Stöße +" + v.toFixed(1)); }
     if (w && hitEnergy) { const v = attackRate * hitEnergy; extra += v; eNotes.push("Energie je Treffer +" + v.toFixed(1)); }
     if (w && critEnergy) { const v = attackRate * (critChance || 0) * critEnergy; extra += v; eNotes.push("Energie je kritischem Treffer +" + v.toFixed(1)); }
-    if (opts.bipPips) { extra += opts.bipPips / 3; eNotes.push("Blut ist Kraft +" + (opts.bipPips / 3).toFixed(1)); }
+    if (opts.bipPips) { extra += opts.bipPips / 3; eNotes.push("Energie aus dem Team +" + (opts.bipPips / 3).toFixed(1)); }
     const corpse = minions.length ? Math.min(1, DEATH / uses.filter(u => u.minion).reduce((a, u) => a + u.rate, 0)) : 1;
     uses.forEach(u => { if (u.minion) u.rate *= corpse; });
-    const need = uses.reduce((a, u) => a + u.cost * u.rate, 0), gains = uses.reduce((a, u) => a + u.gain * u.rate, 0);
+    // Zeit zuerst: Ein Charakter kann nur eine Sache zugleich tun. Zauber kosten Wirkzeit plus 0,75 s Nachwirkzeit.
+    let busy = uses.reduce((a, u) => a + u.rate * u.time, 0);
+    if (busy > 1) { uses.forEach(u => { if (u.time) u.rate /= busy; }); notes.push("Zeit begrenzt: Die Leiste hat mehr Zauber, als in die Zeit passen. Alle Zauber laufen auf " + Math.round(100 / busy) + " %."); busy = 1; }
+    // Energie, die beim Wirken zurückkommt (Wiki-Texte): Einstimmungen, Aura der Wiederherstellung, Ätherische Erneuerung, Glyphe der geringeren Energie
+    const has = n2 => sk.find(x => x[1].n === n2), ES = rank(12), EL = { "Air Attunement": 8, "Earth Attunement": 9, "Fire Attunement": 10, "Water Attunement": 11 };
+    const isSpell = u => /spell/i.test(u.s.t);
+    for (const [nm, aid] of Object.entries(EL)) if (has(nm)) uses.forEach(u => { if (u.s.aid === aid && u.cost) u.gain += 1 + 0.3 * u.cost; });
+    const allEl = has("Elemental Attunement") ? 0.5 : has("Master of Magic") ? 0.3 : 0;
+    if (allEl) uses.forEach(u => { if ([8, 9, 10, 11].includes(u.s.aid) && u.cost) u.gain += 1 + allEl * u.cost; });
+    if (has("Aura of Restoration")) uses.forEach(u => { if (isSpell(u)) u.gain += at("0...1", ES); });
+    if (has("Ether Renewal")) { const er = has("Ether Renewal")[1], dur = at("5...20", ES), up = Math.min(1, dur / (frac(er.rc) + frac(er.ac))), ench = Math.min(3, sk.filter(x => /enchantment/i.test(x[1].t) && x[1].p === 6).length);
+      uses.forEach(u => { if (isSpell(u)) u.gain += at("1...4", ES) * ench * up; }); eNotes.push("Ätherische Erneuerung: je Zauber +" + (at("1...4", ES) * ench * up).toFixed(1)); }
+    if (has("Glyph of Lesser Energy")) { const v = 2 * at("10...18", ES) / 31; extra += v; eNotes.push("Glyphe der geringeren Energie +" + v.toFixed(1)); }
+    const need = uses.reduce((a, u) => a + u.cost * u.rate, 0), gains = uses.reduce((a, u) => a + Math.min(u.gain, u.cost + 20) * u.rate, 0);
     const budget = income + extra;
-    const f = need - gains > budget ? budget / (need - gains) : 1;
+    const f = need - gains > budget ? budget / Math.max(0.01, need - gains) : 1;
     if (gains > 0.05) eNotes.push("eigene Fertigkeiten +" + (gains * f).toFixed(1));
     if (f < 1) notes.push("Energie begrenzt: Nur " + Math.round(f * 100) + " % der möglichen Einsätze sind auf Dauer bezahlbar (" + pips + " Pips" + (eNotes.length ? ", " + eNotes.join(", ") + " Energie/s" : "") + ").");
     else if (eNotes.length) notes.push("Energie reicht: " + pips + " Pips, " + eNotes.join(", ") + " Energie/s.");
     uses.forEach(u => { if (u.cost || u.gain) u.rate *= f; });
-    // Zeit: Ein Charakter kann nur eine Sache zugleich tun. Zauber kosten Wirkzeit plus 0,75 s Nachwirkzeit.
-    let busy = uses.reduce((a, u) => a + u.rate * u.time, 0);
-    if (busy > 1) { uses.forEach(u => { if (u.time) u.rate /= busy; }); notes.push("Zeit begrenzt: Die Leiste hat mehr Zauber, als in die Zeit passen. Alle Zauber laufen auf " + Math.round(100 / busy) + " %."); busy = 1; }
+    busy = Math.min(1, uses.reduce((a, u) => a + u.rate * u.time, 0));
     if (wIdx >= 0 && busy > 0.02) { out[wIdx].dps *= 1 - busy; out[wIdx].detail += ", " + Math.round(busy * 100) + " % der Zeit mit Zaubern belegt"; }
     const atkSum = uses.filter(u => u.isAtk).reduce((a, u) => a + u.rate, 0), atkCap = attackRate * (1 - busy);
     if (atkSum > atkCap && atkSum > 0) uses.forEach(u => { if (u.isAtk) u.rate *= atkCap / atkSum; });
@@ -815,6 +837,7 @@
       out.push({ name: "Tiergefährte", dps: per / iv, cat: "dmg", kind: "Tier", detail: Math.round(per) + " je Treffer, alle " + iv.toFixed(2) + " s" + (petIas ? " (Angriffstempo +" + Math.round(petIas) + " %)" : "") });
       notes.push("Tiergefährte: Wiki-Messwert für Tierbeherrschung 12, auf deinen Rang umgerechnet wie Waffenschaden. Diese Umrechnung ist eine Annahme.");
     }
+    if (fcUsed) notes.push("Schnellwirkung " + rank(0) + ": Wirkzeit " + Math.round(Math.pow(0.5, rank(0) / 15) * 100) + " %, Aufladezeit der Mesmer-Zauber " + Math.round(Math.max(0.4, 1 - 0.03 * rank(0)) * 100) + " %.");
     if (AR !== 60) notes.push("Zielrüstung " + AR + ": Waffen-, Diener-, Tier- und Elementarschaden zählen zu " + Math.round(af * 100) + " %. Rüstungsignorierender Schaden bleibt voll.");
     if (usedTitle) notes.push("Titel-Fertigkeiten sind mit maximalem Titelrang gerechnet.");
     out.forEach(o => { if (!o.cat) o.cat = "dmg"; });

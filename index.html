@@ -530,13 +530,19 @@ function computeDps(){
 // Rechnet ein ganzes Team. Blut ist Kraft geht an die bis zu drei Verbündeten, denen am meisten Energie fehlt.
 function teamDps(bars, eff, weapon0, n){
   const allies = Math.max(bars.length, 1), base = { targets:n, foeRate:0.5, armor:armorNow(), allies };
-  const run = (i, phys, bp) => GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys }, { bipPips:bp }));
+  // gleiche Geister nur einmal im Team: Der Erste in der Reihe setzt sie
+  const seenSp = new Set(), skips = bars.map(b=>{ const mine = GW.spiritIds(b), sk2 = new Set(mine.filter(id=>seenSp.has(id))); mine.forEach(id=>seenSp.add(id)); return sk2; });
+  const run = (i, phys, bp) => GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys }, { bipPips:bp, skip:skips[i] }));
   const first0 = run(0, 0, 0), pass = bars.map((b,i)=> i===0 ? first0 : run(i, first0.physical, 0));
-  const bi = bars.findIndex(hasBip); if (bi<0) return pass;
-  const pips = bipPips(eff[bi]);
-  const need = pass.map((D,i)=>[i, D.energyF]).filter(x=>x[0]!==bi && x[1] < 0.98).sort((a,b)=>a[1]-b[1]).slice(0,3).map(x=>x[0]);
-  const first = need.includes(0) ? run(0, 0, pips) : first0;
-  return bars.map((b,i)=> i===0 ? first : run(i, first.physical, need.includes(i) ? pips : 0));
+  // Energie aus dem Team (Wiki): Blut ist Kraft gibt +3...6 Pips für 10 s und lässt sich auf drei Verbündeten halten. Blutritual gibt +3 Pips, hier auf zwei Verbündeten.
+  // Verteilt wird an die, denen am meisten Energie fehlt. Wer genug bekommt, hat keinen Engpass mehr.
+  const hasSk = (b, nm) => b.skills.some(id=>{ const s=GW.skill(id); return s && s.n===nm; });
+  const bi = bars.findIndex(hasBip), ri = bars.findIndex(b=>hasSk(b,"Blood Ritual")); if (bi<0 && ri<0) return pass;
+  const give = bars.map(()=>0), order = pass.map((D,i)=>[i, D.energyF]).filter(x=>x[1] < 0.98).sort((a,b)=>a[1]-b[1]).map(x=>x[0]);
+  if (bi>=0) order.filter(i=>i!==bi).slice(0,3).forEach(i=>{ give[i] += bipPips(eff[bi]); });
+  if (ri>=0) { const rest = order.filter(i=>i!==ri && !give[i]); (rest.length ? rest : order.filter(i=>i!==ri)).slice(0,2).forEach(i=>{ give[i] += 3; }); }
+  const first = give[0] ? run(0, 0, give[0]) : first0;
+  return bars.map((b,i)=> i===0 ? first : run(i, first.physical, give[i]));
 }
 const bipPips = effMap => Math.round(3 + 3*Math.min(effMap.get(4)||0, 21)/15);
 // Blut ist Kraft: +3...6 Pips für 10 s auf einem Verbündeten. Annahme: Der Held hält es auf drei Verbündeten zugleich.
@@ -1049,10 +1055,11 @@ function refTeams(){
   const base = refPool().filter(o=>!aiBadBar(o) && !meleeBar(o) && !petBar(o)).map(o=>{ let r=[]; try{ r=GW.equipFor(o.bar, EQ, null).runes; }catch(e){} return Object.assign(o, { eff:GW.effRanks(o.bar, r), bip:hasBip(o.bar), splinter:o.bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Splinter Weapon"; }) }); });
   const evalPool = bp => base.map(o=>{ const D = GW.dps(o.bar, o.eff, { targets:n, foeRate:0.5, armor:armorNow(), physRate:phys, allies, bipPips:o.bip?0:bp }); return Object.assign({}, o, { D, minion:D.parts.some(p=>p.kind==="Diener") }); });
   const pick = (pool, cnt, taken) => { const res=[], el={}; let mm=0, sp=0;
-    taken.forEach(o=>{ el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; });
+    const spir = new Set(GW.spiritIds(TEAM[0].bar)); const clash = o => GW.spiritIds(o.bar).some(id=>spir.has(id));
+    taken.forEach(o=>{ el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; GW.spiritIds(o.bar).forEach(id=>spir.add(id)); });
     for (const o of [...pool].sort((a,b)=>b.D.total-a.D.total)) { if (res.length>=cnt) break; if (taken.some(x=>x.code===o.code)) continue; if (o.bip) continue;
-      if (o.minion && mm>=1) continue; if (o.splinter && sp>=1) continue; if ((el[o.elite.id]||0)>=2) continue;
-      res.push(o); el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; }
+      if (o.minion && mm>=1) continue; if (o.splinter && sp>=1) continue; if ((el[o.elite.id]||0)>=2) continue; if (clash(o)) continue;
+      res.push(o); GW.spiritIds(o.bar).forEach(id=>spir.add(id)); el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; }
     return res; };
   const eff0 = (()=>{ let r=[]; try{ r=GW.equipFor(TEAM[0].bar, EQ, TEAM[0].build && TEAM[0].build.url).runes; }catch(e){} return GW.effRanks(TEAM[0].bar, r); })();
   const aw = TEAM[0].build && TEAM[0].build.annWeapon ? (ANN_W[TEAM[0].build.annWeapon.split(" ")[0]]||null) : null;
@@ -1062,23 +1069,34 @@ function refTeams(){
   const bp = bipBar ? bipShare(bipBar.eff, heroes) : 0;
   const P1 = evalPool(bp), P0 = evalPool(0);
   const sum = (L, you) => Math.round(you + L.reduce((a,o)=>a+o.D.total,0));
-  let play = null, playSum = 0;
-  if (heroes>=3 && bipBar) { const prot = [...P1].filter(o=>!o.bip).sort((a,b)=>b.D.prot-a.D.prot)[0];
-    const fix = [bipBar, prot];
-    if (heroes>=6) { const h2 = [...P1].filter(o=>!o.bip && o.code!==prot.code && o.D.heal>=20).sort((a,b)=>(b.D.heal+b.D.total/3)-(a.D.heal+a.D.total/3))[0]; if (h2) fix.push(h2); }
-    // zwei Kontroll-Helden (Panik, Unbeholfenheit und ähnliche), wenn Platz ist: Schaden allein gewinnt keine schweren Gebiete
-    const nCtl = heroes-fix.length>=4 ? 2 : heroes-fix.length>=2 ? 1 : 0, els = new Set();
-    for (const o of [...P1].filter(o=>!o.bip && (o.D.ctrl||0)>=0.5).sort((a,b)=>(b.D.ctrl+b.D.total/100)-(a.D.ctrl+a.D.total/100))) { if (fix.length>=(heroes>=6?3:2)+nCtl) break; if (fix.some(x=>x.code===o.code) || els.has(o.elite.id)) continue; els.add(o.elite.id); fix.push(o); }
-    play = fix.concat(pick(P1, heroes-fix.length, fix));
-    const TD = teamDps([TEAM[0].bar].concat(play.map(o=>o.bar)), [eff0].concat(play.map(o=>o.eff)), aw, n);
-    play = play.map((o,i)=>Object.assign({}, o, { D:TD[i+1] })); playSum = Math.round(TD.reduce((a,d)=>a+d.total,0)); }
-  const playCtrl = play ? n*(1-play.reduce((a,o)=>a*(1-Math.min(1,(o.D.ctrl||0)/n)),1)) : 0;
+  // Vergleichsteam: so viel Schaden wie möglich, mit gerade genug Verteidigung zum Überleben.
+  // Annahme: Jeder Gegner macht 40 Schaden/s, in Elite-Gebieten 60. Ausgeschaltete Gegner machen keinen Schaden.
+  const incoming = c => n * (ELITE_AREA(state.area) ? 60 : 40) * Math.max(0, 1 - c/n);
+  const evalTeam = L => { const TD = teamDps([TEAM[0].bar].concat(L.map(o=>o.bar)), [eff0].concat(L.map(o=>o.eff)), aw, n);
+    const tot = k => TD.reduce((a,d)=>a+(d[k]||0),0), c = n*(1-TD.reduce((a,d)=>a*(1-Math.min(1,(d.ctrl||0)/n)),1)), inc = incoming(c);
+    return { TD, dmg:tot("total"), heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal") >= 0.3*inc && tot("heal")+tot("prot") >= 1.25*inc, gap: Math.max(0, 0.3*inc-tot("heal")) + Math.max(0, 1.25*inc-tot("heal")-tot("prot")) }; };
+  let play = null, playSum = 0, playEval = null;
+  if (heroes>=1) {
+    const isSup = o => o.D.heal+o.D.prot >= 40 && o.D.total < 30;
+    const sup = [...P1].filter(isSup).sort((a,b)=>(b.D.heal*2+b.D.prot)-(a.D.heal*2+a.D.prot)).slice(0,12);
+    const build = start => { let L = start.concat(pick(P1, heroes-start.length, start)).slice(0,heroes), E = evalTeam(L), guard = 0;
+      while (!E.ok && guard++ < heroes) { let best = null;
+        const idx = L.map((o,i)=>[o,i]).filter(x=>!start.includes(x[0]) && !isSup(x[0])).sort((a,b)=>a[0].D.total-b[0].D.total)[0]; if (!idx) break;
+        for (const s2 of sup) { if (L.some(x=>x.code===s2.code) || (s2.bip && L.some(x=>x.bip))) continue; { const others = new Set(L.filter((x,i)=>i!==idx[1]).flatMap(x=>GW.spiritIds(x.bar)).concat(GW.spiritIds(TEAM[0].bar))); if (GW.spiritIds(s2.bar).some(id=>others.has(id))) continue; } const L2 = L.slice(); L2[idx[1]] = s2; const E2 = evalTeam(L2); if (!best || E2.gap < best.E.gap - 1 || (Math.abs(E2.gap-best.E.gap) <= 1 && E2.dmg > best.E.dmg)) best = { L:L2, E:E2 }; }
+        if (!best || best.E.gap >= E.gap) break; L = best.L; E = best.E; }
+      return { L, E }; };
+    const cands = [build([])]; if (bipBar && heroes>=2) cands.push(build([bipBar]));
+    const good = cands.filter(c=>c.E.ok).sort((a,b)=>b.E.dmg-a.E.dmg)[0] || cands.sort((a,b)=>a.E.gap-b.E.gap)[0];
+    play = good.L.map((o,i)=>Object.assign({}, o, { D:good.E.TD[i+1] })).sort((a,b)=>isSup(b)-isSup(a) || b.D.total-a.D.total); playSum = Math.round(good.E.dmg); playEval = good.E;
+  }
+  const mineEval = (()=>{ const tot = k => DPS.reduce((a,d)=>a+((d&&d[k])||0),0), c = teamCtrl(), inc = incoming(c); return { heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal") >= 0.3*inc && tot("heal")+tot("prot") >= 1.25*inc }; })();
+  const playCtrl = playEval ? playEval.ctrl : 0;
   const maxA = pick(P0, heroes, []), sumA = sum(maxA, youAt(0));
   let max = maxA, maxSum = sumA;
   if (bipBar && heroes>=2) { const maxB = [bipBar].concat(pick(P1, heroes-1, [bipBar])), sumB = sum(maxB, youAt(bp)); if (sumB > sumA) { max = maxB; maxSum = sumB; } }
   const mine = Math.round(DPS.reduce((a,d)=>a+d.total,0));
   const own = (BUILDS[state.pri]||[]).map((b,i)=>[b,i]).filter(([b])=>(b.cat||"team")==="team").map(([b,i])=>{ try { const d=GW.decode(b.code); let r=[]; try{ r=GW.equipFor(d, EQ, b.url).runes; }catch(e){} const w2=b.annWeapon?(ANN_W[b.annWeapon.split(" ")[0]]||null):null; return { b, i, v:GW.dps(d, GW.effRanks(d,r), { targets:n, weapon:w2, foeRate:0.5, armor:armorNow(), allies, bipPips:DPS[0] && TEAM.some(m=>hasBip(m.bar)) ? bp : 0 }).total }; } catch(e){ return null; } }).filter(Boolean).sort((a,b)=>b.v-a.v)[0];
-  REFCACHE = { key, val:{ mine, max, maxSum, play, playSum, playCtrl, own, poolSize:base.length } };
+  REFCACHE = { key, val:{ mine, max, maxSum, play, playSum, playCtrl, playEval, mineEval, own, poolSize:base.length } };
   return REFCACHE.val;
 }
 function refHTML(){
@@ -1088,15 +1106,19 @@ function refHTML(){
   const list = L => `<ul class="sm reflist">${L.map(o=>`<li><b>${esc(dname(o.elite))}</b> · ${esc(GW.PROF_DE[o.bar.pri])} · ${Math.round(o.D.total)} Schaden${(o.D.ctrl||0)>=0.3?`, ${ctrlTxt(o.D.ctrl)} Gegner aus`:""}${o.D.heal>5?`, ${Math.round(o.D.heal)} Heilung`:""}${o.D.prot>5?`, ${Math.round(o.D.prot)} Schutz`:""}<span class="dim"> · ${o.url?`<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.src)}</a>`:esc(o.src)}</span></li>`).join("")}</ul>`;
   const you = Math.round(DPS[0].total);
   let h = `<h3>Wo stehst du?</h3>` + row("Dein Team", R.mine, "", "");
-  if (R.play) h += row("Stärkstes spielbares Team", R.playSum, " sup", `Du erreichst ${Math.round(100*R.mine/Math.max(1,R.playSum))} %. Mit Blut-ist-Kraft-Heiler, zweitem Heiler, Schutz und Kontroll-Helden. Kontrolle: ${ctrlTxt(R.playCtrl||0)} Gegner aus, bei dir ${ctrlTxt(teamCtrl())}.`) + `<div class="row" style="margin:6px 0 2px"><details class="more" style="flex:1"><summary>Aufstellung ansehen</summary>${list(R.play)}</details><button class="btn s" data-reftake="play">Dieses Team übernehmen</button></div>`;
+  const def = E => `Heilung ${Math.round(E.heal)}/s, Schutz ${Math.round(E.prot)}/s, ${ctrlTxt(E.ctrl)} Gegner aus. Erwarteter Schaden auf euch: ${Math.round(E.inc)}/s.`;
+  h += `<div class="dim sm">${R.mineEval.ok ? "Verteidigung reicht nach unserer Annahme." : "Verteidigung reicht nach unserer Annahme nicht."} ${def(R.mineEval)}</div>`;
+  if (R.play) { const better = R.playSum > R.mine + 1;
+    h += row("Stärkstes Team, das überlebt", R.playSum, " sup", (better ? `Du erreichst ${Math.round(100*R.mine/Math.max(1,R.playSum))} %.` : R.mineEval.ok ? "Dein Team liegt gleichauf oder darüber: Mehr Schaden holt unsere Rechnung aus den Heldenleisten im Tool nicht heraus." : "Dein Team macht mehr Schaden, hat nach unserer Annahme aber zu wenig Verteidigung. Dieses Team ist das stärkste, das überlebt.") + " " + def(R.playEval) + (R.playEval.ok ? "" : " Auch dieses Team erreicht die Schwelle nicht ganz."))
+      + `<div class="row" style="margin:6px 0 2px"><details class="more" style="flex:1"><summary>Aufstellung ansehen</summary>${list(R.play)}</details><button class="btn s" data-reftake="play">Dieses Team übernehmen</button></div>`; }
   if (R.own && R.own.v > you+1) h += `<div class="row" style="margin-top:8px"><span class="sm" style="flex:1">Deine Leiste macht ${you}/s. Die stärkste ${esc(GW.PROF_DE[state.pri])}-Leiste im Tool ist „${esc(bname(R.own.b))}“ mit ${Math.round(R.own.v)}/s.</span><button class="btn s" data-take="${R.own.i}">Laden</button></div>`;
   else if (R.own) h += `<p class="sm" style="margin-top:8px">Deine Leiste macht ${you}/s. Im Tool gibt es für ${esc(GW.PROF_DE[state.pri])} keine stärkere Team-Leiste.</p>`;
-  h += `<p class="dim sm">Vergleich aus ${R.poolSize} Heldenleisten (PvX „Great“, „Good“ und „Meta“, dazu die Teams im Tool), mit deiner Leiste und denselben Zielen gerechnet. Das Vergleichsteam ist das stärkste nach unserer Rechnung, nicht nach Spielerfahrung. Es hat immer einen Blut-ist-Kraft-Heiler, einen zweiten Heiler, einen Schutz-Helden und bis zu zwei Kontroll-Helden. Leisten, die die Helden-KI schlecht spielt, sowie Nahkampf- und Tier-Helden sind ausgeschlossen. Tier-Leisten funktionieren nur in reinen Tier-Teams. Die übrigen Plätze gehen an die schadensstärksten Leisten: höchstens ein Dienermeister, ein Splitterwaffe-Helfer und zwei Helden mit derselben Elite. Gezählt wird nur Dauerschaden. Was Unterbrechungen und Panik verhindern, zählt nicht.</p>`;
+  h += `<p class="dim sm">Vergleich aus ${R.poolSize} Heldenleisten (PvX „Great“, „Good“ und „Meta“, dazu die Teams im Tool), mit deiner Leiste und denselben Zielen gerechnet. Das Vergleichsteam ist das stärkste nach unserer Rechnung, nicht nach Spielerfahrung. Es bekommt nur so viel Heilung und Schutz, wie zum Überleben nötig ist. Annahme dafür: Jeder Gegner macht 40 Schaden pro Sekunde, in Elite-Gebieten 60. Ausgeschaltete Gegner machen keinen. Heilung muss mindestens 30 % davon decken, Heilung und Schutz zusammen 125 %. Leisten, die die Helden-KI schlecht spielt, sowie Nahkampf- und Tier-Helden sind ausgeschlossen. Die übrigen Plätze gehen an die schadensstärksten Leisten: höchstens ein Dienermeister, ein Splitterwaffe-Helfer und zwei Helden mit derselben Elite. Kein Geist kommt doppelt vor, weil sich gleiche Geister verdrängen. Gezählt wird Dauerschaden. Kontrolle zählt über den Schaden mit, den ausgeschaltete Gegner nicht machen.</p>`;
   return h;
 }
 function takeRef(kind){
   const R = refTeams(); if (!R) return; const L = kind==="play" ? R.play : R.max; if (!L) return;
-  const key = "ref_"+kind, name = kind==="play" ? "Stärkstes spielbares Team (berechnet)" : "Rechnerisches Maximum (berechnet)";
+  const key = "ref_"+kind, name = kind==="play" ? "Stärkstes Team, das überlebt (berechnet)" : "Rechnerisches Maximum (berechnet)";
   const def = { key, name, ref:true, desc: kind==="play" ? "Von uns berechnet: Die stärksten Heldenleisten für Schaden, dazu der beste Heiler und der beste Schutz aus dem Vergleich. Gezählt wird Dauerschaden, Unterbrechungen zählen nicht." : "Von uns berechnet: Nur die Heldenleisten mit dem höchsten Dauerschaden, ohne Heiler und Schutz. Als Vergleichswert gedacht, im Spiel kaum haltbar.",
     slots: L.map(o=>({ code:o.code, role:`${dname(o.elite)}-${GW.PROF_DE[o.bar.pri]}`, why:`${Math.round(o.D.total)} Schaden/s nach unserer Rechnung. Quelle der Leiste: ${o.src}.`, src:o.url||undefined })) };
   const i = TEAMS.findIndex(T=>T.key===key); if (i>=0) TEAMS[i]=def; else TEAMS.push(def);
