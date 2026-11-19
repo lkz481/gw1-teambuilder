@@ -386,8 +386,8 @@ const GW = window.GW;
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const BASE_AREAS = [
-  {key:"", name:"Missionen und Quests", flags:[], notes:[], env:[]},
-  {key:"hm", name:"Schwerer Modus und Bezwingen", flags:[], notes:[], env:[]},
+  {key:"", name:"Missionen und Quests (Normal Mode)", flags:[], notes:[], env:[]},
+  {key:"hm", name:"Hardmode und Bezwingen", flags:[], notes:[], env:[]},
 ];
 const ATTR_DE = {0:"Schnellwirkung",1:"Illusionsmagie",2:"Beherrschungsmagie",3:"Inspirationsmagie",4:"Blutmagie",5:"Todesmagie",6:"Seelensammlung",7:"Flüche",8:"Luftmagie",9:"Erdmagie",10:"Feuermagie",11:"Wassermagie",12:"Energiespeicherung",13:"Heilgebete",14:"Peinigungsgebete",15:"Schutzgebete",16:"Gunst der Götter",17:"Stärke",18:"Axtbeherrschung",19:"Hammerbeherrschung",20:"Schwertkunst",21:"Taktik",22:"Tierbeherrschung",23:"Fachkenntnis",24:"Überleben in der Wildnis",25:"Treffsicherheit",29:"Dolchbeherrschung",30:"Tödliche Künste",31:"Schattenkünste",32:"Zwiesprache",33:"Wiederherstellungsmagie",34:"Kanalisierungsmagie",35:"Kritische Stöße",36:"Macht des Herbeirufens",37:"Speerbeherrschung",38:"Befehlsgewalt",39:"Motivation",40:"Führung",41:"Sensenbeherrschung",42:"Windgebete",43:"Erdgebete",44:"Mystik"};
 const PCOL = [0,"#d6b14a","#8cc051","#8ec5ea","#57a77a","#b88ae0","#e2675a","#d47ab8","#5fc4b8","#e8a23e","#a68ad8"];
@@ -538,6 +538,10 @@ function myNeeds(){ const b=currentBuild(); return GW.needs(playerBar(), b && EX
 // ---------- Team berechnen ----------
 let TEAM = [], PLAN = null, CHECKS = [], DPS = [], FIXED = [], CAT = "team", SPOT = null, EXACT = false;
 // Manche Teams passen nur zu einer Spielerklasse oder Gruppengröße (Soul Taker Mesmerway: Nekromant mit sieben Helden)
+// Überlebensprüfung: Kontrolle allein trägt ein Team nicht. Gerechnet wird mindestens mit der Hälfte des Schadens, den die Gegner ohne Kontrolle machen würden.
+const incFloor = inc => NORMAL() ? inc : Math.max(inc, 0.5 * (state.dpsN||3) * foeDpsNow());
+// Ein Heiler im Team: eine Leiste, die selbst mindestens 60 Heilung/s bringt oder zusammen mit ihrem Schutz 80/s
+const hasHealer = list => NORMAL() || list.some((d, i) => d && (d.heal >= 60 || (i > 0 && d.heal + d.prot >= 80)));
 const teamFits = T => (!T.area || T.area===state.area) && (!T.pri || T.pri===state.pri) && (!T.size || T.size===partySize());
 function areaTeam(){ const y = TEAMS.find(T=>T.yt && T.area===state.area); return y ? y.key : (GUIDES[state.area] && GUIDES[state.area].team) || "std"; }
 function teamSlotsFor(pb, size){
@@ -559,16 +563,20 @@ function computeDps(){
   const eff = TEAM.map(m=>{ let r=[]; try{ r=GW.equipFor(m.bar, EQ, m.build && m.build.url).runes; }catch(e){} return GW.effRanks(m.bar, r); });
   const wOf = m => { const aw=m.build && m.build.annWeapon; return aw ? (ANN_W[aw.split(" ")[0]]||null) : null; };
   const allies = Math.max(TEAM.length, 1);
-  return teamDps(TEAM.map(m=>m.bar), eff, wOf(TEAM[0]), n);
+  return teamDps(TEAM.map(m=>m.bar), eff, wOf(TEAM[0]), n, TEAM.map(m=>wmodOf(m.bar, m.build && m.build.url)));
 }
 // Rechnet ein ganzes Team. Blut ist Kraft geht an die bis zu drei Verbündeten, denen am meisten Energie fehlt.
 let DEATH_HINT = null; // nur während der Suche nach dem Vergleichsteam gesetzt: feste Kampfdauer, damit die Suche schnell bleibt. Das Ergebnis wird danach mit eigener Kampfdauer neu gerechnet.
-function teamDps(bars, eff, weapon0, n){ return GW.teamDps(bars, eff, weapon0, n, { armor:armorNow(), foeDps:foeDpsNow(), death:DEATH_HINT }); }
+const WMODC = new Map();
+const wmodOf = (bar, url) => { const k = bar.pri + "|" + bar.skills.join(",") + "|" + (url || ""); if (!WMODC.has(k)) { let v = null; try { v = GW.weaponMod(GW.equipFor(bar, EQ, url || null).items); } catch(e){} WMODC.set(k, v); } return WMODC.get(k); };
+function teamDps(bars, eff, weapon0, n, wmods){ return GW.teamDps(bars, eff, weapon0, n, { armor:armorNow(), foeDps:foeDpsNow(), death:DEATH_HINT, wmods: wmods || bars.map(b=>wmodOf(b)) }); }
 // Heilung im Team: Mehr als ankommt, kann nicht geheilt werden
 const healSum = (list, n) => Math.min(n * foeDpsNow(), list.reduce((a,d)=>a+((d&&d.heal)||0),0));
 const bipPips = effMap => Math.round(3 + 3*Math.min(effMap.get(4)||0, 21)/15);
 // Blut ist Kraft: +3...6 Pips für 10 s auf einem Verbündeten. Annahme: Der Held hält es auf drei Verbündeten zugleich.
-const foeDpsNow = () => ELITE_AREA(state.area) ? 60 : 40;
+// Schaden je Gegner und Sekunde: Normal Mode 20, Hardmode 40, Elite-Gebiete 60
+const NORMAL = () => !state.area;
+const foeDpsNow = () => ELITE_AREA(state.area) ? 60 : NORMAL() ? 20 : 40;
 // Schutz mehrerer Leisten überlappt: zusammen nie mehr als der ankommende Schaden
 const protSum = (list, n) => GW.teamProt(list, n, foeDpsNow());
 const armorNow = () => state.armor || (ELITE_AREA(state.area) ? 80 : 60);
@@ -648,7 +656,7 @@ function renderSide(){
   const cat = {team:"Team", run:"Rushen", farm:"Farmen"}[CAT];
   $("v-build-sub").textContent = [pname(pb.pri,pb.sec), b ? cat : "", b && !EXACT ? "angepasst" : ""].filter(Boolean).join(" · ");
   $("l-target").textContent = CAT==="team" ? "Gebiet" : "Ziel";
-  if (CAT==="team") { const a=AREAS.find(x=>x.key===state.area); $("v-target").textContent=a?a.name:"Missionen und Quests"; $("v-target-sub").textContent = ELITE_AREA(state.area) ? "Elitegebiet" : ""; }
+  if (CAT==="team") { const a=AREAS.find(x=>x.key===state.area); $("v-target").textContent=a?a.name:"Missionen und Quests (Normal Mode)"; $("v-target-sub").textContent = ELITE_AREA(state.area) ? "Elitegebiet" : ""; }
   else { $("v-target").textContent = SPOT ? SPOT.name : "Ziel wählen"; $("v-target-sub").textContent = SPOT ? SPOT.group : ""; }
   $("partywrap").hidden = CAT!=="team";
   const size = partySize();
@@ -1126,9 +1134,9 @@ function refTeams(){
   // Vergleichsteam: so viel Schaden wie möglich, mit gerade genug Verteidigung zum Überleben.
   // Annahme: Jeder Gegner macht 40 Schaden/s, in Elite-Gebieten 60. Ausgeschaltete Gegner machen keinen Schaden.
   const incoming = c => n * foeDpsNow() * Math.max(0, 1 - c/n);
-  const evalTeam = L => { const TD = teamDps([TEAM[0].bar].concat(L.map(o=>o.bar)), [eff0].concat(L.map(o=>o.eff)), aw, n);
+  const evalTeam = L => { const TD = teamDps([TEAM[0].bar].concat(L.map(o=>o.bar)), [eff0].concat(L.map(o=>o.eff)), aw, n, [wmodOf(TEAM[0].bar, TEAM[0].build && TEAM[0].build.url)].concat(L.map(o=>wmodOf(o.bar))));
     const tot = k => k==="prot" ? protSum(TD, n) : k==="heal" ? healSum(TD, n) : TD.reduce((a,d)=>a+(d[k]||0),0), c = n*(1-TD.reduce((a,d)=>a*(1-Math.min(1,(d.ctrl||0)/n)),1)), inc = incoming(c);
-    return { TD, dmg:tot("total"), heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal") >= 0.5*Math.max(inc, foeDpsNow()) && tot("heal")+tot("prot") >= 1.5*Math.max(inc, foeDpsNow()), gap: Math.max(0, 0.5*Math.max(inc, foeDpsNow())-tot("heal")) + Math.max(0, 1.5*Math.max(inc, foeDpsNow())-tot("heal")-tot("prot")) }; };
+    return { TD, dmg:tot("total"), heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: hasHealer(TD) && tot("heal") >= 0.5*incFloor(inc) && tot("heal")+tot("prot") >= 1.5*incFloor(inc), gap: (hasHealer(TD) ? 0 : 100) + Math.max(0, 0.5*incFloor(inc)-tot("heal")) + Math.max(0, 1.5*incFloor(inc)-tot("heal")-tot("prot")) }; };
   let play = null, playSum = 0, playEval = null;
   DEATH_HINT = (DPS && DPS.death) || 0.3;
   if (heroes>=1) {
@@ -1168,7 +1176,7 @@ function refTeams(){
     DEATH_HINT = null; playEval = evalTeam(play); play = play.map((o,i)=>Object.assign({}, o, { D:playEval.TD[i+1] })); playSum = Math.round(playEval.dmg);
   }
   DEATH_HINT = null;
-  const mineEval = (()=>{ const tot = k => k==="prot" ? protSum(DPS, n) : k==="heal" ? healSum(DPS, n) : DPS.reduce((a,d)=>a+((d&&d[k])||0),0), c = teamCtrl(), inc = incoming(c); return { heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal") >= 0.5*Math.max(inc, foeDpsNow()) && tot("heal")+tot("prot") >= 1.5*Math.max(inc, foeDpsNow()) }; })();
+  const mineEval = (()=>{ const tot = k => k==="prot" ? protSum(DPS, n) : k==="heal" ? healSum(DPS, n) : DPS.reduce((a,d)=>a+((d&&d[k])||0),0), c = teamCtrl(), inc = incoming(c); return { heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: hasHealer(DPS) && tot("heal") >= 0.5*incFloor(inc) && tot("heal")+tot("prot") >= 1.5*incFloor(inc) }; })();
   const playCtrl = playEval ? playEval.ctrl : 0;
   const maxA = pick(P0, heroes, []), sumA = sum(maxA, youAt(0));
   let max = maxA, maxSum = sumA;
@@ -1181,7 +1189,7 @@ function refTeams(){
 function refHTML(){
   const R0 = refTeams(); if (!R0) return "";
   // "Dein Team" immer frisch rechnen: Nach dem Übernehmen eines Teams muss hier die neue Zahl stehen
-  const R = Object.assign({}, R0, (()=>{ const n=state.dpsN||3, tot = k => k==="prot" ? protSum(DPS,n) : k==="heal" ? healSum(DPS,n) : DPS.reduce((a,d)=>a+((d&&d[k])||0),0), c=teamCtrl(), inc=n*foeDpsNow()*Math.max(0,1-c/n); return { mine: Math.round(tot("total")), mineEval:{ heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal")>=0.5*Math.max(inc, foeDpsNow()) && tot("heal")+tot("prot")>=1.5*Math.max(inc, foeDpsNow()) } }; })());
+  const R = Object.assign({}, R0, (()=>{ const n=state.dpsN||3, tot = k => k==="prot" ? protSum(DPS,n) : k==="heal" ? healSum(DPS,n) : DPS.reduce((a,d)=>a+((d&&d[k])||0),0), c=teamCtrl(), inc=n*foeDpsNow()*Math.max(0,1-c/n); return { mine: Math.round(tot("total")), mineEval:{ heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: hasHealer(DPS) && tot("heal")>=0.5*incFloor(inc) && tot("heal")+tot("prot")>=1.5*incFloor(inc) } }; })());
   const top = Math.max(R.mine, R.playSum, 1), pct = v => Math.round(100*v/top);
   const row = (lab, v, cls, sub) => `<div class="refrow"><div class="t"><span>${lab}</span><b>${v}/s</b></div><div class="meter${cls}"><i style="width:${pct(v)}%"></i></div>${sub?`<div class="dim sm">${sub}</div>`:""}</div>`;
   const list = L => `<ul class="sm reflist">${L.map(o=>`<li><b>${esc((()=>{ const top = (o.D.parts||[]).filter(p=>p.sid && p.cat==="dmg").sort((x,y)=>y.dps-x.dps)[0], ts = top && GW.skill(top.sid); return ts && ts.id!==o.elite.id && o.D.total >= 30 && top.dps > 15 ? dname(ts)+" (Elite: "+dname(o.elite)+")" : dname(o.elite); })())}</b> · ${esc(GW.PROF_DE[o.bar.pri])} · ${Math.round(o.D.total)} Schaden${(o.D.ctrl||0)>=0.3?`, ${ctrlTxt(o.D.ctrl)} Gegner aus`:""}${o.D.heal>5?`, ${Math.round(o.D.heal)} Heilung`:""}${o.D.prot>5?`, ${Math.round(o.D.prot)} Schutz`:""}<span class="dim"> · ${o.url?`<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.src)}</a>`:esc(o.src)}</span></li>`).join("")}</ul>`;
@@ -1229,8 +1237,8 @@ function drawDps(body){
       <li>Was sich im Team nicht stapelt, zählt nur einmal: gleiche Geister, dieselbe Flächen-Verhexung, derselbe Orden oder Schrei. Ein Verbündeter trägt nur einen Waffenzauber. Leichen teilen sich alle, die welche brauchen. Degeneration ist im ganzen Team auf 10 Pips je Ziel begrenzt.</li>
       <li>Vorbedingungen am Ziel: Zwietracht und ähnliche Fertigkeiten zählen nur, wenn im Team jemand die nötige Verhexung oder den Zustand liefert.</li>
       <li>Heilung kann nie größer sein als der Schaden, der ankommt.</li>
-      <li>Überleben im Vergleichsteam: Die Heilung muss die Hälfte des ankommenden Schadens decken, Heilung und Schutz zusammen das Anderthalbfache. Gerechnet wird mindestens mit dem Schaden eines ganzen Gegners, auch wenn die Kontrolle rechnerisch mehr ausschaltet: Kontrolle kann scheitern, Heilung muss dann reichen. Das ist eine Annahme.</li>
-      <li>Gegner: Gerechnet wird der schwere Modus. Nach Wiki ("Hard mode", "Damage calculation") greifen Gegner dort 33 % öfter an und ihre Fertigkeiten treffen je Stufe rund 5 % härter. Daraus: Ein Angriff trifft einen Zauberer mit Rüstung 60 für rund 28, eine Fertigkeit für rund 95, in Elite-Gebieten 34 und 125. Je Gegner kommen 40 Schaden/s an, in Elite-Gebieten 60, je zur Hälfte aus Angriffen und aus Fertigkeiten. Ein Gegner greift im Schnitt 0,55-mal je Sekunde an und nutzt alle 4 s eine Fertigkeit. Die Aufteilung halb und halb ist eine Annahme.</li>
+      <li>Überleben im Vergleichsteam, Hardmode und Elite-Gebiete: Es braucht mindestens einen Heiler, also eine Leiste, die selbst 60 Heilung/s bringt oder mit ihrem Schutz zusammen 80/s. Die Heilung des Teams muss die Hälfte des ankommenden Schadens decken, Heilung und Schutz zusammen das Anderthalbfache. Kontrolle allein trägt ein Team nicht: Gerechnet wird mindestens mit der Hälfte des Schadens, den die Gegner ohne Kontrolle machen würden. Normal Mode (Missionen und Quests): Die Gegner machen halb so viel Schaden und sterben schneller. Dort gilt nur die Rechnung, ohne Heilerpflicht und ohne Mindestschaden. Das sind Annahmen.</li>
+      <li>Gegner: Unter „Missionen und Quests" wird der Normal Mode gerechnet, unter „Hardmode und Bezwingen" und in den Elite-Gebieten der Hardmode. Nach Wiki ("Hard mode", "Damage calculation") greifen Gegner im Hardmode 33 % öfter an und ihre Fertigkeiten treffen je Stufe rund 5 % härter. Daraus für einen Zauberer mit Rüstung 60: Normal Mode Angriff rund 20, Fertigkeit rund 70, zusammen 20 Schaden/s je Gegner. Hardmode 28 und 95, zusammen 40/s. Elite-Gebiete 34 und 125, zusammen 60/s. Je die Hälfte kommt aus Angriffen und aus Fertigkeiten (Annahme). Lebenspunkte je Gegner: rund 500, 700 und 850.</li>
       <li>Schutz wird in der Reihenfolge des Wikis ("Order of damage modifiers") durchgerechnet, für das ganze Team gemeinsam: erst Blocken, dann Rüstung, dann Schadensgrenzen (Unterschlupf, Schutzbindung, Schutzgeist), dann prozentuale Minderung ("Sie stehen in Flammen!", Lebenssperre), zuletzt Vereinigung und feste Abzüge. Jeder Schritt wirkt nur noch auf das, was der vorige übrig lässt. Blockchancen multiplizieren sich (zwei mal 50 % ergeben 75 %), Rüstungsboni aus Fertigkeiten zählen zusammen höchstens +25, außer ein einzelner ist größer (Wiki "Effect stacking"). Blocken wirkt nur auf Angriffe, Schadensgrenzen nur auf große Treffer. Das Wiki weist selbst darauf hin, dass die Reihenfolge-Seite Fehler enthalten kann. Schutzgeister halten nur so lange, wie ihre Lebenspunkte reichen (Wiki "Spirit": Stufe mal 20, plus 4 % je Rang Macht des Herbeirufens), Rüstung der Gefühllosigkeit halbiert ihre Verluste, Seelenverflechtung lädt die Rituale sofort wieder auf.</li>
       <li>Rüstungsbruch senkt die Rüstung der Gegner um 20, nie unter 60 (Wiki). Tiefe Wunde nimmt 20 % der Lebenspunkte, höchstens 100. Schwäche nimmt Angriffen 66 % Schaden. Arkanes Echo kopiert bei Helden einen zufälligen Zauber der Leiste (Wiki "Hero behavior"), beim Spieler die Elite.</li>
       <li>Flächenschaden über Zeit (Strahl des Urteils, Feuersturm, Chaossturm und ähnliche): Gegner laufen nach zwei bis drei Schadenspulsen auseinander (guildwiki.de, "Künstliche Intelligenz"). Gezählt werden 3 Pulse. Wirft der Zauber selbst um oder hat das Team eine Flächen-Verlangsamung wie Geistige Erfrierung, zählen alle Pulse. Einzelne Schadenspakete lösen kein Auseinanderlaufen aus (Wiki "Scatter").</li>

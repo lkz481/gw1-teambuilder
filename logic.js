@@ -583,8 +583,9 @@
       const add = (ids, v, lab) => { if (v > 0.05) { ids.forEach(a => { if (eff.get(a) > 0) boost.set(a, (boost.get(a) || 0) + v); }); notes.push(lab + ": zählt als +" + v.toFixed(1) + " Rang (mit Laufzeit gewichtet)."); } };
       add([5, 6], 2 * upOf("Masochism", "10...40", 6), "Masochismus"); add([4, 7], 2 * upOf("Awaken the Blood", "20...44", 4), "Erwecktes Blut"); add([8, 9, 10, 11], upOf("Elemental Lord", "40...60", -1), "Elementarherr"); }
     // Gegner im schweren Modus (Wiki "Hard mode", "Damage calculation"): Angriffe treffen einen Zauberer mit Rüstung 60 für rund 28, Fertigkeiten für rund 95. Elite-Gebiete: 34 und 125. Je die Hälfte des Schadens kommt aus Angriffen und aus Fertigkeiten.
-    const ELITE = (opts.foeDps || 40) > 50, SMALL = ELITE ? 34 : 28, BIG = ELITE ? 125 : 95, MAXHP0 = 480;
-    const FOE_ATK = 0.55, FOE_SKILL = 0.25, FOE_SPELL = 0.15; // Aktionen je Gegner und Sekunde: Nahkämpfer 0,8 Angriffe (1,33 s Schwert, +33 % im schweren Modus), Zauberer 0,3 mit dem Stab zwischen den Zaubern; eine Fertigkeit alle 4 s; Zauber nur von der Hälfte der Gegner
+    // Normaler Modus (Wiki): Gegner Stufe 20, Angriffe ohne den Tempo-Bonus des schweren Modus, Fertigkeiten ohne Stufenzuschlag: Angriff rund 20, Fertigkeit rund 70
+    const ELITE = (opts.foeDps || 40) > 50, NM = (opts.foeDps || 40) < 30, SMALL = ELITE ? 34 : NM ? 20 : 28, BIG = ELITE ? 125 : NM ? 70 : 95, MAXHP0 = 480;
+    const FOE_ATK = NM ? 0.42 : 0.55, FOE_SKILL = NM ? 0.2 : 0.25, FOE_SPELL = NM ? 0.12 : 0.15; // Aktionen je Gegner und Sekunde. Schwerer Modus: Nahkämpfer 0,8 Angriffe (1,33 s Schwert, +33 %), Zauberer 0,3 mit dem Stab zwischen den Zaubern; eine Fertigkeit alle 4 s; Zauber nur von der Hälfte der Gegner. Normaler Modus: ohne die 33 %, eine Fertigkeit alle 5 s.
     const stN = hasSk("Soul Twisting") ? at("1...3", rank(36)) : 0, nRit = sk.filter(x => /binding ritual/i.test(x[1].t)).length;
     const aouF = hasSk("Armor of Unfeeling") ? 1 - 0.5 * 0.75 : 1; // Rüstung der Gefühllosigkeit halbiert, was Geister einstecken; sie trifft nur Geister, die beim Wirken schon stehen (75 % angenommen)
     const TEAR = tDemand ? Math.min(1, tSupply / tDemand) : 0;
@@ -606,7 +607,7 @@
     const CORPSE = DEATH * (opts.corpseShare || 1); // Leichen teilen sich alle im Team, die welche brauchen
     // Ein Kampf gegen n Gegner dauert n / DEATH Sekunden, ein einzelner Gegner lebt im Schnitt (n+1)/(2n) davon. Wirkt eine Verhexung oder ein Zustand länger, als das Ziel noch lebt, verfällt der Rest.
     const FIGHT = n / DEATH, FOELIFE = FIGHT * (n + 1) / (2 * n), emin = D => D <= 0 ? 0 : D < FOELIFE ? D * (1 - D / (2 * FOELIFE)) : FOELIFE / 2;
-    let ias = 0, petIas = 0, critBonus = 0, wPer = 0, hitEnergy = 0, critEnergy = 0;
+    let ias = 0, petIas = 0, critBonus = 0, wPer = 0, hitEnergy = 0, critEnergy = 0, zealHits = 0;
     for (const [i, s] of sk) {
       const dl = (s.d || "").toLowerCase(), tr = /rank$/.test(s.a || "") ? 15 : rank(s.aid);
       const du = dl.match(/\((\d+(?:\.\.\.\d+)?) seconds?(?:\[s\])?\.?\)/), dur0 = du ? at(du[1], tr) : 0;
@@ -637,12 +638,17 @@
       per *= af; wPer *= af;
       out.push({ name: "Normale Angriffe (" + w[0] + ")", dps: per * attackRate * hits, kind: "Waffe", detail: Math.round(per) + " je Treffer, alle " + (1 / attackRate).toFixed(2) + " s" + (ias ? " (Angriffstempo +" + Math.round(ias) + " %)" : "") + (hits > 1 ? ", " + hits.toFixed(1) + " Ziele" : "") + (melee ? ", " + Math.round(reach * 100) + " % der Zeit am Gegner" : "") });
       var critChance = crit;
+      // Waffen-Aufwertung, wenn die Ausrüstungsempfehlung der Leiste sie nennt (Wiki "Vampiric", "Zealous", "Sundering")
+      if (opts.wmod === "vamp") { const two = /Bogen|Hammer|Sense/.test(w[0]), v = (two ? 5 : 3) * attackRate * hits; out.push({ name: "Vampir-Aufwertung", dps: v, cat: "dmg", kind: "Waffe", detail: (two ? 5 : 3) + " Lebensentzug je Treffer, rüstungsignorierend" }); const hv = Math.max(0, v - 2); if (hv > 0.05) out.push({ name: "Vampir-Aufwertung", dps: hv, cat: "heal", kind: "Heilung", detail: "Lebensentzug heilt den Träger, abzüglich 1 Pip Lebenspunkte-Degeneration (2/s)" }); }
+      if (opts.wmod === "sund") { const k = 1 + 0.2 * (Math.pow(2, 0.2 * AR / 40) - 1); out[wIdx].dps *= k; out[wIdx].detail += ", Trenn-Aufwertung: 20 % Rüstungsdurchdringung bei jedem fünften Treffer"; }
+      if (opts.wmod === "zeal") zealHits = attackRate * hits;
     }
     // Energie
     let pips = REGEN[bar.pri] || 2;
     // Aufrechterhaltene Verzauberungen (ohne Dauer und Aufladezeit) kosten je 1 Pip Energieregeneration (Wiki "Maintained enchantment")
     const isMaint = x => /enchantment spell/i.test(x.t) && !/\d+(\.\.\.\d+)?\)? seconds?/.test(x.d || "") && !/next \d|ends after/i.test(x.d || "");
     const maint = sk.filter(x => isMaint(x[1])).length; if (maint) { pips -= maint; notes.push(maint + " aufrechterhaltene Verzauberung" + (maint > 1 ? "en kosten" : " kostet") + " zusammen " + maint + " Pip Energieregeneration."); }
+    if (opts.wmod === "zeal" && w) pips -= 1; // Eifer-Aufwertung: Energieregeneration −1 (Wiki "Zealous")
     const income = pips / 3;
     const uses = [], minions = []; let usedTitle = false;
     for (const [i, s] of sk) {
@@ -912,6 +918,7 @@
     let extra = 0; const eNotes = [];
     if (bar.pri === 4 && rank(6) > 0) { const v = rank(6) * Math.min(3 / 15, DEATH); extra += v; eNotes.push("Seelensammlung +" + v.toFixed(1)); }
     if (bar.pri === 7 && w && rank(35) >= 3) { const e = rank(35) >= 13 ? 3 : rank(35) >= 8 ? 2 : 1, v = attackRate * (critChance || 0) * e; extra += v; eNotes.push("Kritische Stöße +" + v.toFixed(1)); }
+    if (w && zealHits) { extra += zealHits; eNotes.push("Eifer-Aufwertung +" + zealHits.toFixed(1) + " (1 Energie je Treffer, dafür 1 Pip weniger)"); }
     if (w && hitEnergy) { const v = attackRate * hitEnergy; extra += v; eNotes.push("Energie je Treffer +" + v.toFixed(1)); }
     if (w && critEnergy) { const v = attackRate * (critChance || 0) * critEnergy; extra += v; eNotes.push("Energie je kritischem Treffer +" + v.toFixed(1)); }
     if (hasSk("Essence Bond")) { const v = 0.4 * INC * (0.5 / SMALL + 0.5 / BIG); extra += v; eNotes.push("Essenzbindung +" + v.toFixed(1)); }
@@ -1011,7 +1018,7 @@
       const cap = 2 + Math.floor(rank(5) / 2);
       const life = L => { let hp = (80 + 20 * L) * (bar.pri === 8 ? 1 + 0.04 * rank(36) : 1), t = 0, p = 1; while (hp > 0 && t < 600) { const loss = p * 2 * 20; if (loss >= hp) { t += hp / (p * 2); hp = 0; } else { hp -= loss; t += 20; p++; } } return t; };
       let left = cap; const got = [];
-      minions.sort((a, b) => a.max - b.max).forEach(m => { const u = uses.find(x => x.i === m.i); const want = Math.min(m.max, (u ? u.rate : 0) * m.count * life(m.L) / 2); const share = Math.min(want, left); left -= share; if (share > 0.05) { got.push(share); out.push({ name: m.s.de || m.s.n, sid: m.s.id, dps: share * m.per * af, cat: "dmg", kind: "Diener", detail: share.toFixed(1) + " Diener im Schnitt, Stufe " + m.L + ", je " + m.per.toFixed(1) + "/s" }); } });
+      minions.sort((a, b) => a.max - b.max).forEach(m => { const u = uses.find(x => x.i === m.i); const want = Math.min(m.max, (u ? u.rate : 0) * m.count * life(m.L) / 2); const share = Math.min(want, left); left -= share; if (share > 0.05) { got.push(share); const reachM = FIGHT / (FIGHT + (m.kind === "bone fiend" ? 1 : 2)); out.push({ name: m.s.de || m.s.n, sid: m.s.id, dps: share * m.per * af * reachM, cat: "dmg", kind: "Diener", detail: share.toFixed(1) + " Diener im Schnitt, Stufe " + m.L + ", je " + m.per.toFixed(1) + "/s, " + Math.round(reachM * 100) + " % der Zeit am Gegner (Laufweg je Kampf wie bei Nahkämpfern, Fernkämpfer 1 s)" }); } });
       notes.push("Diener: Im Schnitt " + got.reduce((a, b) => a + b, 0).toFixed(1) + " von höchstens " + cap + ". Gerechnet mit einer Leiche alle " + (1 / DEATH).toFixed(1) + " s. Lebensdauer: die Hälfte der Zerfallszeit laut Wiki, weil Diener im Kampf auch durch Gegner sterben (Annahme).");
     }
     // Tiergefährte (Wiki "Animal companion"): Stufe 20, im Schnitt 24,4 je Treffer bei Tierbeherrschung 12, +33 % in PvE, ein Angriff alle 2 s
@@ -1028,7 +1035,7 @@
     out.forEach(o => { if (!o.cat) o.cat = "dmg"; });
     const sum = c => out.filter(o => o.cat === c).reduce((a, o) => a + o.dps, 0);
     // Schutz in der Reihenfolge des Wikis ("Order of damage modifiers"): Die Leiste wird als Ganzes gerechnet, die Anzeige je Fertigkeit ist ihr Anteil daran.
-    const fxSids = new Set(fxOut.map(f => f.sid)), protOf = list => GW.protTotal(list, INC, ELITE, opts.allies || 8);
+    const fxSids = new Set(fxOut.map(f => f.sid)), protOf = list => GW.protTotal(list, INC, NM ? "nm" : ELITE, opts.allies || 8);
     { const ps = out.filter(o => o.cat === "prot" && fxSids.has(o.sid)), solo = ps.map(o => protOf(fxOut.filter(f => f.sid === o.sid))), sumS = solo.reduce((a, b) => a + b, 0), tot = protOf(fxOut); ps.forEach((o, k) => { o.dps = sumS > 0 ? solo[k] * tot / sumS : 0; }); }
     const protExtra = out.filter(o => o.cat === "prot" && !fxSids.has(o.sid)).reduce((a, o) => a + o.dps, 0);
     // Heilung mit Bedingung: "while moving" wirkt im Kampf kaum (25 %), "below 75% Health" nur zeitweise (50 %). Annahmen.
@@ -1045,13 +1052,15 @@
   // Gegnerschaden: 50 % kleine Angriffe, 10 % Angriffsfertigkeiten, 40 % Zauber. Blocken wirkt nur auf die ersten beiden.
   // Rüstungsbruch (Wiki "Cracked Armor"): −20 Rüstung, nie unter 60. Anteil der Zeit, in der die Gegner ihn tragen.
   GW._aoeMul = aoeMul;
+  // Welche Waffen-Aufwertung die Ausrüstungsempfehlung zuerst nennt
+  GW.weaponMod = function (items) { for (const it of items || []) { const m = String(it).match(/\b(zealous|vampiric|sundering|eifer-|vampir-|trenn-)/i); if (m) { const k = m[1].toLowerCase(); return /^(zeal|eifer)/.test(k) ? "zeal" : /^vamp/.test(k) ? "vamp" : "sund"; } } return null; };
   GW.crackOf = function (bar, eff, n) { let u = 0; for (const id of bar.skills) { const s = GW.skill(id); if (!s) continue; const d = (s.d || "").toLowerCase(); if (!/cracked armor/.test(d) || /if target foe has cracked armor|foe has cracked armor|suffering from cracked armor|you have cracked armor/.test(d)) continue;
       const m = d.match(/cracked armor[^.(]*\((\d+(?:\.\.\.\d+)?) seconds?/) || d.match(/cracked armor (?:condition )?(?:for )?\(?(\d+(?:\.\.\.\d+)?) seconds?/) || d.match(/\((\d+(?:\.\.\.\d+)?) seconds?\)[^.]*cracked armor/); const r = /rank$/.test(s.a || "") ? 15 : Math.min(20, eff.get(s.aid) || 0), dur = m ? at(m[1], r) : 5;
       const T = /A$/.test(String(s.cost || "")) ? 8 : Math.max(1, frac(s.rc) + frac(s.ac) + 0.75), wide = /also (affects|hits)|adjacent|nearby|in the area|foes near/.test(d);
       u += Math.min(1, dur / T) * (wide ? 1 : 1 / Math.max(1, n)) * (/ if |end effect/.test(d) ? 0.5 : 1); } return Math.min(1, u); };
   GW.protTotal = function (fx, INC, elite, allies) {
     if (!fx || !fx.length || INC <= 0) return 0;
-    const SMALL = elite ? 34 : 28, BIG = elite ? 125 : 95;
+    const SMALL = elite === "nm" ? 20 : elite ? 34 : 28, BIG = elite === "nm" ? 70 : elite ? 125 : 95;
     const cls = [{ share: 0.5, h: SMALL, atk: true }, { share: 0.1, h: BIG, atk: true }, { share: 0.4, h: BIG, atk: false }];
     const atkPS = INC * (0.5 / SMALL + 0.1 / BIG), bigPS = INC * 0.5 / BIG, allPS = INC * (0.5 / SMALL + 0.5 / BIG);
     // Schutzgeister: Laufzeit aus Lebenspunkten und Trefferzahl, neu gerufen wird, sobald das Ritual aufgeladen ist
@@ -1069,7 +1078,7 @@
     return Math.min(0.95 * INC, prevented);
   };
   // Schutz des ganzen Teams: alle Effekte aller Leisten gemeinsam durch die Reihenfolge
-  GW.teamProt = function (list, n, foeDps) { const INC = n * foeDps, L = list.filter(Boolean); return Math.min(0.95 * INC, GW.protTotal(L.flatMap(d => d.protFx || []), INC, foeDps > 50, L.length || 8) + L.reduce((a, d) => a + (d.protExtra || 0), 0)); };
+  GW.teamProt = function (list, n, foeDps) { const INC = n * foeDps, L = list.filter(Boolean); return Math.min(0.95 * INC, GW.protTotal(L.flatMap(d => d.protFx || []), INC, foeDps > 50 ? true : foeDps < 30 ? "nm" : false, L.length || 8) + L.reduce((a, d) => a + (d.protExtra || 0), 0)); };
   // ---------- Team: Was sich zwischen den Leisten gegenseitig beeinflusst ----------
   const RUNMEMO = new Map();
   const teamOnce = function (bars, eff, weapon0, n, env, death) {
@@ -1094,8 +1103,8 @@
     const hexSeen = new Map(), scales = bars.map(b=>{ const m = new Map(); SK(b).forEach(s=>{ if (!/hex/i.test(s.t)) return; const j = hexSeen.get(s.id)||0; hexSeen.set(s.id, j+1); const aoe = /also hexes|adjacent|nearby|in the area/i.test(s.d); if (aoe ? j>0 : j>=n) m.set(s.id, 0); }); return m; });
     // Gleiche Leiste unter gleichen Bedingungen nur einmal rechnen (die Suche nach dem Vergleichsteam fragt dieselben Fälle sehr oft ab)
     const run = (i, phys, bp) => { const cs = cu>1 && corpseUser(bars[i]) ? 1/cu : 1;
-      const key = [death.toFixed(3), crackT.toFixed(3), i===0 ? "S" : "H", bars[i].skills.join(","), [...eff[i]].join(";"), i===0 ? "w"+JSON.stringify(weapon0||0) : "p"+(Math.round(phys*1000)), bp, [...skips[i]].join(","), [...scales[i]].join(";"), cs, n, base.armor, base.foeDps, allies, snare?1:0, JSON.stringify(team)].join("|");
-      let v = RUNMEMO.get(key); if (!v) { if (RUNMEMO.size > 6000) RUNMEMO.clear(); v = GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys, hero:true }, { bipPips:bp, skip:skips[i], scale:scales[i], corpseShare: cs })); RUNMEMO.set(key, v); } return v; };
+      const key = [(env.wmods && env.wmods[i]) || "-", death.toFixed(3), crackT.toFixed(3), i===0 ? "S" : "H", bars[i].skills.join(","), [...eff[i]].join(";"), i===0 ? "w"+JSON.stringify(weapon0||0) : "p"+(Math.round(phys*1000)), bp, [...skips[i]].join(","), [...scales[i]].join(";"), cs, n, base.armor, base.foeDps, allies, snare?1:0, JSON.stringify(team)].join("|");
+      let v = RUNMEMO.get(key); if (!v) { if (RUNMEMO.size > 6000) RUNMEMO.clear(); v = GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys, hero:true }, { wmod: (env.wmods && env.wmods[i]) || null, bipPips:bp, skip:skips[i], scale:scales[i], corpseShare: cs })); RUNMEMO.set(key, v); } return v; };
     const first0 = run(0, 0, 0); let pass = bars.map((b,i)=> i===0 ? first0 : run(i, first0.physical, 0));
     // Verstärkungen für Angreifer stapeln sich nicht: Ein Verbündeter trägt nur einen Waffenzauber, dieselbe Verzauberung oder derselbe Orden wirkt nur einmal
     const physCount = Math.max(1, pass.filter(D=>D.physical>0).length); let ws = 0; const buffSeen = new Map(); let changed = false;
@@ -1123,7 +1132,7 @@
     // Tiefe Wunde im Team: Mehr als jeder zweite sterbende Gegner kann sie nicht tragen
     { const cap = 100 * death * 0.5, tot = res.reduce((a,D)=>a+D.parts.filter(p=>p.dw).reduce((x,p)=>x+p.dps,0),0); if (tot > cap + 0.01) { const k = cap/tot; res = res.map(D=>{ const mine = D.parts.filter(p=>p.dw).reduce((x,p)=>x+p.dps,0); return mine ? Object.assign({}, D, { total: D.total - mine*(1-k), parts: D.parts.map(p=>p.dw ? Object.assign({}, p, { dps:p.dps*k, detail:p.detail + ". Im Team geteilt" }) : p) }) : D; }); } }
     // Unterbrechungen der Helden: Laut Wiki ("Hero behavior") stimmen sich Helden nicht ab, legen sich auf das Ziel des Spielers fest und unterbrechen fast nie andere Gegner. Alle Helden teilen sich also, was dieser eine Gegner tut: 0,55 Angriffe, 0,25 Fertigkeiten, 0,15 Zauber je Sekunde.
-    { const CAP = { atk: 0.55, skill: 0.25, spell: 0.15 }, tot = { atk: 0, skill: 0, spell: 0 }, seen = new Set();
+    { const CAP = env.foeDps < 30 ? { atk: 0.42, skill: 0.2, spell: 0.12 } : { atk: 0.55, skill: 0.25, spell: 0.15 }, tot = { atk: 0, skill: 0, spell: 0 }, seen = new Set();
       res.forEach((D, i) => { if (i === 0) return; D.parts.forEach(p => { if (!p.intr || !p.sid) return; const k = i + ":" + p.sid; if (seen.has(k)) return; seen.add(k); tot[p.intr] += p.ips || 0; }); });
       const kf = {}; for (const t in CAP) kf[t] = tot[t] > CAP[t] ? CAP[t] / tot[t] : 1;
       if (Object.values(kf).some(v => v < 0.999)) res = res.map((D, i) => { if (i === 0 || !D.parts.some(p => p.intr && kf[p.intr] < 0.999)) return D; let dD = 0, dC = 0;
@@ -1134,7 +1143,8 @@
   // Team mit passender Kampfdauer: Wie schnell Gegner sterben, folgt aus dem Schaden des Teams. Lebenspunkte im schweren Modus nach Wiki ("Hard mode", Stufe 24 bis 28): rund 700, in Elite-Gebieten 850.
   // Annahme: Ein Kampf dauert doppelt so lange wie Lebenspunkte geteilt durch Schaden, weil Helden laut Wiki auch auf fast tote Gegner weiter Schaden machen, Ziele gewechselt werden und Gegner sich heilen.
   GW.teamDps = function (bars, eff, weapon0, n, env) {
-    const HP = env.foeDps > 50 ? 850 : 700, K = 2, deathOf = res => Math.max(n / 45, Math.min(n / 4, res.reduce((a, d) => a + (d ? d.total : 0), 0) / (HP * K)));
+    const HP = env.foeDps > 50 ? 850 : env.foeDps < 30 ? 500 : 700, K = 2, // normaler Modus: Stufe 20 bis 22, rund 500 Lebenspunkte
+       deathOf = res => Math.max(n / 45, Math.min(n / 4, res.reduce((a, d) => a + (d ? d.total : 0), 0) / (HP * K)));
     const q = x => Math.round(x * 50) / 50;
     if (env.death) { const r = teamOnce(bars, eff, weapon0, n, env, q(env.death)); r.death = q(env.death); return r; }
     let death = q(0.3), res = null;

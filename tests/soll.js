@@ -177,6 +177,12 @@ const tpart = (D, name, cat) => D.parts.filter(p => p.sid === id(name) && p.cat 
 // Sense 9-41, alle 1,5 s. Drei Gegner: Neben dem Ziel steht einer der beiden anderen, also 2 Treffer je Schwung. Kampf 18 s, 90 % der Zeit am Gegner.
 { const b = bar(D, 0, { 41: 12 }, []), r = run(b, { targets: 3 }), p = r.parts.find(x => /Normale Angriffe/.test(x.name)), c = 0.052 + 0.01575 * 8;
   T('Sense, drei Gegner', p ? p.dps : 0, ((1 - c) * 25 + c * 41 * Math.SQRT2) * 1.2 * 1.135 * (18 / 20) / 1.5 * 2, 0.04); } // Sense: ein Angriff alle 1,5 s (Wiki)
+// Waffen-Aufwertungen (Wiki "Vampiric", "Zealous"): Vampir-Schwert 3 Lebensentzug je Treffer, Sense 5; Eifer 1 Energie je Treffer und 1 Pip weniger
+{ const b = bar(W, 0, { 20: 12 }, []), r = run(b, { wmod: 'vamp' }), v = r.parts.filter(x => x.name === 'Vampir-Aufwertung' && x.cat === 'dmg').reduce((a, x) => a + x.dps, 0);
+  T('Vampir-Schwert: 3 je Treffer', v, 3 * (6 / 8) / 1.33, 0.03);
+  const d = bar(D, 0, { 41: 12 }, []), r2 = run(d, { wmod: 'vamp', targets: 3 }), v2 = r2.parts.filter(x => x.name === 'Vampir-Aufwertung' && x.cat === 'dmg').reduce((a, x) => a + x.dps, 0);
+  T('Vampir-Sense: 5 je Treffer, zwei Ziele', v2, 5 * 2 * (18 / 20) / 1.5, 0.03);
+  const z = run(d, { wmod: 'zeal', targets: 3, bipPips: 0 }); T('Eifer-Sense: Energie je Treffer vermerkt', /Eifer-Aufwertung \+1\.2/.test(z.notes.join(' ')) ? 1 : 0, 1, 0); }
 // Zwietracht 30...110, 1 s Wirkzeit, 2 s Aufladen. Zählt nur, wenn das Team Verhexung und Zustand liefert.
 { const b = bar(N, 0, { 5: 12, 6: 8 }, ['Discord']);
   T('Zwietracht mit Verhexung und Zustand im Team', part(run(b, { team: { hex: 1, mhex: 1, cond: 1 } }), 'Discord'), lin(30, 110, 12) / (2 + 1 + AFT), 0.04);
