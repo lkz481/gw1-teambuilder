@@ -238,7 +238,7 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
 .chip.on{background:linear-gradient(180deg,var(--lacq2),var(--lacq));border-color:var(--gold);color:#fbe7b8}
 
 .vseg{flex-wrap:wrap;border-radius:14px}.vseg button{padding:6px 12px;border-radius:999px;font-size:13px}
-.refrow{margin:10px 0 2px}.refrow .t{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}.refrow .t b{font-family:var(--head);color:#f3dfb0;font-size:17px}.reflist{padding-left:18px;margin:8px 0}.reflist li{margin:4px 0}
+.cmprow{margin:10px 0 2px;padding:8px 10px;border:1px solid var(--line);border-radius:10px}.cmprow.me{border-color:var(--gold)}.cmprow .t{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:4px}.cmprow .t>b{font-family:var(--head);color:#f3dfb0;font-size:16px;white-space:nowrap}.refrow{margin:10px 0 2px}.refrow .t{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}.refrow .t b{font-family:var(--head);color:#f3dfb0;font-size:17px}.reflist{padding-left:18px;margin:8px 0}.reflist li{margin:4px 0}
 .tag.warnt{border-color:#b5533c;color:#f0a58f}.need.warnn{color:#f0a58f}
 .pvrow{flex-direction:row;align-items:center;gap:10px;min-width:0;max-width:100%;overflow:hidden}.pvrow .pvt{flex:1}.pvi{flex:none;width:36px;height:36px;border-radius:6px;border:1px solid var(--line);display:block}.pvrow .pvt{display:flex;flex-direction:column;gap:2px;min-width:0}.pvrow small{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pvq{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0;background:rgba(255,255,255,.03)}.pvq h3{margin:0 0 8px}.pvq .kv{display:flex;gap:10px;padding:3px 0;font-size:13px}.pvq .kv span{flex:none;width:110px;color:var(--muted)}.pvq ol{margin:10px 0 8px;padding-left:20px}.pvq ol li{margin:3px 0}
@@ -529,7 +529,7 @@ function computeDps(){
 }
 // Rechnet ein ganzes Team. Blut ist Kraft geht an die bis zu drei Verbündeten, denen am meisten Energie fehlt.
 function teamDps(bars, eff, weapon0, n){
-  const allies = Math.max(bars.length, 1), base = { targets:n, foeRate:0.5, armor:armorNow(), allies };
+  const allies = Math.max(bars.length, 1), base = { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), allies };
   // gleiche Geister nur einmal im Team: Der Erste in der Reihe setzt sie
   const seenSp = new Set(), skips = bars.map(b=>{ const mine = GW.spiritIds(b), sk2 = new Set(mine.filter(id=>seenSp.has(id))); mine.forEach(id=>seenSp.add(id)); return sk2; });
   const run = (i, phys, bp) => GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys }, { bipPips:bp, skip:skips[i] }));
@@ -546,6 +546,9 @@ function teamDps(bars, eff, weapon0, n){
 }
 const bipPips = effMap => Math.round(3 + 3*Math.min(effMap.get(4)||0, 21)/15);
 // Blut ist Kraft: +3...6 Pips für 10 s auf einem Verbündeten. Annahme: Der Held hält es auf drei Verbündeten zugleich.
+const foeDpsNow = () => ELITE_AREA(state.area) ? 60 : 40;
+// Schutz mehrerer Leisten überlappt: zusammen nie mehr als der ankommende Schaden
+const protSum = (list, n) => { const inc = n * foeDpsNow(); return inc * (1 - list.reduce((a,d)=>a*(1-Math.min(0.95, ((d&&d.prot)||0)/inc)),1)); };
 const armorNow = () => state.armor || (ELITE_AREA(state.area) ? 80 : 60);
 const hasBip = bar => bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Blood is Power"; });
 const bipShare = (effMap, others) => { const r = Math.min(effMap.get(4)||0, 21); return Math.round(3 + 3*r/15) * Math.min(1, 3/Math.max(1,others)); };
@@ -597,7 +600,7 @@ function metricHTML(D){
 let LAST = null;
 function render(){
   compute();
-  const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
+  const sum = k => Math.round(k==="prot" ? protSum(DPS, state.dpsN||3) : DPS.reduce((a,d)=>a+val(d,k),0));
   const now = { code: TEAM.map(m=>m.code).join("|"), pri: state.pri, n: TEAM.length, t: state.dpsN, dmg: sum("dmg"), heal: sum("heal"), prot: sum("prot") };
   if (LAST && LAST.code !== now.code && LAST.pri === now.pri && LAST.n === now.n && LAST.t === now.t && ui.drawer === "member" && CAT !== "run") {
     const parts = ["dmg","heal","prot"].filter(k=>now[k]!==LAST[k]).map(k=>`${METRIC[k][0]} ${LAST[k]} → ${now[k]} <span class="${now[k]>LAST[k]?"up":"down"}">(${now[k]>LAST[k]?"+":""}${now[k]-LAST[k]})</span>`);
@@ -634,7 +637,7 @@ function renderMain(){
   const pills = [];
   if (PLAN && CAT==="team") pills.push(`<button class="pill" id="p-team" aria-haspopup="menu">${esc(PLAN.def.name)} ▾</button>`);
   if (CAT!=="run" && DPS.length) {
-    const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
+    const sum = k => Math.round(k==="prot" ? protSum(DPS, state.dpsN||3) : DPS.reduce((a,d)=>a+val(d,k),0));
     pills.push(`<button class="pill" data-open="dps">${ICN.dmg} <b>${sum("dmg")}</b> Schaden/s</button>`);
     const ctl = teamCtrl();
     if (ctl >= 0.05) pills.push(`<button class="pill" data-open="dps" title="So viele Gegner sind im Schnitt ausgeschaltet">${ICN.ctrl} <b>${ctrlTxt(ctl)}</b> von ${state.dpsN||3} Gegnern aus</button>`);
@@ -967,7 +970,7 @@ function drawMember(body){
   const d = m.bar, D = DPS[ui.idx];
   const C = sdata.chg || {};
   const chg = d.skills.map(id=>GW.skill(id)).filter(s=>s && C[s.n.replace(/ \((Kurzick|Luxon|PvP)\)$/,"")]);
-  tabs([["bar","Leiste"],["eq","Ausrüstung"],["dps","Werte",CAT==="run"],["code","Code"],["chg",`Änderungen${chg.length?" "+chg.length:""}`,!chg.length]]);
+  tabs([["bar","Leiste"],["eq","Ausrüstung"],["dps","Werte",CAT==="run"],["cmp","Vergleich",CAT==="run"||m.you||!m.key],["code","Code"],["chg",`Änderungen${chg.length?" "+chg.length:""}`,!chg.length]]);
   $("dtitle").innerHTML = `${m.you?"Deine Leiste":esc(m.name||"Kein Held frei")}<small>${esc(pname(d.pri,d.sec))}${m.you?"":" · "+esc(m.role)}</small>`;
   const attrs = d.attrs.filter(a=>a[1]>0).map(a=>`<div class="kv"><span>${esc(attrDe(a[0]))}</span><b>${a[1]}</b></div>`).join("");
   if (ui.tab==="bar") {
@@ -1017,6 +1020,24 @@ function drawMember(body){
     body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="mut sm">Dauerwerte pro Sekunde</div>${targetSeg()}</div>
       ${(["dmg","heal","prot"].map(sec).join("") + (()=>{ const ps=D.parts.filter(p=>p.cat==="ctrl"); return ps.length ? `<h3>${ICN.ctrl} Kontrolle · ${ctrlTxt(D.ctrl)} Gegner ausgeschaltet</h3>` + ps.map(p=>`<div class="dpsrow"><div>${p.sid?`<span data-sid="${p.sid}">${esc(p.name)}</span>`:esc(p.name)}<div class="dim sm">${esc(p.detail)}</div></div><b>${p.dps.toFixed(2).replace(".",",")}</b></div>`).join("") : ""; })()) || `<p class="mut">Keine berechenbaren Werte.</p>`}
       ${D.notes.length?`<p class="dim sm" style="margin-top:10px">${D.notes.map(esc).join(" ")}</p>`:""}`;
+  } else if (ui.tab==="cmp") {
+    // Vergleich: dieselbe Rolle mit anderen Heldenleisten aus dem Tool, mit denselben Zielen und derselben Team-Energie gerechnet
+    const n = state.dpsN, give = TEAM.some(x=>hasBip(x.bar)) ? 5 : 0;
+    const ev = (bar) => { let r=[]; try{ r=GW.equipFor(bar, EQ, null).runes; }catch(e){} return GW.dps(bar, GW.effRanks(bar, r), { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), allies:TEAM.length, physRate:DPS[0]?DPS[0].physical:0, bipPips:hasBip(bar)?0:give }); };
+    const cur = ev(d), KEYS = [["total","Schaden/s",ICN.dmg],["heal","Heilung/s",ICN.heal],["prot","Schutz/s",ICN.prot],["ctrl","Gegner aus",ICN.ctrl]];
+    const auto = cur.prot > cur.total && cur.prot >= cur.heal ? "prot" : cur.heal > cur.total ? "heal" : (cur.ctrl >= 0.5 && cur.total < 50) ? "ctrl" : "total";
+    const k = ui.cmpK && KEYS.some(x=>x[0]===ui.cmpK) ? ui.cmpK : auto, fmt = (kk, v) => kk==="ctrl" ? ctrlTxt(v) : Math.round(v);
+    const pool = refPool().filter(o=>normCode(o.code)!==normCode(m.code)).map(o=>({ o, D:ev(o.bar) })).filter(x=>x.D[k] > (k==="ctrl"?0.05:1)).sort((a,b)=>b.D[k]-a.D[k]);
+    const seenEl = {}, top = pool.filter(x=>{ const e=x.o.elite.id+"|"+x.o.bar.pri; seenEl[e]=(seenEl[e]||0)+1; return seenEl[e]<=1; }).slice(0,8);
+    if (k==="prot" || k==="heal") { const mo = pool.find(x=>x.o.bar.pri===3); if (mo && !top.includes(mo)) top.push(mo); }
+    const mx = Math.max(cur[k], ...top.map(x=>x.D[k]), 0.01), better = top.filter(x=>x.D[k] > cur[k]*1.02).length;
+    const line = (name, sub, D2, me, code) => `<div class="cmprow${me?" me":""}"><div class="t"><span><b>${esc(name)}</b> <span class="dim sm">${esc(sub)}</span></span><b>${fmt(k, D2[k])}${k==="ctrl"?"":"/s"}</b></div><div class="meter${me?"":" sup"}"><i style="width:${Math.round(100*D2[k]/mx)}%"></i></div><div class="dim sm">${KEYS.filter(x=>x[0]!==k && D2[x[0]] > (x[0]==="ctrl"?0.05:1)).map(x=>`${x[2]} ${fmt(x[0], D2[x[0]])}`).join(" · ")}${code?` <button class="btn s" style="float:right;margin-top:-2px" data-cmptake="${esc(code)}">Diese Leiste nehmen</button>`:""}</div></div>`;
+    const el = d.skills.map(id=>GW.skill(id)).find(s=>s && s.e);
+    body.innerHTML = `<div class="row" style="justify-content:space-between;margin-bottom:8px"><div class="seg" style="width:min(100%,380px)">${KEYS.map(x=>`<button class="${k===x[0]?"on":""}" data-cmpk="${x[0]}">${x[1].replace("/s","")}</button>`).join("")}</div></div>
+      <p class="sm" style="margin:0 0 8px">${top.length ? (better ? `${better} ${better===1?"Leiste liegt":"Leisten liegen"} bei ${KEYS.find(x=>x[0]===k)[1].replace("/s","")} über dieser.` : `Keine andere Heldenleiste im Tool liegt bei ${KEYS.find(x=>x[0]===k)[1].replace("/s","")} über dieser.`) : "Für diesen Wert gibt es keine vergleichbare Leiste."}</p>
+      ${line((m.name||"Held")+": "+(el?dname(el):"ohne Elite"), pname(d.pri,d.sec)+" · aktuell", cur, true, "")}
+      ${top.map(x=>line(dname(x.o.elite), GW.PROF_DE[x.o.bar.pri]+" · "+x.o.src, x.D, false, x.o.code)).join("")}
+      <p class="dim sm" style="margin-top:10px">Jede Leiste ist einzeln gerechnet, mit ${n} Zielen, Rüstung ${armorNow()}${give?" und Energie aus Blut ist Kraft":""}. Je Elite und Klasse steht nur die beste Leiste. Schutz zählt verhinderten Schaden und kann nie größer sein als der Schaden, der ankommt (jeder Gegner ${foeDpsNow()}/s, Annahme). Geister wie Schutzraum und Vereinigung wirken auf alle Treffer der Gruppe. Schutz auf ein einzelnes Ziel sieht 40 % der Treffer, weil der Heiler den schützt, der gerade Schaden nimmt.</p>`;
   } else if (ui.tab==="code") {
     let html = `<h3>Vorlagen-Code</h3><div class="code"><input readonly value="${esc(m.code)}" aria-label="Code"><button class="btn s" data-copy="${esc(m.code)}">Kopieren</button></div>`;
     if (m.you) {
@@ -1053,7 +1074,7 @@ function refTeams(){
   // Tier-Leisten stammen aus reinen Tier-Teams (Petway) und taugen einzeln nicht als Vergleich
   const petBar = o => o.bar.skills.some(id=>{ const s=GW.skill(id); return s && ["Heal as One","Charm Animal","Comfort Animal"].includes(s.n); });
   const base = refPool().filter(o=>!aiBadBar(o) && !meleeBar(o) && !petBar(o)).map(o=>{ let r=[]; try{ r=GW.equipFor(o.bar, EQ, null).runes; }catch(e){} return Object.assign(o, { eff:GW.effRanks(o.bar, r), bip:hasBip(o.bar), splinter:o.bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Splinter Weapon"; }) }); });
-  const evalPool = bp => base.map(o=>{ const D = GW.dps(o.bar, o.eff, { targets:n, foeRate:0.5, armor:armorNow(), physRate:phys, allies, bipPips:o.bip?0:bp }); return Object.assign({}, o, { D, minion:D.parts.some(p=>p.kind==="Diener") }); });
+  const evalPool = bp => base.map(o=>{ const D = GW.dps(o.bar, o.eff, { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), physRate:phys, allies, bipPips:o.bip?0:bp }); return Object.assign({}, o, { D, minion:D.parts.some(p=>p.kind==="Diener") }); });
   const pick = (pool, cnt, taken) => { const res=[], el={}; let mm=0, sp=0;
     const spir = new Set(GW.spiritIds(TEAM[0].bar)); const clash = o => GW.spiritIds(o.bar).some(id=>spir.has(id));
     taken.forEach(o=>{ el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; GW.spiritIds(o.bar).forEach(id=>spir.add(id)); });
@@ -1063,21 +1084,21 @@ function refTeams(){
     return res; };
   const eff0 = (()=>{ let r=[]; try{ r=GW.equipFor(TEAM[0].bar, EQ, TEAM[0].build && TEAM[0].build.url).runes; }catch(e){} return GW.effRanks(TEAM[0].bar, r); })();
   const aw = TEAM[0].build && TEAM[0].build.annWeapon ? (ANN_W[TEAM[0].build.annWeapon.split(" ")[0]]||null) : null;
-  const youAt = bp => GW.dps(TEAM[0].bar, eff0, { targets:n, weapon:aw, foeRate:0.5, armor:armorNow(), allies, bipPips:bp }).total;
+  const youAt = bp => GW.dps(TEAM[0].bar, eff0, { targets:n, weapon:aw, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), allies, bipPips:bp }).total;
   // mit Blut-ist-Kraft-Held: bester BiP-Heiler nach Heilung
-  const bipBar = [...base].filter(o=>o.bip).map(o=>Object.assign({}, o, { D:GW.dps(o.bar, o.eff, { targets:n, foeRate:0.5, armor:armorNow(), physRate:phys, allies }) })).sort((a,b)=>(b.D.heal+b.D.prot/4)-(a.D.heal+a.D.prot/4))[0];
+  const bipBar = [...base].filter(o=>o.bip).map(o=>Object.assign({}, o, { D:GW.dps(o.bar, o.eff, { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), physRate:phys, allies }) })).sort((a,b)=>(b.D.heal+b.D.prot/4)-(a.D.heal+a.D.prot/4))[0];
   const bp = bipBar ? bipShare(bipBar.eff, heroes) : 0;
   const P1 = evalPool(bp), P0 = evalPool(0);
   const sum = (L, you) => Math.round(you + L.reduce((a,o)=>a+o.D.total,0));
   // Vergleichsteam: so viel Schaden wie möglich, mit gerade genug Verteidigung zum Überleben.
   // Annahme: Jeder Gegner macht 40 Schaden/s, in Elite-Gebieten 60. Ausgeschaltete Gegner machen keinen Schaden.
-  const incoming = c => n * (ELITE_AREA(state.area) ? 60 : 40) * Math.max(0, 1 - c/n);
+  const incoming = c => n * foeDpsNow() * Math.max(0, 1 - c/n);
   const evalTeam = L => { const TD = teamDps([TEAM[0].bar].concat(L.map(o=>o.bar)), [eff0].concat(L.map(o=>o.eff)), aw, n);
-    const tot = k => TD.reduce((a,d)=>a+(d[k]||0),0), c = n*(1-TD.reduce((a,d)=>a*(1-Math.min(1,(d.ctrl||0)/n)),1)), inc = incoming(c);
+    const tot = k => k==="prot" ? protSum(TD, n) : TD.reduce((a,d)=>a+(d[k]||0),0), c = n*(1-TD.reduce((a,d)=>a*(1-Math.min(1,(d.ctrl||0)/n)),1)), inc = incoming(c);
     return { TD, dmg:tot("total"), heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal") >= 0.3*inc && tot("heal")+tot("prot") >= 1.25*inc, gap: Math.max(0, 0.3*inc-tot("heal")) + Math.max(0, 1.25*inc-tot("heal")-tot("prot")) }; };
   let play = null, playSum = 0, playEval = null;
   if (heroes>=1) {
-    const isSup = o => o.D.heal+o.D.prot >= 40 && o.D.total < 30;
+    const isSup = o => o.D.heal+o.D.prot >= 25 && o.D.total < 30;
     const sup = [...P1].filter(isSup).sort((a,b)=>(b.D.heal*2+b.D.prot)-(a.D.heal*2+a.D.prot)).slice(0,12);
     const build = start => { let L = start.concat(pick(P1, heroes-start.length, start)).slice(0,heroes), E = evalTeam(L), guard = 0;
       while (!E.ok && guard++ < heroes) { let best = null;
@@ -1087,15 +1108,17 @@ function refTeams(){
       return { L, E }; };
     const cands = [build([])]; if (bipBar && heroes>=2) cands.push(build([bipBar]));
     const good = cands.filter(c=>c.E.ok).sort((a,b)=>b.E.dmg-a.E.dmg)[0] || cands.sort((a,b)=>a.E.gap-b.E.gap)[0];
-    play = good.L.map((o,i)=>Object.assign({}, o, { D:good.E.TD[i+1] })).sort((a,b)=>isSup(b)-isSup(a) || b.D.total-a.D.total); playSum = Math.round(good.E.dmg); playEval = good.E;
+    play = good.L.map((o,i)=>Object.assign({}, o, { D:good.E.TD[i+1] })).sort((a,b)=>isSup(b)-isSup(a) || b.D.total-a.D.total);
+    // in genau der Reihenfolge noch einmal rechnen, in der das Team übernommen wird: Dann stimmt die Zahl nach dem Übernehmen überein
+    playEval = evalTeam(play); play = play.map((o,i)=>Object.assign({}, o, { D:playEval.TD[i+1] })); playSum = Math.round(playEval.dmg);
   }
-  const mineEval = (()=>{ const tot = k => DPS.reduce((a,d)=>a+((d&&d[k])||0),0), c = teamCtrl(), inc = incoming(c); return { heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal") >= 0.3*inc && tot("heal")+tot("prot") >= 1.25*inc }; })();
+  const mineEval = (()=>{ const tot = k => k==="prot" ? protSum(DPS, n) : DPS.reduce((a,d)=>a+((d&&d[k])||0),0), c = teamCtrl(), inc = incoming(c); return { heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal") >= 0.3*inc && tot("heal")+tot("prot") >= 1.25*inc }; })();
   const playCtrl = playEval ? playEval.ctrl : 0;
   const maxA = pick(P0, heroes, []), sumA = sum(maxA, youAt(0));
   let max = maxA, maxSum = sumA;
   if (bipBar && heroes>=2) { const maxB = [bipBar].concat(pick(P1, heroes-1, [bipBar])), sumB = sum(maxB, youAt(bp)); if (sumB > sumA) { max = maxB; maxSum = sumB; } }
   const mine = Math.round(DPS.reduce((a,d)=>a+d.total,0));
-  const own = (BUILDS[state.pri]||[]).map((b,i)=>[b,i]).filter(([b])=>(b.cat||"team")==="team").map(([b,i])=>{ try { const d=GW.decode(b.code); let r=[]; try{ r=GW.equipFor(d, EQ, b.url).runes; }catch(e){} const w2=b.annWeapon?(ANN_W[b.annWeapon.split(" ")[0]]||null):null; return { b, i, v:GW.dps(d, GW.effRanks(d,r), { targets:n, weapon:w2, foeRate:0.5, armor:armorNow(), allies, bipPips:DPS[0] && TEAM.some(m=>hasBip(m.bar)) ? bp : 0 }).total }; } catch(e){ return null; } }).filter(Boolean).sort((a,b)=>b.v-a.v)[0];
+  const own = (BUILDS[state.pri]||[]).map((b,i)=>[b,i]).filter(([b])=>(b.cat||"team")==="team").map(([b,i])=>{ try { const d=GW.decode(b.code); let r=[]; try{ r=GW.equipFor(d, EQ, b.url).runes; }catch(e){} const w2=b.annWeapon?(ANN_W[b.annWeapon.split(" ")[0]]||null):null; return { b, i, v:GW.dps(d, GW.effRanks(d,r), { targets:n, weapon:w2, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), allies, bipPips:DPS[0] && TEAM.some(m=>hasBip(m.bar)) ? bp : 0 }).total }; } catch(e){ return null; } }).filter(Boolean).sort((a,b)=>b.v-a.v)[0];
   REFCACHE = { key, val:{ mine, max, maxSum, play, playSum, playCtrl, playEval, mineEval, own, poolSize:base.length } };
   return REFCACHE.val;
 }
@@ -1119,14 +1142,14 @@ function refHTML(){
 function takeRef(kind){
   const R = refTeams(); if (!R) return; const L = kind==="play" ? R.play : R.max; if (!L) return;
   const key = "ref_"+kind, name = kind==="play" ? "Stärkstes Team, das überlebt (berechnet)" : "Rechnerisches Maximum (berechnet)";
-  const def = { key, name, ref:true, desc: kind==="play" ? "Von uns berechnet: Die stärksten Heldenleisten für Schaden, dazu der beste Heiler und der beste Schutz aus dem Vergleich. Gezählt wird Dauerschaden, Unterbrechungen zählen nicht." : "Von uns berechnet: Nur die Heldenleisten mit dem höchsten Dauerschaden, ohne Heiler und Schutz. Als Vergleichswert gedacht, im Spiel kaum haltbar.",
+  const def = { key, name, ref:true, desc: kind==="play" ? "Von uns berechnet: So viel Schaden wie möglich, mit gerade genug Heilung und Schutz zum Überleben. Die Annahmen stehen unter Schaden/s." : "Von uns berechnet: Nur die Heldenleisten mit dem höchsten Dauerschaden, ohne Heiler und Schutz. Als Vergleichswert gedacht, im Spiel kaum haltbar.",
     slots: L.map(o=>({ code:o.code, role:`${dname(o.elite)}-${GW.PROF_DE[o.bar.pri]}`, why:`${Math.round(o.D.total)} Schaden/s nach unserer Rechnung. Quelle der Leiste: ${o.src}.`, src:o.url||undefined })) };
   const i = TEAMS.findIndex(T=>T.key===key); if (i>=0) TEAMS[i]=def; else TEAMS.push(def);
   state.team = key; state.over = {}; toast("Team übernommen"); render();
 }
 function drawDps(body){
   $("dtabs").hidden = true; $("dtabs").innerHTML = "";
-  const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
+  const sum = k => Math.round(k==="prot" ? protSum(DPS, state.dpsN||3) : DPS.reduce((a,d)=>a+val(d,k),0));
   const maxOf = k => Math.max(1, ...DPS.map(d=>val(d,k)));
   $("dtitle").innerHTML = `Team-Werte<small>Dauerwerte pro Sekunde</small>`;
   body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="row">${["dmg","heal","prot"].map(k=>`<div><div class="mut sm">${METRIC[k][1]}</div><div class="hd" style="font-size:24px;color:#f3dfb0">${METRIC[k][0]} ${sum(k)}</div></div>`).join("")}<div><div class="mut sm">Gegner aus</div><div class="hd" style="font-size:24px;color:#f3dfb0">${ICN.ctrl} ${ctrlTxt(teamCtrl())}</div></div></div>${targetSeg()}</div>
@@ -1145,6 +1168,7 @@ function drawDps(body){
       <li>Rüstung der Gegner: Je 40 Rüstung halbiert sich Waffen-, Diener-, Tier- und Elementarschaden (Wiki). Rüstungsignorierender Schaden wie bei Mesmern, Peinigungsgebeten und Angriffsboni bleibt voll. In normalen Gebieten rechnet das Tool mit 60, in Elite-Gebieten mit 80. Laut Wiki gilt 3 mal Stufe plus Klassenbonus, bei Stufe 28 also ab 84.</li>
       <li>Kontrolle ("Gegner aus"): Niederschlag, Unterbrechung, Benommenheit, Blindheit, gesperrte Fertigkeiten und Panik zählen als Zeit, in der ein Gegner nichts tun kann. 1,0 heißt: Im Schnitt ist ständig ein Gegner ausgeschaltet. Annahmen: Die Hälfte der Gegner zaubert, die Hälfte greift an. Eine Unterbrechung kostet 2 Sekunden und jede zweite sitzt.</li>
       <li>Nebeneffekte der Erstattribute (Wiki): Schnellwirkung verkürzt Wirk- und Aufladezeit. Stärke gibt je Rang 1 % Rüstungsdurchdringung bei Angriffsfertigkeiten. Fachkenntnis und Mystik senken Energiekosten. Gunst der Götter heilt je Rang 3,2 zusätzlich. Seelensammlung, Kritische Stöße und Führung geben Energie. Macht des Herbeirufens verlängert Waffenzauber und gibt Dienern mehr Lebenspunkte. Energiespeicherung erhöht nur die Höchstenergie und ändert Dauerwerte nicht.</li>
+      <li>Schutz: Gerechnet wird mit dem Schaden, der auf die Gruppe einprasselt (je Gegner 40/s, in Elite-Gebieten 60/s, Annahme). Schutz kann nie mehr verhindern, als ankommt. Mehrere Schutz-Effekte überlappen und werden nicht einfach addiert.</li>
       <li>Flächenzauber am Boden (Strahl des Urteils, Feuersturm und ähnliche) zählen mit halber Dauer, weil Gegner herauslaufen. Das ist eine Annahme.</li>
       <li>Stab und Zauberstab: 11-22 Schaden alle 1,75 Sekunden (Wiki), nur in der Zeit ohne Zauber.</li>
       <li>Auslöser durch Gegner-Aktionen: Eine Aktion alle 2 Sekunden angenommen.</li>
@@ -1206,6 +1230,8 @@ document.addEventListener("click", e=>{
   const sl = t.closest("[data-slot]"); if (sl) { openPicker(+sl.dataset.slot); return; }
   const ar = t.closest("[data-area]"); if (ar) { state.area=ar.dataset.area; state.team=null; store.set("area",state.area); closeDrawer(); render(); return; }
   const sp = t.closest("[data-spot]"); if (sp) { state.spot=sp.dataset.spot; state.forceTeam=false; closeDrawer(); render(); return; }
+  const ck = t.closest("[data-cmpk]"); if (ck) { ui.cmpK=ck.dataset.cmpk; drawMember($("dbody")); return; }
+  const ct = t.closest("[data-cmptake]"); if (ct) { const mm=TEAM[ui.idx]; if (mm && mm.key) { state.over[mm.key]=ct.dataset.cmptake; toast("Leiste übernommen"); render(); } return; }
   const rs = t.closest("[data-reset]"); if (rs) { delete state.over[rs.dataset.reset]; render(); return; }
   if (t.closest("#pvebtn")) { ui.pveId=null; openDrawer("pve"); render(); return; }
   if (t.closest("[data-pveback]")) { ui.pveId=null; renderDrawer(); return; }

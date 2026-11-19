@@ -554,6 +554,7 @@
   GW.dps = function (bar, eff, opts) {
     const n = opts.targets || 1, out = [], notes = [];
     let fcUsed = false, fleeUsed = false;
+    const INC = n * (opts.foeDps || 40);
     // Zielrüstung (Wiki "Armor rating"): je 40 Rüstung halbiert sich rüstungsabhängiger Schaden, 60 ist die Basis
     const AR = opts.armor || 60, af = Math.pow(2, (60 - AR) / 40), afAir = Math.pow(2, (60 - AR * 0.75) / 40);
     const armorOf = x => { const m = x.match(/\d (fire|cold|lightning|earth|slashing|piercing|blunt|physical|chaos|dark) damage/); return !m ? 1 : m[1] === "lightning" ? afAir : af; };
@@ -694,7 +695,7 @@
       const ab = dRaw.match(/target ally deals (\d+(?:\.\.\.\d+)?) more damage in melee/) || dRaw.match(/(\d+(?:\.\.\.\d+)?) more damage whenever these party members hit with physical/);
       if (ab && opts.physRate) { const D = dur || 60; parts.push({ kind: "Verbündeten-Bonus", per: at(ab[1], r) * opts.physRate * D, dur: D, aoe: 1, label: "+" + at(ab[1], r) + " je Treffer des Nahkämpfers" }); }
       // ---- Unterstützung: Heilung und verhinderter Schaden (Texte von guildwiki.de) ----
-      const HIT = 80, HITRATE = 0.5, MAXHP = 480;
+      const HIT = 80, MAXHP = 480;
       const allies = opts.allies || 8;
       const many = /(gesamte Gruppe|alle Gruppenmitglieder|Gruppenmitglieder in|Verbündete in (Reichweite|Hörweite)|alle Verbündeten|Verbündeten in (Reichweite|Hörweite))/i.test(dd) || /(party members|allies in (earshot|range)|within range|entire party|all allies)/.test(d);
       const lifeM = d.match(/\((\d+(?:\.\.\.\d+)?) second lifespan\)/);
@@ -702,6 +703,8 @@
       const enchant = /enchantment|echo|ritual/i.test(s.t);
       if (!sdur && enchant && !/spell\.\s/i.test(s.t)) sdur = 0;
       const mult = many ? allies : 1;
+      // Treffer auf die Gruppe: Jeder Gegner macht opts.foeDps Schaden/s (Annahme 40, Elite 60). Gruppenweite Effekte sehen alle Treffer, Effekte auf ein Ziel 40 % davon (der Heiler schützt den, der gerade Schaden nimmt).
+      const HITRATE = (many ? INC / allies : 0.4 * INC) / HIT;
       const hpReg = dd.match(/\+?(\d+(?:\.\.\.\d+)?) Lebenspunktregeneration/);
       if (hpReg && !/hex/i.test(s.t)) { const p = Math.abs(at(hpReg[1], r)); const D = sdur || (/echo/i.test(s.t) ? 15 : 60); parts.push({ kind: "Heilung", per: p * 2 * D, dur: D, aoe: mult, label: "Regeneration +" + p }); }
       const trig = dd.match(/[Hh]eilt jedes Mal um (\d+(?:\.\.\.\d+)?)/) || dd.match(/[Hh]eilt[^.]*?jedes Mal um (\d+(?:\.\.\.\d+)?)/);
@@ -724,7 +727,9 @@
         else if (redM) { perHit = Math.min(HIT, at(redM[1], r)); lab = "−" + at(redM[1], r) + " je Treffer"; }
         else if (blkM) { perHit = HIT * (+blkM[1]) / 100; lab = blkM[1] + " % Blocken"; }
         else if (armM && !/hex/i.test(s.t)) { const a = at(armM[1], r); perHit = HIT * (1 - Math.pow(2, -a / 40)); lab = "+" + a + " Rüstung"; }
-        if (perHit > 0) parts.push({ kind: "Schutz", per: perHit * HITRATE * D2, dur: D2, aoe: mult, label: lab });
+        // Wirkt der Effekt nur auf den Wirker selbst ("You have +20 armor"), schützt er nur dessen Anteil an den Treffern
+        const selfOnly = /you have \+\d+(\.\.\.\d+)? armor|you (have|gain) (a )?\d+(\.\.\.\d+)?% chance to block|you block/i.test(d);
+        if (perHit > 0) parts.push({ kind: "Schutz", per: perHit * (selfOnly ? INC / allies / HIT : HITRATE) * D2, dur: D2, aoe: selfOnly ? 1 : mult, label: lab + (selfOnly ? ", nur für den Helden selbst" : "") });
       }
       // ---- Diener und Geister (Wiki: Minion, Bone Horror, Bone Fiend, Flesh Golem, Spirit) ----
       const lvM = d.match(/level (\d+\.\.\.\d+) (bone horror|bone fiend|vampiric horror|shambling horror|flesh golem|bone minion)/) || d.match(/creates? (?:two|2) level (\d+\.\.\.\d+) (bone minion)/) || d.match(/animates? a level (\d+\.\.\.\d+) (bone horror)/);
@@ -851,9 +856,11 @@
     if (usedTitle) notes.push("Titel-Fertigkeiten sind mit maximalem Titelrang gerechnet.");
     out.forEach(o => { if (!o.cat) o.cat = "dmg"; });
     const sum = c => out.filter(o => o.cat === c).reduce((a, o) => a + o.dps, 0);
+    // Schutz überlappt: Ein geblockter Treffer kann nicht noch einmal gedeckelt werden. Zusammen nie mehr als der Schaden, der ankommt.
+    { const ps = out.filter(o => o.cat === "prot" && o.dps > 0), raw = ps.reduce((a, o) => a + o.dps, 0); if (raw > 0) { const comb = INC * (1 - ps.reduce((a, o) => a * (1 - Math.min(0.95, o.dps / INC)), 1)); ps.forEach(o => { o.dps *= comb / raw; }); } }
     const total = sum("dmg"), heal = sum("heal"), prot = sum("prot"), ctrl = Math.min(n, sum("ctrl"));
     if (ctrl > 0.05) notes.push("Kontrolle: Im Schnitt " + ctrl.toFixed(1).replace(".", ",") + " von " + n + " Gegnern ausgeschaltet. Annahmen: Die Hälfte der Gegner zaubert, die Hälfte greift an. Eine Unterbrechung kostet 2 s und jede zweite sitzt.");
-    return { total, heal, prot, ctrl, parts: out.filter(o => o.dps > (o.cat === "ctrl" ? 0.005 : 0.05)).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0, energyF: f };
+    return { total, heal, prot, ctrl, incoming: INC, parts: out.filter(o => o.dps > (o.cat === "ctrl" ? 0.005 : 0.05)).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0, energyF: f };
   };
   // Effektive Ränge aus Grundwerten plus Runen der Ausrüstungsempfehlung
   GW.effRanks = function (bar, runes) {
