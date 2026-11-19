@@ -554,6 +554,7 @@
   GW.dps = function (bar, eff, opts) {
     const n = opts.targets || 1, out = [], notes = [];
     let fcUsed = false, fleeUsed = false, heldUsed = false, scatter = 0;
+
     const ADOT = new Set(["Kirin's Wrath", "Ray of Judgment", "Symbol of Wrath", "Mystic Sandstorm", "Sandstorm", "Savannah Heat", "Searing Heat", "Bed of Coals", "Breath of Fire", "Celestial Storm", "Eruption", "Fire Storm", "Lava Font", "Maelstrom", "Unsteady Ground", "Chaos Storm", "Snow Storm", "Churning Earth", "Meteor Shower", "Balthazar's Aura", "Storm of Swords"]);
     const SNARE = new Set(["Deep Freeze", "Grasping Earth", "Frozen Burst", "Ice Spikes", "Teinai's Prison"]);
     const INC = n * (opts.foeDps || 40);
@@ -562,6 +563,12 @@
     const armorOf = x => { const m = x.match(/\d (fire|cold|lightning|earth|slashing|piercing|blunt|physical|chaos|dark) damage/); return !m ? 1 : m[1] === "lightning" ? afAir : af; };
     const rank = a => eff.get(a) || 0;
     const sk = bar.skills.map((id, i) => [i, GW.skill(id)]).filter(x => x[1]);
+    // Derwisch: Fertigkeiten, die eine eigene Derwisch-Verzauberung entfernen, wirken voll, solange genug Verzauberungen nachkommen. Fromme Erneuerung lädt sich beim Enden selbst wieder auf und liefert deshalb immer eine.
+    const TEARRX = /(removes?|lose) (1|one|a) (of your )?dervish enchantments?/i;
+    const dEnch = sk.map(x => x[1]).filter(x => x.p === 10 && /enchantment/i.test(x.t)), hasPR = dEnch.some(x => x.n === "Pious Renewal");
+    const tearSk = sk.map(x => x[1]).filter(x => x.p === 10 && TEARRX.test(x.d || ""));
+    const tSupply = hasPR ? 9 : dEnch.reduce((a, x) => a + 1 / Math.max(1, frac(x.rc) + frac(x.ac)), 0), tDemand = tearSk.reduce((a, x) => a + 1 / Math.max(2, /A$/.test(String(x.cost)) ? 6 : frac(x.rc) * 0.5 + 1), 0);
+    const TEAR = tDemand ? Math.min(1, tSupply / tDemand) : 0;
     // Waffe bestimmen
     let w = null, wAttr = null;
     const best = [...eff].filter(a => WEAP[a[0]]).sort((a, b) => b[1] - a[1])[0];
@@ -624,6 +631,8 @@
         if (s.p === 5 && /spell/i.test(s.t)) rc *= Math.max(0.4, 1 - 0.03 * rank(0));
         fcUsed = true;
       }
+      const tear = s.p === 10 && TEARRX.test(d);
+      if (tear) { const m = d.match(/recharges (\d+)% faster/); if (m) rc *= 1 - (+m[1] / 100) * TEAR; }
       const spell = /spell|signet|ritual|chant|shout|echo|well|glyph/i.test(s.t) && !/attack/i.test(s.t);
       const T = Math.max(0.25, rc + ac + (/spell/i.test(s.t) ? 0.75 : 0));
       const durM = d.match(/\((\d+(?:\.\.\.\d+)?) seconds?(?:\[s\])?\.?\)/);
@@ -641,13 +650,14 @@
       const aoeAll = /(^|[.:)] )(also (hits|affects|strikes)|hits (\d+ )?(foes|all)|affects (foes|all)|strikes (foes|all))/.test(d);
       const aoeAt = rx => { const x = sents.find(q => rx.test(q)); const v = aoeMul(x || d, n) || 1; return v === 1 && aoeAll ? (aoeMul(d, n) || 1) : v; };
       // Bedingter Schaden (nur wenn der Gegner gerade zaubert, angreift oder eine Fertigkeit nutzt): halbe Trefferquote angenommen
-      const condP = /if (target|that|this) foe is (casting|using|attacking|activating)|the next (spell|skill|attack)[^.]*that target foe|if target foe was (casting|attacking)|if that action was|interruption effect:|removal effect:|if (a|an|that) (condition|hex|enchantment) (is|was) removed|for each (condition|hex) removed/.test(d) ? (/foe loses \d+(\.\.\.\d+)? enchantment|enchantments? from target foe/.test(d) ? 0.3 : 0.5) : 1;
+      const condP = tear ? 1 : /if (target|that|this) foe is (casting|using|attacking|activating)|the next (spell|skill|attack)[^.]*that target foe|if target foe was (casting|attacking)|if that action was|interruption effect:|removal effect:|if (a|an|that) (condition|hex|enchantment) (is|was) removed|for each (condition|hex) removed/.test(d) ? (/foe loses \d+(\.\.\.\d+)? enchantment|enchantments? from target foe/.test(d) ? 0.3 : 0.5) : 1;
       // Energiegewinn der Fertigkeit selbst
       let gain = 0;
       const gm = dRaw.match(/you gain (\d+(?:\.\.\.\d+)?) energy(?! (?:whenever|when|each time|for each|every))/) || dRaw.match(/health and (\d+(?:\.\.\.\d+)?) energy/);
       if (gm) gain = at(gm[1], r) * (condP < 1 ? 1 : / if |interrupt/.test(dRaw) ? 0.5 : 1);
       const el2 = dRaw.match(/causes (\d+(?:\.\.\.\d+)?) energy loss\. you gain (\d+) energy for each/); if (el2) gain = at(el2[1], r) * +el2[2];
       if (bar.pri === 9 && /shout|chant/i.test(s.t)) gain += Math.min(2 * (opts.allies || 8), Math.floor(rank(40) / 2));
+      if (tear && hasPR) { cost += 5 * (1 - 0.04 * rank(44)); gain += at("0...5", rank(44)); } // Fromme Erneuerung wird nach jedem Entfernen neu gewirkt und gibt beim Enden Energie zurück
       // Zustände
       for (const [k, p] of Object.entries(COND)) {
         const m = d.match(new RegExp("(inflicts?|causes?|suffers?|take|bleeding|burning|poison|disease)[^.]*?" + k + " \\((\\d+(?:\\.\\.\\.\\d+)?) seconds?"));
@@ -758,6 +768,11 @@
       const isCtrl = s.n === "Panic" || /hex/i.test(s.t) && /(attack|cast)[^.]*% slower|% slower spell casting|doubles? (spell casting|skill activation|casting) time/i.test(s.d || "") || /knock[s]?[- ]?down|interrupt|Dazed|Blind|disable/i.test(s.d || "") && !/enchantment|stance|shout|chant|form/i.test(s.t.replace(/hex/i, "")) || /Dazed|Blind|knock/i.test(s.d || "") && /attack|shout/i.test(s.t);
       if (!parts.length && !gain && !isMinion && !isCtrl) continue;
       // Wie oft wird die Fertigkeit genutzt? Effekte mit Dauer werden nur gehalten, nicht gestapelt.
+      if (tear && TEAR > 0) { const rs = d.split(/removal effect:/)[1] || "", sc2 = w && /sense|scythe/i.test(w[0]) ? Math.min(3, n) : 1, pct = Math.round(TEAR * 100);
+        const m1 = rs.match(/adjacent foes take (\d+(?:\.\.\.\d+)?) /); if (m1) parts.push({ kind: "Direkt", per: at(m1[1], r) * TEAR, dur: 0, aoe: n, label: "Entfernungseffekt auf alle Nachbarn (" + pct + " % der Einsätze)" });
+        const m2 = rs.match(/deals \+(\d+(?:\.\.\.\d+)?) (?:additional )?damage/); if (m2) parts.push({ kind: "Direkt", per: at(m2[1], r) * TEAR, dur: 0, aoe: sc2, label: "Entfernungseffekt (" + pct + " % der Einsätze)" });
+        if (/attack twice/.test(rs) && wPer) parts.push({ kind: "Direkt", per: wPer * TEAR, dur: 0, aoe: sc2, label: "zweiter Angriff (" + pct + " % der Einsätze)" });
+      }
       const holds = parts.length > 0 && parts.every(p => p.dur > 0 && p.kind !== "Direkt");
       let rate = 1 / (holds ? Math.max(T, parts[0].dur) : T);
       if (isMinion) rate = Math.min(rate, CORPSE);

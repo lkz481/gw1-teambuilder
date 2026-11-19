@@ -1099,11 +1099,13 @@ function refTeams(){
   const petBar = o => o.bar.skills.some(id=>{ const s=GW.skill(id); return s && ["Heal as One","Charm Animal","Comfort Animal"].includes(s.n); });
   const base = refPool().filter(o=>!aiBadBar(o) && !meleeBar(o) && !petBar(o)).map(o=>{ let r=[]; try{ r=GW.equipFor(o.bar, EQ, null).runes; }catch(e){} return Object.assign(o, { eff:GW.effRanks(o.bar, r), bip:hasBip(o.bar), splinter:o.bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Splinter Weapon"; }) }); });
   const evalPool = bp => base.map(o=>{ const D = GW.dps(o.bar, o.eff, { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), physRate:phys, allies, bipPips:o.bip?0:bp }); return Object.assign({}, o, { D, minion:D.parts.some(p=>p.kind==="Diener") }); });
+  // Elite, die Verzauberungen vom Gegner nehmen, nur einmal: Die zweite findet nichts mehr zum Entfernen
+  const once = o => { const s=GW.skill(o.elite.id); return !!s && /(foes?|target)[^.]{0,20}loses? \S+ enchantment|removes? [^.]*enchantments? from (target|foe)|for each enchantment removed/i.test(s.d||""); };
   const pick = (pool, cnt, taken) => { const res=[], el={}; let mm=0, sp=0;
     const spir = new Set(GW.spiritIds(TEAM[0].bar)); const clash = o => GW.spiritIds(o.bar).some(id=>spir.has(id));
     taken.forEach(o=>{ el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; GW.spiritIds(o.bar).forEach(id=>spir.add(id)); });
     for (const o of [...pool].sort((a,b)=>b.D.total-a.D.total)) { if (res.length>=cnt) break; if (taken.some(x=>x.code===o.code)) continue; if (o.bip) continue;
-      if (o.minion && mm>=1) continue; if (o.splinter && sp>=1) continue; if ((el[o.elite.id]||0)>=2) continue; if (clash(o)) continue;
+      if (o.minion && mm>=1) continue; if (o.splinter && sp>=1) continue; if ((el[o.elite.id]||0)>=(once(o)?1:2)) continue; if (clash(o)) continue;
       res.push(o); GW.spiritIds(o.bar).forEach(id=>spir.add(id)); el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; }
     return res; };
   const eff0 = (()=>{ let r=[]; try{ r=GW.equipFor(TEAM[0].bar, EQ, TEAM[0].build && TEAM[0].build.url).runes; }catch(e){} return GW.effRanks(TEAM[0].bar, r); })();
@@ -1147,7 +1149,9 @@ function refTeams(){
   return REFCACHE.val;
 }
 function refHTML(){
-  const R = refTeams(); if (!R) return "";
+  const R0 = refTeams(); if (!R0) return "";
+  // "Dein Team" immer frisch rechnen: Nach dem Übernehmen eines Teams muss hier die neue Zahl stehen
+  const R = Object.assign({}, R0, (()=>{ const n=state.dpsN||3, tot = k => k==="prot" ? protSum(DPS,n) : k==="heal" ? healSum(DPS,n) : DPS.reduce((a,d)=>a+((d&&d[k])||0),0), c=teamCtrl(), inc=n*foeDpsNow()*Math.max(0,1-c/n); return { mine: Math.round(tot("total")), mineEval:{ heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal")>=0.5*inc && tot("heal")+tot("prot")>=1.5*inc } }; })());
   const top = Math.max(R.mine, R.playSum, 1), pct = v => Math.round(100*v/top);
   const row = (lab, v, cls, sub) => `<div class="refrow"><div class="t"><span>${lab}</span><b>${v}/s</b></div><div class="meter${cls}"><i style="width:${pct(v)}%"></i></div>${sub?`<div class="dim sm">${sub}</div>`:""}</div>`;
   const list = L => `<ul class="sm reflist">${L.map(o=>`<li><b>${esc((()=>{ const top = (o.D.parts||[]).filter(p=>p.sid && p.cat==="dmg").sort((x,y)=>y.dps-x.dps)[0], ts = top && GW.skill(top.sid); return ts && ts.id!==o.elite.id && o.D.total >= 30 && top.dps > 15 ? dname(ts)+" (Elite: "+dname(o.elite)+")" : dname(o.elite); })())}</b> · ${esc(GW.PROF_DE[o.bar.pri])} · ${Math.round(o.D.total)} Schaden${(o.D.ctrl||0)>=0.3?`, ${ctrlTxt(o.D.ctrl)} Gegner aus`:""}${o.D.heal>5?`, ${Math.round(o.D.heal)} Heilung`:""}${o.D.prot>5?`, ${Math.round(o.D.prot)} Schutz`:""}<span class="dim"> · ${o.url?`<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.src)}</a>`:esc(o.src)}</span></li>`).join("")}</ul>`;
