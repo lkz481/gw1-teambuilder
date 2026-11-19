@@ -46,7 +46,7 @@ const AFT = 0.75; // Nachwirkzeit von Zaubern (Wiki "Aftercast")
 // 13 Diener: Bone Fiend Stufe 1...17, bei Todesmagie 12 Stufe 14, 12-35 Schaden (Wiki-Messreihe), ein Angriff alle 1,86 s
 { const r = run(bar(N, 0, { 5: 12, 6: 8 }, ['Animate Bone Fiend'])), p = r.parts.find(x => x.sid === id('Animate Bone Fiend'));
   T('Bone Fiend, Stufe 14', +(p.detail.match(/Stufe (\d+)/) || [0, 0])[1], 14, 0);
-  T('Bone Fiend, Schaden je Diener', +(p.detail.match(/je ([\d.]+)\/s/) || [0, 0])[1], 23.5 / 1.86); }
+  T('Bone Fiend, Schaden je Diener', +(p.detail.match(/je ([\d.]+)\/s/) || [0, 0])[1], 23.5 * 0.86 / 1.86); } // Mittelwert 86 % der Spannenmitte (Wiki "Bone Horror": Stufe 18 im Mittel 27,5 bei 17-49)
 // 14 Dienerzahl: höchstens 2 plus halber Rang Todesmagie (Wiki "Minion")
 { const r = run(bar(N, 0, { 5: 12, 6: 8 }, ['Animate Bone Fiend']), { targets: 3 }); const m = (r.notes.join(' ').match(/von höchstens (\d+)/) || [0, 0])[1];
   T('Diener höchstens 8 bei Todesmagie 12', +m, 8, 0); }
@@ -215,5 +215,9 @@ const tpart = (D, name, cat) => D.parts.filter(p => p.sid === id(name) && p.cat 
   const X = team([para, soh], 3, [17, 'Speer']), Y = team([derv, soh], 3, [6, 'Sense']);
   T('Stärke der Ehre ohne Nahkämpfer: 0', part(X[1], 'Strength of Honor'), 0, 0);
   T('Stärke der Ehre mit Nahkämpfer: zählt', part(Y[1], 'Strength of Honor') > 3 ? 1 : 0, 1, 0); }
+
+// Bone Horror (Wiki): Stufe 18 macht im Mittel 27,5 Schaden je Treffer und 8,7 Schaden/s. Todesmagie 16 ergibt Stufe 18.
+{ const r = run(bar(N, 0, { 5: 16, 6: 8 }, ['Animate Bone Horror'])), p = r.parts.find(x => x.sid === id('Animate Bone Horror'));
+  T('Bone Horror Stufe 18: 8,7 Schaden/s je Diener', +(p.detail.match(/je ([\d.]+)\/s/) || [0, 0])[1], 8.7, 0.06); }
 
 console.log(ok + ' von ' + (ok + bad) + ' Fällen bestanden'); fails.forEach(f => console.log('  FEHLER  ' + f)); process.exit(bad ? 1 : 0);

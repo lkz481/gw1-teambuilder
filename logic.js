@@ -879,7 +879,8 @@
       const lvM = d.match(/level (\d+\.\.\.\d+) (bone horror|bone fiend|vampiric horror|shambling horror|flesh golem|bone minion)/) || d.match(/creates? (?:two|2) level (\d+\.\.\.\d+) (bone minion)/) || d.match(/animates? a level (\d+\.\.\.\d+) (bone horror)/);
       if (lvM) {
         const L = at(lvM[1], r), kind = lvM[2];
-        const mean = minionMean(kind, L), per = mean / (kind === "bone fiend" ? 1.86 : 3.10);
+        // Die Tabelle hält die Mitte der Wiki-Spanne. Die Spanne schließt kritische Treffer ein, der Mittelwert liegt darunter: Wiki "Bone Horror" nennt für Stufe 18 (17-49) 27,5 und für Stufe 21 (21-59) 35,5, also rund 86 % der Mitte.
+        const mean = minionMean(kind, L) * 0.86, per = mean / (kind === "bone fiend" ? 1.86 : 3.10);
         minions.push({ s, per, count: /two|2 level/.test(d) || kind === "bone minion" ? 2 : 1, max: kind === "flesh golem" ? 1 : 99, rate: 1 / Math.max(1, rc + ac + 0.75), cost, L, kind, i });
       }
       const spA = dRaw.match(/(?:its attacks|these spirits|attacks) (?:deal|steal) (\d+(?:\.\.\.\d+)?) (?:damage|health)/);
