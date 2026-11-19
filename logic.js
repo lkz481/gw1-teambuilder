@@ -575,6 +575,7 @@
       wAttr = ANNIV[bar.pri][0]; const t = TYPE2ATTR[ANNIV[bar.pri][1]]; w = t ? WEAP[t] : ["Stab", 11, 22, 1.75, 1]; notes.push("Jubiläumswaffe angenommen: " + w[0] + ".");
     }
     // Angriffstempo (Wiki "Attack speed"): "X % schneller" verkürzt die Angriffsdauer um X %, höchstens 33 %
+    const CORPSE = (1 / 6) * (opts.corpseShare || 1); // Leichen teilen sich alle im Team, die welche brauchen
     const DEATH = 1 / 6; // Annahme für alle Leisten: Im Kampf stirbt alle 6 s eine Kreatur (Leichen, Seelensammlung)
     let ias = 0, petIas = 0, critBonus = 0, wPer = 0, hitEnergy = 0, critEnergy = 0;
     for (const [i, s] of sk) {
@@ -693,7 +694,7 @@
           const dual = /dual attack/i.test(s.t) ? 2 : 1;
           const deathP = /if (target|this|that) (foe|ally|creature) dies/.test(d) ? 0.5 : 1;
           const tot = (every ? dm * +every[1] * flee : dm) * deathP * (/pet attack/i.test(s.t) ? 1.33 : 1) * dual + (dual > 1 && w ? wPer : 0);
-          parts.push({ kind: "Direkt", per: tot, dur: 0, aoe: aoeAt(/(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:\w+ )?damage/), limit: onDeath ? DEATH : undefined, label: onDeath ? "beim Tod eines Gegners (eine Leiche alle 6 s)" : dual > 1 ? "Doppelangriff, zwei Treffer" : /pet attack/i.test(s.t) ? "Tierangriff" : /attack/i.test(s.t) ? "Angriffsbonus" : condP < 1 ? "Direktschaden, bedingt (halbe Trefferquote)" : "Direktschaden" });
+          parts.push({ kind: "Direkt", per: tot, dur: 0, aoe: aoeAt(/(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:\w+ )?damage/), limit: onDeath ? (/corpse|exploit/.test(d) ? CORPSE : DEATH) : undefined, label: onDeath ? "beim Tod eines Gegners (eine Leiche alle 6 s" + (/corpse|exploit/.test(d) && opts.corpseShare < 1 ? ", geteilt im Team" : "") + ")" : dual > 1 ? "Doppelangriff, zwei Treffer" : /pet attack/i.test(s.t) ? "Tierangriff" : /attack/i.test(s.t) ? "Angriffsbonus" : condP < 1 ? "Direktschaden, bedingt (halbe Trefferquote)" : "Direktschaden" });
         }
       }
       const ward = dRaw.match(/allies in this ward deal \+(\d+(?:\.\.\.\d+)?) damage/);
@@ -759,9 +760,18 @@
       // Wie oft wird die Fertigkeit genutzt? Effekte mit Dauer werden nur gehalten, nicht gestapelt.
       const holds = parts.length > 0 && parts.every(p => p.dur > 0 && p.kind !== "Direkt");
       let rate = 1 / (holds ? Math.max(T, parts[0].dur) : T);
-      if (isMinion) rate = Math.min(rate, DEATH);
+      if (isMinion) rate = Math.min(rate, CORPSE);
       if (adr) rate = Math.min(rate, attackRate / adr);
       const lim = parts.find(p => p.limit != null); if (lim) rate = Math.min(rate, lim.limit);
+      // Vorbedingung am Ziel (Verhexung, Zustand): Zählt nur, wenn das Team sie liefert. Ohne Team-Angabe wird sie als erfüllt angenommen.
+      if (opts.team) { const dl = d.toLowerCase();
+        if (/no effect unless|damage if target foe (has|is|was)|if target foe (has|had|is) [^.]*deals|removes? (a|one) (mesmer )?hex(es)? from target foe/.test(dl)) {
+          const needC = /(has|suffering from) a condition|foes? with a condition/.test(dl), orEnch = /hexed or enchanted|hex or (an )?enchantment|condition or hex/.test(dl), needM = /mesmer hex/.test(dl), needH = /hexed|has a (mesmer )?hex|removes? (a|one) (mesmer )?hex/.test(dl);
+          let pf = 1; if (needC && !/condition or hex/.test(dl) && !opts.team.cond) pf *= 0;
+          if (needH && !(needM ? opts.team.mhex : opts.team.hex)) pf *= orEnch ? (/condition or hex/.test(dl) && opts.team.cond ? 1 : 0.3) : 0;
+          const missC = needC && !/condition or hex/.test(dl) && !opts.team.cond, missH = needH && !(needM ? opts.team.mhex : opts.team.hex);
+          if (pf < 1) { rate *= pf; notes.push((s.de || s.n) + " braucht am Ziel " + [missC ? "einen Zustand" : "", missH ? (needM ? "eine Mesmer-Verhexung" : "eine Verhexung") : ""].filter(Boolean).join(" und ") + ". Das liefert im Team niemand" + (pf > 0 ? ". Gezählt zu 30 %, weil manche Gegner sich selbst verzaubern." : ". Nicht gezählt.")); }
+        } }
       rate *= condP; // bedingte Fertigkeiten (Unterbrechung, Entfernung) werden nur halb so oft gewirkt und kosten dann auch nur halb so viel
       const isAtk = /attack/i.test(s.t) && !/pet attack/i.test(s.t);
       uses.push({ s, i, rate, cost, gain, parts, holds, isAtk, time: isAtk ? 0 : ac + (/spell/i.test(s.t) ? 0.75 : 0), minion: isMinion });
@@ -773,7 +783,7 @@
     if (w && hitEnergy) { const v = attackRate * hitEnergy; extra += v; eNotes.push("Energie je Treffer +" + v.toFixed(1)); }
     if (w && critEnergy) { const v = attackRate * (critChance || 0) * critEnergy; extra += v; eNotes.push("Energie je kritischem Treffer +" + v.toFixed(1)); }
     if (opts.bipPips) { extra += opts.bipPips / 3; eNotes.push("Energie aus dem Team +" + (opts.bipPips / 3).toFixed(1)); }
-    const corpse = minions.length ? Math.min(1, DEATH / uses.filter(u => u.minion).reduce((a, u) => a + u.rate, 0)) : 1;
+    const corpse = minions.length ? Math.min(1, CORPSE / uses.filter(u => u.minion).reduce((a, u) => a + u.rate, 0)) : 1;
     uses.forEach(u => { if (u.minion) u.rate *= corpse; });
     // Zeit zuerst: Ein Charakter kann nur eine Sache zugleich tun. Zauber kosten Wirkzeit plus 0,75 s Nachwirkzeit.
     let busy = uses.reduce((a, u) => a + u.rate * u.time, 0);
@@ -805,16 +815,17 @@
       if (v > 0.05) out.push({ name: "Stärke", dps: v, cat: "dmg", kind: "Waffe", detail: rank(17) + " % Rüstungsdurchdringung bei " + Math.round(share * 100) + " % der Treffer (Angriffsfertigkeiten)" });
     }
     for (const u of uses) {
-      const rate = u.rate;
+      const rate = u.rate, sc = opts.scale && opts.scale.has(u.s.id) ? opts.scale.get(u.s.id) : 1;
+      if (sc < 1 && u.parts.some(p => p.dur > 0 || p.kind === "Pro Angriff")) notes.push((u.s.de || u.s.n) + " wirkt schon jemand anders im Team. Der Effekt stapelt sich nicht" + (sc > 0 ? " voll." : ", deshalb hier nicht gezählt."));
       let dps = 0; const det = [];
       for (const p of u.parts) {
-        if (p.kind === "Pro Angriff") { const up = Math.min(1, p.dur * rate); const v = p.perAttack * attackRate * up * p.aoe; dps += v; det.push(p.label + " " + p.perAttack + (attackRate ? "" : " (keine Waffe erkannt)")); }
-        else if (p.dur > 0) { const up = Math.min(1, p.dur * rate); const v = (p.per / p.dur) * up * p.aoe; dps += v; det.push(p.label + " " + Math.round(up * 100) + " % Laufzeit"); }
+        if (p.kind === "Pro Angriff") { const up = Math.min(1, p.dur * rate); const v = p.perAttack * attackRate * up * p.aoe * sc; dps += v; det.push(p.label + " " + p.perAttack + (attackRate ? "" : " (keine Waffe erkannt)")); }
+        else if (p.dur > 0) { const up = Math.min(1, p.dur * rate); const v = (p.per / p.dur) * up * p.aoe * sc; dps += v; det.push(p.label + " " + Math.round(up * 100) + " % Laufzeit"); }
         else { const v = p.per * rate * p.aoe; dps += v; det.push(p.label + " " + Math.round(p.per) + " alle " + (1 / rate).toFixed(1) + " s"); }
       }
       // nach Art aufteilen
       const by = { dmg: 0, heal: 0, prot: 0 };
-      u.parts.forEach((p, j) => { const v = p.kind === "Pro Angriff" ? p.perAttack * attackRate * Math.min(1, p.dur * rate) * p.aoe : p.dur > 0 ? (p.per / p.dur) * Math.min(1, p.dur * rate) * p.aoe : p.per * rate * p.aoe; by[p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg"] += v; });
+      u.parts.forEach((p, j) => { const v = p.kind === "Pro Angriff" ? p.perAttack * attackRate * Math.min(1, p.dur * rate) * p.aoe * sc : p.dur > 0 ? (p.per / p.dur) * Math.min(1, p.dur * rate) * p.aoe * sc : p.per * rate * p.aoe; by[p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg"] += v; });
       for (const k of ["dmg", "heal", "prot"]) if (by[k] > 0.05) out.push({ name: u.s.de || u.s.n, sid: u.s.id, dps: by[k], cat: k, kind: u.parts.filter(p => (p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg") === k).map(p => p.kind).join("/"), detail: det.filter((x, j) => (u.parts[j].kind === "Heilung" ? "heal" : u.parts[j].kind === "Schutz" ? "prot" : "dmg") === k).join(", ") });
     }
     // Stab oder Zauberstab (Wiki "Staff", "Wand"): 11-22 Schaden, ein Angriff alle 1,75 s, rüstungsabhängig. Nur in der Zeit ohne Zauber.
@@ -865,6 +876,8 @@
     const sum = c => out.filter(o => o.cat === c).reduce((a, o) => a + o.dps, 0);
     // Schutz überlappt: Ein geblockter Treffer kann nicht noch einmal gedeckelt werden. Zusammen nie mehr als der Schaden, der ankommt.
     { const ps = out.filter(o => o.cat === "prot" && o.dps > 0), raw = ps.reduce((a, o) => a + o.dps, 0); if (raw > 0) { const comb = INC * (1 - ps.reduce((a, o) => a * (1 - Math.min(0.95, o.dps / INC)), 1)); ps.forEach(o => { o.dps *= comb / raw; }); } }
+    // Heilung: Mehr als ankommt, kann nicht geheilt werden
+    { const hs = out.filter(o => o.cat === "heal" && o.dps > 0), raw = hs.reduce((a, o) => a + o.dps, 0); if (raw > INC) { hs.forEach(o => { o.dps *= INC / raw; }); notes.push("Heilung auf den ankommenden Schaden begrenzt (" + Math.round(INC) + "/s). Die Leiste könnte " + Math.round(raw) + "/s heilen."); } }
     const total = sum("dmg"), heal = sum("heal"), prot = sum("prot"), ctrl = Math.min(n, sum("ctrl"));
     if (ctrl > 0.05) notes.push("Kontrolle: Im Schnitt " + ctrl.toFixed(1).replace(".", ",") + " von " + n + " Gegnern ausgeschaltet. Annahmen: Die Hälfte der Gegner zaubert, die Hälfte greift an. Eine Unterbrechung kostet 2 s und jede zweite sitzt.");
     return { total, heal, prot, ctrl, incoming: INC, parts: out.filter(o => o.dps > (o.cat === "ctrl" ? 0.005 : 0.05)).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0, energyF: f };
