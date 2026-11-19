@@ -6481,9 +6481,32 @@
 }
 ],
 "sk": {
+"415": {
+"diff": [
+"Werte: 33% → 25%"
+]
+},
 "49": {
 "diff": [],
 "de": "Verhexung. 5...40 Sekunden lang verliert der Gegner 1 Energie, sooft er Ziel Eurer Mesmer-Fertigkeiten wird, die keine Verhexungen sind. Fällt seine Energie auf 0, endet die Verhexung und er erleidet 15...100 Schaden."
+},
+"209": {
+"diff": [
+"Energie 5 → 10"
+]
+},
+"236": {
+"diff": [],
+"en": "Elite Enchantment Spell. (10...45 seconds.) Take 33% less damage from foes hexed with Water Magic. Heals non-spirit allies in earshot for 50...250 of the energy cost of your elemental spells. Does not heal allies above 80% Health."
+},
+"239": {
+"diff": [],
+"en": "Elite Ward Spell. (5...15 seconds.) Allies in this ward have 1...3 Health regeneration, 12...24 armor, and 12...24 additional armor against elemental damage. Spirits are unaffected. This spell is disabled for 30 seconds."
+},
+"836": {
+"diff": [
+"Aufladezeit 5 → 10 s"
+]
 },
 "993": {
 "diff": [
@@ -6506,6 +6529,40 @@
 "diff": [],
 "de": "Schrei. 10 Sekunden lang haben Gruppenmitglieder in Hörweite +5...25 Rüstung. Endet nach 1...3 Angriffen gegen sie."
 },
+"117": {
+"diff": [
+"Aufladezeit 5 → 10 s"
+]
+},
+"181": {
+"diff": [
+"Werte: 5...20 → 10, 1...4 → 1...3"
+]
+},
+"398": {
+"diff": [
+"Wirkzeit {{3/4}} → 1 s",
+"Werte: 5...25 → 5...15"
+]
+},
+"826": {
+"diff": [
+"Energie 5 → 10",
+"Aufladezeit 30 → 60 s"
+],
+"en": "Elite Enchantment Spell. (5...15 seconds.) Hostile spells targeting you fail, and attacks against you miss."
+},
+"817": {
+"diff": [
+"Wirkzeit 1 → 2 s"
+]
+},
+"1191": {
+"diff": [
+"Wirkzeit {{3/4}} → 1 s",
+"Werte: 5...25 → 5...15"
+]
+},
 "791": {
 "diff": [
 "Aufladezeit – → 6 s"
@@ -6518,16 +6575,87 @@
 ],
 "de": "Fertigkeit. 3 Sekunden lang erleiden Gegner direkt neben dem Verbündeten jede Sekunde 4...50 Blitzschaden."
 },
+"792": {
+"diff": [
+"Aufladezeit 5 → 8 s",
+"Werte: 5...50 → 5...40"
+]
+},
+"1639": {
+"diff": [
+"Energie 5 → 10"
+]
+},
+"1397": {
+"diff": [
+"Aufladezeit 6 → 8 s"
+],
+"en": "Elite Spell. Heals entire party for 5...70. Disables your Smiting Prayers (20 seconds)."
+},
 "1481": {
 "diff": [
 "Wirkzeit 3 → 4 s"
 ]
+},
+"1549": {
+"diff": [
+"Wirkzeit {{1/2}} → 1 s"
+]
+},
+"1555": {
+"diff": [
+"Energie 10 → 15",
+"Wirkzeit 1 → 2 s"
+]
+},
+"1564": {
+"diff": [
+"Aufladezeit 10 → 20 s"
+]
+},
+"1771": {
+"diff": [
+"Aufladezeit 10 → 20 s"
+]
+},
+"1596": {
+"diff": [
+"Energie 5 → 10",
+"Aufladezeit 20 → 25 s"
+]
+},
+"1598": {
+"diff": [
+"Aufladezeit 15 → 20 s",
+"Werte: 15 → 10"
+]
+},
+"343": {
+"diff": [],
+"en": "Shout. (8 seconds.) You gain 1 extra strike of adrenaline whenever you hit with an attack."
 },
 "1516": {
 "diff": [
 "Aufladezeit 10 → 15 s",
 "Werte: 8 → 3"
 ]
+},
+"118": {
+"diff": [
+"Opfer 10% → 17% %"
+],
+"en": "Spell. Inflicts Weakness condition (1...16 second[s]) on this foe and nearby foes."
+},
+"294": {
+"diff": [],
+"en": "Elite Half Range Signet. Knocks down target. Deals 5...50 holy damage to target and adjacent foes."
+},
+"268": {
+"diff": [
+"Wirkzeit {{1/4}} → 3 s",
+"Aufladezeit 10 → 15 s"
+],
+"en": "Elite Enchantment Spell. Resurrects target party member (full Health, full Energy). End effect: this ally dies and leaves an exploited corpse. Does not incur a death penalty. 50% failure chance unless Divine Favor 5 or more."
 },
 "1114": {
 "diff": [
@@ -6540,17 +6668,78 @@
 ],
 "de": "Waffenzauber. 3...8 Sekunden lang hat der Verbündete 2...4 Lebenspunktregeneration und blockt mit 50 % Chance. Endet, wenn er angreift."
 },
+"2005": {
+"diff": [
+"Energie 5 → 25",
+"Aufladezeit 10 → 90 s",
+"Werte: 30 → 4"
+]
+},
+"2069": {
+"diff": [
+"Aufladezeit 8 → 15 s",
+"Werte: 10...25 → 5...15, 10...35 → 5...20"
+]
+},
+"1724": {
+"diff": [
+"Werte: 33% → 15%, 2 → 1"
+]
+},
+"1239": {
+"diff": [
+"Aufladezeit 30 → 20 s"
+],
+"en": "Elite Signet. You gain 3...12 Energy. No effect unless you are within earshot of a spirit."
+},
+"1742": {
+"diff": [
+"Aufladezeit 15 → 5 s"
+],
+"en": "Elite Signet. Target allied summoned creature deals 5...35 damage. That creature is destroyed after 10 seconds."
+},
+"432": {
+"diff": [],
+"en": "Preparation. (24 seconds). Your arrows move twice as fast."
+},
 "19": {
 "diff": [
 "Aufladezeit 5 → 8 s"
 ],
 "de": "Verhexung. Trifft auch Gegner direkt neben dem Ziel. 8...20 Sekunden lang erleiden sie 5...20 Schaden, sooft sie einen Zustand erhalten oder verlieren."
 },
+"243": {
+"diff": [
+"Werte: 5...25 → 1...5"
+]
+},
+"374": {
+"diff": [],
+"en": "Elite Stance. (5...35 seconds.) You gain 3 Energy each time you hit with a melee attack. No Energy gain if you have more than 10...25 Energy."
+},
+"1232": {
+"diff": [
+"Energie 5 → 10"
+],
+"en": "Enchantment Spell. (10...35 seconds.) You have 10 base damage reduction while casting binding rituals."
+},
 "911": {
 "diff": [
 "Wirkzeit {{3/4}} → 3 s"
 ],
 "de": "Binderitual. Erschafft einen Geist der Stufe 1...8, der 30...60 Sekunden lebt. Erleidet ein Verbündeter in Reichweite Schaden oder Lebensraub, wird dieser um 15 verringert und der Geist erleidet 15 Schaden."
+},
+"871": {
+"diff": [
+"Wirkzeit 1 → 2 s",
+"Werte: 1...10 → 1...6"
+]
+},
+"1247": {
+"diff": [
+"Wirkzeit {{3/4}} → 1{{1/2}} s",
+"Werte: 1...12 → 1...8"
+]
 },
 "920": {
 "diff": [
@@ -6572,9 +6761,35 @@
 ],
 "de": "Binderitual. Erschafft einen Geist der Stufe 1...10, der 30...60 Sekunden lebt. Verbündete in Reichweite, die keine Geister sind, blocken mit 75 % Chance."
 },
+"1250": {
+"diff": [
+"Wirkzeit {{3/4}} → 3 s"
+],
+"en": "Elite Binding Ritual. Creates a level 1...10 Spirit (90 second lifespan). Every 4 seconds this spirit heals one non-spirit ally for 10...115."
+},
 "1251": {
 "diff": [
 "Wirkzeit {{3/4}} → 3 s",
+"Werte: 1...14 → 1...10"
+]
+},
+"981": {
+"diff": [
+"Wirkzeit {{3/4}} → 3 s",
+"Werte: 1...14 → 1...10"
+]
+},
+"921": {
+"diff": [
+"Wirkzeit 1 → 2 s",
+"Aufladezeit 45 → 30 s",
+"Werte: 1...12 → 1...8"
+]
+},
+"1252": {
+"diff": [
+"Wirkzeit 1 → 3 s",
+"Aufladezeit 30 → 45 s",
 "Werte: 1...14 → 1...10"
 ]
 },
@@ -6584,10 +6799,35 @@
 "Werte: 1...12 → 1...8"
 ]
 },
+"923": {
+"diff": [
+"Energie 15 → 25",
+"Wirkzeit 1 → 3 s",
+"Werte: 1...12 → 1...8, 10...35 → 15...40"
+]
+},
+"963": {
+"diff": [
+"Wirkzeit 1 → 3 s",
+"Aufladezeit 30 → 45 s",
+"Werte: 1...14 → 1...10"
+]
+},
 "1253": {
 "diff": [
 "Wirkzeit {{3/4}} → 1{{1/2}} s",
 "Werte: 1...12 → 1...8"
+]
+},
+"1255": {
+"diff": [
+"Wirkzeit 1 → 3 s",
+"Werte: 1...12 → 1...8"
+]
+},
+"1380": {
+"diff": [
+"Energie 5 → 15"
 ]
 },
 "1734": {
@@ -6595,6 +6835,20 @@
 "Wirkzeit {{3/4}} → 2 s"
 ],
 "de": "Binderitual. Zerstört einen verbündeten Geist. Erschafft einen Geist der Stufe 1...10, der 30...60 Sekunden lebt. Seine Angriffe verursachen 5...20 Schaden."
+},
+"1745": {
+"diff": [
+"Energie 15 → 25",
+"Wirkzeit {{3/4}} → 1{{1/2}} s",
+"Aufladezeit 45 → 30 s",
+"Werte: 1...11 → 1...7"
+]
+},
+"1747": {
+"diff": [
+"Wirkzeit {{3/4}} → 3 s",
+"Werte: 1...14 → 1...10"
+]
 },
 "1748": {
 "diff": [
@@ -6606,6 +6860,59 @@
 "diff": [
 "Aufladezeit – → 4 s",
 "Werte: 30...100 → 30...75"
+]
+},
+"1572": {
+"diff": [
+"Aufladezeit 4 → 8 s"
+],
+"en": "Shout. (5...15 seconds.) Prevents the next knock-down and deals 15...90 damage to one foe near target ally. Cannot self-target."
+},
+"1575": {
+"diff": [
+"Werte: 1...7 → 1...5"
+]
+},
+"1580": {
+"diff": [],
+"en": "Echo. (20 seconds.) Target ally has 10...40 armor against slashing damage. Renewal: Whenever a chant or shout ends on that ally. Cannot target spirits."
+},
+"1778": {
+"diff": [
+"Aufladezeit 5 → 20 s"
+]
+},
+"1780": {
+"diff": [],
+"en": "Shout. (20 seconds.) The next 1...5 touch-range skill[s] used against you fail[s]."
+},
+"1589": {
+"diff": [
+"Energie 10 → 15",
+"Aufladezeit 20 → 30 s"
+],
+"en": "Shout. (5...20 seconds.) Party members in earshot gain +24 armor when not moving. Ends for an ally if that ally attacks."
+},
+"1592": {
+"diff": [
+"Energie 25 → 5",
+"Aufladezeit 30 → 15 s"
+],
+"en": "Shout. (10 seconds.) Whenever party members in earshot use a resurrection skill, their fallen allies return with 10...75 more Health and 5...50 more Energy."
+},
+"1781": {
+"diff": [],
+"en": "Shout. (5...20 seconds.) Target ally inflicts Deep Wound condition (5...20 seconds) with the next critical hit."
+},
+"1593": {
+"diff": [
+"Aufladezeit 15 → 20 s"
+]
+},
+"1594": {
+"diff": [
+"Aufladezeit 10 → 15 s",
+"Werte: 15...90 → 5...50"
 ]
 },
 "1595": {
@@ -6625,14 +6932,72 @@
 "Werte: 1...20 → 1...16"
 ]
 },
+"2018": {
+"diff": [
+"Wirkzeit 1 → 2 s"
+]
+},
 "436": {
 "diff": [
 "Energie 5 → 10"
 ]
 },
+"441": {
+"diff": [],
+"en": "Pet Attack. Deals 5...20 damage. Deals 5...35 more damage to target and foes adjacent to target if this foe is enchanted."
+},
+"1031": {
+"diff": [],
+"en": "Enchantment Spell. (30...60 seconds.) You have 75% chance to block. No effect unless your Health is below 50%."
+},
+"1041": {
+"diff": [
+"Aufladezeit 20 → 45 s"
+],
+"en": "Stance. (15...60 seconds.) You cannot be blocked by Blinded foes."
+},
+"1194": {
+"diff": [],
+"en": "Shout. (5...20 seconds.) You gain Health whenever your pet makes a successful attack."
+},
+"1202": {
+"diff": [],
+"en": "Elite Pet Attack. Deals 3...23 damage (maximum 60) for each of your recharging Beast Mastery skills."
+},
+"2186": {
+"diff": [],
+"en": "Signet. Deals 5...35 damage (maximum 130) for each condition on target foe. Must follow a dual attack."
+},
+"2139": {
+"diff": [],
+"en": "Enchantment Spell. (30 seconds.) You gain 1...3 Energy whenever you sacrifice Health."
+},
+"110": {
+"diff": [
+"Aufladezeit 8 → 20 s"
+]
+},
+"145": {
+"diff": [
+"Aufladezeit 8 → 20 s"
+]
+},
+"448": {
+"diff": [],
+"en": "Elite Stance. (1...8 second[s].) You move 33% faster and have 75% chance to block. Ends if you make a melee attack."
+},
 "775": {
 "diff": [
 "Aufladezeit 2 → 6 s"
+]
+},
+"1577": {
+"diff": [],
+"en": "Echo. (10...35 seconds.) Target ally gains 15...75 Health the next 5 times a shout or chant ends on that ally. Cannot target spirits."
+},
+"17": {
+"diff": [
+"Werte: 30...90 → 5"
 ]
 },
 "453": {
@@ -6640,9 +7005,72 @@
 "Aufladezeit 30 → 45 s"
 ]
 },
+"994": {
+"diff": [
+"Wirkzeit 1 → – s"
+],
+"en": "Hammer Attack. Deals 5...20 damage. You gain 3 energy and this attack recharges instantly if target foe was knocked down."
+},
+"1195": {
+"diff": [
+"Aufladezeit 5 → 8 s"
+],
+"en": "Elite Skill. Heals you and your pet for 25...145. If your pet is dead, it is resurrected with 50% Health. No effect if neither you nor your pet are below 75% Health."
+},
+"1199": {
+"diff": [
+"Werte: 6...20 → 6...18"
+]
+},
+"1720": {
+"diff": [
+"Aufladezeit 6 → 12 s",
+"Werte: 5...20 → 5...15, 5...25 → 5...30"
+]
+},
+"1559": {
+"diff": [
+"Aufladezeit – → 6 s",
+"Werte: 10...25 → 10...20"
+]
+},
+"1578": {
+"diff": [],
+"en": "Echo. (15 seconds.) You have 2...3 Health regeneration. Renewal: whenever a chant or shout ends on you."
+},
 "26": {
 "diff": [],
 "de": "Verhexung. 5...15 Sekunden lang erleidet der Gegner 15...45 Schaden, sooft er angreift."
+},
+"54": {
+"diff": [
+"Energie 5 → 10",
+"Aufladezeit 12 → 20 s"
+],
+"en": "Elite Hex Spell. (5...20 seconds.) Target foe moves 50% slower and has 2...6 Health degeneration."
+},
+"1698": {
+"diff": [
+"Aufladezeit 15 → 8 s"
+],
+"en": "Elite Stance. (4...10 seconds.) You attack 33% faster while under the effects of a shout or chant."
+},
+"1732": {
+"diff": [
+"Energie 5 → 10",
+"Wirkzeit {{3/4}} → 1 s",
+"Aufladezeit 5 → 10 s",
+"Werte: 20% → 10%"
+]
+},
+"27": {
+"diff": [
+"Aufladezeit 6 → 10 s"
+]
+},
+"33": {
+"diff": [],
+"en": "Elite Enchantment Spell. (30 seconds.) Deals 20...60 damage to foes in place of other damage or effects from melee attacks. Your melee attacks neither hit nor fail to hit."
 },
 "53": {
 "diff": [
@@ -6659,15 +7087,89 @@
 "diff": [],
 "de": "Elite-Zauber. Unterbricht eine Handlung. War es eine Fertigkeit, werden das Ziel und alle Gegner direkt daneben 2...3 Sekunden niedergeschlagen. 50 % Fehlschlagchance, wenn Schnellwirkung unter 5 liegt."
 },
+"900": {
+"diff": [
+"Energie 5 → 10",
+"Aufladezeit 15 → 20 s",
+"Werte: 50% → 33%"
+]
+},
 "880": {
 "diff": [],
 "de": "Elite-Verhexung. Trifft auch Gegner direkt neben dem Ziel, Dauer 1...10 Sekunden. Ihre Zauber dauern doppelt so lange. Eure Zauber auf verhexte Gegner wirken Ihr in der halben Zeit."
+},
+"934": {
+"diff": [
+"Aufladezeit 10 → 20 s"
+],
+"en": "Signet. Deals 10...60 damage. Deals 10...60 damage to other adjacent foes if the target is hexed or enchanted. Your non-Mesmer skills except signets are disabled (10 seconds)."
+},
+"1336": {
+"diff": [
+"Aufladezeit 7 → 12 s",
+"Werte: 15...75 → 5...40"
+]
 },
 "1341": {
 "diff": [
 "Aufladezeit 7 → 15 s"
 ],
 "de": "Verhexung. 5...20 Sekunden lang wirkt der Gegner Zauber 50 % langsamer. Er erleidet 5...50 Schaden, sooft er unterbrochen wird."
+},
+"979": {
+"diff": [
+"Werte: 10...80 → 10...60"
+]
+},
+"1345": {
+"diff": [
+"Aufladezeit 10 → 20 s"
+]
+},
+"1657": {
+"diff": [
+"Aufladezeit 8 → 12 s"
+]
+},
+"1349": {
+"diff": [
+"Energie 5 → 10",
+"Aufladezeit 15 → 20 s"
+]
+},
+"2056": {
+"diff": [
+"Energie 5 → 10",
+"Werte: 30...110 → 10...92"
+]
+},
+"2053": {
+"diff": [
+"Energie 5 → 10",
+"Aufladezeit 7 → 12 s",
+"Werte: 3...24 → 3...12, 15...100 → 15...60"
+]
+},
+"318": {
+"diff": [],
+"en": "Elite Stance. (20 seconds.) You have 90...300 maximum Health and +20 armor."
+},
+"287": {
+"diff": [
+"Wirkzeit 2 → 1 s",
+"Aufladezeit 2 → 10 s"
+]
+},
+"1066": {
+"diff": [
+"Werte: 25...100 → 15...75"
+]
+},
+"878": {
+"diff": [
+"Aufladezeit 20 → 30 s",
+"Werte: 15...45 → 10...30, 5...50 → 5...40"
+]
 },
 "780": {
 "diff": [
@@ -6680,19 +7182,77 @@
 "Aufladezeit 4 → 6 s"
 ]
 },
+"1483": {
+"diff": [
+"Wirkzeit 1 → – s"
+]
+},
 "1487": {
 "diff": [],
 "de": "Nahkampfangriff. Entfernt 1 Eurer Derwisch-Verzauberungen. Ihr erhaltet 10...20 Lebenspunkte. Wird eine entfernt: Nicht blockbar, Ihr schlagt zweimal mit je 25 % weniger Schaden zu und erhaltet 10...30 Lebenspunkte mehr."
 },
+"1489": {
+"diff": [
+"Energie 5 → –",
+"Adrenalin – → 5",
+"Aufladezeit 6 → – s"
+],
+"en": "Scythe Attack. Deals 3...15 damage. Remove 1 of your Dervish enchantments. Removal effect: unblockable, removes a stance."
+},
 "1490": {
 "diff": [],
 "de": "Nahkampfangriff. Entfernt 1 Eurer Derwisch-Verzauberungen. Wird eine entfernt, lädt diese Fertigkeit 75 % schneller auf und Gegner direkt daneben erleiden 15...40 Schaden."
+},
+"1513": {
+"diff": [
+"Aufladezeit 10 → 15 s"
+]
+},
+"1519": {
+"diff": [],
+"en": "Elite Form. (10...90 seconds.) Deal holy damage. You lose 1 hex whenever you use a Dervish attack skill. Heal yourself for 5...50 Health whenever you lose a Dervish enchantment. This skill is disabled for 45 seconds."
+},
+"1522": {
+"diff": [],
+"en": "Elite Form. (10...90 seconds.) You have +100 maximum Health, +30 elemental armor, and your attacks deal earth damage. Cure 2 conditions from yourself whenever you lose a Dervish enchantment. This skill is disabled for 45 seconds."
+},
+"1527": {
+"diff": [
+"Aufladezeit 4 → 10 s"
+]
+},
+"2014": {
+"diff": [
+"Aufladezeit 10 → 16 s"
+],
+"en": "Signet. (5...15 seconds.) Cripples target foe and removes 1 of your Dervish enchantments. Removal effect: recharges 50% faster."
+},
+"55": {
+"diff": [
+"Aufladezeit 10 → 15 s"
+],
+"en": "Elite Hex Spell. (5...15 seconds.) Foes in the area also have any new conditions that target foe acquires."
+},
+"1495": {
+"diff": [
+"Energie 5 → 10"
+]
+},
+"1497": {
+"diff": [
+"Aufladezeit 6 → 10 s"
+],
+"en": "Flash Enchantment Spell. (30 seconds.) Your attacks deal earth damage. Initial effect: deals 10...40 earth damage to adjacent foes. End effect: inflicts Blindness condition (1...4 second[s]) on adjacent foes."
 },
 "1512": {
 "diff": [
 "Energie 10 → 5",
 "Aufladezeit 15 → 25 s"
 ]
+},
+"1754": {
+"diff": [],
+"en": "Elite Flash Enchantment Spell. (2...8 seconds.) You attack and gain adrenaline 25% faster."
 },
 "1762": {
 "diff": [
@@ -6709,9 +7269,50 @@
 "Werte: 1...7 → 1...5"
 ]
 },
+"37": {
+"diff": [
+"Aufladezeit 5 → 8 s"
+],
+"en": "Enchantment Spell. (5...11 seconds.) You move 33% faster. End effect: you are Crippled (3 seconds)."
+},
+"879": {
+"diff": [],
+"en": "Hex Spell. (8 seconds.) Causes 3...10 Health degeneration and target foe takes 3...10 damage each second. End effect: that foe is healed for 36...120. Ends if reapplied."
+},
 "180": {
 "diff": [
 "Werte: 200...500 → 200...400"
+]
+},
+"1344": {
+"diff": [
+"Energie 5 → 10"
+]
+},
+"865": {
+"diff": [],
+"en": "Spell. Deals 10...100 lightning damage. 25% armor penetration."
+},
+"1663": {
+"diff": [
+"Werte: 10...35 → 5...20, 1...5 → 1...2"
+]
+},
+"2191": {
+"diff": [
+"Aufladezeit 10 → 15 s"
+],
+"en": "Spell. Causes knock-down if this foe is Blind or moving. 50% failure chance unless Water Magic 5 or higher."
+},
+"2015": {
+"diff": [
+"Aufladezeit 12 → 20 s",
+"Werte: 5...20 → 5...35"
+]
+},
+"1547": {
+"diff": [
+"Aufladezeit – → 1 s"
 ]
 },
 "346": {
@@ -6754,6 +7355,11 @@
 "Werte: 10...25 → 5...15"
 ]
 },
+"928": {
+"diff": [
+"Werte: 3...9 → 2...7"
+]
+},
 "1043": {
 "diff": [
 "Aufladezeit 8 → 12 s"
@@ -6781,6 +7387,11 @@
 "Werte: 5...11 → 4...8"
 ]
 },
+"831": {
+"diff": [
+"Werte: 150...125 → 200...150"
+]
+},
 "853": {
 "diff": [
 "Aufladezeit 8 → 12 s"
@@ -6795,15 +7406,35 @@
 "diff": [],
 "de": "Elite-Fertigkeit. 5...45 Sekunden lang kosten Eure Binderituale 15 Energie weniger (mindestens 5) und laden 25...50 % schneller auf. Endet nach 1...3 Binderitualen."
 },
+"1259": {
+"diff": [
+"Aufladezeit 5 → 12 s"
+]
+},
+"1342": {
+"diff": [
+"Aufladezeit 15 → 20 s"
+]
+},
 "1404": {
 "diff": [],
 "de": "Haltung. 1...15 Sekunden lang greift Ihr 33 % schneller an und bewegt Euch 33 % langsamer. Endet, wenn Ihr eine Fernkampf-Angriffsfertigkeit benutzt."
+},
+"1405": {
+"diff": [
+"Werte: 10...90 → 10...80"
+]
 },
 "1730": {
 "diff": [
 "Aufladezeit 15 → 30 s"
 ],
 "de": "Elite-Naturritual. Erschafft einen Geist der Stufe 1...10, der 30...120 Sekunden lebt. Kreaturen in Reichweite erhalten 33...66 % mehr Adrenalin."
+},
+"1755": {
+"diff": [
+"Werte: 1...10 → 2...6"
+]
 },
 "1758": {
 "diff": [],
@@ -6826,6 +7457,12 @@
 "Aufladezeit 8 → 15 s"
 ],
 "de": "Zauber. Ihr erhaltet 80...150 Lebenspunkte und verliert 1 Derwisch-Verzauberung. Wird eine entfernt, verliert Ihr 1 Verhexung."
+},
+"1544": {
+"diff": [
+"Aufladezeit 8 → 10 s",
+"Werte: 10...60 → 10...50"
+]
 },
 "2070": {
 "diff": [
@@ -7859,5 +8496,294 @@
 "con": "Lange Wirkzeiten, wenig Druck."
 }
 ],
+"freq": {
+"1990": 4,
+"231": 11,
+"776": 4,
+"777": 4,
+"778": 3,
+"221": 3,
+"780": 2,
+"207": 1,
+"1043": 24,
+"1023": 1,
+"1988": 3,
+"775": 4,
+"782": 3,
+"1370": 3,
+"1019": 2,
+"2": 87,
+"331": 14,
+"344": 1,
+"2146": 2,
+"1765": 8,
+"1524": 13,
+"1493": 1,
+"2012": 7,
+"1504": 2,
+"1506": 2,
+"1516": 9,
+"1526": 2,
+"1530": 2,
+"1500": 5,
+"1523": 1,
+"864": 4,
+"133": 4,
+"1543": 2,
+"109": 4,
+"143": 4,
+"1762": 12,
+"1512": 2,
+"1514": 5,
+"2070": 5,
+"1758": 9,
+"1540": 1,
+"1529": 1,
+"1537": 11,
+"1544": 7,
+"1768": 2,
+"2013": 1,
+"1487": 1,
+"1496": 1,
+"1535": 2,
+"1490": 1,
+"225": 22,
+"200": 7,
+"2059": 8,
+"173": 10,
+"177": 10,
+"1081": 10,
+"229": 1,
+"1542": 1,
+"2060": 1,
+"222": 18,
+"288": 1,
+"1090": 3,
+"1379": 6,
+"1381": 3,
+"180": 26,
+"184": 9,
+"191": 8,
+"955": 1,
+"220": 7,
+"160": 6,
+"1082": 7,
+"223": 4,
+"162": 6,
+"2061": 27,
+"1382": 1,
+"235": 3,
+"1999": 1,
+"2192": 1,
+"213": 1,
+"187": 3,
+"189": 5,
+"846": 2,
+"219": 5,
+"169": 3,
+"171": 3,
+"1374": 1,
+"932": 16,
+"69": 19,
+"68": 22,
+"1481": 20,
+"51": 9,
+"30": 11,
+"42": 2,
+"49": 4,
+"24": 4,
+"29": 1,
+"25": 13,
+"38": 7,
+"46": 3,
+"50": 3,
+"1335": 7,
+"57": 5,
+"19": 3,
+"1341": 3,
+"898": 1,
+"26": 3,
+"61": 7,
+"1337": 1,
+"1343": 1,
+"56": 2,
+"258": 40,
+"292": 12,
+"1037": 6,
+"2003": 25,
+"885": 14,
+"311": 24,
+"1114": 31,
+"299": 15,
+"2063": 20,
+"848": 4,
+"1691": 3,
+"309": 17,
+"1399": 10,
+"307": 2,
+"10": 2,
+"2064": 3,
+"283": 2,
+"257": 13,
+"371": 12,
+"275": 1,
+"380": 5,
+"887": 6,
+"279": 1,
+"1117": 1,
+"991": 3,
+"300": 1,
+"2189": 3,
+"135": 1,
+"2057": 1,
+"2188": 3,
+"149": 1,
+"1601": 5,
+"1774": 5,
+"1551": 6,
+"1558": 5,
+"316": 4,
+"348": 2,
+"1600": 4,
+"1605": 5,
+"1546": 3,
+"1557": 1,
+"453": 6,
+"399": 17,
+"1022": 1,
+"435": 13,
+"1727": 13,
+"426": 10,
+"1474": 1,
+"198": 1,
+"232": 3,
+"1369": 2,
+"392": 6,
+"1401": 1,
+"427": 1,
+"141": 4,
+"2068": 1,
+"1603": 3,
+"436": 3,
+"411": 6,
+"444": 1,
+"2142": 1,
+"447": 1,
+"2150": 3,
+"454": 1,
+"337": 8,
+"340": 6,
+"1403": 7,
+"408": 1,
+"1470": 1,
+"2148": 1,
+"1604": 2,
+"1738": 1,
+"1591": 6,
+"2074": 1,
+"1567": 8,
+"1219": 7,
+"1251": 6,
+"787": 5,
+"983": 7,
+"793": 9,
+"1478": 13,
+"1225": 2,
+"1246": 2,
+"1218": 1,
+"795": 8,
+"1249": 2,
+"1258": 2,
+"911": 2,
+"1266": 1,
+"982": 2,
+"1253": 11,
+"1227": 8,
+"1234": 7,
+"920": 3,
+"1245": 7,
+"916": 5,
+"919": 9,
+"2204": 2,
+"1734": 2,
+"2205": 1,
+"810": 4,
+"2203": 1,
+"352": 13,
+"326": 5,
+"1414": 10,
+"332": 18,
+"1404": 16,
+"129": 1,
+"100": 1,
+"136": 1,
+"45": 1,
+"62": 5,
+"23": 3,
+"2197": 5,
+"346": 9,
+"319": 10,
+"182": 3,
+"1018": 1,
+"1026": 1,
+"2073": 1,
+"1020": 2,
+"989": 1,
+"321": 1,
+"188": 2,
+"349": 5,
+"2065": 2,
+"1994": 1,
+"254": 1,
+"1753": 1,
+"905": 3,
+"1056": 1,
+"770": 1,
+"28": 1,
+"1993": 2,
+"16": 1,
+"881": 2,
+"21": 2,
+"1398": 1,
+"251": 1,
+"930": 1,
+"14": 1,
+"859": 1,
+"31": 1,
+"210": 1,
+"115": 1,
+"791": 2,
+"336": 1,
+"196": 1,
+"2054": 2,
+"1052": 2,
+"108": 1,
+"123": 1,
+"1265": 1,
+"192": 1,
+"195": 1,
+"202": 1,
+"183": 1,
+"333": 3,
+"384": 1,
+"390": 1,
+"382": 1,
+"450": 2,
+"475": 1,
+"476": 2,
+"1213": 2,
+"1595": 3,
+"962": 4,
+"915": 4,
+"1748": 2,
+"94": 1,
+"159": 1,
+"471": 1,
+"1228": 1,
+"215": 1,
+"786": 1,
+"1645": 1,
+"1407": 3
+},
 "stand": "19.11.2026"
 }

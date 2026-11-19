@@ -729,7 +729,8 @@
       // Gunst der Götter: Mönchszauber auf Verbündete heilen zusätzlich 3,2 je Rang (Wiki "Divine Favor")
       if (bar.pri === 3 && s.p === 3 && /spell/i.test(s.t) && /Verbündete/.test(dd) && rank(16) > 0) parts.push({ kind: "Heilung", per: Math.round(3.2 * rank(16)), dur: 0, aoe: 1, label: "Gunst der Götter " + Math.round(3.2 * rank(16)) });
       const isMinion = minions.some(m => m.i === i);
-      if (!parts.length && !gain && !isMinion) continue;
+      const isCtrl = s.n === "Panic" || /knock[s]?[- ]?down|interrupt|Dazed|Blind|disable/i.test(s.d || "") && !/enchantment|stance|shout|chant|form/i.test(s.t.replace(/hex/i, "")) || /Dazed|Blind|knock/i.test(s.d || "") && /attack|shout/i.test(s.t);
+      if (!parts.length && !gain && !isMinion && !isCtrl) continue;
       // Wie oft wird die Fertigkeit genutzt? Effekte mit Dauer werden nur gehalten, nicht gestapelt.
       const holds = parts.length > 0 && parts.every(p => p.dur > 0 && p.kind !== "Direkt");
       let rate = 1 / (holds ? Math.max(T, parts[0].dur) : T);
@@ -774,6 +775,27 @@
       u.parts.forEach((p, j) => { const v = p.kind === "Pro Angriff" ? p.perAttack * attackRate * Math.min(1, p.dur * rate) * p.aoe : p.dur > 0 ? (p.per / p.dur) * Math.min(1, p.dur * rate) * p.aoe : p.per * rate * p.aoe; by[p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg"] += v; });
       for (const k of ["dmg", "heal", "prot"]) if (by[k] > 0.05) out.push({ name: u.s.de || u.s.n, sid: u.s.id, dps: by[k], cat: k, kind: u.parts.filter(p => (p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg") === k).map(p => p.kind).join("/"), detail: det.filter((x, j) => (u.parts[j].kind === "Heilung" ? "heal" : u.parts[j].kind === "Schutz" ? "prot" : "dmg") === k).join(", ") });
     }
+    // Stab oder Zauberstab (Wiki "Staff", "Wand"): 11-22 Schaden, ein Angriff alle 1,75 s, rüstungsabhängig. Nur in der Zeit ohne Zauber.
+    if (wIdx < 0 && !w && [3, 4, 5, 6, 8].includes(bar.pri)) {
+      const top = Math.max(0, ...bar.attrs.map(a => rank(a[0]))), free = Math.max(0, 1 - busy);
+      const v = 16.5 * strikeFactor(Math.min(top, 12)) / strikeFactor(12) * af / 1.75 * free;
+      if (v > 0.05) out.push({ name: "Stab oder Zauberstab", dps: v, cat: "dmg", kind: "Waffe", detail: "11-22 Schaden alle 1,75 s, " + Math.round(free * 100) + " % der Zeit frei" });
+    }
+    // Kontrolle: Wie viele Gegner im Schnitt ausgeschaltet sind (Niederschlag, Unterbrechung, Benommenheit, Blindheit, gesperrte Fertigkeiten, Panik)
+    const CAST = 0.5, MELEE = 0.5; // Annahme: Die Hälfte der Gegner zaubert, die Hälfte greift an
+    for (const u of uses) {
+      const sx = u.s, d = sx.d || "", r = /rank$/.test(sx.a || "") ? 15 : rank(sx.aid), rate = u.rate; if (rate <= 0) continue;
+      const secs = rx => { const m = d.match(rx); return m ? at(m[1], r) : 0; };
+      const cond = /\bif\b|unless|whenever|interruption effect|if target/i.test(d) ? 0.5 : 1;
+      const add = (v, label) => { if (v > 0.005) out.push({ name: sx.de || sx.n, sid: sx.id, dps: v, cat: "ctrl", kind: "Kontrolle", detail: label }); };
+      if (sx.n === "Panic") { const dur = secs(/\((\d+(?:\.\.\.\d+)?) seconds?/), up = Math.min(1, dur * rate), frac = n > 1 ? Math.min(0.8, (n - 1) * (opts.foeRate || 0.5) * 0.8) : 0; add(up * n * frac, "Panik: " + Math.round(frac * 100) + " % der Fertigkeiten von " + n + " Gegnern scheitern, " + Math.round(up * 100) + " % Laufzeit"); continue; }
+      const kd = /caus\w* knock[- ]?down|knocks? down|is knocked down for|are knocked down(?! foe)|knock(?:ed)?[- ]down (?:target|all|that|nearby|adjacent)|and knocked down/i.test(d) && !/cannot be knocked|if you are knocked|you are knocked down|immune/i.test(d);
+      if (kd) { const dur = secs(/knock[- ]?down[^.]*?\((\d+(?:\.\.\.\d+)?) seconds?\)/i) || secs(/for (\d+(?:\.\.\.\d+)?) seconds?[^.]*knock/i) || 2; const c = /if|unless|moving|attacking|casting|using a skill|\d+% chance/i.test(d) ? 0.5 : 1; add(rate * dur * Math.max(1, aoeMul(d, n)) * c, "Niederschlag " + dur + " s" + (c < 1 ? ", an Bedingung geknüpft" : "")); }
+      if (/interrupt/i.test(d) && !/easily interrupted|cannot be interrupted|not interrupt|if interrupted|is interrupted/i.test(d)) add(rate * 2 * 0.5 * Math.max(1, /all (other )?(nearby|adjacent) foes|foes in the area/i.test(d) ? aoeMul(d, n) : 1), "Unterbrechung: je Treffer 2 s verloren, jede zweite sitzt (Annahme)");
+      if (/Dazed/.test(d) && /inflict|causes?|are Dazed|is Dazed|become/i.test(d)) { const dur = secs(/Dazed[^.(]*\((\d+(?:\.\.\.\d+)?) seconds?\)/) || secs(/Dazed (?:condition )?for (\d+(?:\.\.\.\d+)?) seconds?/) || 5; add(Math.min(1, rate * dur) * 0.75 * CAST * cond * Math.max(1, aoeMul(d, n)), "Benommenheit " + dur + " s: Zauberer fast ausgeschaltet"); }
+      if (/Blind/.test(d) && /inflict|causes?|are Blinded|become Blind|Blindness/i.test(d) && !/remove|lose|cure|if you are blind/i.test(d)) { const dur = secs(/Blind(?:ness|ed)?[^.(]*\((\d+(?:\.\.\.\d+)?) seconds?\)/) || secs(/Blind(?:ness|ed)? (?:condition )?for (\d+(?:\.\.\.\d+)?) seconds?/) || 5; add(Math.min(1, rate * dur) * 0.9 * MELEE * cond * Math.max(1, aoeMul(d, n)), "Blindheit " + dur + " s: 90 % der Angriffe gehen daneben"); }
+      if (/disables?|disabled/i.test(d) && /target foe|that foe|foe's/i.test(d) && !/your (non-|other )?[\w -]*skills are disabled|disables your/i.test(d.replace(/target foe[^.]*\./i, ""))) { const dur = secs(/disabled?[^.(]*\((\d+(?:\.\.\.\d+)?) seconds?\)/i) || secs(/disabled? for (\d+(?:\.\.\.\d+)?) seconds?/i) || secs(/\((\d+(?:\.\.\.\d+)?) seconds?\)/); const all = /all (of )?(target foe's |that foe's |its )?skills/i.test(d), part = all ? 1 : /attribute/i.test(d) ? 0.5 : 0.2; if (dur) add(Math.min(1, rate * dur) * part * (all ? 1 : cond), "Fertigkeiten gesperrt " + Math.round(dur) + " s" + (all ? "" : ", nur ein Teil")); }
+    }
     // Degenerationsgrenze: höchstens 10 Pips (20 Lebenspunkte/s) je Ziel
     const deg = out.filter(o => /Zustand|Degeneration/.test(o.kind)).reduce((a, o) => a + o.dps, 0);
     const cap = 20 * n;
@@ -796,8 +818,9 @@
     if (usedTitle) notes.push("Titel-Fertigkeiten sind mit maximalem Titelrang gerechnet.");
     out.forEach(o => { if (!o.cat) o.cat = "dmg"; });
     const sum = c => out.filter(o => o.cat === c).reduce((a, o) => a + o.dps, 0);
-    const total = sum("dmg"), heal = sum("heal"), prot = sum("prot");
-    return { total, heal, prot, parts: out.filter(o => o.dps > 0.05).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0, energyF: f };
+    const total = sum("dmg"), heal = sum("heal"), prot = sum("prot"), ctrl = Math.min(n, sum("ctrl"));
+    if (ctrl > 0.05) notes.push("Kontrolle: Im Schnitt " + ctrl.toFixed(1).replace(".", ",") + " von " + n + " Gegnern ausgeschaltet. Annahmen: Die Hälfte der Gegner zaubert, die Hälfte greift an. Eine Unterbrechung kostet 2 s und jede zweite sitzt.");
+    return { total, heal, prot, ctrl, parts: out.filter(o => o.dps > (o.cat === "ctrl" ? 0.005 : 0.05)).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0, energyF: f };
   };
   // Effektive Ränge aus Grundwerten plus Runen der Ausrüstungsempfehlung
   GW.effRanks = function (bar, runes) {
@@ -815,9 +838,14 @@
       let d; try { d = GW.decode(s.code); } catch (e) { return [9, i]; }
       const top = d.attrs.slice().sort((a, b) => b[1] - a[1])[0] || [0, 0];
       const support = d.pri === 3 || (d.pri === 8 && [33, 32].includes(top[0])) || (d.pri === 4 && top[0] === 4) || /heil|schutz|mönch/i.test(s.role || "");
-      return [support ? 0 : d.pri === 5 ? 1 : 2, i];
+      const sub = /blut-ist-kraft/i.test(s.role || "") ? 0 : /seelenverflechtung|schutz/i.test(s.role || "") ? 0.1 : 0.2;
+      return [support ? sub : d.pri === 5 ? 1 : 2, i];
     };
-    return slots.map((s, i) => score(s, i)).sort((a, b) => a[0] - b[0] || a[1] - b[1]).slice(0, keep).map(x => x[1]).sort((a, b) => a - b);
+    // Kleine Gruppen brauchen nicht drei Unterstützer: bei bis zu 3 Helden höchstens 2, bei bis zu 5 höchstens 3. Der Rest geht an Schaden und Kontrolle.
+    const maxSup = keep <= 3 ? 2 : keep <= 5 ? 3 : 99; let sup = 0;
+    const ranked = slots.map((s, i) => score(s, i)).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    const first = ranked.filter(x => x[0] >= 1 || sup++ < maxSup);
+    return first.slice(0, keep).map(x => x[1]).sort((a, b) => a - b);
   };
   // Builds mit beliebiger Primärklasse (PvX "Any/X") auf die gewählte Klasse umschreiben
   GW.adaptAny = function (code, pri) {

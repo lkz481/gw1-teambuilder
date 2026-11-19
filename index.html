@@ -574,14 +574,19 @@ function compute(){
 
 // ---------- Darstellung ----------
 const ICN = {"dmg": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14.5 3.5 20.5 3.5 20.5 9.5 9 21 3 15z\"/><path d=\"M5 13l6 6M3 21l3-3\"/></svg>", "heal": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg>", "prot": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z\"/></svg>", "copy": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"9\" y=\"9\" width=\"11\" height=\"11\" rx=\"2\"/><path d=\"M5 15V6a2 2 0 0 1 2-2h9\"/></svg>", "down": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 4v11M7 11l5 5 5-5M5 20h14\"/></svg>", "dice": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"3\"/><circle cx=\"9\" cy=\"9\" r=\".8\" fill=\"currentColor\"/><circle cx=\"15\" cy=\"15\" r=\".8\" fill=\"currentColor\"/><circle cx=\"15\" cy=\"9\" r=\".8\" fill=\"currentColor\"/><circle cx=\"9\" cy=\"15\" r=\".8\" fill=\"currentColor\"/></svg>", "list": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01\"/></svg>", "ok": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg>", "warn": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 4l9 16H3z\"/><path d=\"M12 10v4M12 17h.01\"/></svg>", "bad": "<svg class=\"i\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 6l12 12M18 6L6 18\"/></svg>"};
+ICN.ctrl = `<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M6.5 6.5l11 11"/></svg>`;
 const METRIC = { dmg:[ICN.dmg,"Schaden/s","total"], heal:[ICN.heal,"Heilung/s","heal"], prot:[ICN.prot,"Schutz/s","prot"] };
+// Kontrolle mehrerer Leisten überlappt: Nicht addieren, sondern als Wahrscheinlichkeit verrechnen
+const teamCtrl = () => { const n=state.dpsN||3; return n*(1-DPS.reduce((a,d)=>a*(1-Math.min(1,((d&&d.ctrl)||0)/n)),1)); };
+const ctrlTxt = v => (Math.round(v*10)/10).toFixed(1).replace(".",",");
 const val = (D,k) => D ? D[METRIC[k][2]] || 0 : 0;
 function mainMetric(D){ if(!D) return "dmg"; const s=D.heal+D.prot; return s > D.total*1.2 && s > 2 ? (D.heal>=D.prot?"heal":"prot") : "dmg"; }
 function metricHTML(D){
   if (!D) return "";
   const list = ["dmg","heal","prot"].filter(k=>val(D,k)>=0.5).sort((a,b)=>val(D,b)-val(D,a)).slice(0,2);
-  if (!list.length) return `<span class="dim">kein Schaden, keine Heilung</span>`;
-  return list.map(k=>`${METRIC[k][0]} <b>${Math.round(val(D,k))}</b>/s`).join(" · ");
+  const c = D.ctrl >= 0.05 ? `${ICN.ctrl} <b>${ctrlTxt(D.ctrl)}</b> aus` : "";
+  if (!list.length) return c || `<span class="dim">kein Schaden, keine Heilung</span>`;
+  return list.slice(0, c ? 1 : 2).map(k=>`${METRIC[k][0]} <b>${Math.round(val(D,k))}</b>/s`).concat(c ? [c] : []).join(" · ");
 }
 let LAST = null;
 function render(){
@@ -625,6 +630,8 @@ function renderMain(){
   if (CAT!=="run" && DPS.length) {
     const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
     pills.push(`<button class="pill" data-open="dps">${ICN.dmg} <b>${sum("dmg")}</b> Schaden/s</button>`);
+    const ctl = teamCtrl();
+    if (ctl >= 0.05) pills.push(`<button class="pill" data-open="dps" title="So viele Gegner sind im Schnitt ausgeschaltet">${ICN.ctrl} <b>${ctrlTxt(ctl)}</b> von ${state.dpsN||3} Gegnern aus</button>`);
     if (sum("heal")+sum("prot") > 0) pills.push(`<button class="pill" data-open="dps">${ICN.heal} <b>${sum("heal")}</b> Heilung/s${sum("prot")?` · ${ICN.prot} <b>${sum("prot")}</b> Schutz/s`:""}</button>`);
   }
   if (CHECKS.length) { const n=k=>CHECKS.filter(c=>c[0]===k).length; pills.push(`<button class="pill" data-open="info" data-tab="check">Prüfung <span class="ok">${ICN.ok} ${n("ok")}</span>${n("warn")?`<span class="warn">${ICN.warn} ${n("warn")}</span>`:""}${n("bad")?`<span class="bad">${ICN.bad} ${n("bad")}</span>`:""}</button>`); }
@@ -739,6 +746,24 @@ function pvCodex(){
   const card = (x, inTeam) => { const s=GW.skill(x.id); const sk=x.d.skills.filter(Boolean).map(GW.skill).filter(Boolean); const need=sk.filter(k=>!k.e && !FREE.has(k.n)); const miss=need.filter(k=>!C.have.has(k.id)).length;
     return `<article class="pvc" style="--pc:${PCOL[x.d.pri]}"><div class="pvh">${ico(x.id)}<div style="min-width:0"><div class="nm">${esc(dname(s))}</div><div class="rl">${esc(pname(x.d.pri,x.d.sec))} · ${x.c.s} Punkte</div></div></div><div class="bar8">${x.d.skills.map(id=>ico(id)).join("")}</div>${pvAttr(x.d)}<div class="pvattr">Hake an, was davon diese Woche im Kodex ist. Immer erlaubt sind das Wiederbelebungssiegel und die Selbstheilung jeder Klasse.</div><div class="cxchips">${need.map(k=>`<button class="chip${C.have.has(k.id)?" on":""}" data-cxh="${k.id}" data-sid="${k.id}">${esc(dname(k))}</button>`).join("")}</div><div class="pvattr ${miss?"":"up"}">${need.length?(miss?`${miss} von ${need.length} noch offen oder nicht im Kodex. Ersetze fehlende Plätze durch Kodex-Fertigkeiten derselben Attribute.`:"Alle Fertigkeiten sind im Kodex: Die Leiste ist so spielbar."):"Keine weiteren Fertigkeiten nötig."}</div><div class="code"><input readonly value="${esc(x.m.code)}" aria-label="Vorlagen-Code"><button class="btn s" data-copy="${esc(x.m.code)}">Kopieren</button></div><div class="pvfoot"><span class="dim">Vorlage aus ${esc(x.b.fmt.map(f=>PVP.fmt[f].name).join(", "))}</span><a href="${esc(x.b.u)}" target="_blank" rel="noopener">PvX-Seite (inoffiziell)</a></div></article>`; };
   const total = C.ids.size, noBar = [...C.ids].filter(id=>!PVP.codex[id]).map(GW.skill).filter(Boolean);
+  // Eigenbau für Eliten ohne erprobte Leiste: Wunschliste nach Häufigkeit in den PvX-PvP-Leisten, Leiste aus dem, was im Kodex ist
+  const PRIM = {1:17,2:23,3:16,4:6,5:0,6:12,7:35,8:36,9:40,10:44}, SELF = {1:"Healing Signet",2:"Troll Unguent",4:"Blood Renewal",5:"Ether Feast",6:"Aura of Restoration",7:"Shadow Refuge",8:"Vital Boon",9:"Leader's Comfort"};
+  const allS = GW.allSkills(), byName = n => allS.find(s=>s.n===n);
+  const ownCard = el => {
+    const cand = allS.filter(s=>!s.e && !s.pve && s.p===el.p && !/\(PvP\)$/.test(s.n) && !FREE.has(s.n) && (s.aid===el.aid || s.aid===PRIM[el.p] || !s.a || PVP.freq[s.id]))
+      .map(s=>[s, (s.aid===el.aid?3:0) + Math.min(6,(PVP.freq[s.id]||0)) + (s.aid===PRIM[el.p]?1:0)]).filter(x=>x[1]>=2).sort((a,b)=>b[1]-a[1]).slice(0,16).map(x=>x[0]);
+    const pick = cand.filter(s=>C.have.has(s.id)).slice(0,6), self = byName(SELF[el.p]), res = byName("Resurrection Signet");
+    const skills = [el, ...pick]; if (self && skills.length<7) skills.push(self); if (res && skills.length<8) skills.push(res);
+    const cnt = new Map(); skills.forEach(s=>{ if (s.a && s.aid!=null && s.p===el.p) cnt.set(s.aid, (cnt.get(s.aid)||0) + (s===el?3:1)); });
+    if (!cnt.has(PRIM[el.p])) cnt.set(PRIM[el.p], 0.5);
+    const WPN = {1:[18,19,20],2:[25],7:[29],9:[37],10:[41]}, TW = [[/axe/i,18],[/hammer/i,19],[/sword/i,20]];
+    if (WPN[el.p] && ![...cnt.keys()].some(k=>WPN[el.p].includes(k))) { const hit = TW.find(x=>skills.some(s=>x[0].test(s.t))); cnt.set(hit && el.p===1 ? hit[1] : WPN[el.p][0], 99); }
+    const order = [...cnt].sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[0]), ranks = order.length>=3 ? [12,10,8] : order.length===2 ? [12,12] : [12];
+    const attrs = order.map((a,i)=>[a,ranks[i]]).sort((a,b)=>a[0]-b[0]);
+    const ids = skills.map(s=>s.id); while (ids.length<8) ids.push(0);
+    let code = ""; try { code = GW.encode(el.p, 0, attrs, ids); } catch(e) {}
+    return `<article class="pvc" style="--pc:${PCOL[el.p]}"><div class="pvh">${ico(el.id)}<div style="min-width:0"><div class="nm">${esc(dname(el))}</div><div class="rl">${esc(GW.PROF_DE[el.p])} · Eigenbau, nicht erprobt</div></div></div><div class="pvtags"><span class="tag weak">Von uns gebaut</span></div><div class="bar8">${ids.map(id=>ico(id)).join("")}</div><div class="pvattr">${attrs.map(a=>`${esc(attrDe(a[0]))} ${a[1]}`).join(" · ")}</div><div class="pvattr">Hake an, was davon im Kodex ist. Die Liste ist nach Häufigkeit in erprobten PvP-Leisten sortiert, die ersten sechs Treffer kommen in die Leiste. Selbstheilung und Wiederbelebungssiegel füllen auf.</div><div class="cxchips">${cand.map(k=>`<button class="chip${C.have.has(k.id)?" on":""}" data-cxh="${k.id}" data-sid="${k.id}">${esc(dname(k))}</button>`).join("")}</div>${pick.length>=3 && code ? `<div class="code"><input readonly value="${esc(code)}" aria-label="Vorlagen-Code"><button class="btn s" data-copy="${esc(code)}">Kopieren</button></div>` : `<div class="pvattr">Ab drei angehakten Fertigkeiten gibt es einen Code.</div>`}</article>`;
+  };
   const hench = C.mode==="hench";
   const me = hench ? (avail.find(x=>x.id===C.mine) || avail[0]) : null;
   const hcard = h => `<article class="pvc" style="--pc:${PCOL[h.p]}"><div class="pvh"><div style="min-width:0"><div class="nm">${esc(h.n)}</div><div class="rl">${esc(GW.PROF_DE[h.p])} · ${esc(h.role)}</div></div></div><div class="bar8">${h.sk.map(id=>ico(id)).join("")}</div><div class="pvchg"><div><span class="up">${esc(h.pro)}</span></div><div><span class="dn">${esc(h.con)}</span></div></div></article>`;
@@ -752,7 +777,7 @@ function pvCodex(){
     : `${team.length?`<h2 class="cxh2">Stärkstes Team dieser Woche</h2><p class="dim sm" style="margin:0 0 10px;max-width:80ch">Jede Erstklasse nur einmal, ein Heiler zuerst, danach nach Punkten. ${team.length<4?`Bisher passen nur ${team.length} Leisten. Trag weitere Klassen ein.`:""}</p><div class="pvgrid">${team.map(x=>card(x,true)).join("")}</div>`:""}
        ${avail.length>team.length?`<h2 class="cxh2">Weitere spielbare Leisten</h2><div class="pvgrid">${avail.filter(x=>!team.includes(x)).map(x=>card(x)).join("")}</div>`:""}
        ${!avail.length?`<div class="pvempty">Für keine der eingetragenen Eliten gibt es eine erprobte PvX-Leiste.</div>`:""}`;
-  const resTail = total && noBar.length ? `<p class="dim sm" style="margin:14px 0 0;max-width:80ch">Im Kodex, aber ohne erprobte Leiste: ${noBar.map(s=>`<span data-sid="${s.id}">${esc(dname(s))}</span>`).join(", ")}.</p>` : "";
+  const resTail = total && noBar.length ? `<h2 class="cxh2">Eliten ohne erprobte Leiste</h2><p class="dim sm" style="margin:0 0 10px;max-width:80ch">Für diese Eliten gibt es keine PvX-Leiste. Hier baut die Seite eine aus dem, was diese Woche im Kodex ist. Das ist ein Vorschlag ohne Wertung: Ob die Elite etwas taugt, sagt er nicht.</p><div class="pvgrid">${noBar.map(ownCard).join("")}</div>` : "";
   return `<div class="cxbar"><div><b>Kodex-Woche ab ${fmtD(w.start)}</b><div class="dim sm">Nächster Wechsel: ${fmtD(w.end)}. Dann beginnt die Liste leer.</div></div><div class="row"><div class="seg" style="width:270px"><button class="${hench?"on":""}" data-cxmode="hench">Mit Gefolgsleuten</button><button class="${hench?"":"on"}" data-cxmode="team">Mit Mitspielern</button></div><span class="dim sm">${total} Eliten</span>${total?`<button class="btn s" data-cxclear="1">Leeren</button>`:""}</div></div>${res}${resTail}<h2 class="cxh2">Eliten der Woche eintragen</h2><p class="dim sm" style="margin:0 0 8px;max-width:80ch">Gold umrandet: Dafür gibt es eine erprobte Leiste. Je Klasse stehen 3 bis 5 Eliten im Kodex.</p><input type="text" id="cxq" placeholder="Elite suchen …" value="${esc(pv.cq||"")}" autocomplete="off" style="width:min(100%,340px);margin-bottom:10px;background:#120a08;border:1px solid var(--line2);color:var(--text);border-radius:8px;padding:8px 10px"><div class="cxlist">${pick}</div>`;
 }
 function pvGuide(){
@@ -984,7 +1009,7 @@ function drawMember(body){
   } else if (ui.tab==="dps") {
     const sec = k => { const ps = D.parts.filter(p=>p.cat===k); return ps.length ? `<h3>${METRIC[k][0]} ${METRIC[k][1].replace("/s","")} · ${Math.round(val(D,k))}/s</h3>` + ps.map(p=>`<div class="dpsrow"><div>${p.sid?`<span data-sid="${p.sid}">${esc(p.name)}</span>`:esc(p.name)}<div class="dim sm">${esc(p.detail)}</div></div><b>${p.dps.toFixed(1)}</b></div>`).join("") : ""; };
     body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="mut sm">Dauerwerte pro Sekunde</div>${targetSeg()}</div>
-      ${["dmg","heal","prot"].map(sec).join("") || `<p class="mut">Keine berechenbaren Werte.</p>`}
+      ${(["dmg","heal","prot"].map(sec).join("") + (()=>{ const ps=D.parts.filter(p=>p.cat==="ctrl"); return ps.length ? `<h3>${ICN.ctrl} Kontrolle · ${ctrlTxt(D.ctrl)} Gegner ausgeschaltet</h3>` + ps.map(p=>`<div class="dpsrow"><div>${p.sid?`<span data-sid="${p.sid}">${esc(p.name)}</span>`:esc(p.name)}<div class="dim sm">${esc(p.detail)}</div></div><b>${p.dps.toFixed(2).replace(".",",")}</b></div>`).join("") : ""; })()) || `<p class="mut">Keine berechenbaren Werte.</p>`}
       ${D.notes.length?`<p class="dim sm" style="margin-top:10px">${D.notes.map(esc).join(" ")}</p>`:""}`;
   } else if (ui.tab==="code") {
     let html = `<h3>Vorlagen-Code</h3><div class="code"><input readonly value="${esc(m.code)}" aria-label="Code"><button class="btn s" data-copy="${esc(m.code)}">Kopieren</button></div>`;
@@ -1074,7 +1099,7 @@ function drawDps(body){
   const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
   const maxOf = k => Math.max(1, ...DPS.map(d=>val(d,k)));
   $("dtitle").innerHTML = `Team-Werte<small>Dauerwerte pro Sekunde</small>`;
-  body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="row">${["dmg","heal","prot"].map(k=>`<div><div class="mut sm">${METRIC[k][1]}</div><div class="hd" style="font-size:24px;color:#f3dfb0">${METRIC[k][0]} ${sum(k)}</div></div>`).join("")}</div>${targetSeg()}</div>
+  body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="row">${["dmg","heal","prot"].map(k=>`<div><div class="mut sm">${METRIC[k][1]}</div><div class="hd" style="font-size:24px;color:#f3dfb0">${METRIC[k][0]} ${sum(k)}</div></div>`).join("")}<div><div class="mut sm">Gegner aus</div><div class="hd" style="font-size:24px;color:#f3dfb0">${ICN.ctrl} ${ctrlTxt(teamCtrl())}</div></div></div>${targetSeg()}</div>
     ${TEAM.map((m,i)=>{ const k=mainMetric(DPS[i]); return `<button class="opt" style="margin-top:6px" data-member="${i}"><div class="t"><span class="nm">${m.you?"Du":esc(m.name||"–")}</span><span style="flex:1"></span><span class="sm">${metricHTML(DPS[i])}</span></div><div class="meter${k!=="dmg"?" sup":""}"><i style="width:${Math.round(val(DPS[i],k)/maxOf(k)*100)}%"></i></div></button>`; }).join("")}
     ${refHTML()}
     <details class="more"><summary>So wird gerechnet</summary><ul class="sm">
@@ -1088,7 +1113,10 @@ function drawDps(body){
       <li>Tiergefährte: Stufe 20, im Schnitt 24,4 je Treffer bei Tierbeherrschung 12 (Wiki), plus 33 % in PvE, ein Angriff alle 2 s. Die Umrechnung auf andere Ränge ist eine Annahme.</li>
       <li>Stärke der Ehre, Splitterwaffe und ähnliche Helfer zählen beim Helden, der sie wirkt, über die Angriffe des Spielers.</li>
       <li>Rüstung der Gegner: Je 40 Rüstung halbiert sich Waffen-, Diener-, Tier- und Elementarschaden (Wiki). Rüstungsignorierender Schaden wie bei Mesmern, Peinigungsgebeten und Angriffsboni bleibt voll. In normalen Gebieten rechnet das Tool mit 60, in Elite-Gebieten mit 80. Laut Wiki gilt 3 mal Stufe plus Klassenbonus, bei Stufe 28 also ab 84.</li>
-      <li>Nicht drin: Stab- und Zauberstab-Angriffe von Zauberwirkern, die Wirkung von Unterbrechungen und Panik. Auslöser durch Gegner-Aktionen: eine Aktion alle 2 s angenommen.</li>
+      <li>Kontrolle ("Gegner aus"): Niederschlag, Unterbrechung, Benommenheit, Blindheit, gesperrte Fertigkeiten und Panik zählen als Zeit, in der ein Gegner nichts tun kann. 1,0 heißt: Im Schnitt ist ständig ein Gegner ausgeschaltet. Annahmen: Die Hälfte der Gegner zaubert, die Hälfte greift an. Eine Unterbrechung kostet 2 Sekunden und jede zweite sitzt.</li>
+      <li>Stab und Zauberstab: 11-22 Schaden alle 1,75 Sekunden (Wiki), nur in der Zeit ohne Zauber.</li>
+      <li>Auslöser durch Gegner-Aktionen: Eine Aktion alle 2 Sekunden angenommen.</li>
+      <li>Weiter Annahmen, weil das Wiki dazu nichts misst: Diener leben im Kampf halb so lange wie ihre Zerfallszeit. Der Tierschaden ist im Wiki nur für Tierbeherrschung 12 gemessen und wird auf andere Ränge wie Waffenschaden umgerechnet.</li>
       <li>Heilung: direkte Heilung, Regeneration und ausgelöste Heilung, Mönchszauber mit Gunst der Götter (3,2 je Rang). Gruppenheilung zählt für jedes Gruppenmitglied.</li>
       <li>Schutz ist eine Schätzung: Jedes geschützte Gruppenmitglied wird alle 2 s für 80 Schaden getroffen und hat 480 Lebenspunkte. Gezählt werden Schadensgrenzen, Schadensminderung, Blocken und Rüstungsboni.</li>
     </ul></details>`;
