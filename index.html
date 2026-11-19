@@ -1278,7 +1278,7 @@ function randTeam(){
   if (cur.some(o=>!o)) { info("Im Team steht eine leere Heldenleiste. Damit lässt sich nicht rechnen."); return; }
   const key = [n, TEAM.length, playerCode(), armorNow(), foeDpsNow(), state.area||"", ownedKey()].join("|");
   DEATH_HINT = null;
-  if (!(state.team==="ref_rand" && RANDBASE && RANDBASE.key===key)) { const E = C.evalTeam(cur); RANDBASE = { key, dmg:E.dmg, hp:E.heal+E.prot, ok:E.ok, gap:E.gap, name:PLAN ? PLAN.def.name : "bisheriges Team", codes:cur.map(o=>normCode(o.code)) }; }
+  if (!(state.team==="ref_rand" && RANDBASE && RANDBASE.key===key)) { const E = C.evalTeam(cur); RANDBASE = { key, dmg:E.dmg, hp:E.heal+E.prot, heal:E.heal, prot:E.prot, ok:E.ok, gap:E.gap, name:PLAN ? PLAN.def.name : "bisheriges Team", codes:cur.map(o=>normCode(o.code)) }; }
   const B = RANDBASE, good = E => (B.ok ? E.ok : E.gap <= B.gap + 0.5) && E.dmg >= 0.9*B.dmg && E.heal+E.prot >= 0.9*B.hp;
   const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
   // passt eine Leiste zu den übrigen? Keine Elite doppelt, kein Geist doppelt, höchstens ein Dienermeister, ein Splitterwaffe-Helfer und ein Blut-ist-Kraft-Held
@@ -1298,7 +1298,8 @@ function randTeam(){
   if (!res) { info("Kein anderes Team gefunden, das höchstens 10 % schwächer ist und überlebt. Noch einmal versuchen oder ein anderes Ausgangsteam wählen."); return; }
   setRefTeam("ref_rand", "Zufallsteam (berechnet)", `Zufällig gewürfelt und als ganzes Team durchgerechnet. Maßstab: ${B.name} mit ${Math.round(B.dmg)} Schaden/s. Höchstens 10 % weniger Schaden und 10 % weniger Heilung und Schutz, die Überlebensprüfung hält.`, res.L);
   render();
-  info(`Zufallsteam: ${Math.round(res.E.dmg)} Schaden/s, ${Math.round(res.E.heal)} Heilung/s, ${Math.round(res.E.prot)} Schutz/s. Maßstab „${B.name}“: ${Math.round(B.dmg)} Schaden/s, ${Math.round(B.hp)} Heilung und Schutz/s. ${res.changed} von ${res.L.length} Helden weichen davon ab.`);
+  const tr = (lab, d, h, p) => `<tr><td style="padding:2px 14px 2px 0">${esc(lab)}</td><td style="padding:2px 14px 2px 0;text-align:right"><b>${Math.round(d)}</b></td><td style="padding:2px 14px 2px 0;text-align:right">${Math.round(h)}</td><td style="padding:2px 0;text-align:right">${Math.round(p)}</td></tr>`;
+  $("rndinfo").innerHTML = `<table class="sm" style="border-collapse:collapse"><tr class="dim"><td></td><td style="padding:2px 14px 2px 0;text-align:right">Schaden/s</td><td style="padding:2px 14px 2px 0;text-align:right">Heilung/s</td><td style="padding:2px 0;text-align:right">Schutz/s</td></tr>${tr("Zufallsteam", res.E.dmg, res.E.heal, res.E.prot)}${tr("Maßstab: "+B.name, B.dmg, B.heal, B.prot)}</table><div class="dim" style="margin-top:4px">${res.changed} von ${res.L.length} Helden weichen vom Maßstab ab.</div>`;
 }
 function drawDps(body){
   $("dtabs").hidden = true; $("dtabs").innerHTML = "";
