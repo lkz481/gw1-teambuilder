@@ -543,11 +543,14 @@
   const strikeFactor = r => Math.pow(2, ((5 * Math.min(r, 12) + 2 * Math.max(0, r - 12)) - 60) / 40);
 
   // Wie viele Gegner ein Flächeneffekt trifft. Annahme zur Aufstellung der Gegner (das Wiki nennt nur die Reichweiten "adjacent", "nearby", "in the area"): Neben dem Ziel steht die Hälfte der übrigen Gegner, in der Nähe drei Viertel, im Bereich alle.
+  // Flächen-Niederschlag im Team (opts.hold = Anteil der Kampfzeit, in dem die Gruppe am Boden liegt): Laut Wiki können sich niedergeschlagene Gegner nicht bewegen. Sie bleiben so dicht stehen, wie die Gruppe beim Anlaufen stand.
+  // Annahme für diese Zeit: drei Viertel der übrigen Gegner neben dem Ziel, alle in der Nähe.
+  let ADJS = 0.5, NEARS = 0.75;
   function aoeMul(d, n) {
-    const adj = 1 + (n - 1) * 0.5, near = 1 + (n - 1) * 0.75, isAdj = /adjacent/.test(d);
-    if (/all other (adjacent|nearby) foes|to (adjacent|nearby) foes whenever target foe/.test(d)) return Math.max(0, (n - 1) * (isAdj ? 0.5 : 0.75));
-    if (/75% of that damage to (nearby|adjacent)/.test(d)) return 1 + 0.75 * (n - 1) * (isAdj ? 0.5 : 0.75);
-    if (/to 3 adjacent foes|to up to 3/.test(d)) return Math.min((n - 1) * 0.5, 3) + (/target and/.test(d) ? 1 : 0) || 1;
+    const adj = 1 + (n - 1) * ADJS, near = 1 + (n - 1) * NEARS, isAdj = /adjacent/.test(d);
+    if (/all other (adjacent|nearby) foes|to (adjacent|nearby) foes whenever target foe/.test(d)) return Math.max(0, (n - 1) * (isAdj ? ADJS : NEARS));
+    if (/75% of that damage to (nearby|adjacent)/.test(d)) return 1 + 0.75 * (n - 1) * (isAdj ? ADJS : NEARS);
+    if (/to 3 adjacent foes|to up to 3/.test(d)) return Math.min((n - 1) * ADJS, 3) + (/target and/.test(d) ? 1 : 0) || 1;
     if (/foes in the area|in the area/.test(d)) return n;
     if (/(target and (nearby|adjacent|all nearby|all adjacent) foes|all (adjacent|nearby) foes|to (adjacent|nearby) foes|hits foes adjacent|and foes near|also (hexes|hits|affects|strikes) (all )?(adjacent |nearby )?foes|foes (adjacent to|near|nearby)|(adjacent|nearby) foes)/.test(d)) return isAdj ? adj : near;
     return 1;
@@ -557,7 +560,9 @@
   // Diener-Schaden je Treffer gegen Rüstung 60 nach Stufe: Mittelwerte der Messreihen im Wiki (Bone Horror, Bone Fiend, Bone Minion, Shambling Horror, Vampiric Horror, Flesh Golem, Jagged Horror)
   const MINDMG = {"bone horror":{"1":1.0,"2":1.5,"3":3.5,"4":5.0,"5":6.0,"6":7.5,"7":8.5,"8":10.5,"10":15.0,"11":16.0,"12":18.5,"13":21.0,"14":23.0,"15":24.0,"16":27.0,"17":29.0,"18":33.0,"19":35.0,"20":38.0,"21":40.0,"22":43.5,"23":46.0},"bone fiend":{"1":1.0,"2":2.0,"3":3.0,"4":4.0,"5":6.0,"6":7.5,"7":9.0,"8":11.0,"10":15.0,"11":16.5,"12":19.0,"13":20.5,"14":23.5,"15":24.5,"16":27.5,"17":29.5,"18":33.0,"19":35.0,"20":38.0,"21":40.0,"22":43.5,"23":46.0},"bone minion":{"0":0.0,"1":1.0,"2":1.5,"3":2.0,"4":3.0,"5":4.0,"6":5.5,"7":6.0,"8":7.5,"9":8.5,"10":10.5,"11":11.0,"12":13.0,"13":14.0,"14":15.5,"15":17.0,"16":18.5,"17":20.0},"shambling horror":{"1":1.0,"2":1.5,"3":2.5,"4":3.0,"5":4.0,"6":4.5,"7":7.5,"8":8.5,"10":11.5,"11":13.5,"12":14.5,"13":18.0,"14":20.0,"15":22.5,"16":24.5,"17":27.0,"18":31.0,"19":34.5,"20":37.5,"21":41.0,"22":43.0,"23":46.5},"vampiric horror":{"1":1.0,"2":2.0,"3":3.5,"4":5.0,"5":6.0,"6":6.0,"7":7.5,"8":10.5,"10":15.5,"11":16.5,"12":18.5,"13":20.5,"14":21.5,"15":24.0,"16":28.5,"17":29.5,"18":32.0,"19":34.5,"20":38.5,"21":40.0,"22":43.5,"23":46.0},"flesh golem":{"3":7.5,"4":12.0,"6":14.5,"7":19.5,"9":25.0,"10":30.5,"12":34.5,"13":38.0,"15":50.5,"16":54.0,"18":64.0,"19":68.5,"21":77.5,"22":81.5,"24":89.0,"25":91.0,"26":94.5,"28":105.5,"29":112.5,"31":117.0,"32":128.0,"34":139.0},"jagged horror":{"0":0.0,"1":1.0,"2":1.5,"3":2.5,"4":3.5,"5":4.0,"6":5.0,"7":6.0,"8":6.5,"9":8.5,"10":11.5,"11":12.5,"12":15.0,"13":17.0,"14":18.5,"15":21.5,"16":24.0,"17":27.5,"18":29.5,"19":33.0,"20":36.5,"21":40.0}};
   const minionMean = (kind, L) => { const t = MINDMG[kind]; if (!t) return 1.53 * L; const ks = Object.keys(t).map(Number).sort((a, b) => a - b); if (L <= ks[0]) return t[ks[0]]; if (L >= ks[ks.length - 1]) return t[ks[ks.length - 1]]; let lo = ks[0], hi = ks[ks.length - 1]; for (const k of ks) { if (k <= L) lo = k; if (k >= L) { hi = k; break; } } return lo === hi ? t[lo] : t[lo] + (t[hi] - t[lo]) * (L - lo) / (hi - lo); };
-  GW.dps = function (bar, eff, opts) {
+  GW.dps = function (bar, eff, opts) { const h = Math.max(0, Math.min(1, (opts && opts.hold) || 0)); ADJS = 0.5 + 0.25 * h; NEARS = 0.75 + 0.25 * h; HOLD = h; try { return dpsCore(bar, eff, opts); } finally { ADJS = 0.5; NEARS = 0.75; HOLD = 0; } };
+  let HOLD = 0;
+  const dpsCore = function (bar, eff, opts) {
     const n = opts.targets || 1, out = [], notes = [];
     let fcUsed = false, fleeUsed = false, heldUsed = false, scatter = 0;
 
@@ -633,7 +638,7 @@
       notes.push("Kritische Treffer: Chance nach Spieler-Messung im Wiki (etwa 18 % bei Rang 12), bei Assassinen plus 1 % je Rang Kritische Stöße.");
       const melee = !/Bogen|Speer|Stab/.test(w[0]), reach = melee ? FIGHT / (FIGHT + 2) : 1; // Nahkämpfer laufen je Kampf rund 2 s zum Gegner (Annahme; Wiki "Hero behavior": Nahkampfhelden verlieren Schaden durch Laufwege)
       attackRate = reach / (w[3] * (1 - ias / 100));
-      const hits = w[4] > 1 ? Math.min(w[4], 1 + (n - 1) * 0.5) : 1; // Sense: Die Hälfte der übrigen Gegner steht neben dem Ziel
+      const hits = w[4] > 1 ? Math.min(w[4], 1 + (n - 1) * ADJS) : 1; // Sense: Die Hälfte der übrigen Gegner steht neben dem Ziel
       wIdx = out.length;
       per *= af; wPer *= af;
       out.push({ name: "Normale Angriffe (" + w[0] + ")", dps: per * attackRate * hits, kind: "Waffe", detail: Math.round(per) + " je Treffer, alle " + (1 / attackRate).toFixed(2) + " s" + (ias ? " (Angriffstempo +" + Math.round(ias) + " %)" : "") + (hits > 1 ? ", " + hits.toFixed(1) + " Ziele" : "") + (melee ? ", " + Math.round(reach * 100) + " % der Zeit am Gegner" : "") });
@@ -744,14 +749,14 @@
           // Ausnahme: Der Zauber wirft selbst um, oder im Team gibt es eine Flächen-Verlangsamung. Dann kommen die Gegner kaum vom Fleck (guildwiki.de, Beispiel Geistige Erfrierung).
           const adot = every && (ADOT.has(s.n.replace(/ \(PvP\)$/, "")) || /initial location|to location of|your location/.test(d));
           const held = /knock/.test(d) || opts.snare || sk.some(x => SNARE.has(x[1].n));
-          const flee = adot && !held ? Math.min(1, 3 / +every[1]) : 1; if (flee < 1) fleeUsed = true; if (adot && held) heldUsed = true;
+          const fl0 = adot && !held ? Math.min(1, 3 / +every[1]) : 1, flee = fl0 + (1 - fl0) * HOLD; if (flee < 1) fleeUsed = true; if (adot && held) heldUsed = true;
           if (adot && !held) scatter += 1;
       if (/allies in this ward deal/.test(dRaw)) dm = null;
       if (dm != null && dm > 0) {
         const allyW = /weapon spell/i.test(s.t) && d.match(/ends after (\d+(?:\.\.\.\d+)?) attack/);
         if (allyW) {
           const k = at(allyW[1], r);
-          parts.push({ kind: "Waffenzauber", per: dm * k, dur: 0, aoe: /to \d+ adjacent foes/.test(d) ? Math.min(+(d.match(/to (\d+) adjacent foes/) || [0, 3])[1], (n - 1) * 0.5) : aoeMul(d, n), limit: (opts.physRate != null ? opts.physRate : attackRate) / Math.max(1, k), label: "Waffenzauber auf Verbündete, " + k + " Angriffe" });
+          parts.push({ kind: "Waffenzauber", per: dm * k, dur: 0, aoe: /to \d+ adjacent foes/.test(d) ? Math.min(+(d.match(/to (\d+) adjacent foes/) || [0, 3])[1], (n - 1) * ADJS) : aoeMul(d, n), limit: (opts.physRate != null ? opts.physRate : attackRate) / Math.max(1, k), label: "Waffenzauber auf Verbündete, " + k + " Angriffe" });
         } else if (perAttack && !/attack/i.test(s.t) && endsK) {
           const k = at(endsK[1], r);
           parts.push({ kind: "Direkt", per: dm * k, dur: 0, aoe: aoeMul(d, n), limit: attackRate / Math.max(1, k), label: "je Treffer, endet nach " + k + " Treffern" });
@@ -773,7 +778,7 @@
             while ((m2 = rx2.exec(d))) { if (k2++ === 0) continue; const st = d.lastIndexOf(". ", m2.index) + 1, en = d.indexOf(".", m2.index + m2[0].length + (/\.\.\./.test(m2[0]) ? 0 : 0)); const sen = d.slice(st, d.indexOf(". ", m2.index + m2[0].length) < 0 ? d.length : d.indexOf(". ", m2.index + m2[0].length));
               if (/each second|for each|whenever|every time|charr|summoned|spirit|removal effect|interruption effect|if target foe dies|maximum|\d% chance/.test(sen)) continue;
               const condS = / if |unless| who ha(s|ve) | that (has|is|are) /.test(sen), okS = /if you are enchanted/.test(sen) ? dEnch.length > 0 || sk.some(x => /enchantment/i.test(x[1].t)) : /hexed or enchanted|is hexed|has a hex/.test(sen) ? !!(opts.team && opts.team.hex) : /has a condition|suffering from a condition/.test(sen) ? !!(opts.team && opts.team.cond) : false;
-              const f2 = condS ? (okS ? 1 : 0.5) : 1, a2 = /other adjacent foes|two nearby foes/.test(sen) ? Math.max(0, Math.min(/two/.test(sen) ? 2 : 3, (n - 1) * (/two/.test(sen) ? 0.75 : 0.5))) : (aoeMul(sen, n) || 1);
+              const f2 = condS ? (okS ? 1 : 0.5) : 1, a2 = /other adjacent foes|two nearby foes/.test(sen) ? Math.max(0, Math.min(/two/.test(sen) ? 2 : 3, (n - 1) * (/two/.test(sen) ? NEARS : ADJS))) : (aoeMul(sen, n) || 1);
               if (a2 > 0) parts.push({ kind: "Direkt", per: at(m2[1], r) * f2 * armorOf(sen, s.aid === 8), dur: 0, aoe: a2, label: "zweite Schadensangabe" + (condS ? (okS ? ", Bedingung erfüllt" : ", bedingt (halb gezählt)") : "") }); } }
           parts.push({ kind: "Direkt", per: tot, dur: 0, aoe: aoeAt(/(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:(?!less |more |fewer )\w+ )?damage/), limit: onDeath ? (/corpse|exploit/.test(d) ? CORPSE : DEATH) : undefined, label: onDeath ? "beim Tod eines Gegners (eine Leiche alle " + (1 / DEATH).toFixed(1) + " s" + (/corpse|exploit/.test(d) && opts.corpseShare < 1 ? ", geteilt im Team" : "") + ")" : dual > 1 ? "Doppelangriff, zwei Treffer" : /pet attack/i.test(s.t) ? "Tierangriff" : /attack/i.test(s.t) ? "Angriffsbonus" : condP < 1 ? "Direktschaden, bedingt (wartet auf die Gelegenheit)" : "Direktschaden" });
         }
@@ -887,7 +892,7 @@
       const isCtrl = s.n === "Panic" || /hex/i.test(s.t) && /(attack|cast)[^.]*% slower|% slower spell casting|doubles? (spell casting|skill activation|casting) time/i.test(s.d || "") || /knock[s]?[- ]?down|interrupt|Dazed|Blind|disable/i.test(s.d || "") && !/enchantment|stance|shout|chant|form/i.test(s.t.replace(/hex/i, "")) || /Dazed|Blind|knock/i.test(s.d || "") && /attack|shout/i.test(s.t);
       if (!parts.length && !gain && !isMinion && !isCtrl) continue;
       // Wie oft wird die Fertigkeit genutzt? Effekte mit Dauer werden nur gehalten, nicht gestapelt.
-      if (tear && TEAR > 0) { const rs = d.split(/removal effect:/)[1] || "", sc2 = w && /sense|scythe/i.test(w[0]) ? Math.min(3, 1 + (n - 1) * 0.5) : 1, pct = Math.round(TEAR * 100);
+      if (tear && TEAR > 0) { const rs = d.split(/removal effect:/)[1] || "", sc2 = w && /sense|scythe/i.test(w[0]) ? Math.min(3, 1 + (n - 1) * ADJS) : 1, pct = Math.round(TEAR * 100);
         const m1 = rs.match(/adjacent foes take (\d+(?:\.\.\.\d+)?) /); if (m1) parts.push({ kind: "Direkt", per: at(m1[1], r) * TEAR, dur: 0, aoe: n, label: "Entfernungseffekt auf alle Nachbarn (" + pct + " % der Einsätze)" });
         const m2 = rs.match(/deals \+(\d+(?:\.\.\.\d+)?) (?:additional )?damage/); if (m2) parts.push({ kind: "Direkt", per: at(m2[1], r) * TEAR, dur: 0, aoe: sc2, label: "Entfernungseffekt (" + pct + " % der Einsätze)" });
         if (/attack twice/.test(rs) && wPer) parts.push({ kind: "Direkt", per: wPer * TEAR, dur: 0, aoe: sc2, label: "zweiter Angriff (" + pct + " % der Einsätze)" });
@@ -998,9 +1003,12 @@
       const cond = /\bif\b|unless|whenever|interruption effect|if target/i.test(d) ? 0.5 : 1;
       const add = (v, label, ex) => { if (v > 0.005) out.push(Object.assign({ name: sx.de || sx.n, sid: sx.id, dps: v, cat: "ctrl", kind: "Kontrolle", detail: label }, ex || {})); };
       // Panik (Wiki): Nutzt ein verhexter Gegner erfolgreich eine Fertigkeit, werden alle anderen Gegner in der Nähe unterbrochen. Jeder Gegner nutzt 0,25 Fertigkeiten je Sekunde, 60 % davon kommen durch, weil er selbst unterbrochen wird (Annahme). Jede Unterbrechung kostet rund 1 s.
-      if (sx.n === "Panic") { const dur = secs(/\((\d+(?:\.\.\.\d+)?) seconds?/), up = Math.min(1, dur * rate), nn = 1 + (n - 1) * 0.75, per = Math.min(0.8, Math.max(0, nn - 1) * FOE_SKILL * 0.6); add(up * nn * per, "Panik: Jeder der " + nn.toFixed(1) + " Gegner in der Nähe verliert " + Math.round(per * 100) + " % seiner Zeit durch Unterbrechungen, " + Math.round(up * 100) + " % Laufzeit"); continue; }
+      if (sx.n === "Panic") { const dur = secs(/\((\d+(?:\.\.\.\d+)?) seconds?/), up = Math.min(1, dur * rate), nn = 1 + (n - 1) * NEARS, per = Math.min(0.8, Math.max(0, nn - 1) * FOE_SKILL * 0.6); add(up * nn * per, "Panik: Jeder der " + nn.toFixed(1) + " Gegner in der Nähe verliert " + Math.round(per * 100) + " % seiner Zeit durch Unterbrechungen, " + Math.round(up * 100) + " % Laufzeit"); continue; }
       const kd = /caus\w* knock[- ]?down|knocks? down|is knocked down for|are knocked down(?! foe)|knock(?:ed)?[- ]down (?:target|all|that|nearby|adjacent)|and knocked down/i.test(d) && !/cannot be knocked|if you are knocked|you are knocked down|immune/i.test(d);
-      if (kd) { const dur = secs(/knock[- ]?down[^.]*?\((\d+(?:\.\.\.\d+)?) seconds?\)/i) || secs(/for (\d+(?:\.\.\.\d+)?) seconds?[^.]*knock/i) || 2; const c = /using attack skills/i.test(d) ? 0.2 : /if|unless|moving|attacking|casting|using a skill|\d+% chance/i.test(d) ? 0.5 : 1; add(rate * dur * Math.max(1, aoeMul(d, n)) * c, "Niederschlag " + dur + " s" + (c < 1 ? ", an Bedingung geknüpft" : "")); }
+      if (kd) { const dur = Math.min(4, secs(/knock[- ]?down[^.]*?\((\d+(?:\.\.\.\d+)?) seconds?\)/i) || secs(/for (\d+(?:\.\.\.\d+)?) seconds?[^.]*knock/i) || secs(/knock(?:ed)?[- ]?down for (\d+(?:\.\.\.\d+)?) seconds?/i) || 2); /* Wiki: Kein Niederschlag dauert länger als 4 s */ const c = /using attack skills/i.test(d) ? 0.2 : /if|unless|moving|attacking|casting|using a skill|\d+% chance/i.test(d) ? 0.5 : 1; const kdN = /nearby|adjacent|in the area/i.test(d) && !/knocks? down target( foe)?\./i.test(d) ? Math.max(1, aoeMul(d, n)) : 1, area = kdN > 1; let kdUp = 0; // nur der Satz mit dem Niederschlag entscheidet, wen er trifft
+        // Flächen-Niederschlag: Anteil der Kampfzeit, in dem die Gruppe liegt. Der erste fällt beim Anlaufen, danach so oft, wie die Fertigkeit wieder bereit ist.
+        if (area) { const P = 1 / rate; let cover = 0; for (let t = 0; t < FIGHT; t += P) cover += Math.min(dur, FIGHT - t); kdUp = Math.min(1, c * cover / FIGHT); }
+        add(rate * dur * kdN * c, "Niederschlag " + dur + " s" + (area ? " für " + kdN.toFixed(1) + " Gegner" : "") + (c < 1 ? ", an Bedingung geknüpft" : ""), area ? { kdUp } : null); }
       if (/interrupt/i.test(d) && !/easily interrupted|cannot be interrupted|not interrupt|if interrupted|is interrupted/i.test(d)) { const lost = /interrupts? (target foe's )?(next )?(an )?attack|interrupts next attack/i.test(d) ? 1 : 2; add(rate * lost * Math.max(1, /all (other )?(nearby|adjacent) foes|foes in the area/i.test(d) ? aoeMul(d, n) : 1), "Unterbrechung: " + (lost === 1 ? "ein Angriff (1 s)" : "ein Zauber (2 s)") + " geht verloren", { intr: lost === 1 ? "atk" : /spell|chant/i.test(d) ? "spell" : "skill", ips: rate }); }
       // Verlangsamte Angriffe und Zauber: "50% slower" kostet ein Drittel der Aktionen, "doubles" die Hälfte
       { const mA = d.match(/attacks?[^.]*?(\d+)% slower/i), mC = d.match(/cast[^.]*?(\d+)% slower|(\d+)% slower spell casting/i), dbl = /doubles? (spell casting|skill activation|casting) time/i.test(d) ? (/skill activation/i.test(d) ? 1 : CAST) : 0;
@@ -1105,7 +1113,7 @@
     const hexSeen = new Map(), scales = bars.map(b=>{ const m = new Map(); SK(b).forEach(s=>{ if (!/hex/i.test(s.t)) return; const j = hexSeen.get(s.id)||0; hexSeen.set(s.id, j+1); const aoe = /also hexes|adjacent|nearby|in the area/i.test(s.d); if (aoe ? j>0 : j>=n) m.set(s.id, 0); }); return m; });
     // Gleiche Leiste unter gleichen Bedingungen nur einmal rechnen (die Suche nach dem Vergleichsteam fragt dieselben Fälle sehr oft ab)
     const run = (i, phys, bp) => { const cs = cu>1 && corpseUser(bars[i]) ? 1/cu : 1;
-      const key = [(env.wmods && env.wmods[i]) || "-", death.toFixed(3), crackT.toFixed(3), i===0 ? "S" : "H", bars[i].skills.join(","), [...eff[i]].join(";"), i===0 ? "w"+JSON.stringify(weapon0||0) : "p"+(Math.round(phys*1000)), bp, [...skips[i]].join(","), [...scales[i]].join(";"), cs, n, base.armor, base.foeDps, allies, snare?1:0, JSON.stringify(team)].join("|");
+      const key = [(env.wmods && env.wmods[i]) || "-", death.toFixed(3), crackT.toFixed(3), i===0 ? "S" : "H", bars[i].skills.join(","), [...eff[i]].join(";"), i===0 ? "w"+JSON.stringify(weapon0||0) : "p"+(Math.round(phys*1000)), bp, [...skips[i]].join(","), [...scales[i]].join(";"), cs, n, base.armor, base.foeDps, allies, snare?1:0, base.hold||0, JSON.stringify(team)].join("|");
       let v = RUNMEMO.get(key); if (!v) { if (RUNMEMO.size > 6000) RUNMEMO.clear(); v = GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys, hero:true }, { wmod: (env.wmods && env.wmods[i]) || null, bipPips:bp, skip:skips[i], scale:scales[i], corpseShare: cs })); RUNMEMO.set(key, v); } return v; };
     const first0 = run(0, 0, 0); let pass = bars.map((b,i)=> i===0 ? first0 : run(i, first0.physical, 0));
     // Verstärkungen für Angreifer stapeln sich nicht: Ein Verbündeter trägt nur einen Waffenzauber, dieselbe Verzauberung oder derselbe Orden wirkt nur einmal
@@ -1114,6 +1122,9 @@
       if (/weapon spell/i.test(s.t)) { if (ws >= physCount) { scales[i].set(s.id, 0); changed = true; } ws++; }
       else { const j = buffSeen.get(s.id)||0; buffSeen.set(s.id, j+1); const wide = /party|all allies|allies in|allies within/i.test(s.d); if (wide ? j>0 : j>=physCount) { scales[i].set(s.id, 0); changed = true; } } }); });
     if (changed) pass = bars.map((b,i)=> i===0 ? run(0, 0, 0) : run(i, first0.physical, 0));
+    // Flächen-Niederschlag im Team: Solange die Gruppe liegt, läuft niemand aus dem Flächenschaden und die Gegner bleiben dicht stehen. Das gilt für alle im Team, also zweiter Durchlauf mit diesem Anteil.
+    { const hold = 1 - pass.reduce((a,D)=>a*D.parts.reduce((x,p)=>x*(1-(p.kdUp||0)),1),1);
+      if (hold > 0.02) { base.hold = Math.round(hold*50)/50; const f = run(0, 0, 0); pass = bars.map((b,i)=> i===0 ? f : run(i, f.physical, 0)); } }
     // Energie aus dem Team (Wiki): Blut ist Kraft gibt +3...6 Pips für 10 s und lässt sich auf drei Verbündeten halten. Blutritual gibt +3 Pips, hier auf zwei Verbündeten.
     // Verteilt wird an die, denen am meisten Energie fehlt. Wer genug bekommt, hat keinen Engpass mehr.
     const hasSk = (b, nm) => SK(b).some(s=>s.n===nm);

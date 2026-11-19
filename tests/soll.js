@@ -200,4 +200,14 @@ const tpart = (D, name, cat) => D.parts.filter(p => p.sid === id(name) && p.cat 
 { const X = team([bar(E, 0, { 10: 12 }, ['Flare']), bar(E, 0, { 10: 12 }, ['Flare']), bar(N, 0, { 4: 12 }, ['Blood is Power'])]), dmg = X.reduce((a, d) => a + d.total, 0);
   T('Team: Sterberate aus dem Schaden', X.death, Math.max(3 / 45, Math.min(3 / 4, dmg / 1400)), 0.25); }
 
+// Flächen-Niederschlag hält die Gruppe am Boden (Wiki "Knock down": Niedergeschlagene können sich nicht bewegen). Annahme für diese Zeit: drei Viertel der übrigen Gegner neben dem Ziel statt der Hälfte.
+// Sense gegen drei Gegner: ohne Niederschlag 1 + 2 x 0,5 = 2 Treffer je Schwung, liegt die Gruppe die ganze Zeit, 1 + 2 x 0,75 = 2,5. Bei 40 % Liegezeit 1 + 2 x 0,6 = 2,2.
+{ const b = bar(D, 0, { 41: 12 }, []), w = o => { const r = run(b, Object.assign({ targets: 3, weapon: [6, 'Sense'] }, o)); return r.parts.find(x => /Normale Angriffe/.test(x.name)).dps; }, w0 = w({});
+  T('Niederschlag hält die Gruppe: Sense trifft 2,5 statt 2', w({ hold: 1 }) / w0, 1.25, 0.01);
+  T('Niederschlag 40 % der Zeit: Sense trifft 2,2', w({ hold: 0.4 }) / w0, 1.1, 0.01);
+  T('Ohne Niederschlag unverändert', GW._aoeMul('Deals damage to target and adjacent foes.', 3), 2, 0.001); }
+// Übernatürliche Labilität (Wiki): Niederschlag 2...4 s für Ziel und Gegner in der Nähe, nie länger als 4 s
+{ const b = bar(ME, 0, { 0: 16, 2: 16 }, ['Psychic Instability']), r = run(b, { targets: 3 }), p = r.parts.find(x => x.cat === 'ctrl' && /Niederschlag/.test(x.detail));
+  T('Labilität: Flächen-Niederschlag mit Liegezeit', p && p.kdUp > 0 && p.kdUp <= 1 && /4 s/.test(p.detail) ? 1 : 0, 1, 0); }
+
 console.log(ok + ' von ' + (ok + bad) + ' Fällen bestanden'); fails.forEach(f => console.log('  FEHLER  ' + f)); process.exit(bad ? 1 : 0);
