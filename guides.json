@@ -307,8 +307,8 @@
 },
 "fow": {
 "title": "Riss des Kummers mit Helden",
-"intro": "Der Riss des Kummers hat keine Wiederbelebungs-Schreine. Ein Wipe wirft dich raus, der Tod eines verbündeten NPC ebenfalls. Alle 11 Quests müssen in einem Besuch fallen, laut Wiki dauert das rund 2 Stunden und im Schweren Modus deutlich länger. Die Reihenfolge unten folgt dem Wiki-Leitfaden: Erst der Weg zur Obsidianrüstung, dann der Rest bis zur Kummer-Truhe.",
-"team": "std",
+"intro": "Der Riss des Kummers hat keine Wiederbelebungs-Schreine. Ein Wipe wirft dich raus, der Tod eines verbündeten NPC ebenfalls. Alle 11 Quests müssen in einem Besuch fallen, laut Wiki dauert das rund 2 Stunden und im Schweren Modus deutlich länger. Die Reihenfolge unten folgt dem Wiki-Leitfaden: Erst der Weg zur Obsidianrüstung, dann der Rest bis zur Kummer-Truhe. Ein Video-Team mit Codes aus der Zeit nach dem Update vom 24.06.2026 gibt es für dieses Gebiet nicht. Vorgeschlagen ist deshalb das aktuelle PvX-Mesmerway mit zwei Heilern (Stand 30.10.2026): Ein zweiter Heiler passt zu einem Gebiet ohne Schreine, in dem auch die begleiteten NPCs überleben müssen.",
+"team": "mesmerway2",
 "sections": [
 {
 "t": "Vor dem Start",

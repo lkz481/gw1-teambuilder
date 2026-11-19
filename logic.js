@@ -541,6 +541,7 @@
   const strikeFactor = r => Math.pow(2, ((5 * Math.min(r, 12) + 2 * Math.max(0, r - 12)) - 60) / 40);
 
   function aoeMul(d, n) {
+    if (/all other (adjacent|nearby) foes|to (adjacent|nearby) foes whenever target foe/.test(d)) return Math.max(0, n - 1);
     if (/75% of that damage to (nearby|adjacent)/.test(d)) return 1 + 0.75 * (n - 1);
     if (/to 3 adjacent foes|to up to 3/.test(d)) return Math.min(n - 1, 3) + (/target and/.test(d) ? 1 : 0) || 1;
     if (/(target and (nearby|adjacent|all nearby|all adjacent) foes|all (adjacent|nearby) foes|to (adjacent|nearby) foes|hits foes adjacent|foes in the area|and foes near)/.test(d)) return n;
@@ -550,6 +551,9 @@
   // eff: Map Attribut -> Rang inkl. Runen; opts: {targets, weapon:[attr,typ], foeRate, physRate}
   GW.dps = function (bar, eff, opts) {
     const n = opts.targets || 1, out = [], notes = [];
+    // Zielrüstung (Wiki "Armor rating"): je 40 Rüstung halbiert sich rüstungsabhängiger Schaden, 60 ist die Basis
+    const AR = opts.armor || 60, af = Math.pow(2, (60 - AR) / 40), afAir = Math.pow(2, (60 - AR * 0.75) / 40);
+    const armorOf = x => { const m = x.match(/\d (fire|cold|lightning|earth|slashing|piercing|blunt|physical|chaos|dark) damage/); return !m ? 1 : m[1] === "lightning" ? afAir : af; };
     const rank = a => eff.get(a) || 0;
     const sk = bar.skills.map((id, i) => [i, GW.skill(id)]).filter(x => x[1]);
     // Waffe bestimmen
@@ -564,15 +568,37 @@
     else if (!w && atkSkills.length >= 2 && ANNIV[bar.pri] && sk.some(x => x[1].e && x[1].pve && x[1].tags.has("atk"))) {
       wAttr = ANNIV[bar.pri][0]; const t = TYPE2ATTR[ANNIV[bar.pri][1]]; w = t ? WEAP[t] : ["Stab", 11, 22, 1.75, 1]; notes.push("Jubiläumswaffe angenommen: " + w[0] + ".");
     }
-    let attackRate = 0;
+    // Angriffstempo (Wiki "Attack speed"): "X % schneller" verkürzt die Angriffsdauer um X %, höchstens 33 %
+    const DEATH = 1 / 6; // Annahme für alle Leisten: Im Kampf stirbt alle 6 s eine Kreatur (Leichen, Seelensammlung)
+    let ias = 0, petIas = 0, critBonus = 0, wPer = 0, hitEnergy = 0, critEnergy = 0;
+    for (const [i, s] of sk) {
+      const dl = (s.d || "").toLowerCase(), tr = /rank$/.test(s.a || "") ? 15 : rank(s.aid);
+      const du = dl.match(/\((\d+(?:\.\.\.\d+)?) seconds?(?:\[s\])?\.?\)/), dur0 = du ? at(du[1], tr) : 0;
+      const up = /A$/.test(String(s.cost || "")) ? 1 : dur0 ? Math.min(1, dur0 / Math.max(dur0, frac(s.rc) + frac(s.ac))) : 1;
+      const me = dl.match(/you (?:and your pet )?(?:move and )?attack (\d+(?:\.\.\.\d+)?)% faster/) || dl.match(/while wielding \w+, you attack (\d+(?:\.\.\.\d+)?)% faster/);
+      if (me) ias = Math.max(ias, Math.min(33, at(me[1], tr)) * up);
+      const eh = dl.match(/gain (\d+(?:\.\.\.\d+)?) energy (?:whenever|each time|every time) you (?:successfully )?(?:hit|land a hit|attack|strike)/);
+      if (eh) hitEnergy += at(eh[1], tr) * up;
+      const ec = dl.match(/gain (\d+(?:\.\.\.\d+)?) energy whenever you land a critical hit/);
+      if (ec) critEnergy += at(ec[1], tr) * up;
+      const cb = dl.match(/\+(\d+(?:\.\.\.\d+)?)% chance to land a critical hit/);
+      if (cb) critBonus = Math.max(critBonus, at(cb[1], tr) / 100 * up);
+      const pe = dl.match(/your pet (?:moves and )?attacks (\d+(?:\.\.\.\d+)?)% faster/) || dl.match(/you and your pet attack (\d+(?:\.\.\.\d+)?)% faster/);
+      if (pe) petIas = Math.max(petIas, Math.min(33, at(pe[1], tr)) * up);
+    }
+    let attackRate = 0, wIdx = -1;
     if (w) {
-      const r = rank(wAttr), avg = (w[1] + w[2]) / 2, wc = r <= 4 ? 0.01 + 0.0105 * r : 0.052 + 0.01575 * (r - 4), cs = bar.pri === 7 ? rank(35) / 100 : 0, crit = Math.min(1, 1 - (1 - Math.min(wc, 0.3)) * (1 - cs));
+      const r = rank(wAttr), avg = (w[1] + w[2]) / 2, wc = r <= 4 ? 0.01 + 0.0105 * r : 0.052 + 0.01575 * (r - 4), cs = bar.pri === 7 ? rank(35) / 100 : 0, crit = Math.min(1, 1 - (1 - Math.min(wc, 0.3)) * (1 - cs) * (1 - critBonus));
       let per = ((1 - crit) * avg + crit * w[2] * Math.SQRT2) * strikeFactor(r);
+      wPer = per;
       if (w[0] === "Dolche") per *= 1 + (0.02 + 0.02 * r);
       notes.push("Kritische Treffer: Chance nach Spieler-Messung im Wiki (etwa 18 % bei Rang 12), bei Assassinen plus 1 % je Rang Kritische Stöße.");
-      attackRate = 1 / w[3];
+      attackRate = 1 / (w[3] * (1 - ias / 100));
       const hits = Math.min(n, w[4]);
-      out.push({ name: "Normale Angriffe (" + w[0] + ")", dps: per * attackRate * hits, kind: "Waffe", detail: Math.round(per) + " je Treffer, alle " + w[3] + " s" + (hits > 1 ? ", " + hits + " Ziele" : "") });
+      wIdx = out.length;
+      per *= af; wPer *= af;
+      out.push({ name: "Normale Angriffe (" + w[0] + ")", dps: per * attackRate * hits, kind: "Waffe", detail: Math.round(per) + " je Treffer, alle " + (1 / attackRate).toFixed(2) + " s" + (ias ? " (Angriffstempo +" + Math.round(ias) + " %)" : "") + (hits > 1 ? ", " + hits + " Ziele" : "") });
+      var critChance = crit;
     }
     // Energie
     let pips = REGEN[bar.pri] || 2;
@@ -595,38 +621,64 @@
       if (cost && bar.pri === 2 && (/attack|ritual|touch/i.test(s.t + " " + d) || s.p === 2)) cost *= 1 - 0.04 * rank(23);
       if (cost && bar.pri === 10 && s.p === 10 && /enchant/i.test(s.t)) cost *= 1 - 0.04 * rank(44);
       const parts = [];
+      const sents = d.split(/(?<=[.:)]) /);
+      const aoeAll = /(^|[.:)] )(also (hits|affects|strikes)|hits (\d+ )?(foes|all)|affects (foes|all)|strikes (foes|all))/.test(d);
+      const aoeAt = rx => { const x = sents.find(q => rx.test(q)); const v = aoeMul(x || d, n) || 1; return v === 1 && aoeAll ? (aoeMul(d, n) || 1) : v; };
+      // Bedingter Schaden (nur wenn der Gegner gerade zaubert, angreift oder eine Fertigkeit nutzt): halbe Trefferquote angenommen
+      const condP = /if (target|that|this) foe is (casting|using|attacking|activating)|the next (spell|skill|attack)[^.]*that target foe|if target foe was (casting|attacking)|if that action was|interruption effect:/.test(d) ? 0.5 : 1;
+      // Energiegewinn der Fertigkeit selbst
+      let gain = 0;
+      const gm = dRaw.match(/you gain (\d+(?:\.\.\.\d+)?) energy(?! (?:whenever|when|each time|for each|every))/) || dRaw.match(/health and (\d+(?:\.\.\.\d+)?) energy/);
+      if (gm) gain = at(gm[1], r) * (/ if |interrupt/.test(dRaw) ? 0.5 : 1);
+      const el2 = dRaw.match(/causes (\d+(?:\.\.\.\d+)?) energy loss\. you gain (\d+) energy for each/); if (el2) gain = at(el2[1], r) * +el2[2];
+      if (bar.pri === 9 && /shout|chant/i.test(s.t)) gain += Math.min(2 * (opts.allies || 8), Math.floor(rank(40) / 2));
       // Zustände
       for (const [k, p] of Object.entries(COND)) {
         const m = d.match(new RegExp("(inflicts?|causes?|suffers?|take|bleeding|burning|poison|disease)[^.]*?" + k + " \\((\\d+(?:\\.\\.\\.\\d+)?) seconds?"));
-        if (m) { const cd = at(m[2], r); parts.push({ kind: "Zustand", per: p * 2 * cd, dur: cd, aoe: aoeMul(d, n), label: { burning: "Brennen", bleeding: "Blutung", poison: "Gift", disease: "Krankheit" }[k] }); }
+        if (m) { const cd = at(m[2], r); parts.push({ kind: "Zustand", per: p * 2 * cd, dur: cd, aoe: aoeAt(new RegExp(k + " \\(")), label: { burning: "Brennen", bleeding: "Blutung", poison: "Gift", disease: "Krankheit" }[k] }); }
       }
       // Verhexungs-Degeneration
       const hd = d.match(/(-?\d+\.\.\.\d+|\d+) health degeneration/);
-      if (hd && /hex/i.test(s.t)) { const p = Math.abs(at(hd[1], r)); parts.push({ kind: "Degeneration", per: p * 2 * (dur || 1), dur: dur || 1, aoe: aoeMul(d, n), label: "Lebenspunkte-Degeneration" }); }
+      if (hd && /hex/i.test(s.t)) { const p = Math.abs(at(hd[1], r)); parts.push({ kind: "Degeneration", per: p * 2 * (dur || 1), dur: dur || 1, aoe: aoeAt(/health degeneration/), label: "Lebenspunkte-Degeneration" }); }
       // Direktschaden
       let dm = null;
       if (/for each point of energy lost/.test(d)) { const el = d.match(/causes (\d+\.\.\.\d+) energy loss/); const per = d.match(/deals (\d+) damage[^.]*for each point/); if (el && per) dm = at(el[1], r) * +per[1]; }
       if (dm == null) { const m = d.match(/(?:deals?|causes?|take|takes) \+?(\d+(?:\.\.\.\d+)?) (?:\w+ )?damage/); if (m) dm = at(m[1], r); }
       if (dm == null && !/(its attacks|these spirits) (deal|steal)/.test(dRaw)) { const m = dd.match(/\+?(\d+\.\.\.\d+) Punkte (?:\w+ )?(?:Sakral-|Feuer|Kälte|Blitz|Erd|Dunkel|Chaos|heiligen )?Schaden/); if (m) dm = at(m[1], r); }
-      const perAttack = /whenever you attack|attacks deal|your attacks|whenever you hit|next \d+ attacks?|ends after \d/.test(d) || /Angriffe (verursachen|richten)/.test(dd);
+      const dmS = (d.split(/(?<=[.:)]) /).find(x => /(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:\w+ )?damage/.test(x)) || d);
+      const perAttack = /whenever you attack|when you attack|attacks deal|your attacks|whenever you hit|next \d+ attacks?/.test(dmS) || (dm != null && !/(?:deals?|causes?|take|takes) \+?\d/.test(d) && /Angriffe (verursachen|richten)/.test(dd));
       const onFoe = /whenever (this|target) foe (attacks|uses a skill|takes physical damage)|whenever it takes physical damage/.test(d);
+      const onDeath = /if (target|this|that) (foe|ally|creature) dies|whenever [^.]* dies|exploits? (a|the|nearest) |corpse/.test(d);
+      const endsK = d.match(/ends after (\d+(?:\.\.\.\d+)?) (?:hit|attack)/);
+      if (dm != null) dm = dm * armorOf(dmS);
       const every = d.match(/every second \((\d+) seconds?\)/);
+      if (/allies in this ward deal/.test(dRaw)) dm = null;
       if (dm != null && dm > 0) {
         const allyW = /weapon spell/i.test(s.t) && d.match(/ends after (\d+(?:\.\.\.\d+)?) attack/);
         if (allyW) {
           const k = at(allyW[1], r);
           parts.push({ kind: "Waffenzauber", per: dm * k, dur: 0, aoe: aoeMul(d, n), limit: (opts.physRate != null ? opts.physRate : attackRate) / Math.max(1, k), label: "Waffenzauber auf Verbündete, " + k + " Angriffe" });
+        } else if (perAttack && !/attack/i.test(s.t) && endsK) {
+          const k = at(endsK[1], r);
+          parts.push({ kind: "Direkt", per: dm * k, dur: 0, aoe: aoeMul(d, n), limit: attackRate / Math.max(1, k), label: "je Treffer, endet nach " + k + " Treffern" });
         } else if (perAttack && !/attack/i.test(s.t)) {
-          parts.push({ kind: "Pro Angriff", perAttack: dm, dur: dur || 10, aoe: aoeMul(d, n), label: "Schaden je Angriff" });
+          parts.push({ kind: "Pro Angriff", perAttack: Math.round(dm), dur: dur || 10, aoe: aoeMul(d, n), label: "Schaden je Angriff" });
         } else if (onFoe) {
           const phys = /physical damage/.test(d);
           const rate = phys ? (opts.physRate != null ? opts.physRate : attackRate) : (opts.foeRate || 0.5);
-          parts.push({ kind: "Ausgelöst", per: dm * rate * (dur || 1), dur: dur || 1, aoe: aoeMul(d, n), label: phys ? "bei körperlichem Schaden am Ziel" : "wenn der Gegner handelt (Annahme)" });
+          const life = n / DEATH, live = Math.min(1, life / Math.max(life, Math.min(dur || 1, T)));
+          parts.push({ kind: "Ausgelöst", per: dm * rate * (dur || 1) * live, dur: dur || 1, aoe: aoeMul(d, n), label: (phys ? "bei körperlichem Schaden am Ziel" : "wenn der Gegner handelt (Annahme)") + (live < 1 ? ", Ziel stirbt vorher" : "") });
         } else {
-          const tot = every ? dm * +every[1] : dm;
-          parts.push({ kind: "Direkt", per: tot, dur: 0, aoe: aoeMul(d, n), label: /attack/i.test(s.t) ? "Angriffsbonus" : "Direktschaden" });
+          const dual = /dual attack/i.test(s.t) ? 2 : 1;
+          const deathP = /if (target|this|that) (foe|ally|creature) dies/.test(d) ? 0.5 : 1;
+          const tot = (every ? dm * +every[1] : dm) * condP * deathP * (/pet attack/i.test(s.t) ? 1.33 : 1) * dual + (dual > 1 && w ? wPer : 0);
+          parts.push({ kind: "Direkt", per: tot, dur: 0, aoe: aoeAt(/(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:\w+ )?damage/), limit: onDeath ? DEATH : undefined, label: onDeath ? "beim Tod eines Gegners (eine Leiche alle 6 s)" : dual > 1 ? "Doppelangriff, zwei Treffer" : /pet attack/i.test(s.t) ? "Tierangriff" : /attack/i.test(s.t) ? "Angriffsbonus" : condP < 1 ? "Direktschaden, bedingt (halbe Trefferquote)" : "Direktschaden" });
         }
       }
+      const ward = dRaw.match(/allies in this ward deal \+(\d+(?:\.\.\.\d+)?) damage/);
+      if (ward) { const D = dur || 20, hr = (opts.physRate || 0) + attackRate; if (hr) parts.push({ kind: "Verbündeten-Bonus", per: at(ward[1], r) * hr * D, dur: D, aoe: 1, label: "+" + at(ward[1], r) + " je Treffer in der Abwehr" }); }
+      const ab = dRaw.match(/target ally deals (\d+(?:\.\.\.\d+)?) more damage in melee/) || dRaw.match(/(\d+(?:\.\.\.\d+)?) more damage whenever these party members hit with physical/);
+      if (ab && opts.physRate) { const D = dur || 60; parts.push({ kind: "Verbündeten-Bonus", per: at(ab[1], r) * opts.physRate * D, dur: D, aoe: 1, label: "+" + at(ab[1], r) + " je Treffer des Nahkämpfers" }); }
       // ---- Unterstützung: Heilung und verhinderter Schaden (Texte von guildwiki.de) ----
       const HIT = 80, HITRATE = 0.5, MAXHP = 480;
       const allies = opts.allies || 8;
@@ -665,7 +717,7 @@
       if (lvM) {
         const L = at(lvM[1], r), kind = lvM[2];
         const mean = (kind === "flesh golem" ? 3.5 : 1.53) * L, per = mean / (kind === "bone fiend" ? 1.86 : 3.10);
-        minions.push({ s, per, count: /two|2 level/.test(d) || kind === "bone minion" ? 2 : 1, max: kind === "flesh golem" ? 1 : 99, rate: 1 / Math.max(1, rc + ac + 0.75), cost, L, kind });
+        minions.push({ s, per, count: /two|2 level/.test(d) || kind === "bone minion" ? 2 : 1, max: kind === "flesh golem" ? 1 : 99, rate: 1 / Math.max(1, rc + ac + 0.75), cost, L, kind, i });
       }
       const spA = dRaw.match(/(?:its attacks|these spirits|attacks) (?:deal|steal) (\d+(?:\.\.\.\d+)?) (?:damage|health)/);
       if (spA && /ritual|signet/i.test(s.t) && /spirit/.test(dRaw)) {
@@ -675,19 +727,41 @@
       }
       // Gunst der Götter: Mönchszauber auf Verbündete heilen zusätzlich 3,2 je Rang (Wiki "Divine Favor")
       if (bar.pri === 3 && s.p === 3 && /spell/i.test(s.t) && /Verbündete/.test(dd) && rank(16) > 0) parts.push({ kind: "Heilung", per: Math.round(3.2 * rank(16)), dur: 0, aoe: 1, label: "Gunst der Götter " + Math.round(3.2 * rank(16)) });
-      if (!parts.length) continue;
+      const isMinion = minions.some(m => m.i === i);
+      if (!parts.length && !gain && !isMinion) continue;
       // Wie oft wird die Fertigkeit genutzt? Effekte mit Dauer werden nur gehalten, nicht gestapelt.
-      const holds = parts.every(p => p.dur > 0 && p.kind !== "Direkt");
+      const holds = parts.length > 0 && parts.every(p => p.dur > 0 && p.kind !== "Direkt");
       let rate = 1 / (holds ? Math.max(T, parts[0].dur) : T);
+      if (isMinion) rate = Math.min(rate, DEATH);
       if (adr) rate = Math.min(rate, attackRate / adr);
       const lim = parts.find(p => p.limit != null); if (lim) rate = Math.min(rate, lim.limit);
-      uses.push({ s, i, rate, cost, parts, holds });
+      const isAtk = /attack/i.test(s.t) && !/pet attack/i.test(s.t);
+      uses.push({ s, i, rate, cost, gain, parts, holds, isAtk, time: isAtk ? 0 : ac + (/spell/i.test(s.t) ? 0.75 : 0), minion: isMinion });
     }
-    let need = uses.reduce((a, u) => a + u.cost * u.rate, 0);
-    const f = need > income ? income / need : 1;
-    if (f < 1) notes.push("Energie begrenzt: Nur " + Math.round(f * 100) + " % der möglichen Einsätze sind auf Dauer bezahlbar (" + pips + " Pips Regeneration).");
+    // Energie: Grundregeneration plus Seelensammlung, Kritische Stöße, Führung, eigene Energie-Fertigkeiten und Blut ist Kraft aus dem Team
+    let extra = 0; const eNotes = [];
+    if (bar.pri === 4 && rank(6) > 0) { const v = rank(6) * Math.min(3 / 15, DEATH); extra += v; eNotes.push("Seelensammlung +" + v.toFixed(1)); }
+    if (bar.pri === 7 && w && rank(35) >= 3) { const e = rank(35) >= 13 ? 3 : rank(35) >= 8 ? 2 : 1, v = attackRate * (critChance || 0) * e; extra += v; eNotes.push("Kritische Stöße +" + v.toFixed(1)); }
+    if (w && hitEnergy) { const v = attackRate * hitEnergy; extra += v; eNotes.push("Energie je Treffer +" + v.toFixed(1)); }
+    if (w && critEnergy) { const v = attackRate * (critChance || 0) * critEnergy; extra += v; eNotes.push("Energie je kritischem Treffer +" + v.toFixed(1)); }
+    if (opts.bipPips) { extra += opts.bipPips / 3; eNotes.push("Blut ist Kraft +" + (opts.bipPips / 3).toFixed(1)); }
+    const corpse = minions.length ? Math.min(1, DEATH / uses.filter(u => u.minion).reduce((a, u) => a + u.rate, 0)) : 1;
+    uses.forEach(u => { if (u.minion) u.rate *= corpse; });
+    const need = uses.reduce((a, u) => a + u.cost * u.rate, 0), gains = uses.reduce((a, u) => a + u.gain * u.rate, 0);
+    const budget = income + extra;
+    const f = need - gains > budget ? budget / (need - gains) : 1;
+    if (gains > 0.05) eNotes.push("eigene Fertigkeiten +" + (gains * f).toFixed(1));
+    if (f < 1) notes.push("Energie begrenzt: Nur " + Math.round(f * 100) + " % der möglichen Einsätze sind auf Dauer bezahlbar (" + pips + " Pips" + (eNotes.length ? ", " + eNotes.join(", ") + " Energie/s" : "") + ").");
+    else if (eNotes.length) notes.push("Energie reicht: " + pips + " Pips, " + eNotes.join(", ") + " Energie/s.");
+    uses.forEach(u => { if (u.cost || u.gain) u.rate *= f; });
+    // Zeit: Ein Charakter kann nur eine Sache zugleich tun. Zauber kosten Wirkzeit plus 0,75 s Nachwirkzeit.
+    let busy = uses.reduce((a, u) => a + u.rate * u.time, 0);
+    if (busy > 1) { uses.forEach(u => { if (u.time) u.rate /= busy; }); notes.push("Zeit begrenzt: Die Leiste hat mehr Zauber, als in die Zeit passen. Alle Zauber laufen auf " + Math.round(100 / busy) + " %."); busy = 1; }
+    if (wIdx >= 0 && busy > 0.02) { out[wIdx].dps *= 1 - busy; out[wIdx].detail += ", " + Math.round(busy * 100) + " % der Zeit mit Zaubern belegt"; }
+    const atkSum = uses.filter(u => u.isAtk).reduce((a, u) => a + u.rate, 0), atkCap = attackRate * (1 - busy);
+    if (atkSum > atkCap && atkSum > 0) uses.forEach(u => { if (u.isAtk) u.rate *= atkCap / atkSum; });
     for (const u of uses) {
-      const rate = u.cost ? u.rate * f : u.rate;
+      const rate = u.rate;
       let dps = 0; const det = [];
       for (const p of u.parts) {
         if (p.kind === "Pro Angriff") { const up = Math.min(1, p.dur * rate); const v = p.perAttack * attackRate * up * p.aoe; dps += v; det.push(p.label + " " + p.perAttack + (attackRate ? "" : " (keine Waffe erkannt)")); }
@@ -703,19 +777,26 @@
     const deg = out.filter(o => /Zustand|Degeneration/.test(o.kind)).reduce((a, o) => a + o.dps, 0);
     const cap = 20 * n;
     if (deg > cap) { const k = cap / deg; out.forEach(o => { if (/Zustand|Degeneration/.test(o.kind)) o.dps *= k; }); notes.push("Degeneration auf 10 Pips je Ziel begrenzt."); }
-    // Diener: Obergrenze 2 + halber Rang Todesmagie (Wiki "Minion"), verteilt nach Wirkrate
+    // Diener im Dauerzustand: Erzeugungsrate mal Lebensdauer, höchstens 2 + halber Rang Todesmagie (Wiki "Minion")
     if (minions.length) {
       const cap = 2 + Math.floor(rank(5) / 2);
-      const w8 = minions.map(m => m.rate * m.count), tot = w8.reduce((a, b) => a + b, 0);
-      let left = cap;
-      minions.sort((a, b) => a.max - b.max).forEach(m => { const share = Math.min(m.max, Math.max(m.max < 99 ? 1 : 0, Math.round(cap * (m.rate * m.count) / tot)), left); left -= share; if (share > 0) out.push({ name: m.s.de || m.s.n, sid: m.s.id, dps: share * m.per, cat: "dmg", kind: "Diener", detail: share + " Diener auf Stufe " + m.L + ", je " + m.per.toFixed(1) + "/s" }); });
-      notes.push("Diener: Höchstwert mit voller Dienerzahl (" + cap + " bei diesem Rang Todesmagie). Ohne Leichen sind es weniger.");
+      const life = L => { let hp = 80 + 20 * L, t = 0, p = 1; while (hp > 0 && t < 600) { const loss = p * 2 * 20; if (loss >= hp) { t += hp / (p * 2); hp = 0; } else { hp -= loss; t += 20; p++; } } return t; };
+      let left = cap; const got = [];
+      minions.sort((a, b) => a.max - b.max).forEach(m => { const u = uses.find(x => x.i === m.i); const want = Math.min(m.max, (u ? u.rate : 0) * m.count * life(m.L) / 2); const share = Math.min(want, left); left -= share; if (share > 0.05) { got.push(share); out.push({ name: m.s.de || m.s.n, sid: m.s.id, dps: share * m.per * af, cat: "dmg", kind: "Diener", detail: share.toFixed(1) + " Diener im Schnitt, Stufe " + m.L + ", je " + m.per.toFixed(1) + "/s" }); } });
+      notes.push("Diener: Im Schnitt " + got.reduce((a, b) => a + b, 0).toFixed(1) + " von höchstens " + cap + ". Gerechnet mit einer Leiche alle 6 s. Lebensdauer: die Hälfte der Zerfallszeit laut Wiki, weil Diener im Kampf auch durch Gegner sterben (Annahme).");
     }
+    // Tiergefährte (Wiki "Animal companion"): Stufe 20, im Schnitt 24,4 je Treffer bei Tierbeherrschung 12, +33 % in PvE, ein Angriff alle 2 s
+    if (sk.some(x => ["Charm Animal", "Comfort Animal", "Heal as One"].includes(x[1].n))) {
+      const bm = rank(22), per = 24.4 * 1.33 * af * strikeFactor(bm) / strikeFactor(12), iv = 2 * (1 - petIas / 100);
+      out.push({ name: "Tiergefährte", dps: per / iv, cat: "dmg", kind: "Tier", detail: Math.round(per) + " je Treffer, alle " + iv.toFixed(2) + " s" + (petIas ? " (Angriffstempo +" + Math.round(petIas) + " %)" : "") });
+      notes.push("Tiergefährte: Wiki-Messwert für Tierbeherrschung 12, auf deinen Rang umgerechnet wie Waffenschaden. Diese Umrechnung ist eine Annahme.");
+    }
+    if (AR !== 60) notes.push("Zielrüstung " + AR + ": Waffen-, Diener-, Tier- und Elementarschaden zählen zu " + Math.round(af * 100) + " %. Rüstungsignorierender Schaden bleibt voll.");
     if (usedTitle) notes.push("Titel-Fertigkeiten sind mit maximalem Titelrang gerechnet.");
     out.forEach(o => { if (!o.cat) o.cat = "dmg"; });
     const sum = c => out.filter(o => o.cat === c).reduce((a, o) => a + o.dps, 0);
     const total = sum("dmg"), heal = sum("heal"), prot = sum("prot");
-    return { total, heal, prot, parts: out.filter(o => o.dps > 0.05).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0 };
+    return { total, heal, prot, parts: out.filter(o => o.dps > 0.05).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0, energyF: f };
   };
   // Effektive Ränge aus Grundwerten plus Runen der Ausrüstungsempfehlung
   GW.effRanks = function (bar, runes) {

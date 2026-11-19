@@ -240,14 +240,14 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
 .vseg{flex-wrap:wrap;border-radius:14px}.vseg button{padding:6px 12px;border-radius:999px;font-size:13px}
 .refrow{margin:10px 0 2px}.refrow .t{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}.refrow .t b{font-family:var(--head);color:#f3dfb0;font-size:17px}.reflist{padding-left:18px;margin:8px 0}.reflist li{margin:4px 0}
 .tag.warnt{border-color:#b5533c;color:#f0a58f}.need.warnn{color:#f0a58f}
-.pvrow{flex-direction:row;align-items:center;gap:10px}.pvi{flex:none;width:36px;height:36px;border-radius:6px;border:1px solid var(--line);display:block}.pvrow .pvt{display:flex;flex-direction:column;gap:2px;min-width:0}.pvrow small{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pvrow{flex-direction:row;align-items:center;gap:10px;min-width:0;max-width:100%;overflow:hidden}.pvrow .pvt{flex:1}.pvi{flex:none;width:36px;height:36px;border-radius:6px;border:1px solid var(--line);display:block}.pvrow .pvt{display:flex;flex-direction:column;gap:2px;min-width:0}.pvrow small{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pvq{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0;background:rgba(255,255,255,.03)}.pvq h3{margin:0 0 8px}.pvq .kv{display:flex;gap:10px;padding:3px 0;font-size:13px}.pvq .kv span{flex:none;width:110px;color:var(--muted)}.pvq ol{margin:10px 0 8px;padding-left:20px}.pvq ol li{margin:3px 0}
 .inp{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:inherit;font:inherit}
 #tip{position:fixed;z-index:70;pointer-events:none;max-width:320px;background:linear-gradient(180deg,#1d120d,#0d0806);border:1px solid var(--gold);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.45;box-shadow:0 8px 24px rgba(0,0,0,.5);display:none}
 #tip b{font-size:15px;font-family:var(--head);color:#f3dfb0}
 #tip .meta{color:var(--muted);margin:2px 0 4px}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#24150f;border:1px solid var(--line2);padding:8px 14px;border-radius:999px;display:none;z-index:80}
-@media (max-width:600px){.topbar{gap:6px;padding:8px 10px}.topbar .btn{padding:7px 9px}#rnd{display:none}.topbar .btn span.l{display:none}.attrs,.heroes{grid-template-columns:1fr}.mainhead h1{font-size:19px}}
+@media (max-width:600px){.side{grid-template-columns:1fr 1fr!important;gap:8px}.side>.pick,.side>#pk-build,.side>#partywrap{grid-column:auto!important}.side>#clsgrid,.side>.sidehead,.side>#pk-heroes{grid-column:1/-1!important}.side .pick .val{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px}.side .pick .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.side>#partywrap{align-self:center}.side .pick{padding:9px 11px}.side .pick .v{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.side .pick .s{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#dtabs{overflow-x:auto;scrollbar-width:none}.app{padding:10px}.topbar{gap:6px;padding:8px 10px}.topbar .btn{padding:7px 9px}#rnd{display:none}.topbar .btn span.l{display:none}.attrs,.heroes{grid-template-columns:1fr}.mainhead h1{font-size:19px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -463,9 +463,24 @@ function computeDps(){
   const eff = TEAM.map(m=>{ let r=[]; try{ r=GW.equipFor(m.bar, EQ, m.build && m.build.url).runes; }catch(e){} return GW.effRanks(m.bar, r); });
   const wOf = m => { const aw=m.build && m.build.annWeapon; return aw ? (ANN_W[aw.split(" ")[0]]||null) : null; };
   const allies = Math.max(TEAM.length, 1);
-  const first = GW.dps(TEAM[0].bar, eff[0], { targets:n, weapon:wOf(TEAM[0]), foeRate:0.5, allies });
-  return TEAM.map((m,i)=> i===0 ? first : GW.dps(m.bar, eff[i], { targets:n, foeRate:0.5, physRate:first.physical, allies }));
+  return teamDps(TEAM.map(m=>m.bar), eff, wOf(TEAM[0]), n);
 }
+// Rechnet ein ganzes Team. Blut ist Kraft geht an die bis zu drei Verbündeten, denen am meisten Energie fehlt.
+function teamDps(bars, eff, weapon0, n){
+  const allies = Math.max(bars.length, 1), base = { targets:n, foeRate:0.5, armor:armorNow(), allies };
+  const run = (i, phys, bp) => GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys }, { bipPips:bp }));
+  const first0 = run(0, 0, 0), pass = bars.map((b,i)=> i===0 ? first0 : run(i, first0.physical, 0));
+  const bi = bars.findIndex(hasBip); if (bi<0) return pass;
+  const pips = bipPips(eff[bi]);
+  const need = pass.map((D,i)=>[i, D.energyF]).filter(x=>x[0]!==bi && x[1] < 0.98).sort((a,b)=>a[1]-b[1]).slice(0,3).map(x=>x[0]);
+  const first = need.includes(0) ? run(0, 0, pips) : first0;
+  return bars.map((b,i)=> i===0 ? first : run(i, first.physical, need.includes(i) ? pips : 0));
+}
+const bipPips = effMap => Math.round(3 + 3*Math.min(effMap.get(4)||0, 21)/15);
+// Blut ist Kraft: +3...6 Pips für 10 s auf einem Verbündeten. Annahme: Der Held hält es auf drei Verbündeten zugleich.
+const armorNow = () => state.armor || (ELITE_AREA(state.area) ? 80 : 60);
+const hasBip = bar => bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Blood is Power"; });
+const bipShare = (effMap, others) => { const r = Math.min(effMap.get(4)||0, 21); return Math.round(3 + 3*r/15) * Math.min(1, 3/Math.max(1,others)); };
 function compute(){
   EXACT = syncBase();
   CAT = currentCat(); syncSpot(CAT);
@@ -785,7 +800,7 @@ function drawMember(body){
     body.innerHTML = chg.map(s=>`<h3>${esc(dname(s))}</h3><ul>${C[s.n.replace(/ \((Kurzick|Luxon|PvP)\)$/,"")].map(([dt,tx])=>`<li><b>${fmt(dt)}</b>: ${esc(GW.dePatch(tx))}</li>`).join("")}</ul>`).join("") + `<p class="dim sm" style="margin-top:12px">Spielupdates seit Reforged laut Guild Wars Wiki. Die Werte im Tool sind schon aktuell.</p>`;
   }
 }
-function targetSeg(){ return `<div><div class="mut sm" style="text-align:right">Ziele</div><div class="seg" style="width:130px">${[1,3,5].map(k=>`<button class="${state.dpsN===k?"on":""}" data-dpsn="${k}">${k}</button>`).join("")}</div></div>`; }
+function targetSeg(){ return `<div class="row" style="gap:10px"><div><div class="mut sm" style="text-align:right">Ziele</div><div class="seg" style="width:112px">${[1,3,5].map(k=>`<button class="${state.dpsN===k?"on":""}" data-dpsn="${k}">${k}</button>`).join("")}</div></div><div><div class="mut sm" style="text-align:right" title="Rüstung der Gegner">Rüstung</div><div class="seg" style="width:128px">${[60,80,100].map(k=>`<button class="${armorNow()===k?"on":""}" data-armor="${k}">${k}</button>`).join("")}</div></div></div>`; }
 // ---------- Vergleich: stärkstes Team nach unserer Rechnung ----------
 let REFCACHE = { key:"", val:null };
 function refPool(){
@@ -799,38 +814,50 @@ function refPool(){
 function refTeams(){
   if (CAT!=="team" || !DPS.length || TEAM.length<2) return null;
   const n = state.dpsN, heroes = TEAM.length-1, phys = DPS[0].physical, allies = TEAM.length;
-  const key = [n, heroes, Math.round((phys||0)*100), playerCode()].join("|");
+  const key = [n, heroes, Math.round((phys||0)*100), playerCode(), armorNow()].join("|");
   if (REFCACHE.key===key) return REFCACHE.val;
-  const pool = refPool().map(o=>{ let r=[]; try{ r=GW.equipFor(o.bar, EQ, null).runes; }catch(e){}
-    const D = GW.dps(o.bar, GW.effRanks(o.bar, r), { targets:n, foeRate:0.5, physRate:phys, allies });
-    return Object.assign(o, { D, minion:D.parts.some(p=>p.kind==="Diener"), splinter:o.bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Splinter Weapon"; }) }); });
-  const pick = (cnt, taken) => { const res=[], el={}; let mm=0, sp=0;
+  const base = refPool().map(o=>{ let r=[]; try{ r=GW.equipFor(o.bar, EQ, null).runes; }catch(e){} return Object.assign(o, { eff:GW.effRanks(o.bar, r), bip:hasBip(o.bar), splinter:o.bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Splinter Weapon"; }) }); });
+  const evalPool = bp => base.map(o=>{ const D = GW.dps(o.bar, o.eff, { targets:n, foeRate:0.5, armor:armorNow(), physRate:phys, allies, bipPips:o.bip?0:bp }); return Object.assign({}, o, { D, minion:D.parts.some(p=>p.kind==="Diener") }); });
+  const pick = (pool, cnt, taken) => { const res=[], el={}; let mm=0, sp=0;
     taken.forEach(o=>{ el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; });
-    for (const o of [...pool].sort((a,b)=>b.D.total-a.D.total)) { if (res.length>=cnt) break; if (taken.includes(o)) continue;
+    for (const o of [...pool].sort((a,b)=>b.D.total-a.D.total)) { if (res.length>=cnt) break; if (taken.some(x=>x.code===o.code)) continue; if (o.bip) continue;
       if (o.minion && mm>=1) continue; if (o.splinter && sp>=1) continue; if ((el[o.elite.id]||0)>=2) continue;
       res.push(o); el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; }
     return res; };
-  const sum = L => Math.round(DPS[0].total + L.reduce((a,o)=>a+o.D.total,0));
-  const max = pick(heroes, []);
-  let play = null;
-  if (heroes>=3) { const heal = [...pool].sort((a,b)=>b.D.heal-a.D.heal)[0], prot = [...pool].filter(o=>o!==heal).sort((a,b)=>b.D.prot-a.D.prot)[0]; play = [heal, prot].concat(pick(heroes-2, [heal, prot])); }
+  const eff0 = (()=>{ let r=[]; try{ r=GW.equipFor(TEAM[0].bar, EQ, TEAM[0].build && TEAM[0].build.url).runes; }catch(e){} return GW.effRanks(TEAM[0].bar, r); })();
+  const aw = TEAM[0].build && TEAM[0].build.annWeapon ? (ANN_W[TEAM[0].build.annWeapon.split(" ")[0]]||null) : null;
+  const youAt = bp => GW.dps(TEAM[0].bar, eff0, { targets:n, weapon:aw, foeRate:0.5, armor:armorNow(), allies, bipPips:bp }).total;
+  // mit Blut-ist-Kraft-Held: bester BiP-Heiler nach Heilung
+  const bipBar = [...base].filter(o=>o.bip).map(o=>Object.assign({}, o, { D:GW.dps(o.bar, o.eff, { targets:n, foeRate:0.5, armor:armorNow(), physRate:phys, allies }) })).sort((a,b)=>(b.D.heal+b.D.prot/4)-(a.D.heal+a.D.prot/4))[0];
+  const bp = bipBar ? bipShare(bipBar.eff, heroes) : 0;
+  const P1 = evalPool(bp), P0 = evalPool(0);
+  const sum = (L, you) => Math.round(you + L.reduce((a,o)=>a+o.D.total,0));
+  let play = null, playSum = 0;
+  if (heroes>=3 && bipBar) { const prot = [...P1].filter(o=>!o.bip).sort((a,b)=>b.D.prot-a.D.prot)[0];
+    const fix = [bipBar, prot];
+    if (heroes>=6) { const h2 = [...P1].filter(o=>!o.bip && o.code!==prot.code && o.D.heal>=20).sort((a,b)=>(b.D.heal+b.D.total/3)-(a.D.heal+a.D.total/3))[0]; if (h2) fix.push(h2); }
+    play = fix.concat(pick(P1, heroes-fix.length, fix));
+    const TD = teamDps([TEAM[0].bar].concat(play.map(o=>o.bar)), [eff0].concat(play.map(o=>o.eff)), aw, n);
+    play = play.map((o,i)=>Object.assign({}, o, { D:TD[i+1] })); playSum = Math.round(TD.reduce((a,d)=>a+d.total,0)); }
+  const maxA = pick(P0, heroes, []), sumA = sum(maxA, youAt(0));
+  let max = maxA, maxSum = sumA;
+  if (bipBar && heroes>=2) { const maxB = [bipBar].concat(pick(P1, heroes-1, [bipBar])), sumB = sum(maxB, youAt(bp)); if (sumB > sumA) { max = maxB; maxSum = sumB; } }
   const mine = Math.round(DPS.reduce((a,d)=>a+d.total,0));
-  const own = (BUILDS[state.pri]||[]).map((b,i)=>[b,i]).filter(([b])=>(b.cat||"team")==="team").map(([b,i])=>{ try { const d=GW.decode(b.code); let r=[]; try{ r=GW.equipFor(d, EQ, b.url).runes; }catch(e){} const aw=b.annWeapon?(ANN_W[b.annWeapon.split(" ")[0]]||null):null; return { b, i, v:GW.dps(d, GW.effRanks(d,r), { targets:n, weapon:aw, foeRate:0.5, allies }).total }; } catch(e){ return null; } }).filter(Boolean).sort((a,b)=>b.v-a.v)[0];
-  REFCACHE = { key, val:{ mine, max, maxSum:sum(max), play, playSum:play?sum(play):0, own, poolSize:pool.length } };
+  const own = (BUILDS[state.pri]||[]).map((b,i)=>[b,i]).filter(([b])=>(b.cat||"team")==="team").map(([b,i])=>{ try { const d=GW.decode(b.code); let r=[]; try{ r=GW.equipFor(d, EQ, b.url).runes; }catch(e){} const w2=b.annWeapon?(ANN_W[b.annWeapon.split(" ")[0]]||null):null; return { b, i, v:GW.dps(d, GW.effRanks(d,r), { targets:n, weapon:w2, foeRate:0.5, armor:armorNow(), allies, bipPips:DPS[0] && TEAM.some(m=>hasBip(m.bar)) ? bp : 0 }).total }; } catch(e){ return null; } }).filter(Boolean).sort((a,b)=>b.v-a.v)[0];
+  REFCACHE = { key, val:{ mine, max, maxSum, play, playSum, own, poolSize:base.length } };
   return REFCACHE.val;
 }
 function refHTML(){
   const R = refTeams(); if (!R) return "";
-  const top = Math.max(R.mine, R.maxSum, R.playSum, 1), pct = v => Math.round(100*v/top);
+  const top = Math.max(R.mine, R.playSum, 1), pct = v => Math.round(100*v/top);
   const row = (lab, v, cls, sub) => `<div class="refrow"><div class="t"><span>${lab}</span><b>${v}/s</b></div><div class="meter${cls}"><i style="width:${pct(v)}%"></i></div>${sub?`<div class="dim sm">${sub}</div>`:""}</div>`;
   const list = L => `<ul class="sm reflist">${L.map(o=>`<li><b>${esc(dname(o.elite))}</b> · ${esc(GW.PROF_DE[o.bar.pri])} · ${Math.round(o.D.total)} Schaden${o.D.heal>5?`, ${Math.round(o.D.heal)} Heilung`:""}${o.D.prot>5?`, ${Math.round(o.D.prot)} Schutz`:""}<span class="dim"> · ${o.url?`<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.src)}</a>`:esc(o.src)}</span></li>`).join("")}</ul>`;
   const you = Math.round(DPS[0].total);
   let h = `<h3>Wo stehst du?</h3>` + row("Dein Team", R.mine, "", "");
-  if (R.play) h += row("Stärkstes spielbares Team", R.playSum, " sup", `Du erreichst ${Math.round(100*R.mine/Math.max(1,R.playSum))} %. Mit Heiler und Schutz.`) + `<div class="row" style="margin:6px 0 2px"><details class="more" style="flex:1"><summary>Aufstellung ansehen</summary>${list(R.play)}</details><button class="btn s" data-reftake="play">Dieses Team übernehmen</button></div>`;
-  h += row("Rechnerisches Maximum", R.maxSum, " sup", `Du erreichst ${Math.round(100*R.mine/Math.max(1,R.maxSum))} %. Nur Schaden, ohne Heiler und Schutz.`) + `<div class="row" style="margin:6px 0 2px"><details class="more" style="flex:1"><summary>Aufstellung ansehen</summary>${list(R.max)}</details><button class="btn s" data-reftake="max">Dieses Team übernehmen</button></div>`;
+  if (R.play) h += row("Stärkstes spielbares Team", R.playSum, " sup", `Du erreichst ${Math.round(100*R.mine/Math.max(1,R.playSum))} %. Mit Blut-ist-Kraft-Heiler, zweitem Heiler und Schutz.`) + `<div class="row" style="margin:6px 0 2px"><details class="more" style="flex:1"><summary>Aufstellung ansehen</summary>${list(R.play)}</details><button class="btn s" data-reftake="play">Dieses Team übernehmen</button></div>`;
   if (R.own && R.own.v > you+1) h += `<div class="row" style="margin-top:8px"><span class="sm" style="flex:1">Deine Leiste macht ${you}/s. Die stärkste ${esc(GW.PROF_DE[state.pri])}-Leiste im Tool ist „${esc(bname(R.own.b))}“ mit ${Math.round(R.own.v)}/s.</span><button class="btn s" data-take="${R.own.i}">Laden</button></div>`;
   else if (R.own) h += `<p class="sm" style="margin-top:8px">Deine Leiste macht ${you}/s. Im Tool gibt es für ${esc(GW.PROF_DE[state.pri])} keine stärkere Team-Leiste.</p>`;
-  h += `<p class="dim sm">Vergleich aus ${R.poolSize} Heldenleisten (PvX „Great“, „Good“ und „Meta“, dazu die Teams im Tool), mit deiner Leiste und denselben Zielen gerechnet. Höchstens ein Dienermeister, ein Splitterwaffe-Helfer und zwei Helden mit derselben Elite. Gezählt wird nur Dauerschaden. Was Unterbrechungen und Panik verhindern, zählt nicht.</p>`;
+  h += `<p class="dim sm">Vergleich aus ${R.poolSize} Heldenleisten (PvX „Great“, „Good“ und „Meta“, dazu die Teams im Tool), mit deiner Leiste und denselben Zielen gerechnet. Das Vergleichsteam hat immer einen Blut-ist-Kraft-Heiler, einen zweiten Heiler und einen Schutz-Helden. Die übrigen Plätze gehen an die schadensstärksten Leisten: höchstens ein Dienermeister, ein Splitterwaffe-Helfer und zwei Helden mit derselben Elite. Gezählt wird nur Dauerschaden. Was Unterbrechungen und Panik verhindern, zählt nicht.</p>`;
   return h;
 }
 function takeRef(kind){
@@ -850,11 +877,17 @@ function drawDps(body){
     ${TEAM.map((m,i)=>{ const k=mainMetric(DPS[i]); return `<button class="opt" style="margin-top:6px" data-member="${i}"><div class="t"><span class="nm">${m.you?"Du":esc(m.name||"–")}</span><span style="flex:1"></span><span class="sm">${metricHTML(DPS[i])}</span></div><div class="meter${k!=="dmg"?" sup":""}"><i style="width:${Math.round(val(DPS[i],k)/maxOf(k)*100)}%"></i></div></button>`; }).join("")}
     ${refHTML()}
     <details class="more"><summary>So wird gerechnet</summary><ul class="sm">
-      <li>Jede Fertigkeit so oft, wie Aufladen, Aktivierung und 0,75 s Nachwirkzeit erlauben. Reicht die Energie nicht, sinkt die Nutzung anteilig (1 Pip = 1 Energie alle 3 s).</li>
+      <li>Jede Fertigkeit so oft, wie Aufladen, Wirkzeit und 0,75 s Nachwirkzeit erlauben. Ein Charakter kann nur eine Sache zugleich tun: Passen die Zauber nicht in die Zeit, laufen alle anteilig seltener, und Zauberzeit geht von den normalen Angriffen ab.</li>
+      <li>Energie: Grundregeneration (1 Pip = 1 Energie alle 3 s), dazu Seelensammlung, Energie aus kritischen Treffern, Führung und eigene Energie-Fertigkeiten. Ein Blut-ist-Kraft-Held versorgt drei Verbündete zugleich. Reicht die Energie nicht, sinkt die Nutzung anteilig.</li>
+      <li>Gleiche Annahmen für alle Leisten: Im Kampf stirbt alle 6 s eine Kreatur (Leichen, Seelensammlung, Schaden beim Tod eines Gegners). Schaden, der nur trifft, wenn der Gegner gerade zaubert oder angreift, zählt mit halber Trefferquote.</li>
+      <li>Angriffstempo nach Wiki: 33 % schneller heißt 33 % kürzere Angriffsdauer, das Höchstmaß. Doppelangriffe treffen zweimal.</li>
       <li>Attributränge inklusive empfohlener Runen. Waffen nach Wiki-Werten, kritische Treffer mit Rang als Prozent-Chance.</li>
       <li>Brennen −7, Gift und Krankheit −4, Blutung −3 Pips (1 Pip = 2 Lebenspunkte/s), höchstens 10 Pips je Ziel.</li>
-      <li>Diener: Schaden nach Stufe laut Wiki-Messwerten, volle Dienerzahl angenommen (2 plus halber Rang Todesmagie). Angriffsgeister treffen alle 2 s mit dem Wert aus der Beschreibung, solange sie leben.</li>
-      <li>Nicht drin: Tiere, Energie aus Seelensammlung, kritischen Treffern und Führung. Auslöser durch Gegner-Aktionen: eine Aktion alle 2 s angenommen.</li>
+      <li>Diener: Schaden nach Stufe laut Wiki-Messwerten. Ihre Zahl ergibt sich aus Erzeugungsrate und Lebensdauer, höchstens 2 plus halber Rang Todesmagie. Als Lebensdauer zählt die halbe Zerfallszeit, weil Diener im Kampf auch durch Gegner sterben. Das ist eine Annahme. Angriffsgeister treffen alle 2 s mit dem Wert aus der Beschreibung, solange sie leben.</li>
+      <li>Tiergefährte: Stufe 20, im Schnitt 24,4 je Treffer bei Tierbeherrschung 12 (Wiki), plus 33 % in PvE, ein Angriff alle 2 s. Die Umrechnung auf andere Ränge ist eine Annahme.</li>
+      <li>Stärke der Ehre, Splitterwaffe und ähnliche Helfer zählen beim Helden, der sie wirkt, über die Angriffe des Spielers.</li>
+      <li>Rüstung der Gegner: Je 40 Rüstung halbiert sich Waffen-, Diener-, Tier- und Elementarschaden (Wiki). Rüstungsignorierender Schaden wie bei Mesmern, Peinigungsgebeten und Angriffsboni bleibt voll. In normalen Gebieten rechnet das Tool mit 60, in Elite-Gebieten mit 80. Laut Wiki gilt 3 mal Stufe plus Klassenbonus, bei Stufe 28 also ab 84.</li>
+      <li>Nicht drin: Stab- und Zauberstab-Angriffe von Zauberwirkern, die Wirkung von Unterbrechungen und Panik. Auslöser durch Gegner-Aktionen: eine Aktion alle 2 s angenommen.</li>
       <li>Heilung: direkte Heilung, Regeneration und ausgelöste Heilung, Mönchszauber mit Gunst der Götter (3,2 je Rang). Gruppenheilung zählt für jedes Gruppenmitglied.</li>
       <li>Schutz ist eine Schätzung: Jedes geschützte Gruppenmitglied wird alle 2 s für 80 Schaden getroffen und hat 480 Lebenspunkte. Gezählt werden Schadensgrenzen, Schadensminderung, Blocken und Rüstungsboni.</li>
     </ul></details>`;
@@ -907,6 +940,7 @@ document.addEventListener("click", e=>{
   const cp = t.closest("[data-copy]"); if (cp) { copy(cp.dataset.copy); return; }
   const vr = t.closest("[data-variant]"); if (vr) { state.variant=+vr.dataset.variant; state.over={}; render(); return; }
   const rt = t.closest("[data-reftake]"); if (rt) { takeRef(rt.dataset.reftake); return; }
+  const arm = t.closest("[data-armor]"); if (arm) { state.armor=+arm.dataset.armor; render(); return; }
   const dn = t.closest("[data-dpsn]"); if (dn) { state.dpsN=+dn.dataset.dpsn; render(); return; }
   const sl = t.closest("[data-slot]"); if (sl) { openPicker(+sl.dataset.slot); return; }
   const ar = t.closest("[data-area]"); if (ar) { state.area=ar.dataset.area; state.team=null; store.set("area",state.area); closeDrawer(); render(); return; }

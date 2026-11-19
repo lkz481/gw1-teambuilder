@@ -6,6 +6,50 @@
 "slots": null
 },
 {
+"key": "mesmerway2",
+"name": "PvX-Mesmerway mit zwei Heilern",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Mesmerway",
+"desc": "PvX \"Meta/Great\", Seite zuletzt am 30.10.2026 angepasst, also nach dem Balance-Update: Panik-Mesmer, zwei Energiewellen-Mesmer, Dienermeister, Blut-ist-Kraft-Heiler, Ritualisten-Heiler mit Siegel der Geister und Seelenverflechtung-Schutz. PvX nennt die Variante mit zwei Heilern als die stabilere und führt das Team für alle Elite-Gebiete. Drei Wiederbelebungen über Fleisch von meinem Fleisch.",
+"slots": [
+{
+"code": "OQhkAoC8AGKDNAna6me5gMARYIA",
+"role": "Panik-Mesmer",
+"why": "Legt ganze Gruppen lahm und unterbricht. Kraftentzug und Verzauberung entziehen halten seine Energie oben.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Mesmerway"
+},
+{
+"code": "OQhkAsC8gFKzJY6lDGC4UTXG4iB",
+"role": "Energiewellen-Mesmer",
+"why": "Flächenschaden und Unterbrechungen, dazu Fleisch von meinem Fleisch als Wiederbelebung.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Mesmerway"
+},
+{
+"code": "OQhkAsC8gFKzJY6lDGC4UTXG4iB",
+"role": "Energiewellen-Mesmer",
+"why": "Flächenschaden und Unterbrechungen, dazu Fleisch von meinem Fleisch als Wiederbelebung.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Mesmerway"
+},
+{
+"own": "LIVIA_MM"
+},
+{
+"code": "OAhjQkGZIP3hqqwTaO5GmVvhG",
+"role": "Blut-ist-Kraft-Heiler",
+"why": "Versorgt das Mittelfeld mit Energie und heilt über Wiederherstellungsmagie.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Mesmerway"
+},
+{
+"own": "ZEI_SOS"
+},
+{
+"code": "OAOjAyhDJPYTnp17xFOhmtkLG",
+"role": "Seelenverflechtung-Schutz",
+"why": "Unterschlupf, Vereinigung und Verschiebung als Schutz für die ganze Gruppe, dazu Verhexung entfernen und eine Wiederbelebung.",
+"src": "https://gwpvx.fandom.com/wiki/Build:Team_-_7_Hero_Mesmerway"
+}
+]
+},
+{
 "key": "discord",
 "name": "Dual Mesmer Discord",
 "desc": "PvX \"Great\": Zwei Zwietracht-Nekromanten mit Dienern, Panik- und Unfähigkeit-Mesmer, Splitterwaffe-Support, Heiler und Schutz. Mehr Verhexungs- und Zustandsschaden statt Energiewelle. Stand: PvX-Seite zuletzt am 23.08.2026 angepasst, also nach dem Update. Unsere Leisten stimmen damit überein.",
