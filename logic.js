@@ -641,7 +641,7 @@
       const aoeAll = /(^|[.:)] )(also (hits|affects|strikes)|hits (\d+ )?(foes|all)|affects (foes|all)|strikes (foes|all))/.test(d);
       const aoeAt = rx => { const x = sents.find(q => rx.test(q)); const v = aoeMul(x || d, n) || 1; return v === 1 && aoeAll ? (aoeMul(d, n) || 1) : v; };
       // Bedingter Schaden (nur wenn der Gegner gerade zaubert, angreift oder eine Fertigkeit nutzt): halbe Trefferquote angenommen
-      const condP = /if (target|that|this) foe is (casting|using|attacking|activating)|the next (spell|skill|attack)[^.]*that target foe|if target foe was (casting|attacking)|if that action was|interruption effect:|removal effect:|if (a|an|that) (condition|hex|enchantment) (is|was) removed|for each (condition|hex) removed/.test(d) ? 0.5 : 1;
+      const condP = /if (target|that|this) foe is (casting|using|attacking|activating)|the next (spell|skill|attack)[^.]*that target foe|if target foe was (casting|attacking)|if that action was|interruption effect:|removal effect:|if (a|an|that) (condition|hex|enchantment) (is|was) removed|for each (condition|hex) removed/.test(d) ? (/foe loses \d+(\.\.\.\d+)? enchantment|enchantments? from target foe/.test(d) ? 0.3 : 0.5) : 1;
       // Energiegewinn der Fertigkeit selbst
       let gain = 0;
       const gm = dRaw.match(/you gain (\d+(?:\.\.\.\d+)?) energy(?! (?:whenever|when|each time|for each|every))/) || dRaw.match(/health and (\d+(?:\.\.\.\d+)?) energy/);
@@ -755,7 +755,7 @@
       // Gunst der Götter: Mönchszauber auf Verbündete heilen zusätzlich 3,2 je Rang (Wiki "Divine Favor")
       if (bar.pri === 3 && s.p === 3 && /spell/i.test(s.t) && /Verbündete/.test(dd) && rank(16) > 0) parts.push({ kind: "Heilung", per: Math.round(3.2 * rank(16)), dur: 0, aoe: 1, label: "Gunst der Götter " + Math.round(3.2 * rank(16)) });
       const isMinion = minions.some(m => m.i === i);
-      const isCtrl = s.n === "Panic" || /knock[s]?[- ]?down|interrupt|Dazed|Blind|disable/i.test(s.d || "") && !/enchantment|stance|shout|chant|form/i.test(s.t.replace(/hex/i, "")) || /Dazed|Blind|knock/i.test(s.d || "") && /attack|shout/i.test(s.t);
+      const isCtrl = s.n === "Panic" || /hex/i.test(s.t) && /(attack|cast)[^.]*% slower|% slower spell casting|doubles? (spell casting|skill activation|casting) time/i.test(s.d || "") || /knock[s]?[- ]?down|interrupt|Dazed|Blind|disable/i.test(s.d || "") && !/enchantment|stance|shout|chant|form/i.test(s.t.replace(/hex/i, "")) || /Dazed|Blind|knock/i.test(s.d || "") && /attack|shout/i.test(s.t);
       if (!parts.length && !gain && !isMinion && !isCtrl) continue;
       // Wie oft wird die Fertigkeit genutzt? Effekte mit Dauer werden nur gehalten, nicht gestapelt.
       const holds = parts.length > 0 && parts.every(p => p.dur > 0 && p.kind !== "Direkt");
@@ -845,6 +845,10 @@
       const kd = /caus\w* knock[- ]?down|knocks? down|is knocked down for|are knocked down(?! foe)|knock(?:ed)?[- ]down (?:target|all|that|nearby|adjacent)|and knocked down/i.test(d) && !/cannot be knocked|if you are knocked|you are knocked down|immune/i.test(d);
       if (kd) { const dur = secs(/knock[- ]?down[^.]*?\((\d+(?:\.\.\.\d+)?) seconds?\)/i) || secs(/for (\d+(?:\.\.\.\d+)?) seconds?[^.]*knock/i) || 2; const c = /if|unless|moving|attacking|casting|using a skill|\d+% chance/i.test(d) ? 0.5 : 1; add(rate * dur * Math.max(1, aoeMul(d, n)) * c, "Niederschlag " + dur + " s" + (c < 1 ? ", an Bedingung geknüpft" : "")); }
       if (/interrupt/i.test(d) && !/easily interrupted|cannot be interrupted|not interrupt|if interrupted|is interrupted/i.test(d)) add(rate * 2 * 0.5 * Math.max(1, /all (other )?(nearby|adjacent) foes|foes in the area/i.test(d) ? aoeMul(d, n) : 1), "Unterbrechung: je Treffer 2 s verloren, jede zweite sitzt (Annahme)");
+      // Verlangsamte Angriffe und Zauber: "50% slower" kostet ein Drittel der Aktionen, "doubles" die Hälfte
+      { const mA = d.match(/attacks?[^.]*?(\d+)% slower/i), mC = d.match(/cast[^.]*?(\d+)% slower|(\d+)% slower spell casting/i), dbl = /doubles? (spell casting|skill activation|casting) time/i.test(d) ? (/skill activation/i.test(d) ? 1 : CAST) : 0;
+        const pA = mA ? +mA[1] : 0, pC = mC ? +(mC[1] || mC[2]) : 0, share = (pA ? MELEE * pA / (100 + pA) : 0) + (pC ? CAST * pC / (100 + pC) : 0) + dbl * 0.5;
+        if (share > 0 && /hex/i.test(sx.t)) { const dur = secs(/\((\d+(?:\.\.\.\d+)?) seconds?\)/) || 10, up = Math.min(1, rate * dur) * (opts.scale && opts.scale.has(sx.id) ? opts.scale.get(sx.id) : 1); add(up * Math.max(1, /also hexes/i.test(d) ? aoeMul(d, n) : 1) * share, "Verlangsamt Angriffe oder Zauber, " + Math.round(up * 100) + " % Laufzeit"); } }
       if (/Dazed/.test(d) && /inflict|causes?|are Dazed|is Dazed|become/i.test(d)) { const dur = secs(/Dazed[^.(]*\((\d+(?:\.\.\.\d+)?) seconds?\)/) || secs(/Dazed (?:condition )?for (\d+(?:\.\.\.\d+)?) seconds?/) || 5; add(Math.min(1, rate * dur) * 0.75 * CAST * cond * Math.max(1, aoeMul(d, n)), "Benommenheit " + dur + " s: Zauberer fast ausgeschaltet"); }
       if (/Blind/.test(d) && /inflict|causes?|are Blinded|become Blind|Blindness/i.test(d) && !/remove|lose|cure|if you are blind/i.test(d)) { const dur = secs(/Blind(?:ness|ed)?[^.(]*\((\d+(?:\.\.\.\d+)?) seconds?\)/) || secs(/Blind(?:ness|ed)? (?:condition )?for (\d+(?:\.\.\.\d+)?) seconds?/) || 5; add(Math.min(1, rate * dur) * 0.9 * MELEE * cond * Math.max(1, aoeMul(d, n)), "Blindheit " + dur + " s: 90 % der Angriffe gehen daneben"); }
       if (/disables?|disabled/i.test(d) && /target foe|that foe|foe's/i.test(d) && !/your (non-|other )?[\w -]*skills are disabled|disables your/i.test(d.replace(/target foe[^.]*\./i, ""))) { const dur = secs(/disabled?[^.(]*\((\d+(?:\.\.\.\d+)?) seconds?\)/i) || secs(/disabled? for (\d+(?:\.\.\.\d+)?) seconds?/i) || secs(/\((\d+(?:\.\.\.\d+)?) seconds?\)/); const all = /all (of )?(target foe's |that foe's |its )?skills/i.test(d), part = all ? 1 : /attribute/i.test(d) ? 0.5 : 0.2; if (dur) add(Math.min(1, rate * dur) * part * (all ? 1 : cond), "Fertigkeiten gesperrt " + Math.round(dur) + " s" + (all ? "" : ", nur ein Teil")); }
@@ -876,6 +880,8 @@
     const sum = c => out.filter(o => o.cat === c).reduce((a, o) => a + o.dps, 0);
     // Schutz überlappt: Ein geblockter Treffer kann nicht noch einmal gedeckelt werden. Zusammen nie mehr als der Schaden, der ankommt.
     { const ps = out.filter(o => o.cat === "prot" && o.dps > 0), raw = ps.reduce((a, o) => a + o.dps, 0); if (raw > 0) { const comb = INC * (1 - ps.reduce((a, o) => a * (1 - Math.min(0.95, o.dps / INC)), 1)); ps.forEach(o => { o.dps *= comb / raw; }); } }
+    // Heilung mit Bedingung: "while moving" wirkt im Kampf kaum (25 %), "below 75% Health" nur zeitweise (50 %). Annahmen.
+    out.forEach(o => { if (o.cat !== "heal" || !o.sid) return; const x = GW.skill(o.sid), dx = (x && x.d || "").toLowerCase(); const k = /while moving/.test(dx) ? 0.25 : /below \d+% health|under \d+% health/.test(dx) ? 0.5 : 1; if (k < 1) { o.dps *= k; o.detail += ", an Bedingung geknüpft: zählt zu " + Math.round(k * 100) + " %"; } });
     // Heilung: Mehr als ankommt, kann nicht geheilt werden
     { const hs = out.filter(o => o.cat === "heal" && o.dps > 0), raw = hs.reduce((a, o) => a + o.dps, 0); if (raw > INC) { hs.forEach(o => { o.dps *= INC / raw; }); notes.push("Heilung auf den ankommenden Schaden begrenzt (" + Math.round(INC) + "/s). Die Leiste könnte " + Math.round(raw) + "/s heilen."); } }
     const total = sum("dmg"), heal = sum("heal"), prot = sum("prot"), ctrl = Math.min(n, sum("ctrl"));
