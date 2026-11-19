@@ -220,4 +220,9 @@ const tpart = (D, name, cat) => D.parts.filter(p => p.sid === id(name) && p.cat 
 { const r = run(bar(N, 0, { 5: 16, 6: 8 }, ['Animate Bone Horror'])), p = r.parts.find(x => x.sid === id('Animate Bone Horror'));
   T('Bone Horror Stufe 18: 8,7 Schaden/s je Diener', +(p.detail.match(/je ([\d.]+)\/s/) || [0, 0])[1], 8.7, 0.06); }
 
+// Dienerzahl: ohne Dienerheilung zwei Drittel der Höchstzahl (Annahme), mit Blood of the Master die volle. Todesmagie 16: höchstens 10, also 6,7 und 10.
+{ const cnt = names => { const r = run(bar(N, 0, { 5: 16, 6: 8 }, names), { targets: 3, death: 0.5 }); return +(r.notes.join(' ').match(/Im Schnitt ([\d.]+) von/) || [0, 0])[1]; };
+  T('Diener ohne Heilung: zwei Drittel von 10', cnt(['Animate Bone Fiend', 'Animate Bone Horror']), 6.7, 0.02);
+  T('Diener mit Blut des Meisters: 10', cnt(['Animate Bone Fiend', 'Animate Bone Horror', 'Blood of the Master']), 10, 0.02); }
+
 console.log(ok + ' von ' + (ok + bad) + ' Fällen bestanden'); fails.forEach(f => console.log('  FEHLER  ' + f)); process.exit(bad ? 1 : 0);

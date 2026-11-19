@@ -1032,9 +1032,11 @@
     if (minions.length) {
       const cap = 2 + Math.floor(rank(5) / 2);
       const life = L => { let hp = (80 + 20 * L) * (bar.pri === 8 ? 1 + 0.04 * rank(36) : 1), t = 0, p = 1; while (hp > 0 && t < 600) { const loss = p * 2 * 20; if (loss >= hp) { t += hp / (p * 2); hp = 0; } else { hp -= loss; t += 20; p++; } } return t; };
-      let left = cap; const got = [];
+      // Ohne Dienerheilung hält ein Held die Höchstzahl selten: gerechnet mit zwei Dritteln (Annahme). Mit Blood of the Master reizt er sie aus, solange Leichen da sind (Spielbeobachtung).
+      const keep = sk.some(x => x[1].n === "Blood of the Master"), capUse = keep ? cap : cap * 2 / 3;
+      let left = capUse; const got = [];
       minions.sort((a, b) => a.max - b.max).forEach(m => { const u = uses.find(x => x.i === m.i); const want = Math.min(m.max, (u ? u.rate : 0) * m.count * life(m.L) / 2); const share = Math.min(want, left); left -= share; if (share > 0.05) { got.push(share); const reachM = FIGHT / (FIGHT + (m.kind === "bone fiend" ? 1 : 2)); out.push({ name: m.s.de || m.s.n, sid: m.s.id, dps: share * m.per * af * reachM, cat: "dmg", kind: "Diener", detail: share.toFixed(1) + " Diener im Schnitt, Stufe " + m.L + ", je " + m.per.toFixed(1) + "/s, " + Math.round(reachM * 100) + " % der Zeit am Gegner (Laufweg je Kampf wie bei Nahkämpfern, Fernkämpfer 1 s)" }); } });
-      notes.push("Diener: Im Schnitt " + got.reduce((a, b) => a + b, 0).toFixed(1) + " von höchstens " + cap + ". Gerechnet mit einer Leiche alle " + (1 / DEATH).toFixed(1) + " s. Lebensdauer: die Hälfte der Zerfallszeit laut Wiki, weil Diener im Kampf auch durch Gegner sterben (Annahme).");
+      notes.push("Diener: Im Schnitt " + got.reduce((a, b) => a + b, 0).toFixed(1) + " von höchstens " + cap + (keep ? " (Blut des Meisters hält sie am Leben)" : ", ohne Dienerheilung mit höchstens zwei Dritteln davon gerechnet") + ". Gerechnet mit einer Leiche alle " + (1 / DEATH).toFixed(1) + " s. Lebensdauer: die Hälfte der Zerfallszeit laut Wiki, weil Diener im Kampf auch durch Gegner sterben (Annahme).");
     }
     // Tiergefährte (Wiki "Animal companion"): Stufe 20, im Schnitt 24,4 je Treffer bei Tierbeherrschung 12, +33 % in PvE, ein Angriff alle 2 s
     if (sk.some(x => ["Charm Animal", "Comfort Animal", "Heal as One"].includes(x[1].n))) {
@@ -1158,6 +1160,14 @@
       if (Object.values(kf).some(v => v < 0.999)) res = res.map((D, i) => { if (i === 0 || !D.parts.some(p => p.intr && kf[p.intr] < 0.999)) return D; let dD = 0, dC = 0;
         const parts = D.parts.map(p => { const k = p.intr ? kf[p.intr] : 1; if (k >= 0.999) return p; if (p.cat === "ctrl") dC += p.dps * (1 - k); else if (p.cat === "dmg") dD += p.dps * (1 - k); return Object.assign({}, p, { dps: p.dps * k, detail: p.detail + ". Im Team zu " + Math.round(k * 100) + " % gezählt: Die Helden teilen sich die Gelegenheiten am selben Ziel" }); });
         return Object.assign({}, D, { total: D.total - dD, ctrl: Math.max(0, D.ctrl - dC), parts }); }); }
+    // Wirkungslose Fertigkeiten: Was eine Heldenleiste unter guten Bedingungen leistet (ein Nahkämpfer im Team, nichts doppelt), in diesem Team aber gar nicht, steht in "dead".
+    // Die Teamsuche nimmt solche Leisten nicht: Eine Fertigkeit, die hier nichts bewirkt, belegt nur einen Platz.
+    res = res.map((D, i) => { if (i === 0) return D;
+      const key = ["ideal", (env.wmods && env.wmods[i]) || "-", death.toFixed(3), bars[i].skills.join(","), [...eff[i]].join(";"), n, base.armor, base.foeDps, allies].join("|");
+      let I = RUNMEMO.get(key); if (!I) { I = GW.dps(bars[i], eff[i], Object.assign({}, base, { meleeAlly: true, physRate: Math.max(first0.physical || 0, 0.67), hero: true, wmod: (env.wmods && env.wmods[i]) || null, bipPips: 0 })); RUNMEMO.set(key, I); }
+      const sum = X => { const m = new Map(); X.parts.forEach(p => { if (p.sid) m.set(p.sid, (m.get(p.sid) || 0) + p.dps * (p.cat === "ctrl" ? 40 : 1)); }); return m; };
+      const a = sum(I), b = sum(D), dead = []; a.forEach((v, sid) => { if (v > 1 && (b.get(sid) || 0) < 0.05 * v) dead.push(sid); });
+      return dead.length ? Object.assign({}, D, { dead }) : D; });
     return res;
   };
   // Team mit passender Kampfdauer: Wie schnell Gegner sterben, folgt aus dem Schaden des Teams. Lebenspunkte im schweren Modus nach Wiki ("Hard mode", Stufe 24 bis 28): rund 700, in Elite-Gebieten 850.

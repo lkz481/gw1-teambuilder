@@ -1135,7 +1135,7 @@ let REFCACHE = { key:"", val:null };
 function refPool(){
   const seen = new Set(), out = [];
   const add = (code, src, url) => { let nc; try { nc = normCode(code); const d = GW.decode(code); const sk = d.skills.map(id=>GW.skill(id)); if (!d.pri || sk.some(s=>!s || s.pve) || sk.filter(s=>s.e).length!==1) return; if (seen.has(nc)) return; seen.add(nc); out.push({ code, src, url, bar:d, elite:sk.find(s=>s.e) }); } catch(e){} };
-  REF.forEach(o=>{ if (!/Farm|AFK/i.test(o.p)) add(o.c, o.own ? "Eigene Rechnung, im Spiel ungetestet. Ausgangsleiste: "+o.from+". Getauscht: "+o.log.map(l=>l.split(" -> ").map(n=>{ const k=GW.allSkills().find(x=>x.n===n); return k ? dname(k) : n; }).join(" → ")).join("; ") : "PvX: "+o.p, o.u); });
+  REF.forEach(o=>{ if (!/Farm|AFK/i.test(o.p)) add(o.c, o.own ? (()=>{ const dn = n => { const k=GW.allSkills().find(x=>x.n===n); return k ? dname(k) : n; }; return "Eigene Rechnung, im Spiel ungetestet. Ausgangsleiste: "+o.from+". Raus: "+o.out.map(dn).join(", ")+". Rein: "+o.in.map(dn).join(", "); })() : "PvX: "+o.p, o.u); });
   TEAMS.forEach(T=>(T.variants ? T.variants.flatMap(v=>v.slots) : (T.slots||[])).forEach(s=>{ if (s.code && !T.ref) add(s.code, T.yt ? "YouTube-Team: "+T.name : "PvX-Team: "+T.name, s.src||T.src); }));
   Object.keys(GW.BARS).forEach(k=>add(GW.BARS[k].code, "Standardteam", null));
   return out;
@@ -1175,7 +1175,7 @@ function refTeams(){
   const incoming = c => n * foeDpsNow() * Math.max(0, 1 - c/n);
   const evalTeam = L => { const TD = teamDps([TEAM[0].bar].concat(L.map(o=>o.bar)), [eff0].concat(L.map(o=>o.eff)), aw, n, [wmodOf(TEAM[0].bar, TEAM[0].build && TEAM[0].build.url)].concat(L.map(o=>wmodOf(o.bar))));
     const tot = k => k==="prot" ? protSum(TD, n) : k==="heal" ? healSum(TD, n) : TD.reduce((a,d)=>a+(d[k]||0),0), c = n*(1-TD.reduce((a,d)=>a*(1-Math.min(1,(d.ctrl||0)/n)),1)), inc = incoming(c);
-    const short = heroShort(L.map(o=>o.bar)); // Aufstellungen ohne passende Helden gelten als nicht spielbar
+    const short = heroShort(L.map(o=>o.bar)) + TD.slice(1).reduce((a,d)=>a+((d.dead||[]).length ? 1 : 0), 0); // Aufstellungen ohne passende Helden gelten als nicht spielbar, ebenso Leisten mit einer Fertigkeit, die in diesem Team nichts bewirkt
     return { TD, dmg:tot("total"), heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, sv: survive(TD, n, c), ok: survive(TD, n, c).ok && !short, gap: survive(TD, n, c).gap + 1000*short, short }; };
   let play = null, playSum = 0, playEval = null, ctx = null;
   DEATH_HINT = (DPS && DPS.death) || 0.3;
