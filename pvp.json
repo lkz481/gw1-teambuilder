@@ -1,0 +1,5564 @@
+{
+"fmt": {
+"meta": {
+"name": "Aktuelle Meta",
+"intro": [
+"Hier stehen die Builds, die PvX in der Kategorie \"Meta\" führt, also das, was im jeweiligen Format am häufigsten gespielt wird.",
+"Die PvX-Seiten stammen fast alle aus der Zeit vor dem Update vom 24.06.2026. Jede Leiste ist deshalb gegen die Update-Notizen geprüft. Die Markierung am Build zeigt das Ergebnis."
+],
+"src": [
+[
+"PvX: Meta working PvP builds",
+"https://gwpvx.fandom.com/wiki/Category:Meta_working_PvP_builds"
+]
+]
+},
+"RA": {
+"name": "Zufallsarena",
+"intro": [
+"4 gegen 4. Team und Karte werden zufällig zugeteilt. Du brauchst Stufe 20.",
+"Auf den meisten Karten gewinnt, wer das gegnerische Team auslöscht. Zeitlimit 8 Minuten, danach gewinnt das Team mit weniger Sterbemalus. Auf zwei Karten gibt es einen Flaggenstand mit Obelisk, auf zwei weiteren einen Priester, der alle zwei Minuten wiederbelebt und mit besiegt werden muss (12 Minuten).",
+"Weil du deine Mitspieler nicht kennst, muss jede Leiste für sich allein funktionieren: Eigene Heilung oder Flucht, ein Wiederbelebungssiegel und etwas gegen Zustände oder Verhexungen."
+],
+"src": [
+[
+"Wiki: Random Arenas",
+"https://wiki.guildwars.com/wiki/Random_Arenas"
+]
+]
+},
+"CA": {
+"name": "Kodex-Arena",
+"intro": [
+"4 gegen 4 mit festem Team. Erlaubt sind nur Fertigkeiten aus dem Kodex, einer begrenzten Auswahl. Laut Wiki wechselt sie jede Woche montags um 15:00 UTC.",
+"Feste Builds gibt es deshalb nicht. Den aktuellen Kodex siehst du im Spiel im Fertigkeitenfenster (Taste K) im Außenposten der Kodex-Arena.",
+"Karten und Siegbedingungen sind dieselben wie in der Zufallsarena. Die Leisten von dort sind eine gute Vorlage: Prüfe im Spiel, welche Fertigkeiten gerade im Kodex sind und ersetze den Rest."
+],
+"src": [
+[
+"Wiki: Codex Arena",
+"https://wiki.guildwars.com/wiki/Codex_Arena"
+]
+]
+},
+"GvG": {
+"name": "GvG",
+"intro": [
+"8 gegen 8 in den Gildenhallen. Ziel ist der Tod des gegnerischen Gildenherrn. Helden sind nicht erlaubt, bis zu vier Gefolgsleute schon.",
+"Alles Weitere steht im Leitfaden: Ablauf, Rollen, Flagge und Split."
+],
+"src": [
+[
+"Wiki: Guild versus Guild",
+"https://wiki.guildwars.com/wiki/Guild_versus_Guild"
+]
+]
+},
+"HA": {
+"name": "Aufstieg der Helden",
+"intro": [
+"8 gegen 8 über mehrere Karten bis in die Halle der Helden. Du darfst bis zu sieben Gefolgsleute mitnehmen.",
+"Jede Karte hat ein eigenes Ziel. In vielen gibt der Tod des gegnerischen Geisterhelden einen Moralschub. Kämpfe in der Halle der Helden dauern 12 Minuten und starten zur vollen Stunde und danach alle 12 Minuten.",
+"Pro Tag gibt es höchstens 300 Ruhm. Nach je drei Siegen in Folge gibt es eine Truhe, höchstens fünf am Tag."
+],
+"src": [
+[
+"Wiki: Heroes' Ascent",
+"https://wiki.guildwars.com/wiki/Heroes'_Ascent"
+]
+]
+}
+},
+"guide": {
+"title": "GvG-Leitfaden",
+"lead": "Was wann wo zu tun ist. Alle Regeln stammen aus dem offiziellen Wiki. \"Sieg oder Tod\" gibt es seit 2008 nicht mehr.",
+"sections": [
+{
+"h": "So gewinnst du",
+"items": [
+"Der gegnerische Gildenherr stirbt. Er hat 1680 Lebenspunkte, Rüstung 70 und 5 Pips Regeneration.",
+"Oder: Alle Gegner erreichen 60 % Sterbemalus.",
+"Oder: Nach 28 Minuten gewinnt das angriffslustigere Team. Jeder Schadenspunkt am gegnerischen Gildenherrn zählt 1 Punkt. Jede Verzauberung und jeder Waffenzauber auf den eigenen Gildenherrn kostet 50 Punkte. Lebensraub und Degeneration zählen nicht."
+],
+"src": [
+[
+"Guild versus Guild",
+"https://wiki.guildwars.com/wiki/Guild_versus_Guild"
+],
+[
+"Guild Lord",
+"https://wiki.guildwars.com/wiki/Guild_Lord"
+],
+[
+"Aggressiveness",
+"https://wiki.guildwars.com/wiki/Aggressiveness"
+]
+]
+},
+{
+"h": "Ablauf einer Partie",
+"steps": [
+[
+"Minute 0 bis 2: Aufstellen",
+"Sieben Spieler laufen zum Flaggenstand in der Kartenmitte. Der Flaggenläufer bringt die erste Flagge. Wer den Stand zwei Minuten hält, bekommt 10 % Moralschub und der eigene Gildenherr 300 Lebenspunkte mehr."
+],
+[
+"Kampf am Stand",
+"7 gegen 7 am Stand, die Läufer pendeln. Nahkämpfer machen Druck, die Mitte unterbricht und setzt Spitzen, die Mönche halten alle am Leben. Halte den gegnerischen Läufer auf: Dann bleibt deiner länger am Stand, auch wenn kein Schub herausspringt."
+],
+[
+"Der Zwei-Minuten-Takt",
+"Tote werden alle zwei Minuten in der Basis wiederbelebt. Töte ein Ziel kurz vor der vollen zweiten Minute, dann muss es von der Basis zurücklaufen. Töte einen Nachzügler kurz danach, dann bleibt er fast zwei Minuten tot."
+],
+[
+"Wenn der Stand gewonnen ist",
+"Drück in die gegnerische Basis und töte Wachen. Zuerst der Leibwächter: Er heilt den Gildenherrn und hat nur 480 Lebenspunkte. Wachen stehen nicht wieder auf."
+],
+[
+"Wenn der Stand verloren geht",
+"Zieh dich in die eigene Basis zurück. Mit Wachen, frisch Wiederbelebten und voller Energie drückst du den Gegner wieder hinaus. Ziel ist, wieder eine Flagge durchzubringen."
+],
+[
+"Der Gildenherr",
+"Am Anfang kann er höchstens 25 Lebenspunkte pro Sekunde verlieren. Die Grenze steigt in den ersten 12 Minuten auf 300 pro Sekunde. Ein früher Angriff auf den Herrn bringt deshalb wenig. Später reichen zwei Spieler, wenn niemand verteidigt."
+],
+[
+"Ab Minute 20",
+"Rechne aus, wer nach Angriffslust vorn liegt. Wer hinten ist, muss an den Gildenherrn. Wer vorn ist, verteidigt und verzaubert den eigenen Herrn nicht mehr."
+]
+],
+"src": [
+[
+"Guild versus Guild",
+"https://wiki.guildwars.com/wiki/Guild_versus_Guild"
+],
+[
+"Guild Lord",
+"https://wiki.guildwars.com/wiki/Guild_Lord"
+],
+[
+"Bodyguard",
+"https://wiki.guildwars.com/wiki/Bodyguard"
+],
+[
+"Morale Boost",
+"https://wiki.guildwars.com/wiki/Morale_Boost"
+]
+]
+},
+{
+"h": "Rollen",
+"roles": [
+[
+"Front (meist 2 bis 3)",
+"Krieger, Assassinen oder Derwische. Hauptschaden. Sie halten Dauerdruck auf wechselnden Zielen und leiten die Spitze ein: Ausweiden oder Zerstückeln mit der Axt, Niederschlag und Vernichtender Schlag mit dem Hammer.",
+"Zu tief hineinlaufen und außerhalb der Heilreichweite sterben. Adrenalin vor der Spitze verschwenden."
+],
+[
+"Mitte (meist 2)",
+"Mesmer, Waldläufer, Elementarmagier, Paragone oder Nekromanten. Sie stören Angriff und Verteidigung des Gegners und geben Schaden aus der Distanz dazu. Bei der Spitze kommt ihr Schaden zeitgleich mit dem der Front.",
+"Nur Schaden machen. Die Unterbrechung auf den gegnerischen Mönch im Moment der Spitze entscheidet öfter als der eigene Treffer."
+],
+[
+"Hinten (meist 2 Mönche)",
+"Sie halten alle am Leben. Einer heilt, einer schützt. Gegen Spitzen zählt die Reaktion in unter einer Sekunde, klassisch mit Gesundheit einflößen.",
+"Beide Mönche stehen nah beieinander und werden gemeinsam unterbrochen oder niedergeschlagen."
+],
+[
+"Flaggenläufer (1)",
+"Trägt die Flagge und kann allein überleben. Braucht Tempo, weil die Flagge 25 % langsamer macht, dazu Selbstheilung, Gruppenheilung auf Distanz und die Fähigkeit, Wachen zu heilen. Am Stand hilft er kurz mit und sagt an, wenn er kommt. Er meldet gegnerische Splits. Sterben Wachen unnötig, ist das laut Wiki seine Verantwortung.",
+"Flagge aus Versehen fallen lassen. Ohne Ansage in den Stand laufen und von einer Spitze erwischt werden. An Wänden hängen bleiben, wenn Gegner den Weg blockieren."
+]
+],
+"src": [
+[
+"Guild versus Guild",
+"https://wiki.guildwars.com/wiki/Guild_versus_Guild"
+],
+[
+"Flag running",
+"https://wiki.guildwars.com/wiki/Flag_running"
+],
+[
+"Spike",
+"https://wiki.guildwars.com/wiki/Spike"
+]
+]
+},
+{
+"h": "Split: Wann und wie",
+"items": [
+"Wann: Wenn ihr den Kampf am Stand nicht gewinnt. Ein kleiner Trupp geht durch den Hintereingang in die gegnerische Basis und tötet Wachen oder stört den Läufer. Der Gegner muss selbst teilen oder verliert Wachen und später den Herrn.",
+"Wer: Figuren, die allein stark sind. Sie brauchen eine Verlangsamung, eigenes Tempo oder Schattenschritte, Selbstheilung und etwas gegen Zustände. Am Stand müssen sie trotzdem nützlich bleiben.",
+"Wie: Nicht sterben. Jeder Tote gibt dem Gegner Überzahl in der Mitte. Wenn der Gegner Leute zurückschickt, fallt mit dem Trupp in die Mitte ein und nutzt dort die Überzahl.",
+"Dagegen: Der Läufer meldet früh, wie viele kommen. Schickt genau so viele zurück wie nötig. Verlangsamungen sind dabei der wichtigste Baustein."
+],
+"src": [
+[
+"Split",
+"https://wiki.guildwars.com/wiki/Split"
+],
+[
+"Gank",
+"https://wiki.guildwars.com/wiki/Gank"
+]
+]
+},
+{
+"h": "Spitze oder Druck",
+"items": [
+"Spitze: Alle Schadensquellen treffen ein angesagtes Ziel im selben Moment, damit die Mönche nicht reagieren können. Ansage zählt herunter, jeder löst so aus, dass sein Schaden bei null ankommt.",
+"Druck: Dauerschaden, Zustände und Energieentzug auf vielen Zielen, bis den Mönchen die Energie ausgeht. Braucht mehr Zeit, verzeiht aber verpatzte Ansagen.",
+"Ausgewogene Teams können beides. Reine Spitzen-Teams haben weniger Gesamtschaden und verlieren, wenn die Spitzen abgefangen werden."
+],
+"src": [
+[
+"Spike",
+"https://wiki.guildwars.com/wiki/Spike"
+]
+]
+},
+{
+"h": "Was ein Team braucht",
+"items": [
+"Schaden, Verteidigung und Kontrolle in einem ausgewogenen Verhältnis.",
+"Einen festen Flaggenläufer.",
+"Die Fähigkeit, als Ganzes und in kleinen Trupps zu kämpfen.",
+"Verlangsamungen.",
+"Mindestens eine starke Wiederbelebung neben den Wiederbelebungssiegeln.",
+"Die Karte passend zum Team: In der Rangliste wird die Halle des schlechter platzierten Teams gespielt."
+],
+"src": [
+[
+"Guild versus Guild",
+"https://wiki.guildwars.com/wiki/Guild_versus_Guild"
+]
+]
+}
+]
+},
+"builds": [
+{
+"t": "A/E PvP Gust",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/E_PvP_Gust",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OwZjgod8IOnDFWCz4jwWadDAA",
+"label": "",
+"pri": 7,
+"sec": 6,
+"elite": 843,
+"chg": [
+{
+"id": 1990,
+"t": "Aufladezeit 12 → 8 s",
+"k": 1
+},
+{
+"id": 843,
+"t": "Aufladezeit 10 → 15 s, Kälteschaden nur noch direkt daneben",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "A/E PvP Wastrel's Collapse",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/E_PvP_Wastrel's_Collapse",
+"fmt": [
+"GvG"
+],
+"meta": [],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2020-09-07",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OwZjsod8ISsZ/PMMJMGfIMPDTQA",
+"label": "",
+"pri": 7,
+"sec": 6,
+"elite": 1644,
+"chg": [
+{
+"id": 1990,
+"t": "Aufladezeit 12 → 8 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "A/E PvP Way of the Assassin",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/E_PvP_Way_of_the_Assassin",
+"fmt": [
+"RA",
+"GvG",
+"HA"
+],
+"meta": [
+"RA",
+"GvG",
+"HA"
+],
+"tier": {
+"RA": "gut",
+"GvG": "gut",
+"HA": "gut"
+},
+"team": false,
+"ts": "2020-10-20",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OwZjgYd7ITOMEfHM7PxZaVdDAAA",
+"label": "",
+"pri": 7,
+"sec": 6,
+"elite": 1649,
+"chg": [
+{
+"id": 782,
+"t": "Aufladezeit 1 → 2 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "A/W RA Flourish",
+"u": "https://gwpvx.fandom.com/wiki/Build:A/W_RA_Flourish",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OwFjMNd8IPLFFWCz4jwwKFGBA",
+"label": "",
+"pri": 7,
+"sec": 1,
+"elite": 389,
+"chg": [
+{
+"id": 1990,
+"t": "Aufladezeit 12 → 8 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "D/A GvG Wounding Strike",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/A_GvG_Wounding_Strike",
+"fmt": [
+"GvG"
+],
+"meta": [],
+"tier": {
+"GvG": "gut"
+},
+"team": false,
+"ts": "2022-02-07",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgejkyqJbSAYcflbVX0XihTQCAA",
+"label": "",
+"pri": 10,
+"sec": 7,
+"elite": 1536,
+"chg": [
+{
+"id": 1765,
+"t": "Aufladezeit 6 → 10 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "D/Mo RA Empathic Removal",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/Mo_RA_Empathic_Removal",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-06-25",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgOisysMZGBeZfpfJexdxeRfB",
+"label": "",
+"pri": 10,
+"sec": 3,
+"elite": 1126,
+"chg": []
+}
+]
+},
+{
+"t": "D/Mo RA Life Sheath",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/Mo_RA_Life_Sheath",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgOj8wrIrOjR7r+V8ydBvzX6L",
+"label": "",
+"pri": 10,
+"sec": 3,
+"elite": 1123,
+"chg": []
+}
+]
+},
+{
+"t": "D/N PvP March Signet of Suffering",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/N_PvP_March_Signet_of_Suffering",
+"fmt": [
+"RA",
+"GvG"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgSiQws8QVbDgtCB99RcgBAA",
+"label": "",
+"pri": 10,
+"sec": 4,
+"elite": 1364,
+"chg": []
+}
+]
+},
+{
+"t": "D/any GvG Zurrie Dervish",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/any_GvG_Zurrie_Dervish",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2020-09-07",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgCkkuq0ayqU8l3mFo4G7F3l6F6F",
+"label": "",
+"pri": 10,
+"sec": 0,
+"elite": 1521,
+"chg": []
+},
+{
+"code": "OgCkkmq4ayqU8lFo4G7FBG3l6V+F",
+"label": "",
+"pri": 10,
+"sec": 0,
+"elite": 1521,
+"chg": []
+}
+]
+},
+{
+"t": "D/any PvP Avatar of Balthazar",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/any_PvP_Avatar_of_Balthazar",
+"fmt": [
+"RA",
+"GvG",
+"HA"
+],
+"meta": [
+"RA",
+"GvG",
+"HA"
+],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgCjkqqK7OuXvN3PAXuBAIYAA",
+"label": "",
+"pri": 10,
+"sec": 0,
+"elite": 1518,
+"chg": [
+{
+"id": 1765,
+"t": "Aufladezeit 6 → 10 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "D/any PvP Avatar of Grenth",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/any_PvP_Avatar_of_Grenth",
+"fmt": [
+"RA"
+],
+"meta": [
+"RA"
+],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgCjkyqIrSBYAAAAibobdfwXCAA",
+"label": "",
+"pri": 10,
+"sec": 0,
+"elite": 1520,
+"chg": []
+}
+]
+},
+{
+"t": "D/any PvP May Scythe",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/any_PvP_May_Scythe",
+"fmt": [
+"RA",
+"HA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgCjkyqJbSBYPX/XlbYXibobCAA",
+"label": "",
+"pri": 10,
+"sec": 0,
+"elite": 0,
+"chg": [
+{
+"id": 1765,
+"t": "Aufladezeit 6 → 10 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "D/any PvP Pious Renewal",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/any_PvP_Pious_Renewal",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgCikysM9fJdFgBAsdJGegJAA",
+"label": "",
+"pri": 10,
+"sec": 0,
+"elite": 1499,
+"chg": []
+}
+]
+},
+{
+"t": "D/any RA Avatar of Lyssa",
+"u": "https://gwpvx.fandom.com/wiki/Build:D/any_RA_Avatar_of_Lyssa",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgCjkuqKrSBYWgibebIYcfxXCAA",
+"label": "",
+"pri": 10,
+"sec": 0,
+"elite": 1521,
+"chg": []
+}
+]
+},
+{
+"t": "E/D HA Invoke Lightning",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/D_HA_Invoke_Lightning",
+"fmt": [
+"HA"
+],
+"meta": [
+"HA"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgpTg4kyQCQLHaBEZIWoVIcAAA",
+"label": "",
+"pri": 6,
+"sec": 10,
+"elite": 1664,
+"chg": [
+{
+"id": 1081,
+"t": "Energiekosten 5 → 10",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "E/D PvP Second Wind",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/D_PvP_Second_Wind",
+"fmt": [
+"RA",
+"GvG"
+],
+"meta": [],
+"tier": {
+"RA": "gut",
+"GvG": "gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgpkgwKITuWUOk3Q5ADIQkBm6lAA",
+"label": "",
+"pri": 6,
+"sec": 10,
+"elite": 1088,
+"chg": [
+{
+"id": 1081,
+"t": "Energiekosten 5 → 10",
+"k": -1
+},
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "E/Mo PvP Mind Burn",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/Mo_PvP_Mind_Burn",
+"fmt": [
+"RA",
+"GvG"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2026-04-08",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgNToYm2wJX8LGrCRQSZlWgLA",
+"label": "",
+"pri": 6,
+"sec": 3,
+"elite": 185,
+"chg": []
+}
+]
+},
+{
+"t": "E/N RA Blinding Surge",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/N_RA_Blinding_Surge",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgRTcMEz25qCAAAcjdHtIcIAA",
+"label": "",
+"pri": 6,
+"sec": 4,
+"elite": 1367,
+"chg": []
+}
+]
+},
+{
+"t": "E/any GvG Lightning Surge",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_GvG_Lightning_Surge",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OgpjgwM5aONDvx3QHyeBF0iwB",
+"label": "",
+"pri": 6,
+"sec": 10,
+"elite": 205,
+"chg": [
+{
+"id": 205,
+"t": "Energiekosten 10 → 15",
+"k": -1
+},
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+},
+{
+"code": "OgNTgYG2UqZwbQUIHqBEUgWIcA",
+"label": "",
+"pri": 6,
+"sec": 3,
+"elite": 205,
+"chg": [
+{
+"id": 205,
+"t": "Energiekosten 10 → 15",
+"k": -1
+},
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+},
+{
+"id": 1081,
+"t": "Energiekosten 5 → 10",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "E/any GvG Mirror of Ice",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_GvG_Mirror_of_Ice",
+"fmt": [
+"GvG",
+"HA"
+],
+"meta": [],
+"tier": {
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2020-09-07",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgBSsYGTIDKRVDmVPfrDQiAAA",
+"label": "",
+"pri": 6,
+"sec": 0,
+"elite": 1098,
+"chg": []
+}
+]
+},
+{
+"t": "E/any PvP Double Dragon",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_PvP_Double_Dragon",
+"fmt": [
+"RA",
+"HA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgBSoYGPDxfRvYXMWxFAABA",
+"label": "",
+"pri": 6,
+"sec": 0,
+"elite": 1091,
+"chg": [
+{
+"id": 1091,
+"t": "Aufladezeit 20 → 15 s, Dauer 0...3 → 1...4 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "E/any PvP Flux Master of Magic",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_PvP_Flux_Master_of_Magic",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgBUkQVuSmO/Cn22YdAAAAiVBA",
+"label": "Jack of All Trades",
+"pri": 6,
+"sec": 0,
+"elite": 1378,
+"chg": []
+},
+{
+"code": "OgBUkOFuQGP/Cn22YdAAAAiVBA",
+"label": "Chain Combo",
+"pri": 6,
+"sec": 0,
+"elite": 1378,
+"chg": []
+}
+]
+},
+{
+"t": "E/any PvP Gust",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_PvP_Gust",
+"fmt": [
+"GvG",
+"HA"
+],
+"meta": [
+"GvG",
+"HA"
+],
+"tier": {
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2020-09-07",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OgBSgYGTLNiCeDLgcD0ChDCAA",
+"label": "",
+"pri": 6,
+"sec": 0,
+"elite": 843,
+"chg": [
+{
+"id": 843,
+"t": "Aufladezeit 10 → 15 s, Kälteschaden nur noch direkt daneben",
+"k": -1
+},
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "E/any PvP Invoke Lightning",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_PvP_Invoke_Lightning",
+"fmt": [
+"RA",
+"GvG"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgBSgYGTAaLgeDcD0ChDAAAAA",
+"label": "",
+"pri": 6,
+"sec": 0,
+"elite": 1664,
+"chg": [
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "E/any PvP Lightning Surge",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_PvP_Lightning_Surge",
+"fmt": [
+"RA"
+],
+"meta": [
+"RA"
+],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2020-10-24",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OgBSgYmSNDfDeDcDAA0ChDCAA",
+"label": "",
+"pri": 6,
+"sec": 0,
+"elite": 205,
+"chg": [
+{
+"id": 205,
+"t": "Energiekosten 10 → 15",
+"k": -1
+},
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "E/any PvP Mind Blast",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_PvP_Mind_Blast",
+"fmt": [
+"RA",
+"GvG",
+"HA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgBSoYGO+5fRvYXAAAA0CcB",
+"label": "",
+"pri": 6,
+"sec": 0,
+"elite": 1662,
+"chg": []
+}
+]
+},
+{
+"t": "E/any PvP Stone Sheath",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_PvP_Stone_Sheath",
+"fmt": [
+"GvG",
+"HA"
+],
+"meta": [],
+"tier": {
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2020-09-07",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgBSkYGTdVrCbDAAAAAApCCAA",
+"label": "",
+"pri": 6,
+"sec": 0,
+"elite": 1373,
+"chg": []
+}
+]
+},
+{
+"t": "E/any PvP Stoning",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_PvP_Stoning",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2020-10-24",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgBSkYGPe1Vx2AAAAoFpCBA",
+"label": "",
+"pri": 6,
+"sec": 0,
+"elite": 0,
+"chg": []
+}
+]
+},
+{
+"t": "E/any RA Mind Shock",
+"u": "https://gwpvx.fandom.com/wiki/Build:E/any_RA_Mind_Shock",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgBSgYGTeDLgcDiDAAhD0CCAA",
+"label": "",
+"pri": 6,
+"sec": 0,
+"elite": 226,
+"chg": [
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Me/Rt GvG Energy Surge",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/Rt_GvG_Energy_Surge",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OQhkAoC8AGKEpDAAAwMwJQRARQyF",
+"label": "",
+"pri": 5,
+"sec": 8,
+"elite": 39,
+"chg": [
+{
+"id": 39,
+"t": "Schaden 9 → 7, Flächenschaden 100% → 75%",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Me/any GvG June Domination Mesmer",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_GvG_June_Domination_Mesmer",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2023-06-03",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQBTAQhOQh0BAPYGAgigIAAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 0,
+"chg": []
+}
+]
+},
+{
+"t": "Me/any GvG May Domination Magic",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_GvG_May_Domination_Magic",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQBTAWBPMi0BAAAIGQFoIgIAAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 0,
+"chg": []
+}
+]
+},
+{
+"t": "Me/any GvG November Energy Surge",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_GvG_November_Energy_Surge",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OQBSAYBLkOG4BzwJUEAgAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 39,
+"chg": [
+{
+"id": 39,
+"t": "Schaden 9 → 7, Flächenschaden 100% → 75%",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Me/any GvG November Power Block",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_GvG_November_Power_Block",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQBSAYBLkOAUAdAAUEAgAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 5,
+"chg": []
+}
+]
+},
+{
+"t": "Me/any HA Panic",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_HA_Panic",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQBTAQBPUh0zgiwDmBaAAAAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 52,
+"chg": []
+},
+{
+"code": "OQBTAUBPwh0lDupyAXANwEAAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 52,
+"chg": [
+{
+"id": 57,
+"t": "Aufladezeit 15 → 20 s, Flächenschaden 100% → 75%",
+"k": -1
+},
+{
+"id": 1335,
+"t": "Aufladezeit 3 → 5 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "Me/any PvP Air of Disenchantment",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_PvP_Air_of_Disenchantment",
+"fmt": [
+"GvG",
+"HA"
+],
+"meta": [
+"GvG",
+"HA"
+],
+"tier": {
+"GvG": "gut",
+"HA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQBTAyAPSCPbCAAonCAAAgIQAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 1656,
+"chg": []
+}
+]
+},
+{
+"t": "Me/any PvP Arcane Languor",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_PvP_Arcane_Languor",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQBTAUBPwhkdTFcaAPARoHIAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 804,
+"chg": [
+{
+"id": 1335,
+"t": "Aufladezeit 3 → 5 s",
+"k": 1
+},
+{
+"id": 898,
+"t": "Flächenschaden 100% → 75%",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Me/any PvP Power Block",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_PvP_Power_Block",
+"fmt": [
+"GvG",
+"HA"
+],
+"meta": [],
+"tier": {
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2023-06-03",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQhkAoC8AGKUBApTGAAwMQRARQyF",
+"label": "",
+"pri": 5,
+"sec": 8,
+"elite": 5,
+"chg": []
+}
+]
+},
+{
+"t": "Me/any RA Energy Surge",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_RA_Energy_Surge",
+"fmt": [
+"RA"
+],
+"meta": [
+"RA"
+],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OQBTAQBPU6EAAAAQD4nKnyDQAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 39,
+"chg": [
+{
+"id": 39,
+"t": "Schaden 9 → 7, Flächenschaden 100% → 75%",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Me/any RA Migraine",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_RA_Migraine",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQBTAwAPUqGAHAAonKDoHgIQAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 53,
+"chg": [
+{
+"id": 53,
+"t": "Dauer 3...12 → 4...16 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "Me/any RA Power Block",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_RA_Power_Block",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQBTAQBP0pA4BupAAAAAgIIAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 5,
+"chg": [
+{
+"id": 1335,
+"t": "Aufladezeit 3 → 5 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "Me/any RA Psychic Distraction",
+"u": "https://gwpvx.fandom.com/wiki/Build:Me/any_RA_Psychic_Distraction",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQBTAQBPQqDyDQD4miIAAAAQAA",
+"label": "",
+"pri": 5,
+"sec": 0,
+"elite": 1053,
+"chg": [
+{
+"id": 1335,
+"t": "Aufladezeit 3 → 5 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "Mo/A GvG Healing Burst",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/A_GvG_Healing_Burst",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2023-06-03",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OwcU04HC1vQeRNgkECE1NTf3ENQA",
+"label": "",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Mo/A GvG Healing Burst Runner",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/A_GvG_Healing_Burst_Runner",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OwcT02nCVyLqBULSgouZ67mYCC",
+"label": "Healing Burst Runner",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Mo/A GvG November Healing Burst",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/A_GvG_November_Healing_Burst",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OwcS0YITeRNgkEAAAATfAATQA",
+"label": "",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Mo/A PvP November Protection Prayers",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/A_PvP_November_Protection_Prayers",
+"fmt": [
+"RA",
+"GvG",
+"HA"
+],
+"meta": [
+"RA",
+"GvG",
+"HA"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OwcS8YITXaaRbaCErEQNPgTQA",
+"label": "",
+"pri": 3,
+"sec": 7,
+"elite": 1687,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwcS8YITAAaRAACErE1EPgTQA",
+"label": "Variants",
+"pri": 3,
+"sec": 7,
+"elite": 0,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwcS8YITAAaRbaCE3VQNAATQA",
+"label": "Variants",
+"pri": 3,
+"sec": 7,
+"elite": 0,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwcS8YITAAaRAACErE3VPg1EA",
+"label": "Variants",
+"pri": 3,
+"sec": 7,
+"elite": 0,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwcS8YITEEaRba3VrEQNPgTQA",
+"label": "Variants",
+"pri": 3,
+"sec": 7,
+"elite": 260,
+"chg": []
+},
+{
+"code": "OwcS8YITXaaRzECErEQNAATQA",
+"label": "Variants",
+"pri": 3,
+"sec": 7,
+"elite": 1687,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwcS8YITAAaRAACErE3V1ETQA",
+"label": "Variants",
+"pri": 3,
+"sec": 7,
+"elite": 0,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Mo/Me HA Healing Burst",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/Me_HA_Healing_Burst",
+"fmt": [
+"HA"
+],
+"meta": [
+"HA"
+],
+"tier": {},
+"team": false,
+"ts": "2020-08-07",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OwUUIox1YoSNgbEeRkEKAmAQgTfA",
+"label": "",
+"pri": 3,
+"sec": 5,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Mo/Me HA Restore Condition",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/Me_HA_Restore_Condition",
+"fmt": [
+"HA"
+],
+"meta": [
+"HA"
+],
+"tier": {},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OwUTMwHDVamQggiQLqmwE4u6BE",
+"label": "",
+"pri": 3,
+"sec": 5,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Mo/W GvG Restore Condition",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/W_GvG_Restore_Condition",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OwET8YIWViiQLKgQgYlom4BcuA",
+"label": "",
+"pri": 3,
+"sec": 1,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwET8YoWRaiQLKgQgQhom4BcuA",
+"label": "Variants",
+"pri": 3,
+"sec": 1,
+"elite": 266,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwET8YoWRaMSLKgQgYlom4BcuA",
+"label": "Variants",
+"pri": 3,
+"sec": 1,
+"elite": 1123,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Mo/W RA Healing Burst",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/W_RA_Healing_Burst",
+"fmt": [
+"RA"
+],
+"meta": [
+"RA"
+],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2021-12-14",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OwEU04nA1KSNgeRAA3ETfQgAA8FA",
+"label": "",
+"pri": 3,
+"sec": 1,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Mo/W RA Word of Healing",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/W_RA_Word_of_Healing",
+"fmt": [
+"RA"
+],
+"meta": [
+"RA"
+],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OwEU04nA1KSNgaE3N3ETfQg8FzFA",
+"label": "",
+"pri": 3,
+"sec": 1,
+"elite": 282,
+"chg": [
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "Mo/any HA Peace and Harmony Support",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/any_HA_Peace_and_Harmony_Support",
+"fmt": [
+"HA"
+],
+"meta": [
+"HA"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OwARA5RhcR6ifPAAAAAIAA",
+"label": "",
+"pri": 3,
+"sec": 0,
+"elite": 266,
+"chg": []
+}
+]
+},
+{
+"t": "Mo/any PvP June Healing Burst",
+"u": "https://gwpvx.fandom.com/wiki/Build:Mo/any_PvP_June_Healing_Burst",
+"fmt": [
+"RA"
+],
+"meta": [
+"RA"
+],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OwEU0ynCzKSNgeRCE3EAATf8FzFA",
+"label": "",
+"pri": 3,
+"sec": 1,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+},
+{
+"code": "Owok0kPKUuiUDoXkAxNBAw3DLh6F",
+"label": "",
+"pri": 3,
+"sec": 10,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "N/A PvP Signet of Suffering",
+"u": "https://gwpvx.fandom.com/wiki/Build:N/A_PvP_Signet_of_Suffering",
+"fmt": [
+"RA",
+"GvG",
+"HA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OAdSQYDTUVFCtBgNPCNiTQCAA",
+"label": "",
+"pri": 4,
+"sec": 7,
+"elite": 1364,
+"chg": []
+}
+]
+},
+{
+"t": "N/any PvP Corrupt Enchantment",
+"u": "https://gwpvx.fandom.com/wiki/Build:N/any_PvP_Corrupt_Enchantment",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OABSY4DTSVAAHCMiJgVCAACAA",
+"label": "",
+"pri": 4,
+"sec": 0,
+"elite": 1362,
+"chg": []
+}
+]
+},
+{
+"t": "P/W PvP Flesh Wound",
+"u": "https://gwpvx.fandom.com/wiki/Build:P/W_PvP_Flesh_Wound",
+"fmt": [
+"GvG",
+"HA"
+],
+"meta": [],
+"tier": {
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2023-06-03",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQGlUhlrJeGoJ9jZhFk9gxVwT4uBAA",
+"label": "",
+"pri": 9,
+"sec": 1,
+"elite": 1599,
+"chg": [
+{
+"id": 316,
+"t": "Aufladezeit 15 → 10 s",
+"k": 1
+},
+{
+"id": 1774,
+"t": "Energiekosten 25 → 15, Wirkzeit 2 → 1 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "P/W PvP Stunning Strike",
+"u": "https://gwpvx.fandom.com/wiki/Build:P/W_PvP_Stunning_Strike",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQGjUhlMqOAZAAAgnIk5LCA3N",
+"label": "",
+"pri": 9,
+"sec": 1,
+"elite": 1602,
+"chg": [
+{
+"id": 316,
+"t": "Aufladezeit 15 → 10 s",
+"k": 1
+},
+{
+"id": 1602,
+"t": "Adrenalinkosten 10 → 8, Schaden 5...30 → 10...50",
+"k": 1
+},
+{
+"id": 1774,
+"t": "Energiekosten 25 → 15, Wirkzeit 2 → 1 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "P/W RA Cruel Spear",
+"u": "https://gwpvx.fandom.com/wiki/Build:P/W_RA_Cruel_Spear",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2020-11-15",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQGjUhlMqO8EF8DmBXk5LubBA",
+"label": "",
+"pri": 9,
+"sec": 1,
+"elite": 1548,
+"chg": [
+{
+"id": 316,
+"t": "Aufladezeit 15 → 10 s",
+"k": 1
+},
+{
+"id": 1548,
+"t": "Adrenalinkosten 7 → 6, Schaden 1...31 → 10...50",
+"k": 1
+},
+{
+"id": 1774,
+"t": "Energiekosten 25 → 15, Wirkzeit 2 → 1 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "P/any GvG May Spiker",
+"u": "https://gwpvx.fandom.com/wiki/Build:P/any_GvG_May_Spiker",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2023-06-03",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQCjUymIqSPYFZBZWYAAVYubCAA",
+"label": "",
+"pri": 9,
+"sec": 0,
+"elite": 0,
+"chg": [
+{
+"id": 1774,
+"t": "Energiekosten 25 → 15, Wirkzeit 2 → 1 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "R/A PvP Moebius Strike",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/A_PvP_Moebius_Strike",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgcTc580Zyhx/Jhph5g5xo4QAA",
+"label": "",
+"pri": 2,
+"sec": 7,
+"elite": 781,
+"chg": [
+{
+"id": 782,
+"t": "Aufladezeit 1 → 2 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "R/E HA Magebane Shot",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/E_HA_Magebane_Shot",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgYUky7ixMOAAf9jZ28rbFxCBA",
+"label": "",
+"pri": 2,
+"sec": 6,
+"elite": 1726,
+"chg": []
+}
+]
+},
+{
+"t": "R/E HA Melandru's Shot",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/E_HA_Melandru's_Shot",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgYUky7ixMOVNVzjZ28rbFxCBA",
+"label": "",
+"pri": 2,
+"sec": 6,
+"elite": 853,
+"chg": []
+}
+]
+},
+{
+"t": "R/E PvP June Star Burst",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/E_PvP_June_Star_Burst",
+"fmt": [
+"RA",
+"HA"
+],
+"meta": [],
+"tier": {
+"RA": "gut",
+"HA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgYTgW1ex5ImDRHnjsqw1YIAA",
+"label": "",
+"pri": 2,
+"sec": 6,
+"elite": 1095,
+"chg": [
+{
+"id": 1081,
+"t": "Energiekosten 5 → 10",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "R/Mo PvP May Apply Poison",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/Mo_PvP_May_Apply_Poison",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgMU8m7ix8OAAEjq5xMb+15VAA",
+"label": "",
+"pri": 2,
+"sec": 3,
+"elite": 0,
+"chg": []
+}
+]
+},
+{
+"t": "R/N GvG Turret",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/N_GvG_Turret",
+"fmt": [
+"GvG"
+],
+"meta": [],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgQTcmLnZ6xQ1AxQ3a1gCEAoRA",
+"label": "",
+"pri": 2,
+"sec": 4,
+"elite": 1466,
+"chg": []
+}
+]
+},
+{
+"t": "R/P PvP Packhunter",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/P_PvP_Packhunter",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-05-20",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgkjYxXYpS8Weh/GDZ8G0GbGCAA",
+"label": "",
+"pri": 2,
+"sec": 9,
+"elite": 1468,
+"chg": []
+}
+]
+},
+{
+"t": "R/P PvP Stunning Strike",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/P_PvP_Stunning_Strike",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgkkYhXI2VyEQmZ4QmQGAgxxshAA",
+"label": "",
+"pri": 2,
+"sec": 9,
+"elite": 1602,
+"chg": [
+{
+"id": 1602,
+"t": "Adrenalinkosten 10 → 8, Schaden 5...30 → 10...50",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "R/W PvP Rampage as One Axe",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/W_PvP_Rampage_as_One_Axe",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgETIZreRKXLqYviqAAg2YzQAA",
+"label": "",
+"pri": 2,
+"sec": 1,
+"elite": 1721,
+"chg": [
+{
+"id": 340,
+"t": "Aufladezeit 0 → 1 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "R/any PvP Apply Poison",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/any_PvP_Apply_Poison",
+"fmt": [
+"RA",
+"GvG"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2023-09-15",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgATcXsmV6xQ1oqp4AAY24XDAA",
+"label": "",
+"pri": 2,
+"sec": 0,
+"elite": 853,
+"chg": []
+},
+{
+"code": "OgATcXsmV6xQ1Ixo4AAY24XDAA",
+"label": "Variants",
+"pri": 2,
+"sec": 0,
+"elite": 393,
+"chg": []
+},
+{
+"code": "OgATcXsmV6xwXDxo4AAY24XDAA",
+"label": "Variants",
+"pri": 2,
+"sec": 0,
+"elite": 1726,
+"chg": []
+},
+{
+"code": "OgATcXsm15xoaQM6WAws5XDAA",
+"label": "Variants",
+"pri": 2,
+"sec": 0,
+"elite": 1466,
+"chg": []
+},
+{
+"code": "OgATcX8mx5xoaQMsGAws5XDAA",
+"label": "Variants",
+"pri": 2,
+"sec": 0,
+"elite": 428,
+"chg": []
+}
+]
+},
+{
+"t": "R/any PvP Concussion Shot",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/any_PvP_Concussion_Shot",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgATcVsm35xgZytzmfNAAAIAA",
+"label": "",
+"pri": 2,
+"sec": 0,
+"elite": 1465,
+"chg": []
+}
+]
+},
+{
+"t": "R/any PvP Poison Arrow",
+"u": "https://gwpvx.fandom.com/wiki/Build:R/any_PvP_Poison_Arrow",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OgATcXsm1R18YoM+2fNAAAIAA",
+"label": "",
+"pri": 2,
+"sec": 0,
+"elite": 404,
+"chg": []
+}
+]
+},
+{
+"t": "Rt/P HA Spirit's Strength Caller",
+"u": "https://gwpvx.fandom.com/wiki/Build:Rt/P_HA_Spirit's_Strength_Caller",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OAmkASka5amkGIR2N2HGZoyGymAA",
+"label": "",
+"pri": 8,
+"sec": 9,
+"elite": 1736,
+"chg": [
+{
+"id": 1736,
+"t": "Aufladezeit 30 → 20 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "Rt/any HA Spirit Channeling",
+"u": "https://gwpvx.fandom.com/wiki/Build:Rt/any_HA_Spirit_Channeling",
+"fmt": [
+"HA"
+],
+"meta": [
+"HA"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OACiEykM9MBAc9MxkxMMNOlcB",
+"label": "",
+"pri": 8,
+"sec": 0,
+"elite": 1231,
+"chg": []
+}
+]
+},
+{
+"t": "Rt/any PvP Caretaker's Charge",
+"u": "https://gwpvx.fandom.com/wiki/Build:Rt/any_PvP_Caretaker's_Charge",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2026-03-31",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OAChIyD0OZac9mAAAAAAAA",
+"label": "",
+"pri": 8,
+"sec": 0,
+"elite": 1744,
+"chg": []
+},
+{
+"code": "OAChIyD0OZac9mbMAAAQYC",
+"label": "Variant",
+"pri": 8,
+"sec": 0,
+"elite": 1744,
+"chg": []
+}
+]
+},
+{
+"t": "Rt/any PvP Soul Twisting",
+"u": "https://gwpvx.fandom.com/wiki/Build:Rt/any_PvP_Soul_Twisting",
+"fmt": [
+"GvG",
+"HA"
+],
+"meta": [],
+"tier": {
+"GvG": "gut",
+"HA": "gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OACjAyhG5SYThTWPPOyTqTAAJXA",
+"label": "",
+"pri": 8,
+"sec": 0,
+"elite": 1240,
+"chg": []
+}
+]
+},
+{
+"t": "Rt/any RA Channeling Magic Pressure",
+"u": "https://gwpvx.fandom.com/wiki/Build:Rt/any_RA_Channeling_Magic_Pressure",
+"fmt": [
+"RA"
+],
+"meta": [
+"RA"
+],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2022-02-19",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OACjEyiM5QWbdTbMLTGXYOlTSTA",
+"label": "Common builds",
+"pri": 8,
+"sec": 0,
+"elite": 1750,
+"chg": [
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OACjEyiM5QWbXOUOLTGXcilTSTA",
+"label": "Common builds",
+"pri": 8,
+"sec": 0,
+"elite": 1750,
+"chg": [
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OACiIykMFMR5sxsMZch5UOZsB",
+"label": "Common builds",
+"pri": 8,
+"sec": 0,
+"elite": 1217,
+"chg": [
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OACiIykMFMR5c5sMZc1JWOZsB",
+"label": "Common builds",
+"pri": 8,
+"sec": 0,
+"elite": 1217,
+"chg": [
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OAajgsiMpRjD5QXOLTGXdTlTCAA",
+"label": "Common builds",
+"pri": 8,
+"sec": 6,
+"elite": 227,
+"chg": [
+{
+"id": 1081,
+"t": "Energiekosten 5 → 10",
+"k": -1
+},
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OASjUwiM5QUO7ZXOLTGXbMlTCAA",
+"label": "Common builds",
+"pri": 8,
+"sec": 4,
+"elite": 1659,
+"chg": [
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OAGjUliMZSEWXObMLTGXdTlTqMA",
+"label": "Common builds",
+"pri": 8,
+"sec": 1,
+"elite": 1412,
+"chg": [
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OAChIyElzGT30ljxFAQ5kAA",
+"label": "May: Meek Shall Inherit",
+"pri": 8,
+"sec": 0,
+"elite": 0,
+"chg": [
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OACjEqiMJSSTbMdTXOGXcilTbiA",
+"label": "May: Meek Shall Inherit",
+"pri": 8,
+"sec": 0,
+"elite": 0,
+"chg": [
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OACiIqkKBAAAc50NZch5UOJAA",
+"label": "June: Jack of All Trades",
+"pri": 8,
+"sec": 0,
+"elite": 0,
+"chg": [
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OACiIykMBAsxc5sMZc1NVOJAA",
+"label": "November: All In",
+"pri": 8,
+"sec": 0,
+"elite": 0,
+"chg": [
+{
+"id": 1253,
+"t": "Wirkzeit 3 → 1.5 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "GvG Air of Disenchantment",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_GvG_Air_of_Disenchantment",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2020-06-10",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OgijkqqK7SuXebcfBYlbibIYCAA",
+"label": "AoB Dervish",
+"pri": 10,
+"sec": 8,
+"elite": 1518,
+"chg": [
+{
+"id": 1765,
+"t": "Aufladezeit 6 → 10 s",
+"k": -1
+}
+]
+},
+{
+"code": "OQgjExTc4QGWjFLFgFGFMF8VJXA",
+"label": "Variant A: Target Camping",
+"pri": 1,
+"sec": 8,
+"elite": 355,
+"chg": []
+},
+{
+"code": "OQRTA0BeYCuhMIQARgRMDgIQAA",
+"label": "Variant A: Target Camping",
+"pri": 5,
+"sec": 4,
+"elite": 880,
+"chg": []
+},
+{
+"code": "OQGlUhlrJeGoJ9jZhFk9gxVwT4uJAA",
+"label": "Variant B: Spike/Split Option",
+"pri": 9,
+"sec": 1,
+"elite": 1599,
+"chg": [
+{
+"id": 316,
+"t": "Aufladezeit 15 → 10 s",
+"k": 1
+},
+{
+"id": 1774,
+"t": "Energiekosten 25 → 15, Wirkzeit 2 → 1 s",
+"k": 1
+}
+]
+},
+{
+"code": "OgpjgwM5aS0ChDNDfDeD6QgCsXA",
+"label": "Variant B: Spike/Split Option",
+"pri": 6,
+"sec": 10,
+"elite": 205,
+"chg": [
+{
+"id": 205,
+"t": "Energiekosten 10 → 15",
+"k": -1
+},
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+},
+{
+"code": "OQhTAyAPSCPbConyHAAoFgIQAA",
+"label": "Air of Disenchantment Mesmer",
+"pri": 5,
+"sec": 8,
+"elite": 1656,
+"chg": [
+{
+"id": 62,
+"t": "geändert",
+"k": 0
+}
+]
+},
+{
+"code": "OQdTAQBP0JEeTlBXgMQRgIMBB",
+"label": "Wastrel's Mesmer",
+"pri": 5,
+"sec": 7,
+"elite": 1057,
+"chg": [
+{
+"id": 1335,
+"t": "Aufladezeit 3 → 5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OwET8YIWViiQLKgQgYlom4BcuA",
+"label": "Restore Condition Prot",
+"pri": 3,
+"sec": 1,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwcU04XCz/QeRNgkECE1NTf3ENQA",
+"label": "Healing Burst Fuse",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+},
+{
+"code": "OwcT02nCVyLqBULSgouZ67mYCC",
+"label": "Healing Burst Runner",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "GvG Dual Elementalist Spike",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_GvG_Dual_Elementalist_Spike",
+"fmt": [
+"GvG"
+],
+"meta": [],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": true,
+"ts": "2026-02-26",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OQYTgmILZSqoScvip4cQr4nQAA",
+"label": "Eviscerate",
+"pri": 1,
+"sec": 6,
+"elite": 338,
+"chg": [
+{
+"id": 338,
+"t": "Schaden 1...31 → 10...45",
+"k": 1
+}
+]
+},
+{
+"code": "OQgjExTc4QGWjFLFgFGFMF8VJXA",
+"label": "Devastating Hammer Warrior",
+"pri": 1,
+"sec": 8,
+"elite": 355,
+"chg": []
+},
+{
+"code": "OgpSgYGT0ChDAaeDLgcDgC0XA",
+"label": "Invoke Lightning",
+"pri": 6,
+"sec": 10,
+"elite": 1664,
+"chg": [
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+},
+{
+"code": "OgpjowM5aS0C4C5C/CjVCRlVsXA",
+"label": "Mind Burn",
+"pri": 6,
+"sec": 10,
+"elite": 185,
+"chg": []
+},
+{
+"code": "OwET8YIWViiQLKgQgYlom4BcuA",
+"label": "Restore Condition Prot",
+"pri": 3,
+"sec": 1,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwcU04XCz/QeRNgkECE1NTf3ENQA",
+"label": "Healing Burst Fuse",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+},
+{
+"code": "OwcT02nCVyLqBULSgouZ67mYCC",
+"label": "Healing Burst Runner",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "GvG Dual Gust",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_GvG_Dual_Gust",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2023-06-03",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OwZjogd74SxZOMMMHMEf7P6P2CA",
+"label": "Frontline Builds (2)",
+"pri": 7,
+"sec": 6,
+"elite": 1649,
+"chg": [
+{
+"id": 782,
+"t": "Aufladezeit 1 → 2 s",
+"k": -1
+}
+]
+},
+{
+"code": "OAek0xhioRuEyWGY3zBjAExH/TyF",
+"label": "Frontline Builds (2)",
+"pri": 8,
+"sec": 7,
+"elite": 1736,
+"chg": [
+{
+"id": 1736,
+"t": "Aufladezeit 30 → 20 s",
+"k": 1
+}
+]
+},
+{
+"code": "OgFToYGLnxWcE5FRFqSQprIAA",
+"label": "Frontline Builds (2)",
+"pri": 6,
+"sec": 1,
+"elite": 1095,
+"chg": [
+{
+"id": 340,
+"t": "Aufladezeit 0 → 1 s",
+"k": -1
+}
+]
+},
+{
+"code": "OgpSgYGT0ChDLNnDeDoD0XAAA",
+"label": "Point-Blank Gust",
+"pri": 6,
+"sec": 10,
+"elite": 843,
+"chg": [
+{
+"id": 843,
+"t": "Aufladezeit 10 → 15 s, Kälteschaden nur noch direkt daneben",
+"k": -1
+},
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+},
+{
+"code": "OgVTIWkyUiWIcYp5cIrCdQHqIA",
+"label": "Point-Blank Gust",
+"pri": 6,
+"sec": 5,
+"elite": 843,
+"chg": [
+{
+"id": 843,
+"t": "Aufladezeit 10 → 15 s, Kälteschaden nur noch direkt daneben",
+"k": -1
+}
+]
+},
+{
+"code": "OgNTgYG2UiWIcYpRHaBUUICEAA",
+"label": "Point-Blank Gust",
+"pri": 6,
+"sec": 3,
+"elite": 843,
+"chg": [
+{
+"id": 843,
+"t": "Aufladezeit 10 → 15 s, Kälteschaden nur noch direkt daneben",
+"k": -1
+}
+]
+},
+{
+"code": "OgajgwpKLSdDLNnDWgBYib0XCAA",
+"label": "Point-Blank Gust",
+"pri": 10,
+"sec": 6,
+"elite": 843,
+"chg": [
+{
+"id": 843,
+"t": "Aufladezeit 10 → 15 s, Kälteschaden nur noch direkt daneben",
+"k": -1
+}
+]
+},
+{
+"code": "OgpSgYGT0ChDLNiCeDLgcD0XA",
+"label": "Ranged Gust",
+"pri": 6,
+"sec": 10,
+"elite": 843,
+"chg": [
+{
+"id": 843,
+"t": "Aufladezeit 10 → 15 s, Kälteschaden nur noch direkt daneben",
+"k": -1
+},
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+},
+{
+"code": "OgNTgYG2UiWIcYpRHaBUUICEAA",
+"label": "Ranged Gust",
+"pri": 6,
+"sec": 3,
+"elite": 843,
+"chg": [
+{
+"id": 843,
+"t": "Aufladezeit 10 → 15 s, Kälteschaden nur noch direkt daneben",
+"k": -1
+}
+]
+},
+{
+"code": "OQhkAoC8AGKEpDGgPQMwJQRARQyF",
+"label": "Domination Magic Mesmer",
+"pri": 5,
+"sec": 8,
+"elite": 39,
+"chg": [
+{
+"id": 62,
+"t": "geändert",
+"k": 0
+},
+{
+"id": 39,
+"t": "Schaden 9 → 7, Flächenschaden 100% → 75%",
+"k": -1
+}
+]
+},
+{
+"code": "OQZTAUBPQh0zAMYZmhigIEAA",
+"label": "Domination Magic Mesmer",
+"pri": 5,
+"sec": 6,
+"elite": 203,
+"chg": []
+},
+{
+"code": "OQhkAoC8AGKEpTGgSgHwMQRARQyF",
+"label": "Domination Magic Mesmer",
+"pri": 5,
+"sec": 8,
+"elite": 74,
+"chg": []
+},
+{
+"code": "OQhTASBPSi0R5LDoAwHoIgII5C",
+"label": "Domination Magic Mesmer",
+"pri": 5,
+"sec": 8,
+"elite": 5,
+"chg": [
+{
+"id": 1994,
+"t": "Aufladezeit 12 → 20 s",
+"k": -1
+},
+{
+"id": 62,
+"t": "geändert",
+"k": 0
+}
+]
+},
+{
+"code": "OwET8YIWViiQLKgQgYlom4BcuA",
+"label": "Restore Condition Prot",
+"pri": 3,
+"sec": 1,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwEU04HCx6ReRNg3NCE+DTf3EqMA",
+"label": "Healing Burst Fuse",
+"pri": 3,
+"sec": 1,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+},
+{
+"code": "OwcT02nCVyLqBULSgouZ67mYCC",
+"label": "Healing Burst Runner",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "GvG Dual Mesmer 2020",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_GvG_Dual_Mesmer_2020",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2020-09-07",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OgikEGpqqyuk7l3W2WAW5m4GCWyF",
+"label": "AoB Dervish",
+"pri": 10,
+"sec": 8,
+"elite": 1518,
+"chg": [
+{
+"id": 1765,
+"t": "Aufladezeit 6 → 10 s",
+"k": -1
+}
+]
+},
+{
+"code": "OQcSE5JPhvlCYxok44rTQBA",
+"label": "Enraged Smash Warrior",
+"pri": 1,
+"sec": 7,
+"elite": 993,
+"chg": []
+},
+{
+"code": "OgCkkuq0ayqU8l3mFo4G7F3l6F6F",
+"label": "Zurrie Dervish",
+"pri": 10,
+"sec": 0,
+"elite": 1521,
+"chg": []
+},
+{
+"code": "OQhkAoC8AGKEpDGQGQMwJQRARQyF",
+"label": "Main Team Mesmer",
+"pri": 5,
+"sec": 8,
+"elite": 39,
+"chg": [
+{
+"id": 39,
+"t": "Schaden 9 → 7, Flächenschaden 100% → 75%",
+"k": -1
+}
+]
+},
+{
+"code": "OQdUA0gI4BOkOQYM4EoCKCEhJI",
+"label": "Esurge/Eburn",
+"pri": 5,
+"sec": 7,
+"elite": 39,
+"chg": [
+{
+"id": 39,
+"t": "Schaden 9 → 7, Flächenschaden 100% → 75%",
+"k": -1
+}
+]
+},
+{
+"code": "OwET8YIWViiQLKgQgYl4BUlZuA",
+"label": "Restore Condition Prot",
+"pri": 3,
+"sec": 1,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwEU04HCx6RaENg3NCE1NTf3EqMA",
+"label": "Word of Healing Fuse",
+"pri": 3,
+"sec": 1,
+"elite": 282,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+},
+{
+"code": "OwcU02nC1fQeRNgaRCECMTf3ETQA",
+"label": "Healing Burst Runner",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "GvG Patchwork Hexway",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_GvG_Patchwork_Hexway",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2023-06-03",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OQhkAkC8QGOEpTGgLQDAHQRARQyF",
+"label": "Mantra of Recovery",
+"pri": 5,
+"sec": 8,
+"elite": 13,
+"chg": []
+},
+{
+"code": "OQNTAyR64ZfYXhA/g4WyvCIAA",
+"label": "Scourge Mesmer",
+"pri": 5,
+"sec": 3,
+"elite": 63,
+"chg": []
+},
+{
+"code": "OQhTA0wO0Zr9BcA/g4WyX0hDA",
+"label": "Degeneration Mesmer",
+"pri": 5,
+"sec": 8,
+"elite": 63,
+"chg": [
+{
+"id": 31,
+"t": "Dauer 2...16 → 4...18 s",
+"k": 1
+},
+{
+"id": 930,
+"t": "Aufladezeit 25 → 20 s",
+"k": 1
+}
+]
+},
+{
+"code": "OgpjgwM5aS0ChDNDeDfD6QgCAAA",
+"label": "Lightning Surge Elementalists (2)",
+"pri": 6,
+"sec": 10,
+"elite": 205,
+"chg": [
+{
+"id": 205,
+"t": "Energiekosten 10 → 15",
+"k": -1
+},
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+},
+{
+"code": "OwET8YIWViiQLKgQgYlom4BcuA",
+"label": "Restore Condition Prot",
+"pri": 3,
+"sec": 1,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwcU04XCz/QeRNgkECE1NTf3ENQA",
+"label": "Healing Burst Fuse",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+},
+{
+"code": "OwYVgo112HCTyLqBUaQgouZ67mQrC",
+"label": "Healing Burst Runner",
+"pri": 3,
+"sec": 6,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "GvG RNE Split",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_GvG_RNE_Split",
+"fmt": [
+"GvG"
+],
+"meta": [],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": true,
+"ts": "2022-02-07",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OgikEGpqqyuk7l3G3XAW5m4GCWyF",
+"label": "AoB Dervish",
+"pri": 10,
+"sec": 8,
+"elite": 1518,
+"chg": [
+{
+"id": 1765,
+"t": "Aufladezeit 6 → 10 s",
+"k": -1
+}
+]
+},
+{
+"code": "OQASE5JPG2xySBsAAYK8VAA",
+"label": "Devastating Hammer Warrior",
+"pri": 1,
+"sec": 0,
+"elite": 355,
+"chg": []
+},
+{
+"code": "OgATcXsm1pq9YUNFHAws5XDAA",
+"label": "Melshot Ranger",
+"pri": 2,
+"sec": 0,
+"elite": 853,
+"chg": []
+},
+{
+"code": "OAdSQYDTUVtBgNFCNiPCTQAAA",
+"label": "Necromancer",
+"pri": 4,
+"sec": 7,
+"elite": 1364,
+"chg": []
+},
+{
+"code": "OgpjowM5aS0C4C5C/CjVCRlVsXA",
+"label": "Split Elementalist",
+"pri": 6,
+"sec": 10,
+"elite": 185,
+"chg": []
+},
+{
+"code": "OgpjgwM5aS0ChDNDAAeD6QgCsXA",
+"label": "Split Elementalist",
+"pri": 6,
+"sec": 10,
+"elite": 205,
+"chg": [
+{
+"id": 205,
+"t": "Energiekosten 10 → 15",
+"k": -1
+},
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+}
+]
+},
+{
+"code": "OwET8YIWViiQLKgQgYlom4BcuA",
+"label": "Restore Condition Prot",
+"pri": 3,
+"sec": 1,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwcU04XCz/QeRNgkECE1NTf3ENQA",
+"label": "Healing Burst Fuse",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+},
+{
+"code": "OwcT02nCVyLqBULSgouZ67mYCC",
+"label": "Healing Burst Runner",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "GvG Triple Melee",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_GvG_Triple_Melee",
+"fmt": [
+"GvG"
+],
+"meta": [],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": true,
+"ts": "2023-06-03",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OgijkqqK7SuXebcfBYlbibIYCAA",
+"label": "AoB Dervishes (2)",
+"pri": 10,
+"sec": 8,
+"elite": 1518,
+"chg": [
+{
+"id": 1765,
+"t": "Aufladezeit 6 → 10 s",
+"k": -1
+}
+]
+},
+{
+"code": "OQgjExTc4QGWjFLFgFGFMF8VJXA",
+"label": "Devastating Hammer Warrior",
+"pri": 1,
+"sec": 8,
+"elite": 355,
+"chg": []
+},
+{
+"code": "OgATcXsm1pq9YUNFHAws5XDAA",
+"label": "Melshot Ranger",
+"pri": 2,
+"sec": 0,
+"elite": 853,
+"chg": []
+},
+{
+"code": "OAdSQYDTUVtBgNFCNiPCTQzBA",
+"label": "Necromancer",
+"pri": 4,
+"sec": 7,
+"elite": 1364,
+"chg": []
+},
+{
+"code": "OwET8YIWViiQLKgQgYlom4BcuA",
+"label": "Restore Condition Prot",
+"pri": 3,
+"sec": 1,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwcU04XCz/QeRNgkECE1NTf3ENQA",
+"label": "Healing Burst Fuse",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+},
+{
+"code": "OwcT02nCVyLqBULSgouZ67mYCC",
+"label": "Healing Burst Runner",
+"pri": 3,
+"sec": 7,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "HA Balanced",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_HA_Balanced",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "sehr gut"
+},
+"team": true,
+"ts": "2026-02-26",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OQYTgmILZSqoSkqgp4cQr4nQAA",
+"label": "Shock Axe",
+"pri": 1,
+"sec": 6,
+"elite": 338,
+"chg": [
+{
+"id": 338,
+"t": "Schaden 1...31 → 10...45",
+"k": 1
+},
+{
+"id": 340,
+"t": "Aufladezeit 0 → 1 s",
+"k": -1
+}
+]
+},
+{
+"code": "OQkSE5JPiFwyShpYY5rfYBA",
+"label": "Earth Shaker",
+"pri": 1,
+"sec": 9,
+"elite": 354,
+"chg": []
+},
+{
+"code": "OgYUky7ixMO+6HDi5XPbiFtCBA",
+"label": "Magebane Ranger",
+"pri": 2,
+"sec": 6,
+"elite": 1726,
+"chg": []
+},
+{
+"code": "OgljowMpZOIDcRuYsCA6F3YAA",
+"label": "Mind Burn Elementalist",
+"pri": 6,
+"sec": 9,
+"elite": 185,
+"chg": []
+},
+{
+"code": "OQhkAgC8gGKEAQOQPgHwMQRQFwFD",
+"label": "Dom Mesmer",
+"pri": 5,
+"sec": 8,
+"elite": 0,
+"chg": [
+{
+"id": 57,
+"t": "Aufladezeit 15 → 20 s, Flächenschaden 100% → 75%",
+"k": -1
+}
+]
+},
+{
+"code": "OASjcMhMJTPTXPTMZMDTjTNCJXA",
+"label": "SC Ritualist",
+"pri": 8,
+"sec": 4,
+"elite": 1231,
+"chg": []
+},
+{
+"code": "OwoS8YITaRBEUECE3VPg1E0XA",
+"label": "Prot Monk",
+"pri": 3,
+"sec": 10,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwUUMwG/EoSkENgbEeR9A3ETfmAA",
+"label": "Infuse Monk",
+"pri": 3,
+"sec": 5,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "HA Dual Elementalist Spike",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_HA_Dual_Elementalist_Spike",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "sehr gut"
+},
+"team": true,
+"ts": "2026-02-26",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OQYTgmIL5RqAV2rMlzhW5nIAA",
+"label": "Shock Axe",
+"pri": 1,
+"sec": 6,
+"elite": 338,
+"chg": [
+{
+"id": 338,
+"t": "Schaden 1...31 → 10...45",
+"k": 1
+}
+]
+},
+{
+"code": "OQkSE5JPiFwyShp8h5rGWBA",
+"label": "Earth Shaker",
+"pri": 1,
+"sec": 9,
+"elite": 354,
+"chg": []
+},
+{
+"code": "OglSkYGTdVbDrCIDtCxCpCCAA",
+"label": "Stone Sheath",
+"pri": 6,
+"sec": 9,
+"elite": 1373,
+"chg": []
+},
+{
+"code": "OglkowMZ5YmzQsXQM2FIDcxNWAA",
+"label": "DD Fire Ele",
+"pri": 6,
+"sec": 9,
+"elite": 1091,
+"chg": [
+{
+"id": 1091,
+"t": "Aufladezeit 20 → 15 s, Dauer 0...3 → 1...4 s",
+"k": 1
+}
+]
+},
+{
+"code": "OQhTAQBPU6EYGwDoIIHIDoH4iB",
+"label": "E Surge",
+"pri": 5,
+"sec": 8,
+"elite": 39,
+"chg": [
+{
+"id": 39,
+"t": "Schaden 9 → 7, Flächenschaden 100% → 75%",
+"k": -1
+},
+{
+"id": 57,
+"t": "Aufladezeit 15 → 20 s, Flächenschaden 100% → 75%",
+"k": -1
+}
+]
+},
+{
+"code": "OASjcMhMJTPTNCZMXPDTjTTMJXA",
+"label": "Support Rt",
+"pri": 8,
+"sec": 4,
+"elite": 1231,
+"chg": []
+},
+{
+"code": "OwoS8YITaRBEUECE3VPg1E0XA",
+"label": "Prot",
+"pri": 3,
+"sec": 10,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwUTMwGDVikoB0L6uZ6rH4mwEA",
+"label": "Infuse",
+"pri": 3,
+"sec": 5,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "HA Dual Migraine Hexway",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_HA_Dual_Migraine_Hexway",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "gut"
+},
+"team": false,
+"ts": "2023-01-13",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OgikEGpqqyuE3XAm4m7l3W5GCmAA",
+"label": "AoB Dervish",
+"pri": 10,
+"sec": 8,
+"elite": 1518,
+"chg": [
+{
+"id": 1765,
+"t": "Aufladezeit 6 → 10 s",
+"k": -1
+}
+]
+},
+{
+"code": "OQhkAkC8QGOTOoHcTJCCAagHoIA",
+"label": "Panic Mesmer",
+"pri": 5,
+"sec": 8,
+"elite": 52,
+"chg": [
+{
+"id": 57,
+"t": "Aufladezeit 15 → 20 s, Flächenschaden 100% → 75%",
+"k": -1
+},
+{
+"id": 1335,
+"t": "Aufladezeit 3 → 5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OQZVAwwKuRiI6CIDwHgIoGwAkDSrC",
+"label": "Migraine Mesmer",
+"pri": 5,
+"sec": 6,
+"elite": 53,
+"chg": [
+{
+"id": 62,
+"t": "geändert",
+"k": 0
+},
+{
+"id": 53,
+"t": "Dauer 3...12 → 4...16 s",
+"k": 1
+}
+]
+},
+{
+"code": "OQhlAgBrAOkhBdBkB4DQEUDYAOBwBB",
+"label": "Second Migraine Mesmer",
+"pri": 5,
+"sec": 8,
+"elite": 53,
+"chg": [
+{
+"id": 62,
+"t": "geändert",
+"k": 0
+},
+{
+"id": 53,
+"t": "Dauer 3...12 → 4...16 s",
+"k": 1
+}
+]
+},
+{
+"code": "OAZTYwDnUyRgNgRcPoVAZIWQAA",
+"label": "Lingering Curse Necromancer",
+"pri": 4,
+"sec": 6,
+"elite": 142,
+"chg": [
+{
+"id": 142,
+"t": "Degeneration und Heilungsminderung erhöht",
+"k": 1
+}
+]
+},
+{
+"code": "OAmjEykc5QTMxTZMfYjTDTPTJXA",
+"label": "SC Weapons Ritualist",
+"pri": 8,
+"sec": 9,
+"elite": 1231,
+"chg": []
+},
+{
+"code": "OwoS8YITAACEUEaR0XPgAA1EA",
+"label": "RC Prot",
+"pri": 3,
+"sec": 10,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwUVIox14nAVqB8uxLikQBwEY67mA",
+"label": "HB Infuser",
+"pri": 3,
+"sec": 5,
+"elite": 1118,
+"chg": [
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "HA Henchway",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_HA_Henchway",
+"fmt": [
+"HA"
+],
+"meta": [
+"HA"
+],
+"tier": {
+"HA": "gut"
+},
+"team": true,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgBSoYWO4ijIv4WMMUGADAA",
+"label": "Star Burst Nuker",
+"pri": 6,
+"sec": 0,
+"elite": 1095,
+"chg": []
+},
+{
+"code": "OQBTAUBPwhGkDkB3USnLwEAAA",
+"label": "Panic Mesmer",
+"pri": 5,
+"sec": 0,
+"elite": 52,
+"chg": [
+{
+"id": 57,
+"t": "Aufladezeit 15 → 20 s, Flächenschaden 100% → 75%",
+"k": -1
+},
+{
+"id": 1335,
+"t": "Aufladezeit 3 → 5 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "HA IWAY",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_HA_IWAY",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "sehr gut"
+},
+"team": true,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQITEZJbnJqsXpKMleSTZzIAA",
+"label": "4 IWAY Warriors",
+"pri": 1,
+"sec": 2,
+"elite": 317,
+"chg": [
+{
+"id": 340,
+"t": "Aufladezeit 0 → 1 s",
+"k": -1
+}
+]
+},
+{
+"code": "OQITEZKbnwvA2w/svNdzCA",
+"label": "4 IWAY Warriors",
+"pri": 1,
+"sec": 2,
+"elite": 381,
+"chg": [
+{
+"id": 390,
+"t": "Aufladezeit 15 → 10 s",
+"k": 1
+}
+]
+},
+{
+"code": "OQITE5JbnRsAWWK/EDbTZzIAA",
+"label": "4 IWAY Warriors",
+"pri": 1,
+"sec": 2,
+"elite": 354,
+"chg": []
+},
+{
+"code": "OgYTkw7i3py8Y4ObnepwpVELA",
+"label": "Spirit Spammer",
+"pri": 2,
+"sec": 6,
+"elite": 405,
+"chg": []
+},
+{
+"code": "Owkj8wQopSKEfP3VaR7Y3YfYCAA",
+"label": "PnH Monk",
+"pri": 3,
+"sec": 9,
+"elite": 266,
+"chg": []
+},
+{
+"code": "OghiwwhMFWJNN5I8kxMMd9MOB",
+"label": "Dual E/Rt",
+"pri": 6,
+"sec": 8,
+"elite": 1377,
+"chg": []
+},
+{
+"code": "OghiwwhMFWJNN5I8kxMMd9QtB",
+"label": "Dual E/Rt",
+"pri": 6,
+"sec": 8,
+"elite": 1377,
+"chg": []
+}
+]
+},
+{
+"t": "HA Invoke Spike",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_HA_Invoke_Spike",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "gut"
+},
+"team": true,
+"ts": "2026-02-26",
+"weak": true,
+"chg": true,
+"m": [
+{
+"code": "OgRUUsjoY2S5CjV/C9C4C0CeBNCA",
+"label": "Fire Caller",
+"pri": 6,
+"sec": 4,
+"elite": 185,
+"chg": []
+},
+{
+"code": "OgRTcMEzWCQzbIHSUIcgW4TQAA",
+"label": "Invokers",
+"pri": 6,
+"sec": 4,
+"elite": 1664,
+"chg": [
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+},
+{
+"id": 1081,
+"t": "Energiekosten 5 → 10",
+"k": -1
+},
+{
+"id": 159,
+"t": "Wirkzeit 1 → 0.5 s",
+"k": 1
+}
+]
+},
+{
+"code": "OghkgwJJTGOEgm3QOUrQ4AtQsgAA",
+"label": "Usage",
+"pri": 6,
+"sec": 8,
+"elite": 1664,
+"chg": [
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+},
+{
+"id": 1081,
+"t": "Energiekosten 5 → 10",
+"k": -1
+}
+]
+},
+{
+"code": "OglkgwJJTWOEgm3QOUrQ4AtQswHG",
+"label": "Usage",
+"pri": 6,
+"sec": 9,
+"elite": 1664,
+"chg": [
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+},
+{
+"id": 1081,
+"t": "Energiekosten 5 → 10",
+"k": -1
+}
+]
+},
+{
+"code": "OglkgwMZ5YmEgm3QO0NW4AtwOmAA",
+"label": "Usage",
+"pri": 6,
+"sec": 9,
+"elite": 1664,
+"chg": [
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+},
+{
+"id": 1081,
+"t": "Energiekosten 5 → 10",
+"k": -1
+}
+]
+},
+{
+"code": "OghjgsMY4SAaeD5QTMhDIDZMJXA",
+"label": "Usage",
+"pri": 6,
+"sec": 8,
+"elite": 1664,
+"chg": [
+{
+"id": 222,
+"t": "Schaden 5...50 → 5...40",
+"k": -1
+},
+{
+"id": 1081,
+"t": "Energiekosten 5 → 10",
+"k": -1
+}
+]
+},
+{
+"code": "OwoS8YIT3VCEUEaRBE0XPg1EA",
+"label": "Restore Condition",
+"pri": 3,
+"sec": 10,
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"code": "OwoT04HCVqBUgwLikg+6uZ67mA",
+"label": "Healing Burst",
+"pri": 3,
+"sec": 10,
+"elite": 1118,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 1118,
+"t": "Aufladezeit 4 → 6 s, Heilung 10...160 → 20...120",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "HA RaO Sway",
+"u": "https://gwpvx.fandom.com/wiki/Build:Team_-_HA_RaO_Sway",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "gut"
+},
+"team": true,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OgETIZrexJXHV2rUFmCtZzIAA",
+"label": "3x RaO Axe Ranger",
+"pri": 2,
+"sec": 1,
+"elite": 1721,
+"chg": [
+{
+"id": 340,
+"t": "Aufladezeit 0 → 1 s",
+"k": -1
+}
+]
+},
+{
+"code": "OgYTkwLj15xIs5O9yrTrIWIcA",
+"label": "Infuriating Heat Spirit Spammer",
+"pri": 2,
+"sec": 6,
+"elite": 1730,
+"chg": []
+},
+{
+"code": "OAmkAyhioRuj68xFOteYTm5HO5C",
+"label": "Soul Twisting Rit",
+"pri": 8,
+"sec": 9,
+"elite": 1240,
+"chg": [
+{
+"id": 1228,
+"t": "Energiegewinn 15...50 % → 30...60 %",
+"k": 1
+}
+]
+},
+{
+"code": "Owkj8oQrpS3VaRPgKEfY3Y7YCAA",
+"label": "PnH Prot Monk",
+"pri": 3,
+"sec": 9,
+"elite": 266,
+"chg": []
+},
+{
+"code": "OghjsMMcIPhVh3kTamxueXjxJ",
+"label": "Ether Prism 1",
+"pri": 6,
+"sec": 8,
+"elite": 1377,
+"chg": []
+},
+{
+"code": "Oghiwwh8EWFeTOpZG76NMp2A",
+"label": "Ether Prism 2",
+"pri": 6,
+"sec": 8,
+"elite": 1377,
+"chg": []
+}
+]
+},
+{
+"t": "W/A PvP Backbreaker Daggers",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/A_PvP_Backbreaker_Daggers",
+"fmt": [
+"RA",
+"HA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQcTExp25xswXVYIMjP/bCKAA",
+"label": "",
+"pri": 1,
+"sec": 7,
+"elite": 358,
+"chg": [
+{
+"id": 1990,
+"t": "Aufladezeit 12 → 8 s",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "W/A PvP Forceful Blow",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/A_PvP_Forceful_Blow",
+"fmt": [
+"RA",
+"GvG"
+],
+"meta": [],
+"tier": {
+"RA": "gut",
+"GvG": "gut"
+},
+"team": false,
+"ts": "2023-06-03",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQcTE5J7nJvtUALMF+qhViJAA",
+"label": "",
+"pri": 1,
+"sec": 7,
+"elite": 889,
+"chg": []
+}
+]
+},
+{
+"t": "W/A PvP November Enraged Smash",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/A_PvP_November_Enraged_Smash",
+"fmt": [
+"RA",
+"GvG"
+],
+"meta": [
+"RA",
+"GvG"
+],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQcSE5JPhvE3SBs0m1KTQBA",
+"label": "",
+"pri": 1,
+"sec": 7,
+"elite": 993,
+"chg": []
+}
+]
+},
+{
+"t": "W/E PvP Coward Axe",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/E_PvP_Coward_Axe",
+"fmt": [
+"RA",
+"HA"
+],
+"meta": [],
+"tier": {
+"RA": "gut",
+"HA": "gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQYTgmILZKqoScv6cosRr4nQAA",
+"label": "",
+"pri": 1,
+"sec": 6,
+"elite": 869,
+"chg": []
+}
+]
+},
+{
+"t": "W/E PvP June Star Burst",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/E_PvP_June_Star_Burst",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQYTo2oKV6IqSMqgpQr4nwWQAA",
+"label": "",
+"pri": 1,
+"sec": 6,
+"elite": 1095,
+"chg": []
+}
+]
+},
+{
+"t": "W/E PvP Shock Axe",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/E_PvP_Shock_Axe",
+"fmt": [
+"RA",
+"GvG",
+"HA"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2023-06-03",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQYTgmILZSqoSkq4cgpQr4nQAA",
+"label": "",
+"pri": 1,
+"sec": 6,
+"elite": 338,
+"chg": [
+{
+"id": 338,
+"t": "Schaden 1...31 → 10...45",
+"k": 1
+},
+{
+"id": 340,
+"t": "Aufladezeit 0 → 1 s",
+"k": -1
+}
+]
+}
+]
+},
+{
+"t": "W/E PvP Whirling Axe",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/E_PvP_Whirling_Axe",
+"fmt": [
+"RA",
+"GvG"
+],
+"meta": [],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQYTgmILZJqwbAgpOHt6nEAA",
+"label": "",
+"pri": 1,
+"sec": 6,
+"elite": 888,
+"chg": []
+}
+]
+},
+{
+"t": "W/P GvG July Coward Spear",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/P_GvG_July_Coward_Spear",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2020-09-07",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQkjExlm5SlNWYBZPYFZ8V/VdFA",
+"label": "",
+"pri": 1,
+"sec": 9,
+"elite": 869,
+"chg": []
+}
+]
+},
+{
+"t": "W/P GvG May Spear",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/P_GvG_May_Spear",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {},
+"team": false,
+"ts": "2022-08-19",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQkiExlM1VAkZGSkpgBAwX9XB",
+"label": "",
+"pri": 1,
+"sec": 9,
+"elite": 0,
+"chg": []
+},
+{
+"code": "OQkjExlrpRdFWYBZPYKYFZ8V/VA",
+"label": "",
+"pri": 1,
+"sec": 9,
+"elite": 0,
+"chg": []
+}
+]
+},
+{
+"t": "W/P RA Stunning Strike Warrior",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/P_RA_Stunning_Strike_Warrior",
+"fmt": [
+"RA"
+],
+"meta": [],
+"tier": {
+"RA": "gut"
+},
+"team": false,
+"ts": "2020-06-10",
+"weak": false,
+"chg": true,
+"m": [
+{
+"code": "OQkiExlMBkZGWkNkJkxXBAIAA",
+"label": "",
+"pri": 1,
+"sec": 9,
+"elite": 1602,
+"chg": [
+{
+"id": 1602,
+"t": "Adrenalinkosten 10 → 8, Schaden 5...30 → 10...50",
+"k": 1
+}
+]
+}
+]
+},
+{
+"t": "W/any GvG Enraged Smash",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/any_GvG_Enraged_Smash",
+"fmt": [
+"GvG"
+],
+"meta": [
+"GvG"
+],
+"tier": {
+"GvG": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQASE5JThPLFgFGFJO8VdFCAA",
+"label": "",
+"pri": 1,
+"sec": 0,
+"elite": 993,
+"chg": []
+}
+]
+},
+{
+"t": "W/any PvP Devastating Hammer",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/any_PvP_Devastating_Hammer",
+"fmt": [
+"RA",
+"GvG",
+"HA"
+],
+"meta": [
+"RA",
+"GvG",
+"HA"
+],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2023-06-03",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQASE5JPjFwySBAwU4rGWBA",
+"label": "",
+"pri": 1,
+"sec": 0,
+"elite": 355,
+"chg": []
+}
+]
+},
+{
+"t": "W/any PvP Earth Shaker",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/any_PvP_Earth_Shaker",
+"fmt": [
+"HA"
+],
+"meta": [],
+"tier": {
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQASE5JPiFwySBAwU4rGWBA",
+"label": "",
+"pri": 1,
+"sec": 0,
+"elite": 354,
+"chg": []
+}
+]
+},
+{
+"t": "W/any PvP May Axe",
+"u": "https://gwpvx.fandom.com/wiki/Build:W/any_PvP_May_Axe",
+"fmt": [
+"RA",
+"GvG",
+"HA"
+],
+"meta": [
+"RA",
+"GvG",
+"HA"
+],
+"tier": {
+"RA": "sehr gut",
+"GvG": "sehr gut",
+"HA": "sehr gut"
+},
+"team": false,
+"ts": "2026-02-26",
+"weak": false,
+"chg": false,
+"m": [
+{
+"code": "OQASEZJPRFAweFAwU0K/EBA",
+"label": "",
+"pri": 1,
+"sec": 0,
+"elite": 0,
+"chg": []
+}
+]
+}
+],
+"sk": {
+"49": {
+"diff": [],
+"de": "Verhexung. 5...40 Sekunden lang verliert der Gegner 1 Energie, sooft er Ziel Eurer Mesmer-Fertigkeiten wird, die keine Verhexungen sind. Fällt seine Energie auf 0, endet die Verhexung und er erleidet 15...100 Schaden."
+},
+"993": {
+"diff": [
+"Aufladezeit 5 → 10 s",
+"Werte: 1...4 → 1...3"
+]
+},
+"219": {
+"diff": [
+"Werte: 22...112 → 22...92"
+]
+},
+"257": {
+"diff": [
+"Wirkzeit 2 → {{1/4}} s"
+],
+"de": "Verzauberung. 1...3 Sekunden lang kann das Gruppenmitglied nicht Ziel feindlicher Zauber werden und Angriffe gegen es schlagen fehl. Nicht auf Euch selbst anwendbar."
+},
+"348": {
+"diff": [],
+"de": "Schrei. 10 Sekunden lang haben Gruppenmitglieder in Hörweite +5...25 Rüstung. Endet nach 1...3 Angriffen gegen sie."
+},
+"791": {
+"diff": [
+"Aufladezeit – → 6 s"
+]
+},
+"1246": {
+"diff": [
+"Wirkzeit {{1/4}} → 1 s",
+"Aufladezeit 10 → 8 s"
+],
+"de": "Fertigkeit. 3 Sekunden lang erleiden Gegner direkt neben dem Verbündeten jede Sekunde 4...50 Blitzschaden."
+},
+"1481": {
+"diff": [
+"Wirkzeit 3 → 4 s"
+]
+},
+"1516": {
+"diff": [
+"Aufladezeit 10 → 15 s",
+"Werte: 8 → 3"
+]
+},
+"1114": {
+"diff": [
+"Aufladezeit 2 → 5 s"
+]
+},
+"793": {
+"diff": [
+"Aufladezeit 5 → 8 s"
+],
+"de": "Waffenzauber. 3...8 Sekunden lang hat der Verbündete 2...4 Lebenspunktregeneration und blockt mit 50 % Chance. Endet, wenn er angreift."
+},
+"19": {
+"diff": [
+"Aufladezeit 5 → 8 s"
+],
+"de": "Verhexung. Trifft auch Gegner direkt neben dem Ziel. 8...20 Sekunden lang erleiden sie 5...20 Schaden, sooft sie einen Zustand erhalten oder verlieren."
+},
+"911": {
+"diff": [
+"Wirkzeit {{3/4}} → 3 s"
+],
+"de": "Binderitual. Erschafft einen Geist der Stufe 1...8, der 30...60 Sekunden lebt. Erleidet ein Verbündeter in Reichweite Schaden oder Lebensraub, wird dieser um 15 verringert und der Geist erleidet 15 Schaden."
+},
+"920": {
+"diff": [
+"Wirkzeit {{3/4}} → 3 s"
+],
+"de": "Binderitual. Erschafft einen Geist der Stufe 1...10, der 30 Sekunden lebt. Stirbt er, erleiden alle Gegner im Bereich 1...10 Schaden für jede Sekunde, die er gelebt hat (höchstens 150)."
+},
+"1266": {
+"diff": [
+"Energie 15 → 25",
+"Wirkzeit 1 → 5 s",
+"Aufladezeit 45 → 60 s",
+"Werte: 1...12 → 1...8"
+]
+},
+"1249": {
+"diff": [
+"Wirkzeit {{3/4}} → 3 s"
+],
+"de": "Binderitual. Erschafft einen Geist der Stufe 1...10, der 30...60 Sekunden lebt. Verbündete in Reichweite, die keine Geister sind, blocken mit 75 % Chance."
+},
+"1251": {
+"diff": [
+"Wirkzeit {{3/4}} → 3 s",
+"Werte: 1...14 → 1...10"
+]
+},
+"982": {
+"diff": [
+"Wirkzeit 1 → 5 s",
+"Werte: 1...12 → 1...8"
+]
+},
+"1253": {
+"diff": [
+"Wirkzeit {{3/4}} → 1{{1/2}} s",
+"Werte: 1...12 → 1...8"
+]
+},
+"1734": {
+"diff": [
+"Wirkzeit {{3/4}} → 2 s"
+],
+"de": "Binderitual. Zerstört einen verbündeten Geist. Erschafft einen Geist der Stufe 1...10, der 30...60 Sekunden lebt. Seine Angriffe verursachen 5...20 Schaden."
+},
+"1748": {
+"diff": [
+"Wirkzeit {{3/4}} → 3 s",
+"Werte: 1...14 → 1...10"
+]
+},
+"1558": {
+"diff": [
+"Aufladezeit – → 4 s",
+"Werte: 30...100 → 30...75"
+]
+},
+"1595": {
+"diff": [
+"Aufladezeit 20 → 25 s"
+]
+},
+"2205": {
+"diff": [
+"Wirkzeit {{3/4}} → 3 s",
+"Werte: 1...12 → 1...8"
+]
+},
+"2204": {
+"diff": [
+"Wirkzeit {{3/4}} → 3 s",
+"Werte: 1...20 → 1...16"
+]
+},
+"436": {
+"diff": [
+"Energie 5 → 10"
+]
+},
+"775": {
+"diff": [
+"Aufladezeit 2 → 6 s"
+]
+},
+"453": {
+"diff": [
+"Aufladezeit 30 → 45 s"
+]
+},
+"26": {
+"diff": [],
+"de": "Verhexung. 5...15 Sekunden lang erleidet der Gegner 15...45 Schaden, sooft er angreift."
+},
+"53": {
+"diff": [
+"Werte: 5...20 → 4...16"
+]
+},
+"1052": {
+"diff": [
+"Aufladezeit 12 → 15 s",
+"Werte: 15...75 → 10...35"
+]
+},
+"1057": {
+"diff": [],
+"de": "Elite-Zauber. Unterbricht eine Handlung. War es eine Fertigkeit, werden das Ziel und alle Gegner direkt daneben 2...3 Sekunden niedergeschlagen. 50 % Fehlschlagchance, wenn Schnellwirkung unter 5 liegt."
+},
+"880": {
+"diff": [],
+"de": "Elite-Verhexung. Trifft auch Gegner direkt neben dem Ziel, Dauer 1...10 Sekunden. Ihre Zauber dauern doppelt so lange. Eure Zauber auf verhexte Gegner wirken Ihr in der halben Zeit."
+},
+"1341": {
+"diff": [
+"Aufladezeit 7 → 15 s"
+],
+"de": "Verhexung. 5...20 Sekunden lang wirkt der Gegner Zauber 50 % langsamer. Er erleidet 5...50 Schaden, sooft er unterbrochen wird."
+},
+"780": {
+"diff": [
+"Aufladezeit 3 → 6 s",
+"Werte: 10...35 → 10...25"
+]
+},
+"1022": {
+"diff": [
+"Aufladezeit 4 → 6 s"
+]
+},
+"1487": {
+"diff": [],
+"de": "Nahkampfangriff. Entfernt 1 Eurer Derwisch-Verzauberungen. Ihr erhaltet 10...20 Lebenspunkte. Wird eine entfernt: Nicht blockbar, Ihr schlagt zweimal mit je 25 % weniger Schaden zu und erhaltet 10...30 Lebenspunkte mehr."
+},
+"1490": {
+"diff": [],
+"de": "Nahkampfangriff. Entfernt 1 Eurer Derwisch-Verzauberungen. Wird eine entfernt, lädt diese Fertigkeit 75 % schneller auf und Gegner direkt daneben erleiden 15...40 Schaden."
+},
+"1512": {
+"diff": [
+"Energie 10 → 5",
+"Aufladezeit 15 → 25 s"
+]
+},
+"1762": {
+"diff": [
+"Aufladezeit – → 6 s"
+]
+},
+"1536": {
+"diff": [],
+"de": "Elite-Sensenangriff. Verursacht 5...20 Sekunden Blutung. Entfernt 1 Eurer Derwisch-Verzauberungen. Wird eine entfernt, verursacht der Angriff 5...20 Sekunden Tiefe Wunde."
+},
+"2146": {
+"diff": [
+"Aufladezeit 10 → 15 s",
+"Werte: 1...7 → 1...5"
+]
+},
+"180": {
+"diff": [
+"Werte: 200...500 → 200...400"
+]
+},
+"346": {
+"diff": [
+"Werte: 175...125 → 200...150"
+]
+},
+"381": {
+"diff": [
+"Werte: 10...35 → 10...30"
+]
+},
+"476": {
+"diff": [],
+"de": "Naturritual. Erschafft einen Geist der Stufe 1...10, der 30...240 Sekunden lebt. Für Kreaturen in Reichweite dauert das Wirken von Verzauberungen und Verhexungen 50...75 % länger und das Aufrechterhalten von Verzauberungen kostet doppelt so viel Energie. Wirkt nicht auf Geister."
+},
+"50": {
+"diff": [
+"Aufladezeit 2 → 4 s"
+]
+},
+"266": {
+"diff": [
+"Aufladezeit 10 → 15 s",
+"Werte: 0...9 → 0...4"
+]
+},
+"326": {
+"diff": [
+"Aufladezeit 3 → 6 s"
+]
+},
+"393": {
+"diff": [
+"Energie 5 → 10"
+]
+},
+"447": {
+"diff": [
+"Werte: 10...25 → 5...15"
+]
+},
+"1043": {
+"diff": [
+"Aufladezeit 8 → 12 s"
+],
+"de": "Haltung. 3 Sekunden lang bewegt Ihr Euch 50 % schneller. Je 2 Punkte in Schattenkünste verkürzen die Aufladezeit um 1 Sekunde (höchstens 6 Sekunden)."
+},
+"885": {
+"diff": [
+"Aufladezeit 20 → 25 s",
+"Werte: 2...6 → 1...4, 10...40 → 10...35"
+]
+},
+"905": {
+"diff": [
+"Werte: 3...8 → 2...4"
+]
+},
+"869": {
+"diff": [
+"Aufladezeit 2 → 4 s"
+]
+},
+"810": {
+"diff": [
+"Werte: 5...11 → 4...8"
+]
+},
+"853": {
+"diff": [
+"Aufladezeit 8 → 12 s"
+]
+},
+"1213": {
+"diff": [
+"Werte: 20...50 → 10...30"
+]
+},
+"1240": {
+"diff": [],
+"de": "Elite-Fertigkeit. 5...45 Sekunden lang kosten Eure Binderituale 15 Energie weniger (mindestens 5) und laden 25...50 % schneller auf. Endet nach 1...3 Binderitualen."
+},
+"1404": {
+"diff": [],
+"de": "Haltung. 1...15 Sekunden lang greift Ihr 33 % schneller an und bewegt Euch 33 % langsamer. Endet, wenn Ihr eine Fernkampf-Angriffsfertigkeit benutzt."
+},
+"1730": {
+"diff": [
+"Aufladezeit 15 → 30 s"
+],
+"de": "Elite-Naturritual. Erschafft einen Geist der Stufe 1...10, der 30...120 Sekunden lebt. Kreaturen in Reichweite erhalten 33...66 % mehr Adrenalin."
+},
+"1758": {
+"diff": [],
+"de": "Blitzverzauberung. 5...20 Sekunden lang verkrüppeln Eure Nahkampfangriffe Gegner, die sich bewegen. Beim Wirken verliert Ihr Verkrüppelung und 1 weiteren Zustand. Endet, nachdem Ihr 1...3 Mal Verkrüppelung verursacht habt."
+},
+"1500": {
+"diff": [
+"Energie 15 → 10",
+"Aufladezeit 24 → 15 s"
+],
+"de": "Blitzverzauberung. 1...7 Sekunden lang blockt Ihr mit 30...60 % Chance. Beim Wirken erleiden Gegner in der Nähe 10...40 Erdschaden."
+},
+"1514": {
+"diff": [
+"Werte: 4...10 → 2...8"
+]
+},
+"1529": {
+"diff": [
+"Aufladezeit 8 → 15 s"
+],
+"de": "Zauber. Ihr erhaltet 80...150 Lebenspunkte und verliert 1 Derwisch-Verzauberung. Wird eine entfernt, verliert Ihr 1 Verhexung."
+},
+"2070": {
+"diff": [
+"Adrenalin 4 → 5"
+]
+}
+},
+"stand": "19.11.2026"
+}
