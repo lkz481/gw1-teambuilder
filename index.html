@@ -537,7 +537,8 @@ function syncSpot(cat){
 function myNeeds(){ const b=currentBuild(); return GW.needs(playerBar(), b && EXACT && b.url ? (SPD.cons||{})[b.url] : null); }
 // ---------- Team berechnen ----------
 let TEAM = [], PLAN = null, CHECKS = [], DPS = [], FIXED = [], CAT = "team", SPOT = null, EXACT = false;
-const teamFits = T => !T.area || T.area===state.area;
+// Manche Teams passen nur zu einer Spielerklasse oder Gruppengröße (Soul Taker Mesmerway: Nekromant mit sieben Helden)
+const teamFits = T => (!T.area || T.area===state.area) && (!T.pri || T.pri===state.pri) && (!T.size || T.size===partySize());
 function areaTeam(){ const y = TEAMS.find(T=>T.yt && T.area===state.area); return y ? y.key : (GUIDES[state.area] && GUIDES[state.area].team) || "std"; }
 function teamSlotsFor(pb, size){
   const chosen = state.team && TEAMS.find(T=>T.key===state.team);
@@ -561,7 +562,8 @@ function computeDps(){
   return teamDps(TEAM.map(m=>m.bar), eff, wOf(TEAM[0]), n);
 }
 // Rechnet ein ganzes Team. Blut ist Kraft geht an die bis zu drei Verbündeten, denen am meisten Energie fehlt.
-function teamDps(bars, eff, weapon0, n){ return GW.teamDps(bars, eff, weapon0, n, { armor:armorNow(), foeDps:foeDpsNow() }); }
+let DEATH_HINT = null; // nur während der Suche nach dem Vergleichsteam gesetzt: feste Kampfdauer, damit die Suche schnell bleibt. Das Ergebnis wird danach mit eigener Kampfdauer neu gerechnet.
+function teamDps(bars, eff, weapon0, n){ return GW.teamDps(bars, eff, weapon0, n, { armor:armorNow(), foeDps:foeDpsNow(), death:DEATH_HINT }); }
 // Heilung im Team: Mehr als ankommt, kann nicht geheilt werden
 const healSum = (list, n) => Math.min(n * foeDpsNow(), list.reduce((a,d)=>a+((d&&d.heal)||0),0));
 const bipPips = effMap => Math.round(3 + 3*Math.min(effMap.get(4)||0, 21)/15);
@@ -692,6 +694,7 @@ function renderMain(){
   $("notice").innerHTML = note;
   // Karten
   if (!pb.skills.some(Boolean)) { $("cards").innerHTML = `<div class="empty" style="grid-column:1/-1"><b>Noch keine Leiste</b><span class="mut">Nimm einen fertigen Build oder stell dir selbst acht Fertigkeiten zusammen.</span><div class="row"><button class="btn pri" data-open="build">Build wählen</button><button class="btn" data-member="0">Selbst bauen</button></div></div>`; return; }
+  $("cards").dataset.codes = TEAM.map(m=>m.code).join("|"); // für die Prüfskripte
   const maxOf = k => Math.max(1, ...DPS.map(d=>val(d,k)));
   const sig = TEAM.map(m=>m.hero?m.code:"").join("|") + "|" + state.pri;
   $("cards").classList.toggle("fresh", sig !== renderMain.sig); renderMain.sig = sig;
@@ -1127,6 +1130,7 @@ function refTeams(){
     const tot = k => k==="prot" ? protSum(TD, n) : k==="heal" ? healSum(TD, n) : TD.reduce((a,d)=>a+(d[k]||0),0), c = n*(1-TD.reduce((a,d)=>a*(1-Math.min(1,(d.ctrl||0)/n)),1)), inc = incoming(c);
     return { TD, dmg:tot("total"), heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal") >= 0.5*Math.max(inc, foeDpsNow()) && tot("heal")+tot("prot") >= 1.5*Math.max(inc, foeDpsNow()), gap: Math.max(0, 0.5*Math.max(inc, foeDpsNow())-tot("heal")) + Math.max(0, 1.5*Math.max(inc, foeDpsNow())-tot("heal")-tot("prot")) }; };
   let play = null, playSum = 0, playEval = null;
+  DEATH_HINT = (DPS && DPS.death) || 0.3;
   if (heroes>=1) {
     const isSup = o => o.D.heal+o.D.prot >= 25 && o.D.total < 30;
     const sup = [...P1].filter(isSup).sort((a,b)=>(b.D.heal*2+b.D.prot)-(a.D.heal*2+a.D.prot)).slice(0,12);
@@ -1161,8 +1165,9 @@ function refTeams(){
       window.__gwRef = { tried:cnt, bestOk:bestE.ok, bestDmg:Math.round(bestE.dmg), foundOk:good.E.ok, foundDmg:Math.round(good.E.dmg) }; }
     play = good.L.map((o,i)=>Object.assign({}, o, { D:good.E.TD[i+1] })).sort(lineCmp);
     // in genau der Reihenfolge noch einmal rechnen, in der das Team übernommen wird: Dann stimmt die Zahl nach dem Übernehmen überein
-    playEval = evalTeam(play); play = play.map((o,i)=>Object.assign({}, o, { D:playEval.TD[i+1] })); playSum = Math.round(playEval.dmg);
+    DEATH_HINT = null; playEval = evalTeam(play); play = play.map((o,i)=>Object.assign({}, o, { D:playEval.TD[i+1] })); playSum = Math.round(playEval.dmg);
   }
+  DEATH_HINT = null;
   const mineEval = (()=>{ const tot = k => k==="prot" ? protSum(DPS, n) : k==="heal" ? healSum(DPS, n) : DPS.reduce((a,d)=>a+((d&&d[k])||0),0), c = teamCtrl(), inc = incoming(c); return { heal:tot("heal"), prot:tot("prot"), ctrl:c, inc, ok: tot("heal") >= 0.5*Math.max(inc, foeDpsNow()) && tot("heal")+tot("prot") >= 1.5*Math.max(inc, foeDpsNow()) }; })();
   const playCtrl = playEval ? playEval.ctrl : 0;
   const maxA = pick(P0, heroes, []), sumA = sum(maxA, youAt(0));
@@ -1230,8 +1235,12 @@ function drawDps(body){
       <li>Rüstungsbruch senkt die Rüstung der Gegner um 20, nie unter 60 (Wiki). Tiefe Wunde nimmt 20 % der Lebenspunkte, höchstens 100. Schwäche nimmt Angriffen 66 % Schaden. Arkanes Echo kopiert bei Helden einen zufälligen Zauber der Leiste (Wiki "Hero behavior"), beim Spieler die Elite.</li>
       <li>Flächenschaden über Zeit (Strahl des Urteils, Feuersturm, Chaossturm und ähnliche): Gegner laufen nach zwei bis drei Schadenspulsen auseinander (guildwiki.de, "Künstliche Intelligenz"). Gezählt werden 3 Pulse. Wirft der Zauber selbst um oder hat das Team eine Flächen-Verlangsamung wie Geistige Erfrierung, zählen alle Pulse. Einzelne Schadenspakete lösen kein Auseinanderlaufen aus (Wiki "Scatter").</li>
       <li>Stab und Zauberstab: 11-22 Schaden alle 1,75 Sekunden (Wiki), nur in der Zeit ohne Zauber.</li>
+      <li>Kampfdauer: Wie schnell Gegner sterben, folgt aus dem Schaden des Teams. Ein Gegner im schweren Modus hat rund 700 Lebenspunkte, in Elite-Gebieten 850 (Wiki "Hard mode": Stufe mal 20 plus 80, dazu 20 je Stufe über 20). Angenommen wird, dass ein Kampf doppelt so lange dauert wie Lebenspunkte geteilt durch Schaden, weil Helden laut Wiki auch auf fast tote Gegner weiter Schaden machen, Ziele gewechselt werden und Gegner sich heilen. Daran hängen Leichen für Diener, Seelensammlung und Tiefe Wunde. Wirkt eine Verhexung oder ein Zustand länger, als das Ziel noch lebt, verfällt der Rest.</li>
+      <li>Helden (Wiki "Hero behavior"): Sie legen sich auf das Ziel des Spielers fest, unterbrechen fast nur dort und stimmen sich nicht ab. Alle Helden teilen sich deshalb, was dieser eine Gegner tut. Der Spieler sucht sich die Gelegenheit unter allen Gegnern.</li>
+      <li>Aufstellung der Gegner (Annahme, das Wiki nennt nur die Reichweiten): Neben dem Ziel steht die Hälfte der übrigen Gegner, in der Nähe drei Viertel, im Bereich alle. Eine Sense trifft bei drei Gegnern also zwei. Nahkämpfer laufen je Kampf rund 2 Sekunden zum Gegner.</li>
+      <li>Waffen: angepasst (+20 %, Wiki "Customize") und mit der Inschrift "15 % mehr Schaden über 50 % Lebenspunkte", die zu 90 % der Zeit zählt (Annahme). Vampir- und Eifer-Aufwertungen sind nicht gerechnet.</li>
       <li>Attribute: Jede Fertigkeit skaliert mit ihrem Rang wie im Wiki, linear zwischen Rang 0 und 15 und darüber hinaus weiter. Ränge enden bei 20 (Wiki "Attribute"). Heroischer Refrain gibt +1...3 auf alle Attribute, ab Führung 19 sind es +4. Mit einem gruppenweiten Schrei oder Anfeuerungsruf bleibt er auf dem ganzen Team. Diener-Schaden kommt aus den Messreihen im Wiki je Stufe. 25 % Rüstungsdurchdringung haben nur Luftmagie-Zauber.</li>
-      <li>Auslöser durch Gegner-Aktionen: Angriffe 0,55-mal je Sekunde, Fertigkeiten 0,25-mal, Zauber 0,15-mal (nur die Hälfte der Gegner zaubert).</li>
+      <li>Auslöser durch Gegner-Aktionen: Angriffe 0,55-mal je Sekunde, Fertigkeiten 0,25-mal, Zauber 0,15-mal (nur die Hälfte der Gegner zaubert). Panik: Jeder Gegner in der Nähe wird unterbrochen, wenn ein anderer eine Fertigkeit durchbringt. Gerechnet wird, dass 60 % der Fertigkeiten durchkommen und jede Unterbrechung rund 1 Sekunde kostet (Annahme).</li>
       <li>Gruppenheilung zählt für die halbe Gruppe, weil selten alle zugleich verletzt sind (Annahme). Verjüngung und Todesqual geben insgesamt so viel ab, wie der Geist Lebenspunkte hat (Wiki). Aufrechterhaltene Verzauberungen kosten je 1 Pip Energieregeneration.</li>
       <li>Weiter Annahmen, weil das Wiki dazu nichts misst: Diener leben im Kampf halb so lange wie ihre Zerfallszeit. Geister stehen fest und zählen deshalb nur zu 70 %. Der Tierschaden ist im Wiki nur für Tierbeherrschung 12 gemessen und wird auf andere Ränge wie Waffenschaden umgerechnet.</li>
       <li>Heilung: direkte Heilung, Regeneration und ausgelöste Heilung, Mönchszauber mit Gunst der Götter (3,2 je Rang). Gruppenheilung zählt für jedes Gruppenmitglied.</li>

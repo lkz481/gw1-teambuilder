@@ -55,7 +55,9 @@ const AFT = 0.75; // Nachwirkzeit von Zaubern (Wiki "Aftercast")
   T('Signet of Spirits', part(run(b), 'Signet of Spirits'), 3 * lin(5, 20, 12) / 2 * 0.7); }
 // 16 Verhexung mit Degeneration: Conjure Phantasm −5 Pips = 10 Lebenspunkte/s, hält 4...18 s bei 5 s Aufladen: durchgehend
 { const b = bar(ME, 0, { 1: 12 }, ['Conjure Phantasm']);
-  T('Conjure Phantasm', part(run(b), 'Conjure Phantasm'), 10); }
+  T('Conjure Phantasm, Gegner lebt lange', part(run(b, { death: 0.01 }), 'Conjure Phantasm'), 10, 0.08);
+  // Stirbt der einzige Gegner im Schnitt nach 6 s, bleiben von 13 s Verhexung im Mittel 3 s (Rest verfällt), neu gewirkt wird alle 6,75 s
+  T('Conjure Phantasm, Gegner stirbt nach 6 s', part(run(b), 'Conjure Phantasm'), 10 * 3 / 6.75); }
 // 17 Flächenschaden über Zeit: Fire Storm 5...35 je Sekunde, 10 s. Gegner laufen nach 3 Pulsen raus (guildwiki.de "Künstliche Intelligenz")
 { const b = bar(E, 0, { 10: 12, 12: 12 }, ['Fire Storm']);
   T('Fire Storm, drei Pulse', part(run(b), 'Fire Storm'), lin(5, 35, 12) * 3 / (20 + 2 + AFT)); }
@@ -75,7 +77,7 @@ const AFT = 0.75; // Nachwirkzeit von Zaubern (Wiki "Aftercast")
   T('Strength of Honor kostet 1 Pip', /1 aufrechterhaltene Verzauberung/.test(r.notes.join(' ')) ? 1 : 0, 1, 0); }
 // 22 Splitterwaffe trifft nur die Nachbarn des Ziels (Wiki): bei 3 Gegnern zwei. 5...50 je Angriff, endet nach 1...5 Angriffen.
 { const b = bar(RT, 0, { 34: 12 }, ['Splinter Weapon']), r = run(b, { physRate: 1.2, targets: 3 }), k = lin(1, 5, 12);
-  T('Splinter Weapon, 3 Gegner', part(r, 'Splinter Weapon'), lin(5, 50, 12) * k * 2 / Math.max(5 + 1 + AFT, k / 1.2), 0.05);
+  T('Splinter Weapon, 3 Gegner, einer steht neben dem Ziel', part(r, 'Splinter Weapon'), lin(5, 50, 12) * k * 1 / Math.max(5 + 1 + AFT, k / 1.2), 0.05);
   T('Splinter Weapon, 1 Gegner hat keinen Nachbarn', part(run(b, { physRate: 1.2, targets: 1 }), 'Splinter Weapon'), 0); }
 // 23 Niederschlag dauert 2 s (Wiki "Knock down"): Shock alle 10,75 s
 { const b = bar(E, 0, { 8: 12 }, ['Shock']);
@@ -86,7 +88,9 @@ const AFT = 0.75; // Nachwirkzeit von Zaubern (Wiki "Aftercast")
   T('Power Spike, 1 Gegner', part(run(b, { targets: 1 }), 'Power Spike'), lin(30, 120, 12) / (Tt + 1 / 0.15)); }
 // 25 Auslöser am Gegner: Empathy 10...55 je Angriff, 0,55 Angriffe/s, hält 5...15 s bei 10 s Aufladen + 2 s Wirkzeit + 0,75. Bei drei Gegnern lebt das Ziel lang genug.
 { const b = bar(ME, 0, { 2: 12 }, ['Empathy']), dur = lin(5, 15, 12);
-  T('Empathy', part(run(b, { targets: 3 }), 'Empathy'), lin(10, 55, 12) * 0.55 * Math.min(1, dur / 12.75), 0.05); }
+  T('Empathy, Gegner lebt lange', part(run(b, { targets: 3, death: 0.01 }), 'Empathy'), lin(10, 55, 12) * 0.55 * Math.min(1, dur / 12.75), 0.08);
+  // Drei Gegner, alle 6 s stirbt einer: Kampf 18 s, ein Gegner lebt im Schnitt 12 s, von 13 s Verhexung bleiben 6 s
+  T('Empathy, Ziel stirbt vorher', part(run(b, { targets: 3 }), 'Empathy'), lin(10, 55, 12) * 0.55 * 6 / 12.75, 0.05); }
 // 26 Life: heilt am Ende 1...7 je Sekunde Lebenszeit (20 s), 70 % gerechnet, halbe Gruppe
 { const b = bar(RT, 0, { 33: 12 }, ['Life']);
   T('Life', part(run(b), 'Life', 'heal'), lin(1, 7, 12) * 20 * 0.7 * 4 / (20 + 0.75), 0.05); }
@@ -108,7 +112,7 @@ const AFT = 0.75; // Nachwirkzeit von Zaubern (Wiki "Aftercast")
 { const r = run(bar(E, 0, { 10: 12 }, []), {}); const p = r.parts.find(x => /Stab oder Zauberstab/.test(x.name));
   T('Stab ohne Zauber', p ? p.dps : 0, 16.5 / 1.75, 0.05); }
 // 32 Degeneration höchstens 10 Pips je Ziel
-{ const b = bar(ME, 0, { 1: 16 }, ['Conjure Phantasm', 'Conjure Nightmare', 'Phantom Pain']); const r = run(b); const deg = r.parts.filter(p => /Degeneration|Zustand/.test(p.kind || '')).reduce((a, p) => a + p.dps, 0);
+{ const b = bar(ME, 0, { 1: 16 }, ['Conjure Phantasm', 'Conjure Nightmare', 'Phantom Pain']); const r = run(b, { death: 0.01 }); const deg = r.parts.filter(p => /Degeneration|Zustand/.test(p.kind || '')).reduce((a, p) => a + p.dps, 0);
   T('Degeneration gedeckelt bei 20/s', deg, 20, 0.02); }
 
 // ---------- Teamregeln (GW.teamDps) ----------
@@ -164,5 +168,30 @@ const tpart = (D, name, cat) => D.parts.filter(p => p.sid === id(name) && p.cat 
 // Arkanes Echo (Wiki): Kopie für 20 s, danach 20 s gesperrt, ein Durchlauf alle 42 s. Energy Burn (20 s Aufladen) bekommt je Durchlauf einen Einsatz dazu.
 { const b = bar(ME, 0, { 2: 12 }, ['Energy Burn', 'Arcane Echo']);
   T('Arkanes Echo: ein zusätzlicher Einsatz alle 42 s', part(run(b), 'Energy Burn'), lin(1, 10, 12) * 9 * (1 / (20 + 2 + AFT) + 1 / 42), 0.04); }
+
+// ---------- Waffe, Laufwege, Reichweiten ----------
+// Schwert 15-22, Rang 12: kritische Treffer 17,8 % (Wiki-Messung) mit Höchstschaden mal Wurzel 2. Waffe angepasst +20 % (Wiki "Customize"), Inschrift +15 % zu 90 % der Zeit.
+// Ein Gegner, der nach 6 s stirbt: Der Nahkämpfer läuft 2 s und ist 6/8 der Zeit am Gegner. Ein Angriff alle 1,33 s.
+{ const b = bar(W, 0, { 20: 12 }, []), r = run(b), p = r.parts.find(x => /Normale Angriffe/.test(x.name)), c = 0.052 + 0.01575 * 8;
+  T('Schwert, normale Angriffe', p ? p.dps : 0, ((1 - c) * 18.5 + c * 22 * Math.SQRT2) * 1.2 * 1.135 * (6 / 8) / 1.33, 0.04); }
+// Sense 9-41, alle 1,5 s. Drei Gegner: Neben dem Ziel steht einer der beiden anderen, also 2 Treffer je Schwung. Kampf 18 s, 90 % der Zeit am Gegner.
+{ const b = bar(D, 0, { 41: 12 }, []), r = run(b, { targets: 3 }), p = r.parts.find(x => /Normale Angriffe/.test(x.name)), c = 0.052 + 0.01575 * 8;
+  T('Sense, drei Gegner', p ? p.dps : 0, ((1 - c) * 25 + c * 41 * Math.SQRT2) * 1.2 * 1.135 * (18 / 20) / 1.5 * 2, 0.04); } // Sense: ein Angriff alle 1,5 s (Wiki)
+// Zwietracht 30...110, 1 s Wirkzeit, 2 s Aufladen. Zählt nur, wenn das Team Verhexung und Zustand liefert.
+{ const b = bar(N, 0, { 5: 12, 6: 8 }, ['Discord']);
+  T('Zwietracht mit Verhexung und Zustand im Team', part(run(b, { team: { hex: 1, mhex: 1, cond: 1 } }), 'Discord'), lin(30, 110, 12) / (2 + 1 + AFT), 0.04);
+  T('Zwietracht ohne Vorbedingung', part(run(b, { team: { hex: 0, mhex: 0, cond: 0 } }), 'Discord'), 0); }
+// Unbeholfenheit 30...135 auf das Ziel und Nachbarn (bei drei Gegnern 2 Ziele). Spieler: Gelegenheit bei 3 x 0,55 Angriffen/s.
+{ const b = bar(ME, 0, { 1: 12 }, ['Ineptitude']), Tt = 15 + 1 + AFT;
+  T('Unbeholfenheit, drei Gegner', part(run(b, { targets: 3 }), 'Ineptitude'), lin(30, 135, 12) * 2 / (Tt + 1 / (3 * 0.55)), 0.05); }
+// Held statt Spieler: unterbricht nur am gemeinsamen Ziel (Wiki "Hero behavior"), Gelegenheit 0,15 Zauber/s
+{ const b = bar(ME, 0, { 2: 12 }, ['Power Spike']), Tt = 12 + 0.25 + AFT;
+  T('Power Spike als Held', part(run(b, { targets: 3, hero: true }), 'Power Spike'), lin(30, 120, 12) / (Tt + 1 / 0.15)); }
+// Vier Helden mit Power Spike teilen sich die 0,15 Zauber/s des gemeinsamen Ziels
+{ const ps = () => bar(ME, 0, { 2: 12 }, ['Power Spike']), X = team([bar(E, 0, { 10: 12 }, ['Flare']), ps(), ps(), ps(), ps(), bar(N, 0, { 4: 12 }, ['Blood is Power'])]);
+  T('Team: vier Unterbrecher teilen sich ein Ziel', X.slice(1, 5).reduce((a, d) => a + tpart(d, 'Power Spike'), 0), 0.15 * lin(30, 120, 12), 0.05); }
+// Kampfdauer folgt aus dem Teamschaden: Sterberate = Schaden / (700 Lebenspunkte x 2), mindestens ein Gegner alle 15 s
+{ const X = team([bar(E, 0, { 10: 12 }, ['Flare']), bar(E, 0, { 10: 12 }, ['Flare']), bar(N, 0, { 4: 12 }, ['Blood is Power'])]), dmg = X.reduce((a, d) => a + d.total, 0);
+  T('Team: Sterberate aus dem Schaden', X.death, Math.max(3 / 45, Math.min(3 / 4, dmg / 1400)), 0.25); }
 
 console.log(ok + ' von ' + (ok + bad) + ' Fällen bestanden'); fails.forEach(f => console.log('  FEHLER  ' + f)); process.exit(bad ? 1 : 0);
