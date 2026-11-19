@@ -1152,7 +1152,18 @@ function refTeams(){
         for (const s2 of sup) { if (L.some(x=>x.code===s2.code) || (s2.bip && L.some(x=>x.bip))) continue; { const others = new Set(L.filter((x,i)=>i!==idx[1]).flatMap(x=>GW.spiritIds(x.bar)).concat(GW.spiritIds(TEAM[0].bar))); if (GW.spiritIds(s2.bar).some(id=>others.has(id))) continue; } const L2 = L.slice(); L2[idx[1]] = s2; const E2 = evalTeam(L2); if (!best || E2.gap < best.E.gap - 1 || (Math.abs(E2.gap-best.E.gap) <= 1 && E2.dmg > best.E.dmg)) best = { L:L2, E:E2 }; }
         if (!best || best.E.gap >= E.gap) break; L = best.L; E = best.E; }
       return { L, E }; };
+    // Nachbessern: Jeden Platz einzeln gegen die besten Leisten aus dem Pool tauschen und behalten, was bei gesicherter Verteidigung mehr Schaden bringt. Die erste Auswahl geht nur nach Einzelschaden und übersieht sonst Kontrolle und Zusammenspiel.
+    const spOf = o => GW.spiritIds(o.bar), mySp = new Set(GW.spiritIds(TEAM[0].bar));
+    const valid = L => { const el={}, sp=new Set(mySp); let mm=0, sw=0, bi=0; for (const o of L) { if (o.minion) mm++; if (o.splinter) sw++; if (o.bip) bi++; el[o.elite.id]=(el[o.elite.id]||0)+1; if (el[o.elite.id] > (once(o)?1:2)) return false; for (const id of spOf(o)) { if (sp.has(id)) return false; sp.add(id); } } return mm<=1 && sw<=1 && bi<=1 && new Set(L.map(o=>o.code)).size===L.length; };
+    const byD = [...P1].filter(o=>!o.bip).sort((a,b)=>b.D.total-a.D.total), swapPool = [...new Set(byD.slice(0,18).concat([...P1].sort((a,b)=>(b.D.ctrl||0)-(a.D.ctrl||0)).slice(0,6), sup.slice(0,8), bipBar ? [P1.find(o=>o.code===bipBar.code)||bipBar] : []))];
+    const better = (A, B) => A.ok !== B.ok ? A.ok : A.ok ? A.dmg > B.dmg + 0.5 : A.gap < B.gap - 0.5;
+    const improve = c => { let { L, E } = c; for (let round=0; round<3; round++) { let changed = false;
+        for (let i=0; i<L.length; i++) { let best = null; for (const o of swapPool) { if (L[i].code===o.code) continue; const L2 = L.slice(); L2[i] = o; if (!valid(L2)) continue; const E2 = evalTeam(L2); if (better(E2, best ? best.E : E)) best = { L:L2, E:E2 }; }
+          if (best) { L = best.L; E = best.E; changed = true; } }
+        if (!changed) break; }
+      return { L, E }; };
     const cands = [build([])]; if (bipBar && heroes>=2) cands.push(build([bipBar]));
+    { const top = cands.filter(c=>c.E.ok).sort((a,b)=>b.E.dmg-a.E.dmg)[0] || [...cands].sort((a,b)=>a.E.gap-b.E.gap)[0]; cands.push(improve(top)); }
     const good = cands.filter(c=>c.E.ok).sort((a,b)=>b.E.dmg-a.E.dmg)[0] || cands.sort((a,b)=>a.E.gap-b.E.gap)[0];
     play = good.L.map((o,i)=>Object.assign({}, o, { D:good.E.TD[i+1] })).sort((a,b)=>isSup(b)-isSup(a) || b.D.total-a.D.total);
     // in genau der Reihenfolge noch einmal rechnen, in der das Team übernommen wird: Dann stimmt die Zahl nach dem Übernehmen überein
