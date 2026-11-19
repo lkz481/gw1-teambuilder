@@ -237,6 +237,8 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
 .chip{padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid var(--line2)}
 .chip.on{background:linear-gradient(180deg,var(--lacq2),var(--lacq));border-color:var(--gold);color:#fbe7b8}
 
+.vseg{flex-wrap:wrap;border-radius:14px}.vseg button{padding:6px 12px;border-radius:999px;font-size:13px}
+.refrow{margin:10px 0 2px}.refrow .t{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}.refrow .t b{font-family:var(--head);color:#f3dfb0;font-size:17px}.reflist{padding-left:18px;margin:8px 0}.reflist li{margin:4px 0}
 .tag.warnt{border-color:#b5533c;color:#f0a58f}.need.warnn{color:#f0a58f}
 .pvrow{flex-direction:row;align-items:center;gap:10px}.pvi{flex:none;width:36px;height:36px;border-radius:6px;border:1px solid var(--line);display:block}.pvrow .pvt{display:flex;flex-direction:column;gap:2px;min-width:0}.pvrow small{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pvq{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0;background:rgba(255,255,255,.03)}.pvq h3{margin:0 0 8px}.pvq .kv{display:flex;gap:10px;padding:3px 0;font-size:13px}.pvq .kv span{flex:none;width:110px;color:var(--muted)}.pvq ol{margin:10px 0 8px;padding-left:20px}.pvq ol li{margin:3px 0}
@@ -329,6 +331,7 @@ const store = { get(k,d){ try{ const v=localStorage.getItem("gwbw."+k); return v
 
 // ---------- Daten ----------
 const [sdata, adata, BUILDS, SYN, EQ, TEAMS, GUIDES, SPD] = await Promise.all(["skills.json","areas.json","builds.json","synergy.json","equip.json","teams.json","guides.json","spots.json"].map(f=>fetch(f).then(r=>r.json())));
+const REF = await fetch("ref.json").then(r=>r.json()).catch(()=>[]);
 const PVE = await fetch("pve.json").then(r=>r.json()).catch(()=>({}));
 GW.loadSkills(sdata);
 const SPOTS = SPD.spots;
@@ -444,7 +447,8 @@ function areaTeam(){ const y = TEAMS.find(T=>T.yt && T.area===state.area); retur
 function teamSlotsFor(pb, size){
   const chosen = state.team && TEAMS.find(T=>T.key===state.team);
   const teamKey = (chosen && teamFits(chosen)) ? state.team : areaTeam();
-  const plan = GW.resolveTeam(teamKey, pb, state.area, AREAS, TEAMS);
+  if (state.vteam !== teamKey) { state.vteam = teamKey; state.variant = 0; }
+  const plan = GW.resolveTeam(teamKey, pb, state.area, AREAS, TEAMS, state.variant);
   if (size < 8) {
     const keep = GW.trimSlots(plan.slots, size-1);
     const dropped = plan.slots.filter((s,i)=>!keep.includes(i));
@@ -562,6 +566,8 @@ function renderMain(){
   }
   const missing = TEAM.filter(m=>m.hero && !m.name).length;
   if (missing) note += `<div class="notice"><span class="sp">${missing} Leiste(n) ohne Helden. Aktiviere mehr Helden oder Söldner.</span><button class="btn s" data-open="heroes">Helden</button></div>`;
+  const vdef = PLAN && TEAMS.find(T=>T.key===PLAN.def.key);
+  if (CAT==="team" && vdef && vdef.variants) note = `<div class="notice"><span class="sp">Leisten für:</span><div class="seg vseg">${vdef.variants.map((v,i)=>`<button class="${(state.variant||0)===i?"on":""}" data-variant="${i}">${esc(v.label)}</button>`).join("")}</div></div>` + note;
   $("notice").innerHTML = note;
   // Karten
   if (!pb.skills.some(Boolean)) { $("cards").innerHTML = `<div class="empty" style="grid-column:1/-1"><b>Noch keine Leiste</b><span class="mut">Nimm einen fertigen Build oder stell dir selbst acht Fertigkeiten zusammen.</span><div class="row"><button class="btn pri" data-open="build">Build wählen</button><button class="btn" data-member="0">Selbst bauen</button></div></div>`; return; }
@@ -780,6 +786,61 @@ function drawMember(body){
   }
 }
 function targetSeg(){ return `<div><div class="mut sm" style="text-align:right">Ziele</div><div class="seg" style="width:130px">${[1,3,5].map(k=>`<button class="${state.dpsN===k?"on":""}" data-dpsn="${k}">${k}</button>`).join("")}</div></div>`; }
+// ---------- Vergleich: stärkstes Team nach unserer Rechnung ----------
+let REFCACHE = { key:"", val:null };
+function refPool(){
+  const seen = new Set(), out = [];
+  const add = (code, src, url) => { let nc; try { nc = normCode(code); const d = GW.decode(code); const sk = d.skills.map(id=>GW.skill(id)); if (!d.pri || sk.some(s=>!s || s.pve) || sk.filter(s=>s.e).length!==1) return; if (seen.has(nc)) return; seen.add(nc); out.push({ code, src, url, bar:d, elite:sk.find(s=>s.e) }); } catch(e){} };
+  REF.forEach(o=>{ if (!/Farm|AFK/i.test(o.p)) add(o.c, "PvX: "+o.p, o.u); });
+  TEAMS.forEach(T=>(T.variants ? T.variants.flatMap(v=>v.slots) : (T.slots||[])).forEach(s=>{ if (s.code && !T.ref) add(s.code, T.yt ? "YouTube-Team: "+T.name : "PvX-Team: "+T.name, s.src||T.src); }));
+  Object.keys(GW.BARS).forEach(k=>add(GW.BARS[k].code, "Standardteam", null));
+  return out;
+}
+function refTeams(){
+  if (CAT!=="team" || !DPS.length || TEAM.length<2) return null;
+  const n = state.dpsN, heroes = TEAM.length-1, phys = DPS[0].physical, allies = TEAM.length;
+  const key = [n, heroes, Math.round((phys||0)*100), playerCode()].join("|");
+  if (REFCACHE.key===key) return REFCACHE.val;
+  const pool = refPool().map(o=>{ let r=[]; try{ r=GW.equipFor(o.bar, EQ, null).runes; }catch(e){}
+    const D = GW.dps(o.bar, GW.effRanks(o.bar, r), { targets:n, foeRate:0.5, physRate:phys, allies });
+    return Object.assign(o, { D, minion:D.parts.some(p=>p.kind==="Diener"), splinter:o.bar.skills.some(id=>{ const s=GW.skill(id); return s && s.n==="Splinter Weapon"; }) }); });
+  const pick = (cnt, taken) => { const res=[], el={}; let mm=0, sp=0;
+    taken.forEach(o=>{ el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; });
+    for (const o of [...pool].sort((a,b)=>b.D.total-a.D.total)) { if (res.length>=cnt) break; if (taken.includes(o)) continue;
+      if (o.minion && mm>=1) continue; if (o.splinter && sp>=1) continue; if ((el[o.elite.id]||0)>=2) continue;
+      res.push(o); el[o.elite.id]=(el[o.elite.id]||0)+1; if(o.minion) mm++; if(o.splinter) sp++; }
+    return res; };
+  const sum = L => Math.round(DPS[0].total + L.reduce((a,o)=>a+o.D.total,0));
+  const max = pick(heroes, []);
+  let play = null;
+  if (heroes>=3) { const heal = [...pool].sort((a,b)=>b.D.heal-a.D.heal)[0], prot = [...pool].filter(o=>o!==heal).sort((a,b)=>b.D.prot-a.D.prot)[0]; play = [heal, prot].concat(pick(heroes-2, [heal, prot])); }
+  const mine = Math.round(DPS.reduce((a,d)=>a+d.total,0));
+  const own = (BUILDS[state.pri]||[]).map((b,i)=>[b,i]).filter(([b])=>(b.cat||"team")==="team").map(([b,i])=>{ try { const d=GW.decode(b.code); let r=[]; try{ r=GW.equipFor(d, EQ, b.url).runes; }catch(e){} const aw=b.annWeapon?(ANN_W[b.annWeapon.split(" ")[0]]||null):null; return { b, i, v:GW.dps(d, GW.effRanks(d,r), { targets:n, weapon:aw, foeRate:0.5, allies }).total }; } catch(e){ return null; } }).filter(Boolean).sort((a,b)=>b.v-a.v)[0];
+  REFCACHE = { key, val:{ mine, max, maxSum:sum(max), play, playSum:play?sum(play):0, own, poolSize:pool.length } };
+  return REFCACHE.val;
+}
+function refHTML(){
+  const R = refTeams(); if (!R) return "";
+  const top = Math.max(R.mine, R.maxSum, R.playSum, 1), pct = v => Math.round(100*v/top);
+  const row = (lab, v, cls, sub) => `<div class="refrow"><div class="t"><span>${lab}</span><b>${v}/s</b></div><div class="meter${cls}"><i style="width:${pct(v)}%"></i></div>${sub?`<div class="dim sm">${sub}</div>`:""}</div>`;
+  const list = L => `<ul class="sm reflist">${L.map(o=>`<li><b>${esc(dname(o.elite))}</b> · ${esc(GW.PROF_DE[o.bar.pri])} · ${Math.round(o.D.total)} Schaden${o.D.heal>5?`, ${Math.round(o.D.heal)} Heilung`:""}${o.D.prot>5?`, ${Math.round(o.D.prot)} Schutz`:""}<span class="dim"> · ${o.url?`<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.src)}</a>`:esc(o.src)}</span></li>`).join("")}</ul>`;
+  const you = Math.round(DPS[0].total);
+  let h = `<h3>Wo stehst du?</h3>` + row("Dein Team", R.mine, "", "");
+  if (R.play) h += row("Stärkstes spielbares Team", R.playSum, " sup", `Du erreichst ${Math.round(100*R.mine/Math.max(1,R.playSum))} %. Mit Heiler und Schutz.`) + `<div class="row" style="margin:6px 0 2px"><details class="more" style="flex:1"><summary>Aufstellung ansehen</summary>${list(R.play)}</details><button class="btn s" data-reftake="play">Dieses Team übernehmen</button></div>`;
+  h += row("Rechnerisches Maximum", R.maxSum, " sup", `Du erreichst ${Math.round(100*R.mine/Math.max(1,R.maxSum))} %. Nur Schaden, ohne Heiler und Schutz.`) + `<div class="row" style="margin:6px 0 2px"><details class="more" style="flex:1"><summary>Aufstellung ansehen</summary>${list(R.max)}</details><button class="btn s" data-reftake="max">Dieses Team übernehmen</button></div>`;
+  if (R.own && R.own.v > you+1) h += `<div class="row" style="margin-top:8px"><span class="sm" style="flex:1">Deine Leiste macht ${you}/s. Die stärkste ${esc(GW.PROF_DE[state.pri])}-Leiste im Tool ist „${esc(bname(R.own.b))}“ mit ${Math.round(R.own.v)}/s.</span><button class="btn s" data-take="${R.own.i}">Laden</button></div>`;
+  else if (R.own) h += `<p class="sm" style="margin-top:8px">Deine Leiste macht ${you}/s. Im Tool gibt es für ${esc(GW.PROF_DE[state.pri])} keine stärkere Team-Leiste.</p>`;
+  h += `<p class="dim sm">Vergleich aus ${R.poolSize} Heldenleisten (PvX „Great“, „Good“ und „Meta“, dazu die Teams im Tool), mit deiner Leiste und denselben Zielen gerechnet. Höchstens ein Dienermeister, ein Splitterwaffe-Helfer und zwei Helden mit derselben Elite. Gezählt wird nur Dauerschaden. Was Unterbrechungen und Panik verhindern, zählt nicht.</p>`;
+  return h;
+}
+function takeRef(kind){
+  const R = refTeams(); if (!R) return; const L = kind==="play" ? R.play : R.max; if (!L) return;
+  const key = "ref_"+kind, name = kind==="play" ? "Stärkstes spielbares Team (berechnet)" : "Rechnerisches Maximum (berechnet)";
+  const def = { key, name, ref:true, desc: kind==="play" ? "Von uns berechnet: Die stärksten Heldenleisten für Schaden, dazu der beste Heiler und der beste Schutz aus dem Vergleich. Gezählt wird Dauerschaden, Unterbrechungen zählen nicht." : "Von uns berechnet: Nur die Heldenleisten mit dem höchsten Dauerschaden, ohne Heiler und Schutz. Als Vergleichswert gedacht, im Spiel kaum haltbar.",
+    slots: L.map(o=>({ code:o.code, role:`${dname(o.elite)}-${GW.PROF_DE[o.bar.pri]}`, why:`${Math.round(o.D.total)} Schaden/s nach unserer Rechnung. Quelle der Leiste: ${o.src}.`, src:o.url||undefined })) };
+  const i = TEAMS.findIndex(T=>T.key===key); if (i>=0) TEAMS[i]=def; else TEAMS.push(def);
+  state.team = key; state.over = {}; toast("Team übernommen"); render();
+}
 function drawDps(body){
   $("dtabs").hidden = true; $("dtabs").innerHTML = "";
   const sum = k => Math.round(DPS.reduce((a,d)=>a+val(d,k),0));
@@ -787,6 +848,7 @@ function drawDps(body){
   $("dtitle").innerHTML = `Team-Werte<small>Dauerwerte pro Sekunde</small>`;
   body.innerHTML = `<div class="row" style="justify-content:space-between"><div class="row">${["dmg","heal","prot"].map(k=>`<div><div class="mut sm">${METRIC[k][1]}</div><div class="hd" style="font-size:24px;color:#f3dfb0">${METRIC[k][0]} ${sum(k)}</div></div>`).join("")}</div>${targetSeg()}</div>
     ${TEAM.map((m,i)=>{ const k=mainMetric(DPS[i]); return `<button class="opt" style="margin-top:6px" data-member="${i}"><div class="t"><span class="nm">${m.you?"Du":esc(m.name||"–")}</span><span style="flex:1"></span><span class="sm">${metricHTML(DPS[i])}</span></div><div class="meter${k!=="dmg"?" sup":""}"><i style="width:${Math.round(val(DPS[i],k)/maxOf(k)*100)}%"></i></div></button>`; }).join("")}
+    ${refHTML()}
     <details class="more"><summary>So wird gerechnet</summary><ul class="sm">
       <li>Jede Fertigkeit so oft, wie Aufladen, Aktivierung und 0,75 s Nachwirkzeit erlauben. Reicht die Energie nicht, sinkt die Nutzung anteilig (1 Pip = 1 Energie alle 3 s).</li>
       <li>Attributränge inklusive empfohlener Runen. Waffen nach Wiki-Werten, kritische Treffer mit Rang als Prozent-Chance.</li>
@@ -843,6 +905,8 @@ document.addEventListener("click", e=>{
   const mem = t.closest("[data-member]"); if (mem) { openDrawer("member", {idx:+mem.dataset.member, tab: ui.drawer==="dps" ? "dps" : (ui.drawer==="member" ? ui.tab : "bar")}); return; }
   const tk = t.closest("[data-take]"); if (tk) { takeBuild(+tk.dataset.take); if (ui.drawer==="build") closeDrawer(); return; }
   const cp = t.closest("[data-copy]"); if (cp) { copy(cp.dataset.copy); return; }
+  const vr = t.closest("[data-variant]"); if (vr) { state.variant=+vr.dataset.variant; state.over={}; render(); return; }
+  const rt = t.closest("[data-reftake]"); if (rt) { takeRef(rt.dataset.reftake); return; }
   const dn = t.closest("[data-dpsn]"); if (dn) { state.dpsN=+dn.dataset.dpsn; render(); return; }
   const sl = t.closest("[data-slot]"); if (sl) { openPicker(+sl.dataset.slot); return; }
   const ar = t.closest("[data-area]"); if (ar) { state.area=ar.dataset.area; state.team=null; store.set("area",state.area); closeDrawer(); render(); return; }

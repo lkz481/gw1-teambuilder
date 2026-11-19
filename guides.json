@@ -511,8 +511,8 @@
 },
 "slavers": {
 "title": "Exil des Sklavenhändlers mit Helden",
-"intro": "Der einzige Elite-Dungeon: Eine Eingangsebene, drei Zwischenebenen in beliebiger Reihenfolge und Duncans Ebene am Ende. Anders als in den anderen Elite-Gebieten gibt es Wiederbelebung an den Signallichtern von Droknar. Der Fortschritt der Quest \"Der letzte Hierophant\" bleibt beim Verlassen erhalten. Du kannst also nach jedem Boss raus und die Helden für den nächsten umbauen.",
-"team": "std",
+"intro": "Der einzige Elite-Dungeon: Eine Eingangsebene, drei Zwischenebenen in beliebiger Reihenfolge und Duncans Ebene am Ende. Anders als in den anderen Elite-Gebieten gibt es Wiederbelebung an den Signallichtern von Droknar. Der Fortschritt der Quest \"Der letzte Hierophant\" bleibt beim Verlassen erhalten. Du kannst also nach jedem Boss raus und die Helden für den nächsten umbauen. Das vorgeschlagene Team stammt aus einer Videoreihe von YoungSomalia (Juli bis September 2026, Schwerer Modus ohne Verbrauchsgüter) und hat für jede Ebene eigene Leisten. Über dem Team wählst du die Ebene.",
+"team": "yt_slavers",
 "sections": [
 {
 "t": "Grundsätzliches",
@@ -542,7 +542,7 @@
 "Selvetarm ist Nekromant mit Schmaus der Verdorbenheit. Er und seine Gruppe erzeugen mit Versplitterte Knochen und Todesnova immer neue Untoten-Bomben.",
 "Das Wiki rät, ihm die Diener zu stehlen oder die Bomben mit Flächenschaden zu töten.",
 "Schaden von Geistern trifft Selvetarm nur zu 50 %. Ein Team, das stark auf Angriffsgeister baut, ist hier schwächer.",
-"Nach seinem Tod erscheinen vier Restless Dead mit Schattengefängnis um die Truhe."
+"Nach seinem Tod erscheinen vier Ruhelose Tote mit Schattengefängnis um die Truhe."
 ]
 },
 {
@@ -557,8 +557,8 @@
 {
 "t": "Duncan der Schwarze",
 "b": [
-"Auf dem Weg nur Steingipfel-Zwerge und Restless Dead, die aus dem Boden kommen. Sie nutzen Vampir-Berührung und Vampirbiss. Das Wiki nennt \"Darf nicht angerührt werden!\" als Konter.",
-"Vor dem Kampf den großen Raum abgehen, damit alle Restless Dead erscheinen und tot sind.",
+"Auf dem Weg nur Steingipfel-Zwerge und Ruhelose Tote, die aus dem Boden kommen. Sie nutzen Vampir-Berührung und Vampirbiss. Das Wiki nennt \"Darf nicht angerührt werden!\" als Konter.",
+"Vor dem Kampf den großen Raum abgehen, damit alle Ruhelosen Toten erscheinen und tot sind.",
 "Duncan hat im Normalen Modus rund 19.000 Lebenspunkte. Duncans Verteidigung wirft 100 % jedes Schadens auf die Quelle zurück. Weil Dungeon-Bosse doppelten Schaden machen, kommt das Doppelte an.",
 "Lebensraub löst Duncans Verteidigung laut Wiki nicht aus. Sieger plündern lohnt sich wegen seiner vielen Lebenspunkte.",
 "Schutz wie Schutzgeist senkt den zurückgeworfenen Schaden.",
@@ -581,6 +581,10 @@
 [
 "Guild Wars Wiki: Duncan the Black",
 "https://wiki.guildwars.com/wiki/Duncan_the_Black"
+],
+[
+"YouTube: YoungSomalia, Slavers' Exile HM Reihe (07 bis 09/2026, inoffiziell)",
+"https://www.youtube.com/watch?v=4jwYUSJGia8"
 ]
 ]
 },
@@ -598,7 +602,7 @@
 "Jeden Auftrag abschließen und die Belohnung abholen, bevor du den Hochofen verlässt. Sonst musst du den Zwerg draußen neu suchen.",
 "Die Reihenfolge der vier Aufträge ist frei.",
 "Priester der Betrübnis beleben tote Steingipfel-Zwerge wieder. Früh töten oder unterbrechen.",
-"Die Quetschfallen treffen nur Frost Golems und die Gruppe. Ein Tod dort gibt laut Wiki keinen Todesmalus."
+"Die Quetschfallen treffen nur Frostgolems und die Gruppe. Ein Tod dort gibt laut Wiki keinen Todesmalus."
 ]
 },
 {
@@ -617,7 +621,7 @@
 "t": "Gipfel-Sklaven (Galen Trask)",
 "b": [
 "Galen Trask belegt dich mit Ketten der Versklavung. Die meisten Steingipfel-Zwerge sind dadurch freundlich, deine Gegner sind vor allem aufständische Schaufler.",
-"Ziel: Fünf Orte auskundschaften. Das sind die Stone Basilica, Darkhaven, Sorrow's Belly, The Gap und The Iron Arch.",
+"Ziel: Fünf Orte auskundschaften. Das sind die Steinbasilika, Finsterhafen, der Leib der Betrübnis, Die Kluft und Der Eiserne Bogen.",
 "Krak Flammenpeitsche bietet fünf freiwillige Nebenaufträge an. Jeder davon ruft zusätzliche Gegner herbei. Ohne sie ist der Hauptauftrag deutlich leichter.",
 "Der Auftrag besteht fast nur aus Laufen. Ein Tempo-Ruf für die Gruppe wie \"Zieht Euch zurück!\" spart viel Zeit.",
 "Die Questpfeile führen dich hin und her. Laut Wiki ist die Reihenfolge der Nummern auf der Wiki-Karte kürzer."
@@ -627,8 +631,8 @@
 "t": "Unsäglich, unverständlich (Hohepriester Alkar)",
 "b": [
 "Alkar steht im Nordosten von Grenths Fußabdruck. Im Hochofen läuft er nach der ersten Gruppe selbstständig los. Stirbt er, fliegt die Gruppe raus.",
-"Teil 1: Hierophant Morlog steht zwischen vielen Gipfel-Zuchtmeistern. Erst die Gegner um ihn wegziehen, dann Morlog töten. Er lässt das Buch (Tome of the Rubicon) fallen.",
-"Das Buch sofort zu Alkar bringen und neben ihm ablegen. Auf seiner Plattform wird er angegriffen und braucht euch dort.",
+"Teil 1: Hierophant Morlog steht zwischen vielen Gipfel-Zuchtmeistern. Erst die Gegner um ihn wegziehen, dann Morlog töten. Er lässt den Folianten des Rubikon fallen.",
+"Den Folianten sofort zu Alkar bringen und neben ihm ablegen. Auf seiner Plattform wird er angegriffen und braucht euch dort.",
 "Teil 2: Vier Balthasatkristalle holen. Sie fallen von vier Schaufler-Felsensprengern, die bei Schaufler-Gruppen stehen, aber nicht zu ihnen gehören.",
 "Beim ersten Angriff auf einen Felsensprenger greifen etwa drei Steingipfel-Zwerge Alkar an. Beim Tod des Felsensprengers kommen fünf bis sechs dazu.",
 "Mit Helden heißt das: Schutz- und Heilhelden bei Alkar flaggen, höchstens drei. Mit dem Rest den Felsensprenger holen und nach seinem Tod sofort zurücklaufen. Den Kristall notfalls später holen.",
@@ -644,7 +648,7 @@
 "Ein Wiederbelebungs-Schrein liegt direkt daneben. Das Wiki empfiehlt einen Dienermeister.",
 "Beute einsammeln, bevor du Orozar wieder ansprichst. Dann beginnt sofort Plan B.",
 "Plan B: Orozar rennt los zu seinem Bruder Ural Hochstein. Nach der Zwischensequenz ist Ural ein Gegenstand, den du trägst.",
-"Allein musst du Ural kurz ablegen und das Zahnrad (Master Gear) holen, um die Brücke zu senken. Es liegt dort, wo Ural stand.",
+"Allein musst du Ural kurz ablegen und das Hauptgetriebe holen, um die Brücke zu senken. Es liegt dort, wo Ural stand.",
 "Sicherer Weg laut Wiki: Die Brücke noch nicht senken. Erst außen herum zur anderen Brückenseite laufen und die stehenden Gruppen dort töten. Danach geht der Weg zum Ausgang viel leichter.",
 "Das Senken der Brücke ruft große Patrouillen herbei, die von hinten kommen. Danach zügig weiter.",
 "Läufst du zu weit vor, geht Orozar nur noch im Schritt. Kurz zu ihm zurück, dann rennt er wieder.",
@@ -657,11 +661,11 @@
 "Erst möglich, wenn alle vier Aufträge erledigt sind. Ennis Granitschreiter wartet rechts vom Ausgang des Kriegslagers. Kurz vor dem Hochofen noch einmal ansprechen, sonst folgt er manchmal nicht.",
 "Budger Schwarzpulver begleitet dich und gibt Pulverfässer für die versiegelten Türen. Er kann nicht sterben. Fehlt er, hängt er oft hinter den Quetschfallen.",
 "Der Weg führt von oben links nach unten rechts. Gegen Ende stehen mehrere Gruppen dicht beieinander, also einzeln ziehen.",
-"Beim Iron Forgeman: Erst die Hochofen-Wächter töten, dann die Patrouille. Im ummauerten Bereich nicht stehen bleiben, der Forgeman kippt Lava auf stehende Ziele und trifft sie mit der Abrisskugel.",
+"Beim Eisernen Schmied (Iron Forgeman): Erst die Hochofen-Wächter töten, dann die Patrouille. Im ummauerten Bereich nicht stehen bleiben, der Schmied kippt Lava auf stehende Ziele und trifft sie mit der Abrisskugel.",
 "Die drei Wuthalter müssen kurz nacheinander sterben. Ein toter Wuthalter kommt nach 30 bis 45 Sekunden wieder.",
 "Helden-Tipp aus dem Wiki: Den mittleren Wuthalter zuerst töten. Dann die halbe Heldengruppe zu einem der beiden anderen flaggen und mit der anderen Hälfte zum dritten gehen.",
 "Für den ersten Wuthalter keine Fertigkeiten mit langer Aufladezeit verbrauchen. Ihr Leben abzapfen lässt sich unterbrechen.",
-"Danach stehen drei Flame Djinn im Kreis. Sofort aus dem Kreis raus und immer nur einen herausziehen. Schmerztauscher wirkt laut Wiki sehr stark, während der Djinn Consuming Flames nutzt.",
+"Danach stehen drei Flammen-Dschinn im Kreis. Sofort aus dem Kreis raus und immer nur einen herausziehen. Schmerztauscher wirkt laut Wiki sehr stark, während der Dschinn Verzehrende Flammen nutzt.",
 "Ein Schrein liegt in der Nähe. Die Belohnung bei Ennis am Eingang abholen, bevor du den Hochofen verlässt. Danach \"Der letzte Angriff\" beim Zwergen-Schürfer abgeben."
 ]
 }
@@ -689,7 +693,7 @@
 {
 "t": "Zugang und Regeln",
 "b": [
-"Der Außenposten ist über das Portal in der Drachenhöhle erreichbar. Dafür muss der Charakter Augury Rock abgeschlossen haben.",
+"Der Außenposten ist über das Portal in der Drachenhöhle erreichbar. Dafür muss der Charakter die Mission Fels der Weissagung abgeschlossen haben.",
 "Im Außenposten den Chaosriss betreten.",
 "Drei Phantom-Truhen verteilen sich zufällig auf die Karten zwei bis vier, im Schweren Modus sind es verschlossene Truhen.",
 "Im Schweren Modus haben einige Gegner dauerhaft 7 Pips Lebenspunkte-Regeneration und dafür weniger Lebenspunkte."
@@ -703,7 +707,7 @@
 ]
 },
 {
-"t": "Karte 2 und 3: Vernarbte Erde und The Courtyard",
+"t": "Karte 2 und 3: Vernarbte Erde und Der Hof",
 "b": [
 "Zu den Gegnern der ersten Karte kommen Schrecknetz-Dryder (Elementarmagier), Alptraumreiter (Mesmer) und Chaoswürmer (Krieger).",
 "Auf beiden Karten müssen wieder alle Gegner sterben."
@@ -712,9 +716,9 @@
 {
 "t": "Karte 4: Die Halle der Helden",
 "b": [
-"Dieselben Gegner wie zuvor, dazu drei Bosse namens The Darkness. Es sind Mesmer mit Energiewelle.",
+"Dieselben Gegner wie zuvor, dazu drei Bosse namens Die Finsternis. Es sind Mesmer mit Energiewelle.",
 "Sind alle drei tot, läuft ein Countdown und die Gruppe kommt zurück in den Außenposten.",
-"Die Darkness lassen die grünen Waffen des Gebiets fallen, zum Beispiel Victos Waffen."
+"Sie lassen die grünen Waffen des Gebiets fallen, zum Beispiel Victos Waffen."
 ]
 }
 ],

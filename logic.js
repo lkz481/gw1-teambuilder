@@ -306,8 +306,9 @@
 (function (G) {
   const GW = G.GW;
   // Liefert die 7 Heldenslots als Objekte {code, role, why, pref, src}
-  GW.resolveTeam = function (teamKey, bar, areaKey, areas, TEAMS) {
-    const def = TEAMS.find(t => t.key === teamKey) || TEAMS[0];
+  GW.resolveTeam = function (teamKey, bar, areaKey, areas, TEAMS, variant) {
+    let def = TEAMS.find(t => t.key === teamKey) || TEAMS[0];
+    if (def.variants) { const v = def.variants[Math.min(variant || 0, def.variants.length - 1)]; def = Object.assign({}, def, { slots: v.slots, player: v.player, variant: v.label }); }
     if (!def.slots) {
       const plan = GW.teamPlan(bar, areaKey, areas);
       return { def, analysis: plan.analysis, area: plan.area, reasons: plan.reasons,
