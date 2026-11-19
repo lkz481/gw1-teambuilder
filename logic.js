@@ -1038,8 +1038,8 @@
     const fxSids = new Set(fxOut.map(f => f.sid)), protOf = list => GW.protTotal(list, INC, NM ? "nm" : ELITE, opts.allies || 8);
     { const ps = out.filter(o => o.cat === "prot" && fxSids.has(o.sid)), solo = ps.map(o => protOf(fxOut.filter(f => f.sid === o.sid))), sumS = solo.reduce((a, b) => a + b, 0), tot = protOf(fxOut); ps.forEach((o, k) => { o.dps = sumS > 0 ? solo[k] * tot / sumS : 0; }); }
     const protExtra = out.filter(o => o.cat === "prot" && !fxSids.has(o.sid)).reduce((a, o) => a + o.dps, 0);
-    // Heilung mit Bedingung: "while moving" wirkt im Kampf kaum (25 %), "below 75% Health" nur zeitweise (50 %). Annahmen.
-    out.forEach(o => { if (o.cat !== "heal" || !o.sid) return; const x = GW.skill(o.sid), dx = (x && x.d || "").toLowerCase(); const k = /while moving/.test(dx) ? 0.25 : /below \d+% health|under \d+% health/.test(dx) ? 0.5 : 1; if (k < 1) { o.dps *= k; o.detail += ", an Bedingung geknüpft: zählt zu " + Math.round(k * 100) + " %"; } });
+    // Heilung mit Bedingung: "while moving" zählt im Kampf nicht (dort steht die Gruppe, und "Fall Back!" endet laut Wiki beim ersten Angriffstreffer), "below 75% Health" nur zeitweise (50 %, Annahme).
+    out.forEach(o => { if (o.cat !== "heal" || !o.sid) return; const x = GW.skill(o.sid), dx = (x && x.d || "").toLowerCase(); const k = /while moving/.test(dx) ? 0 : /below \d+% health|under \d+% health/.test(dx) ? 0.5 : 1; if (k < 1) { o.dps *= k; o.detail += k ? ", an Bedingung geknüpft: zählt zu " + Math.round(k * 100) + " %" : ", wirkt nur in Bewegung: zählt im Kampf nicht"; } });
     // Heilung: Mehr als ankommt, kann nicht geheilt werden
     { const hs = out.filter(o => o.cat === "heal" && o.dps > 0), raw = hs.reduce((a, o) => a + o.dps, 0); if (raw > INC) { hs.forEach(o => { o.dps *= INC / raw; }); notes.push("Heilung auf den ankommenden Schaden begrenzt (" + Math.round(INC) + "/s). Die Leiste könnte " + Math.round(raw) + "/s heilen."); } }
     const total = sum("dmg"), heal = sum("heal"), prot = sum("prot"), ctrl = Math.min(n, sum("ctrl"));
