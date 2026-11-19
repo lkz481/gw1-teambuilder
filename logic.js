@@ -693,9 +693,9 @@
       // Direktschaden
       let dm = null;
       if (/for each point of energy lost/.test(d)) { const el = d.match(/causes (\d+\.\.\.\d+) energy loss/); const per = d.match(/deals (\d+) damage[^.]*for each point/); if (el && per) dm = at(el[1], r) * +per[1]; }
-      if (dm == null) { const m = d.match(/(?:deals?|causes?|take|takes) \+?(\d+(?:\.\.\.\d+)?) (?:\w+ )?damage/); if (m) dm = at(m[1], r); }
+      if (dm == null) { const m = d.match(/(?:deals?|causes?|take|takes) \+?(\d+(?:\.\.\.\d+)?) (?:(?!less |more |fewer )\w+ )?damage/); if (m) dm = at(m[1], r); }
       if (dm == null && !/(its attacks|these spirits) (deal|steal)/.test(dRaw)) { const m = dd.match(/\+?(\d+\.\.\.\d+) Punkte (?:\w+ )?(?:Sakral-|Feuer|Kälte|Blitz|Erd|Dunkel|Chaos|heiligen )?Schaden/); if (m) dm = at(m[1], r); }
-      const dmS = (d.split(/(?<=[.:)]) /).find(x => /(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:\w+ )?damage/.test(x)) || d);
+      const dmS = (d.split(/(?<=[.:)]) /).find(x => /(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:(?!less |more |fewer )\w+ )?damage/.test(x)) || d);
       const perAttack0 = /whenever you attack|when you attack|attacks deal|your attacks|whenever you hit|next \d+ attacks?/.test(dmS) || (dm != null && !/(?:deals?|causes?|take|takes) \+?\d/.test(d) && /Angriffe (verursachen|richten)/.test(dd));
       // Schadensrückwurf und Lebenspunktverlust am Gegner: Spoil Victor, Pain Inverter (höchstens 80 je Treffer des Gegners)
       if (dm == null) { const m = d.match(/causes (\d+(?:\.\.\.\d+)?) health loss whenever/); if (m) dm = at(m[1], r); }
@@ -717,7 +717,7 @@
         const allyW = /weapon spell/i.test(s.t) && d.match(/ends after (\d+(?:\.\.\.\d+)?) attack/);
         if (allyW) {
           const k = at(allyW[1], r);
-          parts.push({ kind: "Waffenzauber", per: dm * k, dur: 0, aoe: aoeMul(d, n), limit: (opts.physRate != null ? opts.physRate : attackRate) / Math.max(1, k), label: "Waffenzauber auf Verbündete, " + k + " Angriffe" });
+          parts.push({ kind: "Waffenzauber", per: dm * k, dur: 0, aoe: /to \d+ adjacent foes/.test(d) ? Math.min(+(d.match(/to (\d+) adjacent foes/) || [0, 3])[1], n - 1) : aoeMul(d, n), limit: (opts.physRate != null ? opts.physRate : attackRate) / Math.max(1, k), label: "Waffenzauber auf Verbündete, " + k + " Angriffe" });
         } else if (perAttack && !/attack/i.test(s.t) && endsK) {
           const k = at(endsK[1], r);
           parts.push({ kind: "Direkt", per: dm * k, dur: 0, aoe: aoeMul(d, n), limit: attackRate / Math.max(1, k), label: "je Treffer, endet nach " + k + " Treffern" });
@@ -734,7 +734,7 @@
           const dual = /dual attack/i.test(s.t) ? 2 : 1;
           const deathP = /if (target|this|that) (foe|ally|creature) dies/.test(d) ? 0.5 : 1;
           const tot = (every ? dm * +every[1] * flee : dm) * deathP * (/pet attack/i.test(s.t) ? 1.33 : 1) * dual + (dual > 1 && w ? wPer : 0);
-          parts.push({ kind: "Direkt", per: tot, dur: 0, aoe: aoeAt(/(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:\w+ )?damage/), limit: onDeath ? (/corpse|exploit/.test(d) ? CORPSE : DEATH) : undefined, label: onDeath ? "beim Tod eines Gegners (eine Leiche alle 6 s" + (/corpse|exploit/.test(d) && opts.corpseShare < 1 ? ", geteilt im Team" : "") + ")" : dual > 1 ? "Doppelangriff, zwei Treffer" : /pet attack/i.test(s.t) ? "Tierangriff" : /attack/i.test(s.t) ? "Angriffsbonus" : condP < 1 ? "Direktschaden, bedingt (wartet auf die Gelegenheit)" : "Direktschaden" });
+          parts.push({ kind: "Direkt", per: tot, dur: 0, aoe: aoeAt(/(?:deals?|causes?|take|takes) \+?\d+(?:\.\.\.\d+)? (?:(?!less |more |fewer )\w+ )?damage/), limit: onDeath ? (/corpse|exploit/.test(d) ? CORPSE : DEATH) : undefined, label: onDeath ? "beim Tod eines Gegners (eine Leiche alle 6 s" + (/corpse|exploit/.test(d) && opts.corpseShare < 1 ? ", geteilt im Team" : "") + ")" : dual > 1 ? "Doppelangriff, zwei Treffer" : /pet attack/i.test(s.t) ? "Tierangriff" : /attack/i.test(s.t) ? "Angriffsbonus" : condP < 1 ? "Direktschaden, bedingt (wartet auf die Gelegenheit)" : "Direktschaden" });
         }
       }
       { const rv = dRaw.match(/hits the source for that same amount \(maximum (\d+(?:\.\.\.\d+)?)\)/); if (rv) parts.push({ kind: "Direkt", per: Math.min(80, at(rv[1], r)), dur: 0, aoe: 1, label: "wirft den nächsten Treffer zurück (höchstens " + at(rv[1], r) + ")" }); }
@@ -831,7 +831,7 @@
       }
       if (hasHB && s.aid === 13 && /spell/i.test(s.t)) parts.forEach(p => { if (p.kind === "Heilung") { p.per *= 1.5; p.label += ", +50 % durch Segen des Heilers"; } });
       // Gunst der Götter: Mönchszauber auf Verbündete heilen zusätzlich 3,2 je Rang (Wiki "Divine Favor")
-      if (bar.pri === 3 && s.p === 3 && /spell/i.test(s.t) && /Verbündete/.test(dd) && rank(16) > 0) parts.push({ kind: "Heilung", per: Math.round(3.2 * rank(16)) * (hasSk("Smiter's Boon") && s.aid === 14 ? 2 : 1), dur: 0, aoe: 1, label: "Gunst der Götter " + Math.round(3.2 * rank(16)) });
+      if (bar.pri === 3 && s.p === 3 && /spell/i.test(s.t) && (/Verbündete/.test(dd) || parts.some(p => p.kind === "Heilung" || p.kind === "Schutz")) && rank(16) > 0) parts.push({ kind: "Heilung", per: Math.round(3.2 * rank(16)) * (hasSk("Smiter's Boon") && s.aid === 14 ? 2 : 1), dur: 0, aoe: 1, label: "Gunst der Götter " + Math.round(3.2 * rank(16)) });
       const isMinion = minions.some(m => m.i === i);
       const isCtrl = s.n === "Panic" || /hex/i.test(s.t) && /(attack|cast)[^.]*% slower|% slower spell casting|doubles? (spell casting|skill activation|casting) time/i.test(s.d || "") || /knock[s]?[- ]?down|interrupt|Dazed|Blind|disable/i.test(s.d || "") && !/enchantment|stance|shout|chant|form/i.test(s.t.replace(/hex/i, "")) || /Dazed|Blind|knock/i.test(s.d || "") && /attack|shout/i.test(s.t);
       if (!parts.length && !gain && !isMinion && !isCtrl) continue;
