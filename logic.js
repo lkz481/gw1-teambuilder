@@ -562,7 +562,8 @@
     const SNARE = new Set(["Deep Freeze", "Grasping Earth", "Frozen Burst", "Ice Spikes", "Teinai's Prison"]);
     const INC = n * (opts.foeDps || 40);
     // Zielrüstung (Wiki "Armor rating"): je 40 Rüstung halbiert sich rüstungsabhängiger Schaden, 60 ist die Basis
-    const AR = opts.armor || 60, af = Math.pow(2, (60 - AR) / 40), afAir = Math.pow(2, (60 - AR * 0.75) / 40);
+    const AR0 = opts.armor || 60, crack = opts.crack != null ? opts.crack : GW.crackOf(bar, eff, n), AR = AR0 > 60 ? Math.max(60, AR0 - 20 * crack) : AR0, af = Math.pow(2, (60 - AR) / 40), afAir = Math.pow(2, (60 - AR * 0.75) / 40);
+    if (crack > 0.02 && AR0 > 60) notes.push("Rüstungsbruch: Die Gegner tragen ihn " + Math.round(crack * 100) + " % der Zeit, gerechnet mit Rüstung " + Math.round(AR) + " statt " + AR0 + " (Wiki: −20, nie unter 60).");
     const armorOf = (x, air) => { const m = x.match(/\d (fire|cold|lightning|earth|slashing|piercing|blunt|physical|chaos|dark) damage/); return !m ? 1 : m[1] === "lightning" && air ? afAir : af; }; // 25 % Rüstungsdurchdringung haben nur Luftmagie-Zauber (Wiki "Armor penetration")
     const boost = new Map(); const rank = a => Math.min(20, (eff.get(a) || 0) + (boost.get(a) || 0));
     const sk = bar.skills.map((id, i) => [i, GW.skill(id)]).filter(x => x[1]);
@@ -668,6 +669,12 @@
       if (cost && bar.pri === 2 && (/attack|ritual|touch/i.test(s.t + " " + d) || s.p === 2)) cost *= 1 - 0.04 * rank(23);
       if (cost && bar.pri === 10 && s.p === 10 && /enchant/i.test(s.t)) cost *= 1 - 0.04 * rank(44);
       if (cost && stN && /binding ritual/i.test(s.t)) cost = Math.max(5, cost - 15);
+      // Kostenminderer (Wiki-Texte), mit ihrer Laufzeit gewichtet
+      if (cost) { const upS = (nm, rng, a) => { const x = sk.find(y => y[1].n.replace(/ \((Kurzick|Luxon)\)$/, "") === nm); if (!x) return 0; return Math.min(1, at(rng, a < 0 ? 15 : rank(a)) / Math.max(1, frac(x[1].rc) + frac(x[1].ac))); };
+        if (/spell|ritual/i.test(s.t) && hasSk("Attuned Was Songkai")) cost *= 1 - (at("5...50", rank(36)) / 100) * upS("Attuned Was Songkai", "45", 36);
+        if (s.p === 4 && /spell/i.test(s.t) && hasSk("Cultist's Fervor")) cost = Math.max(1, cost - at("1...6", rank(4)) * Math.min(1, (5 + 3 * rank(6)) / 26));
+        if (/spell/i.test(s.t) && /target ally|other ally|target other/.test(dRaw) && hasSk("Selfless Spirit")) cost = Math.max(1, cost - 3 * upS("Selfless Spirit", "15...20", -1));
+        if (/bow attack/i.test(s.t) && hasSk("Expert Focus")) cost = Math.max(1, cost - at("1...2", rank(23)) * upS("Expert Focus", "24", 23)); }
       const parts = [];
       const sents = d.split(/(?<=[.:)]) /);
       const aoeAll = /(^|[.:)] )(also (hits|affects|strikes)|hits (\d+ )?(foes|all)|affects (foes|all)|strikes (foes|all))/.test(d);
@@ -682,6 +689,13 @@
       const gm = dRaw.match(/you gain (\d+(?:\.\.\.\d+)?) energy(?! (?:whenever|when|each time|for each|every))/) || dRaw.match(/health and (\d+(?:\.\.\.\d+)?) energy/);
       if (gm) gain = at(gm[1], r) * (condP < 1 ? 1 : / if |interrupt/.test(dRaw) ? 0.5 : 1);
       const el2 = dRaw.match(/causes (\d+(?:\.\.\.\d+)?) energy loss\. you gain (\d+) energy for each/); if (el2) gain = at(el2[1], r) * +el2[2];
+      // Weitere Energiegewinne aus dem Text (Wiki): je getroffenem Gegner, je Verbündetem in der Nähe, je erschaffener Kreatur, vom eigenen Geist
+      if (!gm && !el2) { let m;
+        if ((m = dRaw.match(/gain (\d+(?:\.\.\.\d+)?) energy(?: and \d+ adrenaline)? for each foe (?:you hit|struck|hit)/))) gain += at(m[1], r) * Math.min(/scythe/i.test(s.t) ? 3 : n, n);
+        else if ((m = dRaw.match(/you gain (\d+(?:\.\.\.\d+)?) energy \(maximum (\d+(?:\.\.\.\d+)?) energy\) for each nearby ally/))) gain += Math.min(at(m[2], r), at(m[1], r) * Math.max(1, Math.round((opts.allies || 8) / 2)));
+        else if ((m = dRaw.match(/gain (\d+) energy \(maximum (\d+(?:\.\.\.\d+)?) energy\) for each summoned creature/))) { if (sk.some(x => /binding ritual/i.test(x[1].t) || /animate|creates? \d? ?level/i.test(x[1].d || "") || x[1].n === "Signet of Spirits")) gain += at(m[2], r); }
+        else if ((m = dRaw.match(/you gain (\d+(?:\.\.\.\d+)?)% of that energy/)) && /spirit nearest you/.test(dRaw)) { if (sk.some(x => /binding ritual/i.test(x[1].t) || x[1].n === "Signet of Spirits")) gain += 31 * at(m[1], r) / 100; } // Wiki "Spirit": Geister haben 31 Energie
+        else if ((m = dRaw.match(/(?:^|[.;] ?)(?:you )?gain (\d+(?:\.\.\.\d+)?) energy(?! (?:whenever|when|each time|for each|every|regeneration|\())([^.]*)/))) gain += at(m[1], r) * (/ if |unless/.test(m[2]) ? 0.5 : 1); }
       if (s.n === "Blessed Signet") gain += Math.min(at("3...24", r), 3 * sk.filter(x => isMaint0(x[1])).length);
       if (bar.pri === 9 && /shout|chant/i.test(s.t)) gain += Math.min(2 * (opts.allies || 8), Math.floor(rank(40) / 2));
       if (tear && hasPR) { cost += 5 * (1 - 0.04 * rank(44)); gain += at("0...5", rank(44)); } // Fromme Erneuerung wird nach jedem Entfernen neu gewirkt und gibt beim Enden Energie zurück
@@ -794,9 +808,9 @@
         if ((m = dRaw.match(/target ally deals \+(\d+(?:\.\.\.\d+)?) damage.{0,70}?with the next attack/))) { const v = at(m[1], r); if ((opts.physRate || 0) + attackRate > 0) parts.push({ kind: "Direkt", per: v, dur: 0, aoe: 1, label: "+" + v + " auf den nächsten Angriff eines Verbündeten" }); }
         if (/adds \+20% armor penetration/.test(dRaw) && opts.physRate) { const D = sdur || 10, fac = Math.pow(2, 0.2 * AR / 40) - 1; parts.push({ kind: "Verbündeten-Bonus", per: 25 * af * fac * opts.physRate * D, dur: D, aoe: 1, label: "20 % Rüstungsdurchdringung für die Angriffe eines Verbündeten (25 Grundschaden je Treffer angenommen)" }); }
         if (!w && /weapon spell/i.test(s.t) && (m = dRaw.match(/^[^.]*\.\s*\([^)]*\)\s*attacks deal \+(\d+(?:\.\.\.\d+)?) damage/)) && opts.physRate) { const v = at(m[1], r), D = sdur || 20; parts.push({ kind: "Verbündeten-Bonus", per: v * opts.physRate * D, dur: D, aoe: 1, label: "+" + v + " je Treffer des Nahkämpfers (wirkt nicht auf Verzauberte)" }); }
-        if ((m = dRaw.match(/reduces damage you take by (\d+(?:\.\.\.\d+)?)/))) { const x = at(m[1], r), v = HIT * (0.5 * Math.min(1, x / SMALL) + 0.5 * Math.min(1, x / BIG)), D = sdur || 10; parts.push({ kind: "Schutz", per: v * (INC / allies / HIT) * D, dur: D, aoe: 1, label: "−" + x + " je Treffer, nur für den Helden selbst" }); }
-        if ((m = dRaw.match(/take (\d+(?:\.\.\.\d+)?)% less damage from burning foes/))) { const v = at(m[1], r) / 100, D = sdur || 10, burn = sk.some(x => /burning/i.test(x[1].d || "") && x[1].n !== s.n) || (opts.team && opts.team.burn); if (burn) parts.push({ kind: "Schutz", per: v * INC * 0.5 * D, dur: D, aoe: 1, label: Math.round(v * 100) + " % weniger Schaden von brennenden Gegnern (Brennen liegt auf der Hälfte der Gegner)" }); else notes.push((s.de || s.n) + " zählt nicht: Niemand setzt Gegner in Brand."); }
-        if (/cannot lose more than 5% max health from a single attack or spell/.test(dRaw)) { const D = 60; parts.push({ kind: "Schutz", per: (BIG - 0.05 * MAXHP) * (0.4 * INC * 0.5 / BIG) * 0.5 * D, dur: D, aoe: 1, label: "Treffer auf 5 % begrenzt (halb gezählt, weil jeder Treffer Energie kostet)" }); }
+        if ((m = dRaw.match(/reduces damage you take by (\d+(?:\.\.\.\d+)?)/))) { const x = at(m[1], r), v = HIT * (0.5 * Math.min(1, x / SMALL) + 0.5 * Math.min(1, x / BIG)), D = sdur || 10; parts.push({ kind: "Schutz", per: v * (INC / allies / HIT) * D, dur: D, aoe: 1, fx: { type: "flat", val: x, cov: 1 / allies }, label: "−" + x + " je Treffer, nur für den Helden selbst" }); }
+        if ((m = dRaw.match(/take (\d+(?:\.\.\.\d+)?)% less damage from burning foes/))) { const v = at(m[1], r) / 100, D = sdur || 10, burn = sk.some(x => /burning/i.test(x[1].d || "") && x[1].n !== s.n) || (opts.team && opts.team.burn); if (burn) parts.push({ kind: "Schutz", per: v * INC * 0.5 * D, dur: D, aoe: 1, fx: { type: "pct", val: v * 0.5, cov: 1 }, label: Math.round(v * 100) + " % weniger Schaden von brennenden Gegnern (Brennen liegt auf der Hälfte der Gegner)" }); else notes.push((s.de || s.n) + " zählt nicht: Niemand setzt Gegner in Brand."); }
+        if (/cannot lose more than 5% max health from a single attack or spell/.test(dRaw)) { const D = 60; parts.push({ kind: "Schutz", per: (BIG - 0.05 * MAXHP) * (0.4 * INC * 0.5 / BIG) * 0.5 * D, dur: D, aoe: 1, fx: { type: "cap", val: 0.05 * MAXHP, cov: 0.4, upF: 0.5 }, label: "Treffer auf 5 % begrenzt (halb gezählt, weil jeder Treffer Energie kostet)" }); }
         if (/ward/i.test(s.t) && (m = dRaw.match(/causes -?(\d+(?:\.\.\.\d+)?) health degeneration to foes in the area/))) { const p = at(m[1], r), D = sdur || 5; parts.push({ kind: "Degeneration", per: p * 2 * D, dur: D, aoe: n, label: "Lebenspunkte-Degeneration im Bereich" }); }
         if ((m = dRaw.match(/you gain (\d+(?:\.\.\.\d+)?) health and \d+(?:\.\.\.\d+)? energy if target foe is below/))) { const v = at(m[1], r) * 0.5; parts.push({ kind: "Heilung", per: v, dur: 0, aoe: 1, label: "Selbstheilung, nur gegen Gegner unter 50 % (halb gezählt)" }); }
         if (/for each rank in divine favor whenever target takes damage/.test(dRaw)) { const v = 2 * rank(16), D = sdur || at("2...5", r); if (v > 0) parts.push({ kind: "Heilung", per: v * (0.4 * INC * (0.5 / SMALL + 0.5 / BIG)) * D, dur: D, aoe: allies, label: "Gruppenheilung " + v + " bei jedem Treffer auf das Ziel" }); }
@@ -830,9 +844,11 @@
         // Wirkt der Effekt nur auf den Wirker selbst ("You have +20 armor"), schützt er nur dessen Anteil an den Treffern
         const selfOnly = /you have \+\d+(\.\.\.\d+)? armor|you (have|gain) (a )?\d+(\.\.\.\d+)?% chance to block|you block/i.test(d);
         // Schutzgeister halten nur so lange, wie ihre Lebenspunkte reichen (Wiki "Spirit": Stufe mal 20, je Rang Macht des Herbeirufens +4 %; Shelter, Union, Displacement)
-        let capPer; const lossM = dRaw.match(/this spirit loses (\d+(?:\.\.\.\d+)?) health/) || dRaw.match(/spirit takes (\d+) damage/), lvS = dRaw.match(/level (\d+(?:\.\.\.\d+)?) spirit/);
-        if (lossM && lvS && /binding ritual/i.test(s.t)) { const H = at(lvS[1], r) * 20 * (bar.pri === 8 ? 1 + 0.04 * rank(36) : 1), loss = at(lossM[1], r) * aouF, saved = capM ? BIG - 0.1 * MAXHP : blkM ? SMALL * 1.2 : Math.min(at(lossM[1], r), SMALL); capPer = H / Math.max(1, loss) * saved * 0.8; lab += ", Geist hält rund " + Math.round(H / Math.max(1, loss)) + " Treffer aus" + (aouF < 1 ? " (mit Rüstung der Gefühllosigkeit)" : ""); }
-        if (perHit > 0) parts.push({ kind: "Schutz", per: perHit * (selfOnly ? INC / allies / HIT : HITRATE) * D2, dur: D2, aoe: selfOnly ? 1 : mult, capPer, label: lab + (selfOnly ? ", nur für den Helden selbst" : "") });
+        const lossM = dRaw.match(/this spirit loses (\d+(?:\.\.\.\d+)?) health/) || dRaw.match(/spirit takes (\d+) damage/), lvS = dRaw.match(/level (\d+(?:\.\.\.\d+)?) spirit/);
+        let hits; if (lossM && lvS && /binding ritual/i.test(s.t)) { const H = at(lvS[1], r) * 20 * (bar.pri === 8 ? 1 + 0.04 * rank(36) : 1); hits = H / Math.max(1, at(lossM[1], r) * aouF) * 0.8; lab += ", Geist hält rund " + Math.round(H / Math.max(1, at(lossM[1], r) * aouF)) + " Treffer aus" + (aouF < 1 ? " (mit Rüstung der Gefühllosigkeit)" : ""); }
+        const fx = pctM ? { type: "pct", val: at(pctM[1], r) / 100 } : capM ? { type: "cap", val: 0.1 * MAXHP } : redM ? { type: "flat", val: at(redM[1], r) } : blkM ? { type: "block", val: +blkM[1] / 100 } : armM && !/hex/i.test(s.t) ? { type: "armor", val: at(armM[1], r) } : null;
+        if (fx) { fx.cov = selfOnly ? 1 / allies : many ? 1 : 0.4; if (hits) fx.hits = hits; }
+        if (perHit > 0) parts.push({ kind: "Schutz", per: perHit * (selfOnly ? INC / allies / HIT : HITRATE) * D2, dur: D2, aoe: selfOnly ? 1 : mult, fx, label: lab + (selfOnly ? ", nur für den Helden selbst" : "") });
       }
       // ---- Diener und Geister (Wiki: Minion, Bone Horror, Bone Fiend, Flesh Golem, Spirit) ----
       const lvM = d.match(/level (\d+\.\.\.\d+) (bone horror|bone fiend|vampiric horror|shambling horror|flesh golem|bone minion)/) || d.match(/creates? (?:two|2) level (\d+\.\.\.\d+) (bone minion)/) || d.match(/animates? a level (\d+\.\.\.\d+) (bone horror)/);
@@ -864,7 +880,7 @@
       // Gruppenheilung trifft auch Unverletzte: Im Kampf ist etwa die halbe Gruppe verletzt (Annahme), nur dieser Teil zählt
       parts.forEach(p => { if (p.kind === "Heilung" && p.aoe === allies && allies > 2) { p.aoe = allies * 0.5; p.label += ", zählt für die halbe Gruppe"; } });
       // Stirbt ein Schutzgeist vor Ablauf, wird er neu gerufen, sobald er aufgeladen ist
-      const capBound = parts.some(p => p.capPer != null && p.dur > 0 && p.capPer < p.per * p.aoe * 0.9);
+      const capBound = parts.some(p => p.fx && p.fx.hits);
       let rate = 1 / (holds && !capBound ? Math.max(T, parts[0].dur) : T);
       const maintS = isMaint(s); if (maintS) { rate = Math.min(rate, 1 / 120); cost = 0; } // einmal wirken, danach zahlt der Pip-Abzug
       if (isMinion) rate = Math.min(rate, CORPSE);
@@ -890,7 +906,16 @@
     if (w && hitEnergy) { const v = attackRate * hitEnergy; extra += v; eNotes.push("Energie je Treffer +" + v.toFixed(1)); }
     if (w && critEnergy) { const v = attackRate * (critChance || 0) * critEnergy; extra += v; eNotes.push("Energie je kritischem Treffer +" + v.toFixed(1)); }
     if (hasSk("Essence Bond")) { const v = 0.4 * INC * (0.5 / SMALL + 0.5 / BIG); extra += v; eNotes.push("Essenzbindung +" + v.toFixed(1)); }
+    { const crSk = sk.filter(x => /binding ritual|nature ritual/i.test(x[1].t) || /animate|creates? (a|two|three|\d) /i.test(x[1].d || "") || x[1].n === "Signet of Spirits"), bc = sk.find(x => /you gain \d+(\.\.\.\d+)? health and (\d+(?:\.\.\.\d+)?) energy whenever you create a creature/i.test(x[1].d || ""));
+      if (bc && crSk.length) { const cr = uses.filter(u => crSk.some(x => x[1].id === u.s.id)).reduce((a, u) => a + u.rate * (u.s.n === "Signet of Spirits" ? 3 : /two|2 level/i.test(u.s.d || "") ? 2 : 1), 0), v = at((bc[1].d.match(/health and (\d+(?:\.\.\.\d+)?) energy/i) || [0, "0"])[1], rank(bc[1].aid)) * cr; extra += v; eNotes.push("Segen der Schöpfung +" + v.toFixed(1)); }
+      const ch = sk.find(x => x[1].n === "Channeling"); if (ch) { const spells = uses.filter(u => /spell/i.test(u.s.t)).reduce((a, u) => a + u.rate, 0), v = spells * 1; extra += v; eNotes.push("Kanalisieren +" + v.toFixed(1) + " (ein Gegner im Bereich angenommen)"); }
+      const vr = sk.find(x => /gain \+(\d+(?:\.\.\.\d+)?) energy regeneration/i.test(x[1].d || "") && !/cannot self-target/i.test(x[1].d || "")); if (vr) { const v = at((vr[1].d.match(/gain \+(\d+(?:\.\.\.\d+)?) energy regeneration/i))[1], vr[1].aid < 0 ? 15 : rank(vr[1].aid)) / 3; extra += v; eNotes.push((vr[1].de || vr[1].n) + " +" + v.toFixed(1)); } }
     if (opts.bipPips) { extra += opts.bipPips / 3; eNotes.push("Energie aus dem Team +" + (opts.bipPips / 3).toFixed(1)); }
+    // Arkanes Echo (Wiki): Der nächste Zauber wird kopiert, die Kopie bleibt 20 s, danach ist Arkanes Echo 20 s gesperrt: ein Durchlauf alle 42 s. Helden echoen laut Wiki "Hero behavior" einen zufälligen Zauber, der Spieler seine Elite.
+    if (hasSk("Arcane Echo")) { const sp = uses.filter(u => /spell/i.test(u.s.t) && u.parts.length && !u.maint && u.s.n !== "Arcane Echo"), extraOf = u => 1 + Math.floor(20 / Math.max(1, frac(u.s.rc) + frac(u.s.ac) + 0.75));
+      if (sp.length) { const el = sp.find(u => u.s.e); if (!opts.hero && el) el.rate += extraOf(el) / 42; else sp.forEach(u => { u.rate += extraOf(u) / 42 / sp.length; });
+        const ae = sk.find(x => x[1].n === "Arcane Echo")[1]; uses.push({ s: ae, i: -1, rate: 1 / 42, cost: 15, gain: 0, parts: [], holds: false, isAtk: false, time: 2.75, minion: false });
+        notes.push("Arkanes Echo: " + (!opts.hero && el ? "kopiert die Elite-Fertigkeit" : "kopiert bei Helden einen zufälligen Zauber der Leiste (Wiki)") + ", ein Durchlauf alle 42 s."); } }
     const corpse = minions.length ? Math.min(1, CORPSE / uses.filter(u => u.minion).reduce((a, u) => a + u.rate, 0)) : 1;
     uses.forEach(u => { if (u.minion) u.rate *= corpse; });
     // Zeit zuerst: Ein Charakter kann nur eine Sache zugleich tun. Zauber kosten Wirkzeit plus 0,75 s Nachwirkzeit.
@@ -925,15 +950,17 @@
       const share = Math.min(1, uses.filter(u => u.isAtk).reduce((a, u) => a + u.rate, 0) / attackRate), fac = Math.pow(2, AR * rank(17) / 100 / 40) - 1, v = out[wIdx].dps * share * fac;
       if (v > 0.05) out.push({ name: "Stärke", dps: v, cat: "dmg", kind: "Waffe", detail: rank(17) + " % Rüstungsdurchdringung bei " + Math.round(share * 100) + " % der Treffer (Angriffsfertigkeiten)" });
     }
+    const fxOut = [];
     for (const u of uses) {
       const rate = u.rate, sc = opts.scale && opts.scale.has(u.s.id) ? opts.scale.get(u.s.id) : 1;
       if (sc < 1 && u.parts.some(p => p.dur > 0 || p.kind === "Pro Angriff" || /Waffenzauber|Verbündeten-Bonus/.test(p.kind))) notes.push((u.s.de || u.s.n) + " wirkt schon jemand anders im Team. Der Effekt stapelt sich nicht" + (sc > 0 ? " voll." : ", deshalb hier nicht gezählt."));
       let dps = 0; const det = [];
       for (const p of u.parts) {
         if (p.kind === "Pro Angriff") { const up = (u.maint ? 1 : Math.min(1, p.dur * rate)); const v = p.perAttack * attackRate * up * p.aoe * sc; dps += v; det.push(p.label + " " + p.perAttack + (attackRate ? "" : " (keine Waffe erkannt)")); }
-        else if (p.dur > 0) { const up = (u.maint ? 1 : Math.min(1, p.dur * rate)); const v = (p.per / p.dur) * up * p.aoe * sc; dps += v; det.push(p.label + " " + Math.round(up * 100) + " % Laufzeit"); }
+        else if (p.dur > 0) { const up = (u.maint ? 1 : Math.min(1, p.dur * rate)); const v = (p.per / p.dur) * up * p.aoe * sc; dps += v; det.push(p.label + (p.fx && p.fx.hits ? ", neu gerufen alle " + (1 / rate).toFixed(0) + " s" : " " + Math.round(up * 100) + " % Laufzeit")); }
         else { const v = p.per * rate * p.aoe * (/Waffenzauber|Verbündeten-Bonus/.test(p.kind) ? sc : 1); dps += v; det.push(p.label + " " + Math.round(p.per) + " alle " + (1 / rate).toFixed(1) + " s"); }
       }
+      u.parts.forEach(p => { if (p.fx) fxOut.push(Object.assign({}, p.fx, { up: (u.maint ? 1 : Math.min(1, p.dur * rate)) * (p.fx.upF || 1), rate, dur: p.dur, sid: u.s.id })); });
       // nach Art aufteilen
       const by = { dmg: 0, heal: 0, prot: 0 };
       u.parts.forEach((p, j) => { const v = p.kind === "Pro Angriff" ? p.perAttack * attackRate * (u.maint ? 1 : Math.min(1, p.dur * rate)) * p.aoe * sc : p.dur > 0 ? Math.min((p.per / p.dur) * (u.maint ? 1 : Math.min(1, p.dur * rate)) * p.aoe * sc, p.capPer != null ? p.capPer * rate : Infinity) : p.per * rate * p.aoe * (/Waffenzauber|Verbündeten-Bonus/.test(p.kind) ? sc : 1); by[p.kind === "Heilung" ? "heal" : p.kind === "Schutz" ? "prot" : "dmg"] += v; });
@@ -990,17 +1017,48 @@
     if (usedTitle) notes.push("Titel-Fertigkeiten sind mit maximalem Titelrang gerechnet.");
     out.forEach(o => { if (!o.cat) o.cat = "dmg"; });
     const sum = c => out.filter(o => o.cat === c).reduce((a, o) => a + o.dps, 0);
-    // Schutz überlappt: Ein geblockter Treffer kann nicht noch einmal gedeckelt werden. Zusammen nie mehr als der Schaden, der ankommt.
-    { const ps = out.filter(o => o.cat === "prot" && o.dps > 0), raw = ps.reduce((a, o) => a + o.dps, 0); if (raw > 0) { const comb = INC * (1 - ps.reduce((a, o) => a * (1 - Math.min(0.95, o.dps / INC)), 1)); ps.forEach(o => { o.dps *= comb / raw; }); } }
+    // Schutz in der Reihenfolge des Wikis ("Order of damage modifiers"): Die Leiste wird als Ganzes gerechnet, die Anzeige je Fertigkeit ist ihr Anteil daran.
+    const fxSids = new Set(fxOut.map(f => f.sid)), protOf = list => GW.protTotal(list, INC, ELITE, opts.allies || 8);
+    { const ps = out.filter(o => o.cat === "prot" && fxSids.has(o.sid)), solo = ps.map(o => protOf(fxOut.filter(f => f.sid === o.sid))), sumS = solo.reduce((a, b) => a + b, 0), tot = protOf(fxOut); ps.forEach((o, k) => { o.dps = sumS > 0 ? solo[k] * tot / sumS : 0; }); }
+    const protExtra = out.filter(o => o.cat === "prot" && !fxSids.has(o.sid)).reduce((a, o) => a + o.dps, 0);
     // Heilung mit Bedingung: "while moving" wirkt im Kampf kaum (25 %), "below 75% Health" nur zeitweise (50 %). Annahmen.
     out.forEach(o => { if (o.cat !== "heal" || !o.sid) return; const x = GW.skill(o.sid), dx = (x && x.d || "").toLowerCase(); const k = /while moving/.test(dx) ? 0.25 : /below \d+% health|under \d+% health/.test(dx) ? 0.5 : 1; if (k < 1) { o.dps *= k; o.detail += ", an Bedingung geknüpft: zählt zu " + Math.round(k * 100) + " %"; } });
     // Heilung: Mehr als ankommt, kann nicht geheilt werden
     { const hs = out.filter(o => o.cat === "heal" && o.dps > 0), raw = hs.reduce((a, o) => a + o.dps, 0); if (raw > INC) { hs.forEach(o => { o.dps *= INC / raw; }); notes.push("Heilung auf den ankommenden Schaden begrenzt (" + Math.round(INC) + "/s). Die Leiste könnte " + Math.round(raw) + "/s heilen."); } }
     const total = sum("dmg"), heal = sum("heal"), prot = sum("prot"), ctrl = Math.min(n, sum("ctrl"));
     if (ctrl > 0.05) notes.push("Kontrolle: Im Schnitt " + ctrl.toFixed(1).replace(".", ",") + " von " + n + " Gegnern ausgeschaltet. Je die Hälfte des Gegnerschadens kommt aus Angriffen und aus Fertigkeiten. Eine Unterbrechung kostet einen Angriff (1 s) oder einen Zauber (2 s).");
-    return { total, heal, prot, ctrl, incoming: INC, parts: out.filter(o => o.dps > (o.cat === "ctrl" ? 0.005 : 0.05)).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0, energyF: f };
+    return { total, heal, prot, ctrl, incoming: INC, parts: out.filter(o => o.dps > (o.cat === "ctrl" ? 0.005 : 0.05)).sort((a, b) => b.dps - a.dps), notes, attackRate, physical: w ? attackRate : 0, energyF: f, protFx: fxOut, protExtra };
   };
   // Effektive Ränge aus Grundwerten plus Runen der Ausrüstungsempfehlung
+  // ---------- Schutz: Reihenfolge der Schadensminderung nach Wiki "Order of damage modifiers" ----------
+  // Blocken (Zufallschancen multiplizieren sich, Wiki "Effect stacking") -> Rüstung (Boni aus Fertigkeiten zusammen höchstens +25, außer ein einzelner ist größer) -> Schadensgrenzen (Unterschlupf, Schutzbindung, Schutzgeist) -> prozentuale Minderung ("Sie stehen in Flammen!", Lebenssperre) -> Vereinigung und feste Abzüge (Steinfleisch-Aura, Schild der Absorption, Schützende Hände).
+  // Gegnerschaden: 50 % kleine Angriffe, 10 % Angriffsfertigkeiten, 40 % Zauber. Blocken wirkt nur auf die ersten beiden.
+  // Rüstungsbruch (Wiki "Cracked Armor"): −20 Rüstung, nie unter 60. Anteil der Zeit, in der die Gegner ihn tragen.
+  GW.crackOf = function (bar, eff, n) { let u = 0; for (const id of bar.skills) { const s = GW.skill(id); if (!s) continue; const d = (s.d || "").toLowerCase(); if (!/cracked armor/.test(d) || /if target foe has cracked armor|foe has cracked armor|suffering from cracked armor|you have cracked armor/.test(d)) continue;
+      const m = d.match(/cracked armor[^.(]*\((\d+(?:\.\.\.\d+)?) seconds?/) || d.match(/cracked armor (?:condition )?(?:for )?\(?(\d+(?:\.\.\.\d+)?) seconds?/) || d.match(/\((\d+(?:\.\.\.\d+)?) seconds?\)[^.]*cracked armor/); const r = /rank$/.test(s.a || "") ? 15 : Math.min(20, eff.get(s.aid) || 0), dur = m ? at(m[1], r) : 5;
+      const T = /A$/.test(String(s.cost || "")) ? 8 : Math.max(1, frac(s.rc) + frac(s.ac) + 0.75), wide = /also (affects|hits)|adjacent|nearby|in the area|foes near/.test(d);
+      u += Math.min(1, dur / T) * (wide ? 1 : 1 / Math.max(1, n)) * (/ if |end effect/.test(d) ? 0.5 : 1); } return Math.min(1, u); };
+  GW.protTotal = function (fx, INC, elite, allies) {
+    if (!fx || !fx.length || INC <= 0) return 0;
+    const SMALL = elite ? 34 : 28, BIG = elite ? 125 : 95;
+    const cls = [{ share: 0.5, h: SMALL, atk: true }, { share: 0.1, h: BIG, atk: true }, { share: 0.4, h: BIG, atk: false }];
+    const atkPS = INC * (0.5 / SMALL + 0.1 / BIG), bigPS = INC * 0.5 / BIG, allPS = INC * (0.5 / SMALL + 0.5 / BIG);
+    // Schutzgeister: Laufzeit aus Lebenspunkten und Trefferzahl, neu gerufen wird, sobald das Ritual aufgeladen ist
+    const q = fx.map(f => { let up = f.up; if (f.hits) { const ev = (f.type === "block" ? atkPS * f.val : f.type === "cap" ? bigPS : allPS) * f.cov, life = ev > 0 ? f.hits / ev : Infinity; up = Math.min(1, f.rate * Math.min(f.dur || 30, life)); } return Math.max(0, Math.min(1, up)) * f.cov; });
+    const of = t => fx.map((f, i) => [f, q[i]]).filter(x => x[0].type === t);
+    const pb = 1 - of("block").reduce((a, [f, p]) => a * (1 - p * f.val), 1);
+    const arms = of("armor"), aSum = arms.reduce((a, [f, p]) => a + p * f.val, 0), aMax = arms.reduce((a, [f, p]) => Math.max(a, p * f.val), 0), aEff = Math.max(Math.min(25, aSum), aMax);
+    const caps = of("cap"), pCap = 1 - caps.reduce((a, [f, p]) => a * (1 - p), 1), capV = caps.reduce((a, [f]) => Math.min(a, f.val), Infinity);
+    let prevented = 0;
+    for (const c of cls) { let rem = c.h * (1 - 0.8 * (1 - Math.pow(2, -aEff / 40)));
+      if (pCap > 0) rem = (1 - pCap) * rem + pCap * Math.min(rem, capV);
+      for (const [f, p] of of("pct")) rem *= 1 - p * f.val;
+      for (const [f, p] of of("flat")) rem -= p * Math.min(f.val, rem);
+      prevented += INC * c.share * (1 - (c.atk ? 1 - pb : 1) * Math.max(0, rem) / c.h); }
+    return Math.min(0.95 * INC, prevented);
+  };
+  // Schutz des ganzen Teams: alle Effekte aller Leisten gemeinsam durch die Reihenfolge
+  GW.teamProt = function (list, n, foeDps) { const INC = n * foeDps, L = list.filter(Boolean); return Math.min(0.95 * INC, GW.protTotal(L.flatMap(d => d.protFx || []), INC, foeDps > 50, L.length || 8) + L.reduce((a, d) => a + (d.protExtra || 0), 0)); };
   // ---------- Team: Was sich zwischen den Leisten gegenseitig beeinflusst ----------
   const RUNMEMO = new Map();
   GW.teamDps = function (bars, eff, weapon0, n, env) {
@@ -1018,15 +1076,15 @@
       if (hi>=0 && bars.length>1) { const L = Math.min(20, eff[hi].get(40)||0), b = Math.round(1 + 2*L/15), dur = 3 + 12*L/15;
         const wide = SK(bars[hi]).some(s=>/shout|chant/i.test(s.t) && /(allies|party members) (in|within) earshot|all allies|party members/i.test(s.d||"")), cov = wide ? 1 : Math.min(1, (dur/10)/(bars.length-1)), add = Math.round(b*cov);
         if (add>0) eff = eff.map((m,i)=> i===hi ? m : new Map([...m].map(([a,v])=>[a, v>0 ? Math.min(20, v+add) : v]))); } }
-    const allies = Math.max(bars.length, 1), base = { targets:n, foeRate:0.5, armor:env.armor, foeDps:env.foeDps, allies, snare, team };
+    const allies = Math.max(bars.length, 1), crackT = Math.min(1, bars.reduce((a,b,i)=>a+GW.crackOf(b, eff[i], n),0)), base = { targets:n, foeRate:0.5, armor:env.armor, foeDps:env.foeDps, allies, snare, team, crack:crackT };
     // gleiche Geister nur einmal im Team: Der Erste in der Reihe setzt sie
     const seenSp = new Set(), skips = bars.map(b=>{ const mine = GW.spiritIds(b), sk2 = new Set(mine.filter(id=>seenSp.has(id))); mine.forEach(id=>seenSp.add(id)); return sk2; });
     // gleiche Verhexung von mehreren: Flächen-Verhexungen zählen einmal, Einzel-Verhexungen so oft, wie es Ziele gibt
     const hexSeen = new Map(), scales = bars.map(b=>{ const m = new Map(); SK(b).forEach(s=>{ if (!/hex/i.test(s.t)) return; const j = hexSeen.get(s.id)||0; hexSeen.set(s.id, j+1); const aoe = /also hexes|adjacent|nearby|in the area/i.test(s.d); if (aoe ? j>0 : j>=n) m.set(s.id, 0); }); return m; });
     // Gleiche Leiste unter gleichen Bedingungen nur einmal rechnen (die Suche nach dem Vergleichsteam fragt dieselben Fälle sehr oft ab)
     const run = (i, phys, bp) => { const cs = cu>1 && corpseUser(bars[i]) ? 1/cu : 1;
-      const key = [bars[i].skills.join(","), [...eff[i]].join(";"), i===0 ? "w"+JSON.stringify(weapon0||0) : "p"+(Math.round(phys*1000)), bp, [...skips[i]].join(","), [...scales[i]].join(";"), cs, n, base.armor, base.foeDps, allies, snare?1:0, JSON.stringify(team)].join("|");
-      let v = RUNMEMO.get(key); if (!v) { if (RUNMEMO.size > 6000) RUNMEMO.clear(); v = GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys }, { bipPips:bp, skip:skips[i], scale:scales[i], corpseShare: cs })); RUNMEMO.set(key, v); } return v; };
+      const key = [crackT.toFixed(3), i===0 ? "S" : "H", bars[i].skills.join(","), [...eff[i]].join(";"), i===0 ? "w"+JSON.stringify(weapon0||0) : "p"+(Math.round(phys*1000)), bp, [...skips[i]].join(","), [...scales[i]].join(";"), cs, n, base.armor, base.foeDps, allies, snare?1:0, JSON.stringify(team)].join("|");
+      let v = RUNMEMO.get(key); if (!v) { if (RUNMEMO.size > 6000) RUNMEMO.clear(); v = GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys, hero:true }, { bipPips:bp, skip:skips[i], scale:scales[i], corpseShare: cs })); RUNMEMO.set(key, v); } return v; };
     const first0 = run(0, 0, 0); let pass = bars.map((b,i)=> i===0 ? first0 : run(i, first0.physical, 0));
     // Verstärkungen für Angreifer stapeln sich nicht: Ein Verbündeter trägt nur einen Waffenzauber, dieselbe Verzauberung oder derselbe Orden wirkt nur einmal
     const physCount = Math.max(1, pass.filter(D=>D.physical>0).length); let ws = 0; const buffSeen = new Map(); let changed = false;

@@ -141,4 +141,28 @@ const tpart = (D, name, cat) => D.parts.filter(p => p.sid === id(name) && p.cat 
   const bl = d => d.parts.filter(p => p.blind).reduce((a, p) => a + p.dps, 0), u = X[1].parts.find(p => p.blind).blind;
   T('Team: zweite Blindheit nur für die fehlende Zeit', bl(X[2]) / bl(X[1]), Math.max(0, Math.min(1, 2 * u) - u) / u, 0.03); }
 
+// ---------- Schutz: Reihenfolge nach Wiki "Order of damage modifiers" ----------
+// Gegner im schweren Modus: 120 Schaden/s, davon 50 % kleine Angriffe (28), 10 % Angriffsfertigkeiten (95), 40 % Zauber (95)
+{ const F = (type, val, o) => Object.assign({ type, val, cov: 1, up: 1, rate: 1, dur: 10 }, o || {}), P = fx => GW.protTotal(fx, 120, false, 8);
+  T('Schutz: 50 % Blocken wirkt nur auf Angriffe', P([F('block', 0.5)]), 120 * 0.6 * 0.5);
+  T('Schutz: zwei mal 50 % Blocken ergeben 75 % (Wiki "Effect stacking")', P([F('block', 0.5), F('block', 0.5)]), 120 * 0.6 * 0.75);
+  T('Schutz: Schadensgrenze 48 greift nur bei großen Treffern', P([F('cap', 48)]), 120 * 0.5 * (1 - 48 / 95));
+  T('Schutz: Blocken vor Schadensgrenze', P([F('block', 0.5), F('cap', 48)]), 120 * (0.5 * 0.5 + 0.1 * (1 - 0.5 * 48 / 95) + 0.4 * (1 - 48 / 95)));
+  T('Schutz: Schadensgrenze vor Prozent-Minderung (Unterschlupf, dann "Sie stehen in Flammen!")', P([F('cap', 48), F('pct', 0.145)]), 120 * (0.5 * 0.145 + 0.5 * (1 - 48 * 0.855 / 95)));
+  T('Schutz: fester Abzug 15 wirkt bei kleinen Treffern stärker', P([F('flat', 15)]), 120 * (0.5 * 15 / 28 + 0.5 * 15 / 95));
+  T('Schutz: Prozent vor festem Abzug', P([F('pct', 0.2), F('flat', 15)]), 120 * (0.5 * (1 - (28 * 0.8 - 15) / 28) + 0.5 * (1 - (95 * 0.8 - 15) / 95)));
+  T('Schutz: Rüstungsboni zusammen höchstens +25 (Wiki)', P([F('armor', 20), F('armor', 20)]), 120 * 0.8 * (1 - Math.pow(2, -25 / 40)));
+  T('Schutz: ein einzelner größerer Rüstungsbonus zählt voll', P([F('armor', 100), F('armor', 20)]), 120 * 0.8 * (1 - Math.pow(2, -100 / 40)));
+  T('Schutz: Einzelziel-Schutz sieht 40 % der Treffer', P([F('cap', 48, { cov: 0.4 })]), 120 * 0.5 * 0.4 * (1 - 48 / 95));
+  // Schutzgeist mit 5 Treffern Vorrat, alle 20 s neu: 0,63 große Treffer/s, lebt 7,9 s, also 39,6 % der Zeit
+  T('Schutz: Geist lebt nur, bis sein Vorrat verbraucht ist', P([F('cap', 48, { hits: 5, rate: 1 / 20, dur: 54 })]), 120 * 0.5 * (5 / (120 * 0.5 / 95) / 20) * (1 - 48 / 95)); }
+// Rüstungsbruch (Wiki "Cracked Armor"): −20 Rüstung, nie unter 60
+{ const b = bar(E, 0, { 10: 12, 12: 12 }, ['Flare']);
+  T('Rüstungsbruch: Rüstung 80 wird 60', part(run(b, { armor: 80, crack: 1 }), 'Flare'), 56 / 1.75);
+  T('Rüstungsbruch: Rüstung 100 wird 80', part(run(b, { armor: 100, crack: 1 }), 'Flare'), 56 * Math.pow(2, -0.5) / 1.75);
+  T('Rüstungsbruch: Rüstung 60 bleibt 60', part(run(b, { armor: 60, crack: 1 }), 'Flare'), 56 / 1.75); }
+// Arkanes Echo (Wiki): Kopie für 20 s, danach 20 s gesperrt, ein Durchlauf alle 42 s. Energy Burn (20 s Aufladen) bekommt je Durchlauf einen Einsatz dazu.
+{ const b = bar(ME, 0, { 2: 12 }, ['Energy Burn', 'Arcane Echo']);
+  T('Arkanes Echo: ein zusätzlicher Einsatz alle 42 s', part(run(b), 'Energy Burn'), lin(1, 10, 12) * 9 * (1 / (20 + 2 + AFT) + 1 / 42), 0.04); }
+
 console.log(ok + ' von ' + (ok + bad) + ' Fällen bestanden'); fails.forEach(f => console.log('  FEHLER  ' + f)); process.exit(bad ? 1 : 0);
