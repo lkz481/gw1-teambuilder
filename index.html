@@ -529,7 +529,8 @@ function computeDps(){
 }
 // Rechnet ein ganzes Team. Blut ist Kraft geht an die bis zu drei Verbündeten, denen am meisten Energie fehlt.
 function teamDps(bars, eff, weapon0, n){
-  const allies = Math.max(bars.length, 1), base = { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), allies };
+  const SN = ["Deep Freeze","Grasping Earth","Frozen Burst","Ice Spikes","Teinai's Prison"], snare = bars.some(b=>b.skills.some(id=>{ const s=GW.skill(id); return s && SN.includes(s.n); }));
+  const allies = Math.max(bars.length, 1), base = { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), allies, snare };
   // gleiche Geister nur einmal im Team: Der Erste in der Reihe setzt sie
   const seenSp = new Set(), skips = bars.map(b=>{ const mine = GW.spiritIds(b), sk2 = new Set(mine.filter(id=>seenSp.has(id))); mine.forEach(id=>seenSp.add(id)); return sk2; });
   const run = (i, phys, bp) => GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys }, { bipPips:bp, skip:skips[i] }));
@@ -1169,7 +1170,7 @@ function drawDps(body){
       <li>Kontrolle ("Gegner aus"): Niederschlag, Unterbrechung, Benommenheit, Blindheit, gesperrte Fertigkeiten und Panik zählen als Zeit, in der ein Gegner nichts tun kann. 1,0 heißt: Im Schnitt ist ständig ein Gegner ausgeschaltet. Annahmen: Die Hälfte der Gegner zaubert, die Hälfte greift an. Eine Unterbrechung kostet 2 Sekunden und jede zweite sitzt.</li>
       <li>Nebeneffekte der Erstattribute (Wiki): Schnellwirkung verkürzt Wirk- und Aufladezeit. Stärke gibt je Rang 1 % Rüstungsdurchdringung bei Angriffsfertigkeiten. Fachkenntnis und Mystik senken Energiekosten. Gunst der Götter heilt je Rang 3,2 zusätzlich. Seelensammlung, Kritische Stöße und Führung geben Energie. Macht des Herbeirufens verlängert Waffenzauber und gibt Dienern mehr Lebenspunkte. Energiespeicherung erhöht nur die Höchstenergie und ändert Dauerwerte nicht.</li>
       <li>Schutz: Gerechnet wird mit dem Schaden, der auf die Gruppe einprasselt (je Gegner 40/s, in Elite-Gebieten 60/s, Annahme). Schutz kann nie mehr verhindern, als ankommt. Mehrere Schutz-Effekte überlappen und werden nicht einfach addiert.</li>
-      <li>Flächenzauber am Boden (Strahl des Urteils, Feuersturm und ähnliche) zählen mit halber Dauer, weil Gegner herauslaufen. Das ist eine Annahme.</li>
+      <li>Flächenschaden über Zeit (Strahl des Urteils, Feuersturm, Chaossturm und ähnliche): Gegner laufen nach zwei bis drei Schadenspulsen auseinander (guildwiki.de, "Künstliche Intelligenz"). Gezählt werden 3 Pulse. Wirft der Zauber selbst um oder hat das Team eine Flächen-Verlangsamung wie Geistige Erfrierung, zählen alle Pulse. Einzelne Schadenspakete lösen kein Auseinanderlaufen aus (Wiki "Scatter").</li>
       <li>Stab und Zauberstab: 11-22 Schaden alle 1,75 Sekunden (Wiki), nur in der Zeit ohne Zauber.</li>
       <li>Auslöser durch Gegner-Aktionen: Eine Aktion alle 2 Sekunden angenommen.</li>
       <li>Weiter Annahmen, weil das Wiki dazu nichts misst: Diener leben im Kampf halb so lange wie ihre Zerfallszeit. Geister stehen fest und zählen deshalb nur zu 70 %. Der Tierschaden ist im Wiki nur für Tierbeherrschung 12 gemessen und wird auf andere Ränge wie Waffenschaden umgerechnet.</li>

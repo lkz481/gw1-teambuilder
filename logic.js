@@ -553,7 +553,9 @@
   // eff: Map Attribut -> Rang inkl. Runen; opts: {targets, weapon:[attr,typ], foeRate, physRate}
   GW.dps = function (bar, eff, opts) {
     const n = opts.targets || 1, out = [], notes = [];
-    let fcUsed = false, fleeUsed = false;
+    let fcUsed = false, fleeUsed = false, heldUsed = false, scatter = 0;
+    const ADOT = new Set(["Kirin's Wrath", "Ray of Judgment", "Symbol of Wrath", "Mystic Sandstorm", "Sandstorm", "Savannah Heat", "Searing Heat", "Bed of Coals", "Breath of Fire", "Celestial Storm", "Eruption", "Fire Storm", "Lava Font", "Maelstrom", "Unsteady Ground", "Chaos Storm", "Snow Storm", "Churning Earth", "Meteor Shower", "Balthazar's Aura", "Storm of Swords"]);
+    const SNARE = new Set(["Deep Freeze", "Grasping Earth", "Frozen Burst", "Ice Spikes", "Teinai's Prison"]);
     const INC = n * (opts.foeDps || 40);
     // Zielrüstung (Wiki "Armor rating"): je 40 Rüstung halbiert sich rüstungsabhängiger Schaden, 60 ist die Basis
     const AR = opts.armor || 60, af = Math.pow(2, (60 - AR) / 40), afAir = Math.pow(2, (60 - AR * 0.75) / 40);
@@ -665,8 +667,12 @@
       const endsK = d.match(/ends after (\d+(?:\.\.\.\d+)?) (?:hit|attack)/);
       if (dm != null) dm = dm * armorOf(dmS);
       const every = d.match(/(?:every|each) second \((\d+) seconds?\)/);
-          // Flächenzauber am Boden: Gegner laufen heraus, im schweren Modus besonders schnell (Wiki "Hard mode"). Annahme: Die halbe Dauer trifft.
-          const flee = every && /initial location|to location of|your location/.test(d) && !/knock/.test(d) ? 0.5 : 1; if (flee < 1) fleeUsed = true;
+          // Flächenschaden über Zeit löst Auseinanderlaufen aus (Wiki "Scatter", "Area damage over time"). Laut guildwiki.de "Künstliche Intelligenz" verteilen sich NSC nach zwei bis drei Schadenspulsen: Gezählt werden 3 Pulse.
+          // Ausnahme: Der Zauber wirft selbst um, oder im Team gibt es eine Flächen-Verlangsamung. Dann kommen die Gegner kaum vom Fleck (guildwiki.de, Beispiel Geistige Erfrierung).
+          const adot = every && (ADOT.has(s.n.replace(/ \(PvP\)$/, "")) || /initial location|to location of|your location/.test(d));
+          const held = /knock/.test(d) || opts.snare || sk.some(x => SNARE.has(x[1].n));
+          const flee = adot && !held ? Math.min(1, 3 / +every[1]) : 1; if (flee < 1) fleeUsed = true; if (adot && held) heldUsed = true;
+          if (adot && !held) scatter += 1;
       if (/allies in this ward deal/.test(dRaw)) dm = null;
       if (dm != null && dm > 0) {
         const allyW = /weapon spell/i.test(s.t) && d.match(/ends after (\d+(?:\.\.\.\d+)?) attack/);
@@ -850,7 +856,8 @@
       out.push({ name: "Tiergefährte", dps: per / iv, cat: "dmg", kind: "Tier", detail: Math.round(per) + " je Treffer, alle " + iv.toFixed(2) + " s" + (petIas ? " (Angriffstempo +" + Math.round(petIas) + " %)" : "") });
       notes.push("Tiergefährte: Wiki-Messwert für Tierbeherrschung 12, auf deinen Rang umgerechnet wie Waffenschaden. Diese Umrechnung ist eine Annahme.");
     }
-    if (fleeUsed) notes.push("Flächenzauber am Boden zählen mit halber Dauer, weil Gegner herauslaufen (Annahme).");
+    if (fleeUsed) notes.push("Flächenschaden über Zeit: Gegner laufen nach zwei bis drei Schadenspulsen auseinander (guildwiki.de). Gezählt werden 3 Pulse.");
+    if (heldUsed) notes.push("Flächenschaden über Zeit zählt voll: Niederschlag oder eine Flächen-Verlangsamung hält die Gegner im Bereich.");
     if (fcUsed) notes.push("Schnellwirkung " + rank(0) + ": Wirkzeit " + Math.round(Math.pow(0.5, rank(0) / 15) * 100) + " %, Aufladezeit der Mesmer-Zauber " + Math.round(Math.max(0.4, 1 - 0.03 * rank(0)) * 100) + " %.");
     if (AR !== 60) notes.push("Zielrüstung " + AR + ": Waffen-, Diener-, Tier- und Elementarschaden zählen zu " + Math.round(af * 100) + " %. Rüstungsignorierender Schaden bleibt voll.");
     if (usedTitle) notes.push("Titel-Fertigkeiten sind mit maximalem Titelrang gerechnet.");
