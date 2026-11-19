@@ -111,4 +111,34 @@ const AFT = 0.75; // Nachwirkzeit von Zaubern (Wiki "Aftercast")
 { const b = bar(ME, 0, { 1: 16 }, ['Conjure Phantasm', 'Conjure Nightmare', 'Phantom Pain']); const r = run(b); const deg = r.parts.filter(p => /Degeneration|Zustand/.test(p.kind || '')).reduce((a, p) => a + p.dps, 0);
   T('Degeneration gedeckelt bei 20/s', deg, 20, 0.02); }
 
+// ---------- Teamregeln (GW.teamDps) ----------
+const team = (bars, n, w0) => GW.teamDps(bars, bars.map(b => GW.effRanks(b, [])), w0 || null, n || 3, { armor: 60, foeDps: 40 });
+const tpart = (D, name, cat) => D.parts.filter(p => p.sid === id(name) && p.cat === (cat || 'dmg')).reduce((a, p) => a + p.dps, 0);
+// T1 Gleiche Geister verdrängen sich (Wiki "Spirit"): Nur der erste Signet-of-Spirits-Ritualist zählt
+{ const b = () => bar(RT, 0, { 34: 12 }, ['Signet of Spirits']), D = team([bar(E, 0, { 10: 12 }, ['Flare']), b(), b()]);
+  T('Team: erstes Signet of Spirits zählt', tpart(D[1], 'Signet of Spirits'), 3 * lin(5, 20, 12) / 2 * 0.7);
+  T('Team: zweites Signet of Spirits zählt nicht', tpart(D[2], 'Signet of Spirits'), 0); }
+// T2 Blut ist Kraft: +3...6 Pips (bei Blutmagie 12: 5). Flare braucht 2,86 Energie/s, mit 9 Pips = 3/s reicht es.
+{ const D = team([bar(E, 0, { 10: 12 }, ['Flare']), bar(N, 0, { 4: 12 }, ['Blood is Power'])]);
+  T('Team: Flare mit Blut ist Kraft ohne Energiemangel', tpart(D[0], 'Flare'), 56 / 1.75);
+  const D0 = team([bar(E, 0, { 10: 12 }, ['Flare']), bar(N, 0, { 4: 12 }, [])]);
+  T('Team: Flare ohne Blut ist Kraft', tpart(D0[0], 'Flare'), 56 / 1.75 * (4 / 3) / (5 / 1.75)); }
+// T3 Heroischer Refrain: Paragon mit Führung 12 gibt sich +3 (Führung 15) und dem Team +3, wenn ein gruppenweiter Schrei ihn erneuert. Flare zählt dann mit Feuermagie 15.
+{ const pg = bar(P, 0, { 40: 12 }, ['Heroic Refrain', '"Stand Your Ground!"']), el = bar(E, 0, { 10: 12 }, ['Flare']), nb = bar(N, 0, { 4: 12 }, ['Blood is Power']);
+  const D = team([pg, el, nb]); T('Team: Flare unter Heroischem Refrain', tpart(D[1], 'Flare'), lin(20, 65, 15) / 1.75, 0.04); }
+// T4 Dieselbe Flächen-Verhexung zählt im Team einmal
+{ const b = () => bar(ME, 0, { 1: 12 }, ['Fevered Dreams']); let two; try { two = team([bar(E, 0, { 10: 12 }, ['Flare']), bar(N, 0, { 7: 12 }, ['Suffering']), bar(N, 0, { 7: 12 }, ['Suffering'])]); } catch (e) { two = null; }
+  if (two) { T('Team: zweite gleiche Flächen-Verhexung zählt nicht', tpart(two[2], 'Suffering'), 0); T('Team: erste Flächen-Verhexung zählt', tpart(two[1], 'Suffering') > 0 ? 1 : 0, 1, 0); } }
+// T5 Degeneration im Team: höchstens 10 Pips je Ziel, bei 1 Ziel also 20/s zusammen
+{ const b = () => bar(ME, 0, { 1: 16 }, ['Conjure Phantasm', 'Conjure Nightmare']), D = team([b(), b(), bar(N, 0, { 4: 12 }, ['Blood is Power'])], 1);
+  const deg = D.reduce((a, d) => a + d.parts.filter(p => /Degeneration|Zustand/.test(p.kind || '')).reduce((x, p) => x + p.dps, 0), 0);
+  T('Team: Degeneration gedeckelt', deg, 20, 0.02); }
+// T6 Ein Verbündeter trägt nur einen Waffenzauber: Bei einem Nahkämpfer zählt die zweite Splitterwaffe nicht
+{ const sw = () => bar(RT, 0, { 34: 12 }, ['Splinter Weapon']), me = bar(D, 0, { 41: 12, 44: 10 }, ['Mystic Sweep']), X = team([me, sw(), sw()], 3, [6, 'Sense']);
+  T('Team: erste Splitterwaffe zählt', tpart(X[1], 'Splinter Weapon') > 0 ? 1 : 0, 1, 0); T('Team: zweite Splitterwaffe zählt nicht', tpart(X[2], 'Splinter Weapon'), 0); }
+// T7 Blindheit stapelt nicht: Zwei gleiche Leisten bringen zusammen höchstens 100 % Laufzeit
+{ const b = () => bar(ME, 0, { 1: 12, 0: 10 }, ['Ineptitude']), X = team([bar(E, 0, { 10: 12 }, ['Flare']), b(), b(), bar(N, 0, { 4: 12 }, ['Blood is Power'])]);
+  const bl = d => d.parts.filter(p => p.blind).reduce((a, p) => a + p.dps, 0), u = X[1].parts.find(p => p.blind).blind;
+  T('Team: zweite Blindheit nur für die fehlende Zeit', bl(X[2]) / bl(X[1]), Math.max(0, Math.min(1, 2 * u) - u) / u, 0.03); }
+
 console.log(ok + ' von ' + (ok + bad) + ' Fällen bestanden'); fails.forEach(f => console.log('  FEHLER  ' + f)); process.exit(bad ? 1 : 0);

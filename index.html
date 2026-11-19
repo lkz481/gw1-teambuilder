@@ -561,54 +561,7 @@ function computeDps(){
   return teamDps(TEAM.map(m=>m.bar), eff, wOf(TEAM[0]), n);
 }
 // Rechnet ein ganzes Team. Blut ist Kraft geht an die bis zu drei Verbündeten, denen am meisten Energie fehlt.
-function teamDps(bars, eff, weapon0, n){
-  const SK = b => b.skills.map(id=>GW.skill(id)).filter(Boolean);
-  const SN = ["Deep Freeze","Grasping Earth","Frozen Burst","Ice Spikes","Teinai's Prison"], snare = bars.some(b=>SK(b).some(s=>SN.includes(s.n)));
-  // Was das Team an Vorbedingungen liefert: Verhexungen, Mesmer-Verhexungen, Zustände
-  const CONDS = /(inflicts?|causes?|suffer(s)? from|are|become) (the )?(bleeding|burning|poison|disease|deep wound|weakness|crippled?|blind(ness|ed)?|dazed|cracked armor)/i;
-  const all = bars.flatMap(SK), team = { hex: all.some(s=>/hex/i.test(s.t)), mhex: all.some(s=>/hex/i.test(s.t) && s.p===5), cond: all.some(s=>CONDS.test(s.d) && !/remove|lose|cure/i.test(s.d.split(".")[0])) };
-  // Leichen teilen sich alle, die welche brauchen
-  const corpseUser = b => SK(b).some(s=>/corpse|exploit/i.test(s.d)), cu = bars.filter(corpseUser).length;
-  // Heroischer Refrain im Team (Wiki): Der Paragon gibt Verbündeten +1...3 auf alle Attribute, ab Führung 19 +4. Jeder Schrei oder Anfeuerungsruf, der auf dem Verbündeten endet, erneuert ihn. Mit einem gruppenweiten Schrei bleibt er auf allen, sonst nur auf so vielen, wie Dauer und Aufladezeit (10 s) hergeben.
-  { const hi = bars.findIndex(b=>b.pri===9 && SK(b).some(s=>s.n==="Heroic Refrain"));
-    if (hi>=0 && bars.length>1) { const L = Math.min(20, eff[hi].get(40)||0), b = Math.round(1 + 2*L/15), dur = 3 + 12*L/15;
-      const wide = SK(bars[hi]).some(s=>/shout|chant/i.test(s.t) && /(allies|party members) (in|within) earshot|all allies|party members/i.test(s.d||"")), cov = wide ? 1 : Math.min(1, (dur/10)/(bars.length-1)), add = Math.round(b*cov);
-      if (add>0) eff = eff.map((m,i)=> i===hi ? m : new Map([...m].map(([a,v])=>[a, v>0 ? Math.min(20, v+add) : v]))); } }
-  const allies = Math.max(bars.length, 1), base = { targets:n, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), allies, snare, team };
-  // gleiche Geister nur einmal im Team: Der Erste in der Reihe setzt sie
-  const seenSp = new Set(), skips = bars.map(b=>{ const mine = GW.spiritIds(b), sk2 = new Set(mine.filter(id=>seenSp.has(id))); mine.forEach(id=>seenSp.add(id)); return sk2; });
-  // gleiche Verhexung von mehreren: Flächen-Verhexungen zählen einmal, Einzel-Verhexungen so oft, wie es Ziele gibt
-  const hexSeen = new Map(), scales = bars.map(b=>{ const m = new Map(); SK(b).forEach(s=>{ if (!/hex/i.test(s.t)) return; const j = hexSeen.get(s.id)||0; hexSeen.set(s.id, j+1); const aoe = /also hexes|adjacent|nearby|in the area/i.test(s.d); if (aoe ? j>0 : j>=n) m.set(s.id, 0); }); return m; });
-  // Gleiche Leiste unter gleichen Bedingungen nur einmal rechnen (die Suche nach dem Vergleichsteam fragt dieselben Fälle sehr oft ab)
-  const run = (i, phys, bp) => { const cs = cu>1 && corpseUser(bars[i]) ? 1/cu : 1;
-    const key = [bars[i].skills.join(","), [...eff[i]].join(";"), i===0 ? "w"+JSON.stringify(weapon0||0) : "p"+(Math.round(phys*1000)), bp, [...skips[i]].join(","), [...scales[i]].join(";"), cs, n, base.armor, base.foeDps, allies, snare?1:0, JSON.stringify(team)].join("|");
-    let v = RUNMEMO.get(key); if (!v) { if (RUNMEMO.size > 6000) RUNMEMO.clear(); v = GW.dps(bars[i], eff[i], Object.assign({}, base, i===0 ? { weapon:weapon0 } : { physRate:phys }, { bipPips:bp, skip:skips[i], scale:scales[i], corpseShare: cs })); RUNMEMO.set(key, v); } return v; };
-  const first0 = run(0, 0, 0); let pass = bars.map((b,i)=> i===0 ? first0 : run(i, first0.physical, 0));
-  // Verstärkungen für Angreifer stapeln sich nicht: Ein Verbündeter trägt nur einen Waffenzauber, dieselbe Verzauberung oder derselbe Orden wirkt nur einmal
-  const physCount = Math.max(1, pass.filter(D=>D.physical>0).length); let ws = 0; const buffSeen = new Map(); let changed = false;
-  pass.forEach((D,i)=>{ const seen = new Set(); D.parts.forEach(p=>{ if (!p.sid || seen.has(p.sid) || !/Verbündeten-Bonus|Waffenzauber/.test(p.kind||"")) return; seen.add(p.sid); const s = GW.skill(p.sid); if (!s) return;
-    if (/weapon spell/i.test(s.t)) { if (ws >= physCount) { scales[i].set(s.id, 0); changed = true; } ws++; }
-    else { const j = buffSeen.get(s.id)||0; buffSeen.set(s.id, j+1); const wide = /party|all allies|allies in|allies within/i.test(s.d); if (wide ? j>0 : j>=physCount) { scales[i].set(s.id, 0); changed = true; } } }); });
-  if (changed) pass = bars.map((b,i)=> i===0 ? run(0, 0, 0) : run(i, first0.physical, 0));
-  // Energie aus dem Team (Wiki): Blut ist Kraft gibt +3...6 Pips für 10 s und lässt sich auf drei Verbündeten halten. Blutritual gibt +3 Pips, hier auf zwei Verbündeten.
-  // Verteilt wird an die, denen am meisten Energie fehlt. Wer genug bekommt, hat keinen Engpass mehr.
-  const hasSk = (b, nm) => SK(b).some(s=>s.n===nm);
-  const bi = bars.findIndex(hasBip), ri = bars.findIndex(b=>hasSk(b,"Blood Ritual"));
-  let res = pass;
-  if (bi>=0 || ri>=0) {
-    const give = bars.map(()=>0), order = pass.map((D,i)=>[i, D.energyF]).filter(x=>x[1] < 0.98).sort((a,b)=>a[1]-b[1]).map(x=>x[0]);
-    if (bi>=0) order.filter(i=>i!==bi).slice(0,3).forEach(i=>{ give[i] += bipPips(eff[bi]); });
-    if (ri>=0) { const rest = order.filter(i=>i!==ri && !give[i]); (rest.length ? rest : order.filter(i=>i!==ri)).slice(0,2).forEach(i=>{ give[i] += 3; }); }
-    const first = give[0] ? run(0, 0, give[0]) : pass[0];
-    res = bars.map((b,i)=> i===0 ? first : give[i] ? run(i, first.physical, give[i]) : pass[i]);
-  }
-  // Degeneration im Team: höchstens 10 Pips (20 Lebenspunkte/s) je Ziel, egal von wie vielen
-  const isDeg = p => p.cat==="dmg" && /Zustand|Degeneration/.test(p.kind||""), deg = res.reduce((a,D)=>a+D.parts.filter(isDeg).reduce((x,p)=>x+p.dps,0),0), cap = 20*n;
-  if (deg > cap) res = res.map(D=>{ const mine = D.parts.filter(isDeg).reduce((x,p)=>x+p.dps,0); if (!mine) return D; const k = cap/deg; return Object.assign({}, D, { total: D.total - mine*(1-k), parts: D.parts.map(p=>isDeg(p) ? Object.assign({}, p, { dps:p.dps*k }) : p), notes: D.notes.concat("Degeneration im Team auf 10 Pips je Ziel begrenzt: Diese Leiste zählt hier zu " + Math.round(k*100) + " %.") }); });
-  // Blindheit stapelt sich nicht: Ist ein Gegner schon blind, bringt die zweite Quelle nur die Zeit, die noch fehlt. Der Schaden der Fertigkeit bleibt.
-  { let used = 0; res = res.map(D=>{ if (!D.parts.some(p=>p.blind)) return D; let cut = 0; const parts = D.parts.map(p=>{ if (!p.blind) return p; const eff = Math.max(0, Math.min(1, used + p.blind) - used), k = eff / p.blind; used = Math.min(1, used + p.blind); if (k >= 0.999) return p; cut += p.dps*(1-k); return Object.assign({}, p, { dps:p.dps*k, detail:p.detail + ". Im Team zu " + Math.round(k*100) + " % gezählt, weil die Gegner schon von jemand anderem blind sind" }); }); return cut ? Object.assign({}, D, { ctrl: Math.max(0, D.ctrl - cut), parts }) : D; }); }
-  return res;
-}
+function teamDps(bars, eff, weapon0, n){ return GW.teamDps(bars, eff, weapon0, n, { armor:armorNow(), foeDps:foeDpsNow() }); }
 // Heilung im Team: Mehr als ankommt, kann nicht geheilt werden
 const healSum = (list, n) => Math.min(n * foeDpsNow(), list.reduce((a,d)=>a+((d&&d.heal)||0),0));
 const bipPips = effMap => Math.round(3 + 3*Math.min(effMap.get(4)||0, 21)/15);
@@ -618,7 +571,6 @@ const foeDpsNow = () => ELITE_AREA(state.area) ? 60 : 40;
 const protSum = (list, n) => { const inc = n * foeDpsNow(); return inc * (1 - list.reduce((a,d)=>a*(1-Math.min(0.95, ((d&&d.prot)||0)/inc)),1)); };
 const armorNow = () => state.armor || (ELITE_AREA(state.area) ? 80 : 60);
 // Klassische Aufstellung: Frontlinie (Nahkampf) oben, Mittellinie (Schaden aus der Distanz) in der Mitte, Hinterlinie (Heilung, Schutz, Energie) unten
-const RUNMEMO = new Map();
 const lineOf = bar => { const S = bar.skills.map(id=>GW.skill(id)).filter(Boolean), top = (bar.attrs.slice().sort((a,b)=>b[1]-a[1])[0]||[-1])[0];
   if ([1,7,10].includes(bar.pri) || S.filter(s=>/(melee|sword|axe|hammer|scythe|dagger|lead|off-hand|dual) attack/i.test(s.t)).length>=3) return 0;
   if (S.some(s=>s.n==="Blood is Power") || [13,15,33,32,16].includes(top) || S.some(s=>s.n==="Soul Twisting")) return 2;
