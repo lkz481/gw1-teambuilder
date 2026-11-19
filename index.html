@@ -248,12 +248,10 @@ details.more summary{cursor:pointer;color:var(--acc);font-size:13px}
 #tip .meta{color:var(--muted);margin:2px 0 4px}
 #sharebox{position:fixed;inset:0;background:rgba(10,6,4,.72);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px}
 #sharebox[hidden]{display:none}
-.shin{background:#1d120d;border:1px solid var(--line2);border-radius:14px;padding:16px;width:min(520px,100%);max-height:90dvh;overflow:auto}
-.shin h3{margin:0 0 10px}
-.shin textarea{width:100%;box-sizing:border-box;background:#140c09;color:inherit;border:1px solid var(--line2);border-radius:8px;padding:10px;font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
+.shin{background:#1d120d;border:1px solid var(--line2);border-radius:14px;padding:12px;width:min(640px,100%);max-height:90dvh;overflow:auto}
+.shin canvas{display:block;width:100%;height:auto;border-radius:8px}
 .shin .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
 .shin a.btn{text-decoration:none}
-.shhint{font-size:12px;opacity:.7;margin:10px 0 0}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#24150f;border:1px solid var(--line2);padding:8px 14px;border-radius:999px;display:none;z-index:80}
 @media (max-width:600px){.side{grid-template-columns:1fr 1fr!important;gap:8px}.side>.pick,.side>#pk-build,.side>#partywrap{grid-column:auto!important}.side>#clsgrid,.side>.sidehead,.side>#pk-heroes{grid-column:1/-1!important}.side .pick .val{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px}.side .pick .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.side>#partywrap{align-self:center}.side .pick{padding:9px 11px}.side .pick .v{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.side .pick .s{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#dtabs{overflow-x:auto;scrollbar-width:none}.app{padding:10px}.topbar{gap:6px;padding:8px 10px}.topbar .btn{padding:7px 9px}#rnd{display:none}.topbar .btn span.l{display:none}.attrs,.heroes{grid-template-columns:1fr}.mainhead h1{font-size:19px}}
 
@@ -365,7 +363,7 @@ body.pvpmode .app,body.pvpmode #rnd,body.pvpmode #pvebtn,body.pvpmode #copyall,b
 </aside>
 <div class="menu" id="menu" hidden></div>
 <div id="tip" role="tooltip"></div>
-<div id="sharebox" hidden><div class="shin" role="dialog" aria-label="Team teilen"><h3>Team teilen</h3><textarea id="shtext" readonly rows="12" aria-label="Text zum Teilen"></textarea><div class="row"><a class="btn" id="shwa" target="_blank" rel="noopener">WhatsApp öffnen</a><button class="btn" data-shcopy="1">Text kopieren</button><button class="btn s" data-shclose="1">Schließen</button></div><p class="shhint">Die Codes lassen sich im Spiel im Fertigkeitenfenster unter „Vorlagen“ einfügen.</p></div></div>
+<div id="sharebox" hidden><div class="shin" role="dialog" aria-label="Team teilen"><canvas id="shcv" aria-label="Die Leisten des Teams mit Klassensymbolen"></canvas><div class="row"><button class="btn" id="shimg" data-shimg="1" hidden>Bild teilen</button><button class="btn" data-shsave="1">Bild speichern</button><button class="btn s" data-shcopy="1">Codes kopieren</button><button class="btn s" data-shclose="1">Schließen</button></div></div></div>
 <div class="toast" id="toast" role="status"></div>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle">
@@ -483,7 +481,23 @@ function shareText(){
     L.push("", who + " (" + pname(m.bar.pri, m.bar.sec) + ")" + (e ? ", " + e : ""), m.code); });
   return L.join("\n");
 }
-function openShare(){ const tx = shareText(); $("shtext").value = tx; $("shwa").href = "https://wa.me/?text=" + encodeURIComponent(tx); $("sharebox").hidden = false; }
+// Teilen-Ansicht: je Zeile die Klassensymbole (Primär, Sekundär) und die acht Fertigkeiten, gezeichnet auf eine Leinwand, damit sie sich als Bild verschicken lässt. Klassensymbole: wiki.guildwars.com.
+const shImg = {}; function loadImg(src){ return shImg[src] || (shImg[src] = new Promise((ok, no)=>{ const im = new Image(); im.onload = ()=>ok(im); im.onerror = no; im.src = src; })); }
+async function drawShare(){
+  const rows = TEAM.filter(m=>m.bar), S = 64, P = 44, G = 4, pad = 14, gapX = 12, W = pad*2 + P*2 + G + gapX + 8*S + 7*G, H = pad*2 + rows.length*S + (rows.length-1)*10;
+  const cv = $("shcv"); cv.width = W; cv.height = H; const c = cv.getContext("2d");
+  c.fillStyle = "#1a100c"; c.fillRect(0, 0, W, H);
+  const [ic, pr] = await Promise.all([loadImg("icons0.jpg"), loadImg("prof.png")]);
+  rows.forEach((m, r)=>{ const y = pad + r*(S+10), py = y + (S-P)/2;
+    [m.bar.pri, m.bar.sec].forEach((p, k)=>{ if (p) c.drawImage(pr, (p-1)*48, 0, 48, 48, pad + k*(P+G), py, P, P); });
+    m.bar.skills.forEach((id, k)=>{ const x = pad + P*2 + G + gapX + k*(S+G), s = id ? GW.skill(id) : null;
+      if (s && s.ic != null) c.drawImage(ic, (s.ic%IC.N)*IC.size, Math.floor(s.ic/IC.N)*IC.size, IC.size, IC.size, x, y, S, S);
+      else { c.fillStyle = "#2a1a13"; c.fillRect(x, y, S, S); } }); });
+}
+const shBlob = () => new Promise(ok => $("shcv").toBlob(ok, "image/png"));
+async function shareImg(){ try { const f = new File([await shBlob()], "gw1-team.png", { type:"image/png" }); await navigator.share({ files:[f] }); } catch(e){ if (!e || e.name!=="AbortError") toast("Teilen nicht möglich, bitte Bild speichern"); } }
+async function saveImg(){ try { const u = URL.createObjectURL(await shBlob()), a = document.createElement("a"); a.href = u; a.download = "gw1-team.png"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u), 4000); } catch(e){ toast("Speichern nicht möglich"); } }
+function openShare(){ $("sharebox").hidden = false; let can = false; try { can = !!navigator.canShare && navigator.canShare({ files:[new File([""], "x.png", { type:"image/png" })] }); } catch(e){} $("shimg").hidden = !can; drawShare().catch(()=>toast("Bild konnte nicht gezeichnet werden")); }
 async function copy(text){ try{ await navigator.clipboard.writeText(text); toast("Kopiert"); }catch(e){ toast("Kopieren nicht erlaubt"); } }
 
 // ---------- Spielerleiste ----------
@@ -583,6 +597,8 @@ function teamDps(bars, eff, weapon0, n){
   // Degeneration im Team: höchstens 10 Pips (20 Lebenspunkte/s) je Ziel, egal von wie vielen
   const isDeg = p => p.cat==="dmg" && /Zustand|Degeneration/.test(p.kind||""), deg = res.reduce((a,D)=>a+D.parts.filter(isDeg).reduce((x,p)=>x+p.dps,0),0), cap = 20*n;
   if (deg > cap) res = res.map(D=>{ const mine = D.parts.filter(isDeg).reduce((x,p)=>x+p.dps,0); if (!mine) return D; const k = cap/deg; return Object.assign({}, D, { total: D.total - mine*(1-k), parts: D.parts.map(p=>isDeg(p) ? Object.assign({}, p, { dps:p.dps*k }) : p), notes: D.notes.concat("Degeneration im Team auf 10 Pips je Ziel begrenzt: Diese Leiste zählt hier zu " + Math.round(k*100) + " %.") }); });
+  // Blindheit stapelt sich nicht: Ist ein Gegner schon blind, bringt die zweite Quelle nur die Zeit, die noch fehlt. Der Schaden der Fertigkeit bleibt.
+  { let used = 0; res = res.map(D=>{ if (!D.parts.some(p=>p.blind)) return D; let cut = 0; const parts = D.parts.map(p=>{ if (!p.blind) return p; const eff = Math.max(0, Math.min(1, used + p.blind) - used), k = eff / p.blind; used = Math.min(1, used + p.blind); if (k >= 0.999) return p; cut += p.dps*(1-k); return Object.assign({}, p, { dps:p.dps*k, detail:p.detail + ". Im Team zu " + Math.round(k*100) + " % gezählt, weil die Gegner schon von jemand anderem blind sind" }); }); return cut ? Object.assign({}, D, { ctrl: Math.max(0, D.ctrl - cut), parts }) : D; }); }
   return res;
 }
 // Heilung im Team: Mehr als ankommt, kann nicht geheilt werden
@@ -1296,7 +1312,9 @@ document.addEventListener("click", e=>{
   const ct = t.closest("[data-cmptake]"); if (ct) { const mm=TEAM[ui.idx]; if (mm && mm.key) { state.over[mm.key]=ct.dataset.cmptake; toast("Leiste übernommen"); render(); } return; }
   if (t.closest("[data-share]")) { openShare(); return; }
   if (t.closest("[data-shclose]") || t.id==="sharebox") { $("sharebox").hidden=true; return; }
-  if (t.closest("[data-shcopy]")) { copy($("shtext").value); return; }
+  if (t.closest("[data-shcopy]")) { copy(shareText()); return; }
+  if (t.closest("[data-shimg]")) { shareImg(); return; }
+  if (t.closest("[data-shsave]")) { saveImg(); return; }
   const rs = t.closest("[data-reset]"); if (rs) { delete state.over[rs.dataset.reset]; render(); return; }
   if (t.closest("#pvebtn")) { ui.pveId=null; openDrawer("pve"); render(); return; }
   if (t.closest("[data-pveback]")) { ui.pveId=null; renderDrawer(); return; }
