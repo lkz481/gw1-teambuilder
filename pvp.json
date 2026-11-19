@@ -35,9 +35,8 @@
 "CA": {
 "name": "Kodex-Arena",
 "intro": [
-"4 gegen 4 mit festem Team. Erlaubt sind nur Fertigkeiten aus dem Kodex, einer begrenzten Auswahl. Laut Wiki wechselt sie jede Woche montags um 15:00 UTC.",
-"Feste Builds gibt es deshalb nicht. Den aktuellen Kodex siehst du im Spiel im Fertigkeitenfenster (Taste K) im Außenposten der Kodex-Arena.",
-"Karten und Siegbedingungen sind dieselben wie in der Zufallsarena. Die Leisten von dort sind eine gute Vorlage: Prüfe im Spiel, welche Fertigkeiten gerade im Kodex sind und ersetze den Rest."
+"4 gegen 4 mit festem Team. Erlaubt sind nur Fertigkeiten aus dem Kodex. Er wechselt laut Wiki jeden Montag um 15:00 UTC. Pro Team ist jede Erstklasse nur einmal erlaubt, Eliten gibt es nur für die Erstklasse.",
+"Die Auswahl ist laut Entwickler zufällig und wiederholt sich nicht nach festem Muster. Sie wird nirgends veröffentlicht. Deshalb trägst du die Eliten der Woche einmal ein (im Spiel: Taste K im Außenposten). Die Seite merkt sich das bis zum nächsten Wechsel und fragt dann von selbst neu."
 ],
 "src": [
 [
@@ -6948,5 +6947,818 @@
 "t": "Dauer 10 → 10...40. s"
 }
 ],
+"lineups": [
+{
+"key": "stand",
+"name": "Stand-Team",
+"sub": "Für Karten, auf denen 8 gegen 8 am Flaggenstand entscheidet.",
+"plan": [
+[
+"Vor der Spitze",
+"Der Entzauberungs-Mesmer legt Flair der Entzauberung auf das Ziel. Der Hammer-Krieger nimmt mit Verzauberung aufheben nach, falls noch Schutz liegt."
+],
+[
+"Ansage \"3, 2, 1\"",
+"Bei 1: Hammerschlag wirft um, Ausweiden und Vernichtender Schlag treffen das liegende Ziel. Der Paragon wirft Speer des Blitzes, der Kraftblock-Mesmer Verzauberung zerschmettern."
+],
+[
+"Im selben Moment",
+"Der Kraftblock-Mesmer unterbricht den Mönch, der gerade nicht am Boden liegt. Der Paragon hält den zweiten Mönch mit Betäubender Schlag benommen."
+],
+[
+"Zwischen den Spitzen",
+"Dauerdruck auf wechselnden Zielen. Ziel kurz vor der vollen zweiten Minute töten, dann läuft es von der Basis zurück."
+]
+],
+"strong": [
+"Zwei Tiefe Wunden und ein Niederschlag auf Ansage.",
+"Der Schutz der Mönche wird vor der Spitze entfernt. Wächter lädt seit dem Update nur noch alle 6 Sekunden auf.",
+"Drei Wege, den gegnerischen Heiler zu stören: Kraftblock, Benommenheit, Siegel der Demut."
+],
+"weak": [
+"Wenig gegen Verhexungen: Nur Heiliger Schleier, Verhexung umkehren und Verhexung heilen beim Läufer. Gegen reine Verhexer-Teams wird es eng.",
+"Kaum Verlangsamung. Gegen einen frühen Split muss der Axt-Krieger mit dem Heil-Mönch zurück.",
+"Keine starke Wiederbelebung außer den Siegeln. Siegel nicht für den ersten Toten verbrauchen."
+],
+"m": [
+{
+"role": "Hammer-Krieger",
+"code": "OQcSE5JPhvE3SBs0m1KTQBA",
+"task": "Leitet jede Spitze ein: Hammerschlag wirft das Ziel um, Vernichtender Schlag setzt darauf die Tiefe Wunde. Verzauberung aufheben nimmt vorher den Schutz vom Ziel. Raserei nur einschalten, wenn niemand auf dich schlägt, sonst mit Preschen abbrechen.",
+"src": "PvX W/A Enraged Smash, unverändert",
+"elite": 993,
+"chg": []
+},
+{
+"role": "Axt-Krieger",
+"code": "OQYTgmILZSqoSkq4cgpQr4nQAA",
+"task": "Zweite Tiefe Wunde und Dauerdruck. Ausweiden wurde im Update verstärkt. Schock und Stierschlag werfen Fliehende und Mönche um, Unterbrechender Hieb stört den Heiler direkt nach der Ansage.",
+"src": "PvX W/E Shock Axe, unverändert",
+"elite": 338,
+"chg": [
+{
+"id": 338,
+"t": "Schaden 1...31 → 10...45",
+"k": 1
+},
+{
+"id": 340,
+"t": "Aufladezeit 0 → 1 s",
+"k": -1
+}
+]
+},
+{
+"role": "Speer-Paragon",
+"code": "OQGjUymIqOC5HcROIbhrwubBA",
+"task": "Schaden aus der zweiten Reihe und Benommenheit auf den gegnerischen Mönch: Hymne der Flamme lässt den nächsten Angriff brennen, danach trifft Betäubender Schlag ein Ziel mit Zustand und macht es benommen. Betäubender Schlag wurde im Update verstärkt.",
+"src": "PvX P/any GvG May Spiker, freier Platz mit Betäubender Schlag gefüllt",
+"elite": 1602,
+"chg": [
+{
+"id": 1602,
+"t": "Adrenalinkosten 10 → 8, Schaden 5...30 → 10...50",
+"k": 1
+},
+{
+"id": 1774,
+"t": "Energiekosten 25 → 15, Wirkzeit 2 → 1 s",
+"k": 1
+}
+]
+},
+{
+"role": "Entzauberungs-Mesmer",
+"code": "OQBTAyAPyBPPB+A90MgPgIIAA",
+"task": "Macht die Bahn frei: Flair der Entzauberung nimmt dem Ziel und allen daneben eine Verzauberung und lässt neue schneller auslaufen. Das trifft genau den Schutz, den die Mönche auf das Ziel legen. Siegel der Demut sperrt die Elite des gegnerischen Mönchs, Energie-Entzug unterbricht und füllt die eigene Energie.",
+"src": "PvX Me/any Air of Disenchantment, drei freie Plätze gefüllt",
+"elite": 1656,
+"chg": [
+{
+"id": 31,
+"t": "Dauer 2...16 → 4...18 s",
+"k": 1
+},
+{
+"id": 62,
+"t": "Eigene Sperre 10 → 4 s",
+"k": 1
+}
+]
+},
+{
+"role": "Kraftblock-Mesmer",
+"code": "OQBSAYBLkuHUAdwMUEqgAA",
+"task": "Schaltet den Heiler ab: Kraftblock sperrt nach einer Unterbrechung ein ganzes Attribut, Ablenkung und Scham bestrafen den nächsten Heilzauber. Bei der Spitze kommt Verzauberung zerschmettern auf das Ziel.",
+"src": "PvX Me/any GvG November Power Block, drei freie Plätze gefüllt",
+"elite": 5,
+"chg": []
+},
+{
+"role": "Schutz-Mönch",
+"code": "OwET8YIWViiQLKgQgYlom4BcuA",
+"task": "Hält das Team gegen Spitzen: Seelenbund und Schützende Hände auf das angesagte Ziel, Zustand wiederherstellen räumt Tiefe Wunde und Benommenheit ab. Wächter lädt seit dem Update langsamer auf: Nicht auf Verdacht wirken.",
+"src": "PvX Mo/W GvG Restore Condition, unverändert",
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"role": "Heil-Mönch",
+"code": "OwcS8YITXaaRbaCErEQNPgTQA",
+"task": "Zweiter Mönch mit Eifriger Segnung als großer Heilung. Mit Preschen beweglich genug, um einen Trupp zu begleiten. Steht nie neben dem anderen Mönch.",
+"src": "PvX Mo/A November Protection Prayers, unverändert",
+"elite": 1687,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"role": "Flaggenläufer",
+"code": "OwcT02nCVSjoBULSg4jY67mYCC",
+"task": "Trägt die Flagge, heilt Wachen und meldet Splits. Gruppe heilen hilft dem Team über die ganze Karte. Die PvX-Leiste nutzt Heilsalve, die im Update abgeschwächt wurde. Hier steht dafür Wort der Heilung, das unverändert ist.",
+"src": "PvX Mo/A GvG Healing Burst Runner, Elite und ein Platz getauscht",
+"elite": 282,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+},
+{
+"key": "split",
+"name": "Split-Team",
+"sub": "Für große Karten mit schwach verteidigtem Hintereingang.",
+"plan": [
+[
+"Start",
+"Vier gehen zum Stand: Hammer-Krieger, beide Mesmer und der Schutz-Mönch. Sie müssen nicht gewinnen, nur stehen bleiben und den Stand halten."
+],
+[
+"Der Trupp",
+"Speer-Krieger, Assassine und Heil-Mönch gehen durch den Hintereingang. Reihenfolge: Bogenschützen am Eingang, dann Ritter, dann der Leibwächter. Den Gildenherrn erst angreifen, wenn die Wachen weg sind."
+],
+[
+"Wenn der Gegner Leute zurückschickt",
+"Kommen zwei oder mehr: Trupp zieht sich zurück und fällt in die Mitte ein. Dort ist dann Überzahl. Kommt nur einer: \"Feigling!\" und Schattenschritt töten ihn."
+],
+[
+"Der Läufer",
+"Bleibt zwischen Basis und Stand. Er sagt an, wie viele Gegner fehlen. Niemand im Trupp stirbt für eine Wache."
+]
+],
+"strong": [
+"Zwei Niederschläge im Trupp, beide bestrafen Weglaufen und Nichtstun.",
+"Jede Trupp-Figur hat eigenes Tempo, der Speer-Krieger dazu eigene Heilung.",
+"Die Vier am Stand haben Entzauberung, Kraftblock und einen Niederschlag: Genug, um einen Kampf in die Länge zu ziehen."
+],
+"weak": [
+"Am Stand fehlt Schaden. Wird der Trupp ignoriert und die Vier überrannt, ist der Stand weg.",
+"Der Trupp hat keine Zustandsentfernung außer Zustand aufheben beim Mönch.",
+"Braucht Ansagen über Sprache. Ohne die geht der Split schief."
+],
+"m": [
+{
+"role": "Hammer-Krieger",
+"code": "OQcSE5JPhvE3SBs0m1KTQBA",
+"task": "Leitet jede Spitze ein: Hammerschlag wirft das Ziel um, Vernichtender Schlag setzt darauf die Tiefe Wunde. Verzauberung aufheben nimmt vorher den Schutz vom Ziel. Raserei nur einschalten, wenn niemand auf dich schlägt, sonst mit Preschen abbrechen.",
+"src": "PvX W/A Enraged Smash, unverändert",
+"elite": 993,
+"chg": []
+},
+{
+"role": "Speer-Krieger (Trupp)",
+"code": "OQkjExlm5OlNLcQ+BXk5r/1uC",
+"task": "Führt den Trupp in die gegnerische Basis. \"Feigling!\" wirft jeden um, der wegläuft, auch den Läufer. Sprint und Löwentrost machen ihn allein überlebensfähig.",
+"src": "PvX W/P GvG July Coward Spear, unverändert",
+"elite": 869,
+"chg": []
+},
+{
+"role": "Assassine (Trupp)",
+"code": "OwZjsod8IOs5/HDLhZ8RYPjJI",
+"task": "Tötet Wachen und einzelne Verteidiger. Schattenschritt mit Niederschlag auf ein Ziel, das gerade nichts wirkt, danach die Dolchkette. Springende Gottesanbeterin verkrüppelt Fliehende.",
+"src": "PvX A/E Wastrel's Collapse, unverändert",
+"elite": 1644,
+"chg": [
+{
+"id": 1990,
+"t": "Aufladezeit 12 → 8 s",
+"k": 1
+}
+]
+},
+{
+"role": "Entzauberungs-Mesmer",
+"code": "OQBTAyAPyBPPB+A90MgPgIIAA",
+"task": "Macht die Bahn frei: Flair der Entzauberung nimmt dem Ziel und allen daneben eine Verzauberung und lässt neue schneller auslaufen. Das trifft genau den Schutz, den die Mönche auf das Ziel legen. Siegel der Demut sperrt die Elite des gegnerischen Mönchs, Energie-Entzug unterbricht und füllt die eigene Energie.",
+"src": "PvX Me/any Air of Disenchantment, drei freie Plätze gefüllt",
+"elite": 1656,
+"chg": [
+{
+"id": 31,
+"t": "Dauer 2...16 → 4...18 s",
+"k": 1
+},
+{
+"id": 62,
+"t": "Eigene Sperre 10 → 4 s",
+"k": 1
+}
+]
+},
+{
+"role": "Kraftblock-Mesmer",
+"code": "OQBSAYBLkuHUAdwMUEqgAA",
+"task": "Schaltet den Heiler ab: Kraftblock sperrt nach einer Unterbrechung ein ganzes Attribut, Ablenkung und Scham bestrafen den nächsten Heilzauber. Bei der Spitze kommt Verzauberung zerschmettern auf das Ziel.",
+"src": "PvX Me/any GvG November Power Block, drei freie Plätze gefüllt",
+"elite": 5,
+"chg": []
+},
+{
+"role": "Schutz-Mönch",
+"code": "OwET8YIWViiQLKgQgYlom4BcuA",
+"task": "Hält das Team gegen Spitzen: Seelenbund und Schützende Hände auf das angesagte Ziel, Zustand wiederherstellen räumt Tiefe Wunde und Benommenheit ab. Wächter lädt seit dem Update langsamer auf: Nicht auf Verdacht wirken.",
+"src": "PvX Mo/W GvG Restore Condition, unverändert",
+"elite": 276,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"role": "Heil-Mönch",
+"code": "OwcS8YITXaaRbaCErEQNPgTQA",
+"task": "Zweiter Mönch mit Eifriger Segnung als großer Heilung. Mit Preschen beweglich genug, um einen Trupp zu begleiten. Steht nie neben dem anderen Mönch.",
+"src": "PvX Mo/A November Protection Prayers, unverändert",
+"elite": 1687,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+}
+]
+},
+{
+"role": "Flaggenläufer",
+"code": "OwcT02nCVSjoBULSg4jY67mYCC",
+"task": "Trägt die Flagge, heilt Wachen und meldet Splits. Gruppe heilen hilft dem Team über die ganze Karte. Die PvX-Leiste nutzt Heilsalve, die im Update abgeschwächt wurde. Hier steht dafür Wort der Heilung, das unverändert ist.",
+"src": "PvX Mo/A GvG Healing Burst Runner, Elite und ein Platz getauscht",
+"elite": 282,
+"chg": [
+{
+"id": 258,
+"t": "Aufladezeit 4 → 6 s",
+"k": -1
+},
+{
+"id": 2003,
+"t": "Heilung 30...120 → 30...100",
+"k": -1
+}
+]
+}
+]
+}
+],
+"maps": [
+{
+"n": "Insel des Kriegers",
+"en": "Warrior's Isle",
+"l": "stand",
+"tips": [
+"Splitten lohnt kaum: Der Hauptweg ist schneller als die Seitenwege und die Eingänge sind vom Stand aus zu sehen.",
+"Zum Start nimmt ein Spieler aus der Mitte die Flagge, der Läufer holt den Reparatursatz und bringt ihn in die Basis. Sonst repariert der Gegner das Katapult, das in eure Basis schießt."
+],
+"u": "https://wiki.guildwars.com/wiki/Warrior's_Isle"
+},
+{
+"n": "Insel des Jägers",
+"en": "Hunter's Isle",
+"l": "stand",
+"tips": [
+"Gleicher Aufbau wie die Insel des Kriegers: Splits werden früh gesehen.",
+"Reparatursatz zum Start sichern, das Katapult trifft die Basis mit hohem Flächenschaden."
+],
+"u": "https://wiki.guildwars.com/wiki/Hunter's_Isle"
+},
+{
+"n": "Insel des Zauberers",
+"en": "Wizard's Isle",
+"l": "stand",
+"tips": [
+"Gleicher Aufbau wie die Insel des Kriegers.",
+"Reparatursatz zum Start sichern."
+],
+"u": "https://wiki.guildwars.com/wiki/Wizard's_Isle"
+},
+{
+"n": "Brennende Insel",
+"en": "Burning Isle",
+"l": "stand",
+"tips": [
+"Schwache Basisverteidigung und enge Stellen: Laut Wiki die Karte für Spitzen- und 8-gegen-8-Teams.",
+"Der kurze Weg zum Stand führt durch Lava (Verkrüppelung und Brennen alle 3 Sekunden). Der Umweg über die Brücke ist sicher.",
+"Der direkte Weg zur gegnerischen Basis ist anfangs von Flammenwächtern versperrt, sie sterben erst um Minute 8. Vorher ist kein Split möglich."
+],
+"u": "https://wiki.guildwars.com/wiki/Burning_Isle"
+},
+{
+"n": "Jadeinsel",
+"en": "Isle of Jade",
+"l": "stand",
+"tips": [
+"8-gegen-8-Teams sind hier im Vorteil.",
+"Die Korallen unter dem Stand verlangsamen und machen 25 Schaden pro Sekunde in Bewegung. Nicht durch die Korallen verfolgen.",
+"Die Teleporter führen direkt unter den Stand oder in die gegnerische Basis: Gegen Ende für den Angriff auf den Gildenherrn nutzen."
+],
+"u": "https://wiki.guildwars.com/wiki/Isle_of_Jade"
+},
+{
+"n": "Insel der Toten",
+"en": "Isle of the Dead",
+"l": "stand",
+"tips": [
+"Kleinste Halle. Splits sind möglich, aber schwer zu gewinnen.",
+"Der Teer am Stand verlangsamt um 30 %. Die Mönche stehen am Rand, nicht im Teer.",
+"Wer am Stand verliert, kommt kaum noch aus der Basis. Die Entscheidung für Stand oder Split fällt deshalb früh."
+],
+"u": "https://wiki.guildwars.com/wiki/Isle_of_the_Dead"
+},
+{
+"n": "Insel des Druiden",
+"en": "Druid's Isle",
+"l": "stand",
+"tips": [
+"Ausgewogene Karte. Ein starkes 8-gegen-8-Team kann den Stand die ganze Partie halten.",
+"Der Läufer bleibt zum Start in der Basis, um einen frühen Split abzufangen.",
+"Der Hintereingang öffnet sich erst mit dem Rankensamen. Den eigenen Samen sichern. In den letzten Minuten ist der Sturm über die Rankenbrücke auf den Gildenherrn ein bekannter Zug."
+],
+"u": "https://wiki.guildwars.com/wiki/Druid's_Isle"
+},
+{
+"n": "Kaiserliche Insel",
+"en": "Imperial Isle",
+"l": "stand",
+"tips": [
+"Sehr starke Basisverteidigung. Es gewinnt, wer die Mitte und damit die Moralschübe hält.",
+"Die Flagge liegt außerhalb der Basis in einem Gang mit Säurefallen (20 Schaden pro Sekunde). Den gegnerischen Läufer dort verlangsamen oder töten.",
+"Die Teleporter neben dem Stand bringen auf die andere Seite. Die Flagge fällt dabei nicht."
+],
+"u": "https://wiki.guildwars.com/wiki/Imperial_Isle"
+},
+{
+"n": "Verdorbene Insel",
+"en": "Corrupted Isle",
+"l": "split",
+"tips": [
+"Der Hinterweg liegt weit vom Stand entfernt: Laut Wiki eine Karte für Split-Teams.",
+"Die Bogenschützen über den Eingängen erreicht nur Fernkampf. Der Speer-Krieger räumt sie ab.",
+"Der Weg zum Stand ist schmal: Dort den gegnerischen Läufer mit Körpern blockieren."
+],
+"u": "https://wiki.guildwars.com/wiki/Corrupted_Isle"
+},
+{
+"n": "Gefrorene Insel",
+"en": "Frozen Isle",
+"l": "split",
+"tips": [
+"Mehrere Wege, Tore und Eis: Die klassische Split-Karte.",
+"Die Hebel auf dem Podest in der Mitte steuern die Tore beider Basen. Wer das Podest hält, bestimmt die Wege. Die Vier gehen dorthin statt zum Stand.",
+"Wer auf dem Eis stehen bleibt, wird verlangsamt. In Bewegung bleiben."
+],
+"u": "https://wiki.guildwars.com/wiki/Frozen_Isle"
+},
+{
+"n": "Insel der Einsamkeit",
+"en": "Isle of Solitude",
+"l": "split",
+"tips": [
+"Große Karte, schwacher Hintereingang. Beide Ritter lassen sich herausziehen und töten, bevor Hilfe kommt.",
+"Die Teleporter führen nur aus der Basis hinaus.",
+"Lange Wege für den Läufer: Moralschübe gegen einen unvorbereiteten Läufer sind leicht zu holen."
+],
+"u": "https://wiki.guildwars.com/wiki/Isle_of_Solitude"
+},
+{
+"n": "Insel des Weinenden Steins",
+"en": "Isle of Weeping Stone",
+"l": "split",
+"tips": [
+"Das Tor zwischen Hauptweg und Hinterweg lässt sich nur von der Hinterweg-Seite öffnen. Wer zuerst splittet, hat den Vorteil.",
+"Der Hintereingang ist nur von zwei Bogenschützen gedeckt.",
+"Wasser gibt einen Segen, Sporen an den Riesenpilzen schaden. Nicht in den Sporen kämpfen."
+],
+"u": "https://wiki.guildwars.com/wiki/Isle_of_Weeping_Stone"
+},
+{
+"n": "Insel der Würmer",
+"en": "Isle of Wurms",
+"l": "split",
+"tips": [
+"Zwei Wege und ein Lebensschrein auf dem Südweg: Wer ihn hält, hat 120 Lebenspunkte mehr.",
+"Der Trupp nimmt zum Start den Schrein ein und geht dann weiter zum schwachen Hintereingang.",
+"An der Mauer beim Stand können Zauberer geschützt unterhalb des Kampfes stehen."
+],
+"u": "https://wiki.guildwars.com/wiki/Isle_of_Wurms"
+},
+{
+"n": "Insel des Nomaden",
+"en": "Nomad's Isle",
+"l": "split",
+"tips": [
+"Im Treibsand am Stand kostet jeder Angriff und jede Fertigkeit 1 Energie zusätzlich, dazu 15 % langsamer. Am Ufer kämpfen, nicht im Sand.",
+"Die Teleporter führen in beide Richtungen nah an die Basen. Die Basis hat nur drei Bogenschützen vor dem Gildenherrn.",
+"Der Rückweg durch den Sand ist lang: Wer einmal gesplittet hat, wird schwer eingeholt."
+],
+"u": "https://wiki.guildwars.com/wiki/Nomad's_Isle"
+},
+{
+"n": "Unerforschte Insel",
+"en": "Uncharted Isle",
+"l": "split",
+"tips": [
+"Der Hinterweg liegt außerhalb der Kompass-Reichweite der Spieler vorn. Der Split bleibt lange unbemerkt.",
+"Lange Wege: Wer verlangsamt wird, stirbt weit weg von seinen Mönchen.",
+"Der Stand liegt abseits. Angriffe auf den Läufer sind hier üblich, er braucht Begleitung."
+],
+"u": "https://wiki.guildwars.com/wiki/Uncharted_Isle"
+},
+{
+"n": "Insel der Meditation",
+"en": "Isle of Meditation",
+"l": "split",
+"tips": [
+"Größte Halle. Sehr gute Split-Möglichkeiten, die Basis ist schwer zu verteidigen.",
+"Zuerst den Obelisken auf dem oberen Weg einnehmen: Dann beschießen die Statuen am unteren Weg den Gegner mit Feuerbällen.",
+"Der Weg zum Nordtor liegt im Miasma: 5 Pips Degeneration, nicht entfernbar, steckt an. Abstand halten."
+],
+"u": "https://wiki.guildwars.com/wiki/Isle_of_Meditation"
+}
+],
+"codex": {
+"843": {
+"s": 1.0,
+"b": 0,
+"m": 0
+},
+"1644": {
+"s": 3.0,
+"b": 1,
+"m": 0
+},
+"1649": {
+"s": 3.5,
+"b": 2,
+"m": 0
+},
+"389": {
+"s": 2.5,
+"b": 3,
+"m": 0
+},
+"1536": {
+"s": 0.5,
+"b": 4,
+"m": 0
+},
+"1126": {
+"s": 1.5,
+"b": 5,
+"m": 0
+},
+"1123": {
+"s": 3.0,
+"b": 48,
+"m": 2
+},
+"1364": {
+"s": 2.5,
+"b": 7,
+"m": 0
+},
+"1521": {
+"s": 3.0,
+"b": 8,
+"m": 0
+},
+"1518": {
+"s": 3.0,
+"b": 9,
+"m": 0
+},
+"1520": {
+"s": 3.5,
+"b": 10,
+"m": 0
+},
+"1499": {
+"s": 1.5,
+"b": 12,
+"m": 0
+},
+"1664": {
+"s": 2.5,
+"b": 14,
+"m": 0
+},
+"1088": {
+"s": 0.5,
+"b": 15,
+"m": 0
+},
+"185": {
+"s": 2.5,
+"b": 16,
+"m": 0
+},
+"1367": {
+"s": 2.5,
+"b": 17,
+"m": 0
+},
+"205": {
+"s": 1.5,
+"b": 24,
+"m": 0
+},
+"1098": {
+"s": 2.5,
+"b": 19,
+"m": 0
+},
+"1091": {
+"s": 4.0,
+"b": 20,
+"m": 0
+},
+"1378": {
+"s": 2.5,
+"b": 21,
+"m": 0
+},
+"1662": {
+"s": 2.5,
+"b": 25,
+"m": 0
+},
+"1373": {
+"s": 2.0,
+"b": 26,
+"m": 0
+},
+"226": {
+"s": 2.0,
+"b": 28,
+"m": 0
+},
+"39": {
+"s": 2.5,
+"b": 38,
+"m": 0
+},
+"5": {
+"s": 3.0,
+"b": 33,
+"m": 0
+},
+"52": {
+"s": 1.5,
+"b": 34,
+"m": 0
+},
+"1656": {
+"s": 3.5,
+"b": 35,
+"m": 0
+},
+"804": {
+"s": 1.0,
+"b": 36,
+"m": 0
+},
+"53": {
+"s": 4.5,
+"b": 39,
+"m": 0
+},
+"1053": {
+"s": 1.5,
+"b": 41,
+"m": 0
+},
+"1118": {
+"s": 1.5,
+"b": 49,
+"m": 0
+},
+"1687": {
+"s": 3.5,
+"b": 45,
+"m": 0
+},
+"260": {
+"s": 3.5,
+"b": 45,
+"m": 4
+},
+"276": {
+"s": 3.0,
+"b": 47,
+"m": 0
+},
+"266": {
+"s": 3.5,
+"b": 51,
+"m": 0
+},
+"282": {
+"s": 3.5,
+"b": 50,
+"m": 0
+},
+"1362": {
+"s": 2.0,
+"b": 54,
+"m": 0
+},
+"1599": {
+"s": 3.0,
+"b": 55,
+"m": 0
+},
+"1602": {
+"s": 5.0,
+"b": 56,
+"m": 0
+},
+"1548": {
+"s": 4.5,
+"b": 57,
+"m": 0
+},
+"781": {
+"s": 2.5,
+"b": 59,
+"m": 0
+},
+"1726": {
+"s": 3.0,
+"b": 68,
+"m": 2
+},
+"853": {
+"s": 3.0,
+"b": 68,
+"m": 0
+},
+"1095": {
+"s": 3.0,
+"b": 94,
+"m": 0
+},
+"1466": {
+"s": 3.0,
+"b": 68,
+"m": 3
+},
+"1468": {
+"s": 1.5,
+"b": 65,
+"m": 0
+},
+"1721": {
+"s": 1.5,
+"b": 67,
+"m": 0
+},
+"393": {
+"s": 3.0,
+"b": 68,
+"m": 1
+},
+"428": {
+"s": 3.0,
+"b": 68,
+"m": 4
+},
+"1465": {
+"s": 2.0,
+"b": 69,
+"m": 0
+},
+"404": {
+"s": 2.0,
+"b": 70,
+"m": 0
+},
+"1736": {
+"s": 3.5,
+"b": 71,
+"m": 0
+},
+"1231": {
+"s": 3.0,
+"b": 72,
+"m": 0
+},
+"1744": {
+"s": 1.5,
+"b": 73,
+"m": 0
+},
+"1240": {
+"s": 1.0,
+"b": 74,
+"m": 0
+},
+"1750": {
+"s": 4.0,
+"b": 75,
+"m": 0
+},
+"1217": {
+"s": 4.0,
+"b": 75,
+"m": 2
+},
+"227": {
+"s": 4.0,
+"b": 75,
+"m": 4
+},
+"1659": {
+"s": 4.0,
+"b": 75,
+"m": 5
+},
+"1412": {
+"s": 4.0,
+"b": 75,
+"m": 6
+},
+"358": {
+"s": 3.5,
+"b": 90,
+"m": 0
+},
+"889": {
+"s": 2.0,
+"b": 91,
+"m": 0
+},
+"993": {
+"s": 4.0,
+"b": 92,
+"m": 0
+},
+"869": {
+"s": 3.5,
+"b": 97,
+"m": 0
+},
+"338": {
+"s": 4.0,
+"b": 95,
+"m": 0
+},
+"888": {
+"s": 3.0,
+"b": 96,
+"m": 0
+},
+"355": {
+"s": 4.0,
+"b": 101,
+"m": 0
+},
+"354": {
+"s": 2.5,
+"b": 102,
+"m": 0
+}
+},
 "stand": "19.11.2026"
 }

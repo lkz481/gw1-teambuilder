@@ -72,6 +72,7 @@
       SK.set(o.id, o);
     });
     G.GW.heroai = data.heroai || {};
+    G.GW.allSkills = () => [...SK.values()];
     G.GW.ATTR = data.attr;
     G.GW.icon = { N: data.iconN, size: data.iconSize };
     return SK;
