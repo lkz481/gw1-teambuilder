@@ -626,7 +626,7 @@
       const aoeAll = /(^|[.:)] )(also (hits|affects|strikes)|hits (\d+ )?(foes|all)|affects (foes|all)|strikes (foes|all))/.test(d);
       const aoeAt = rx => { const x = sents.find(q => rx.test(q)); const v = aoeMul(x || d, n) || 1; return v === 1 && aoeAll ? (aoeMul(d, n) || 1) : v; };
       // Bedingter Schaden (nur wenn der Gegner gerade zaubert, angreift oder eine Fertigkeit nutzt): halbe Trefferquote angenommen
-      const condP = /if (target|that|this) foe is (casting|using|attacking|activating)|the next (spell|skill|attack)[^.]*that target foe|if target foe was (casting|attacking)|if that action was|interruption effect:/.test(d) ? 0.5 : 1;
+      const condP = /if (target|that|this) foe is (casting|using|attacking|activating)|the next (spell|skill|attack)[^.]*that target foe|if target foe was (casting|attacking)|if that action was|interruption effect:|removal effect:|if (a|an|that) (condition|hex|enchantment) (is|was) removed|for each (condition|hex) removed/.test(d) ? 0.5 : 1;
       // Energiegewinn der Fertigkeit selbst
       let gain = 0;
       const gm = dRaw.match(/you gain (\d+(?:\.\.\.\d+)?) energy(?! (?:whenever|when|each time|for each|every))/) || dRaw.match(/health and (\d+(?:\.\.\.\d+)?) energy/);
@@ -724,7 +724,8 @@
       if (spA && /ritual|signet/i.test(s.t) && /spirit/.test(dRaw)) {
         const dmgS = at(spA[1], r), life = lifeM ? at(lifeM[1], r) : (d.match(/\((\d+)[- ]second lifespan\)/) || [0, 30])[1] * 1;
         const cnt = (d.match(/creates (\d) level/) || [0, 1])[1] * 1;
-        parts.push({ kind: "Geist", per: dmgS * 0.5 * life * cnt * (/double damage to hexed/.test(dRaw) ? 1.5 : 1), dur: life, aoe: 1, label: cnt + (cnt > 1 ? " Geister" : " Geist") + ", " + dmgS + " alle 2 s" });
+        // Geister stehen fest und müssen in jedem Kampf neu gesetzt werden: 70 % der Zeit im Einsatz (Annahme)
+        parts.push({ kind: "Geist", per: dmgS * 0.5 * life * cnt * 0.7 * (/double damage to hexed/.test(dRaw) ? 1.5 : 1), dur: life, aoe: 1, label: cnt + (cnt > 1 ? " Geister" : " Geist") + ", " + dmgS + " alle 2 s, 70 % im Einsatz" });
       }
       // Gunst der Götter: Mönchszauber auf Verbündete heilen zusätzlich 3,2 je Rang (Wiki "Divine Favor")
       if (bar.pri === 3 && s.p === 3 && /spell/i.test(s.t) && /Verbündete/.test(dd) && rank(16) > 0) parts.push({ kind: "Heilung", per: Math.round(3.2 * rank(16)), dur: 0, aoe: 1, label: "Gunst der Götter " + Math.round(3.2 * rank(16)) });
