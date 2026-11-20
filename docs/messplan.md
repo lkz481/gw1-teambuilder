@@ -10,9 +10,15 @@ Die Toolbox sieht nur Schadenszahlen von Gruppenmitgliedern. Diener, Geister und
 - Pro Lauf genau eine Änderung. Was sich an Zeit und sichtbarem Schaden ändert, ist der echte Beitrag dieser einen Sache, egal wem die Toolbox ihn zurechnet.
 - Sinkt der sichtbare Gesamtschaden bei gleichen Gegnern, hat eine unsichtbare Quelle (Diener, Geister, Degeneration) den Rest erledigt.
 
-## Strecke
+## Stufe 1: Insel der Namenlosen, Meister des Schadens
 
-Ein Gebiet im Hardmode, in dem die ersten drei bis vier Gruppen bei jedem Betreten gleich stehen, möglichst ohne Gegner-Heiler. Jede Gruppe einzeln ziehen, nichts zusammenlaufen lassen, Gruppe bleibt in Kompassreichweite.
+Messstand laut Wiki: Stufe 20, Rüstung 60, greift nicht an, nennt nach `/bow` Gesamtschaden, Zeit und Schaden pro Sekunde, Lebensraub und Degeneration eingeschlossen. Die normale Insel nutzt PvE-Fassungen der Fertigkeiten. Im Tool dazu 1 Ziel und Rüstung 60 einstellen. Ohne Conset und ohne andere Verbrauchsgüter.
+
+Läufe: Spieler allein, Spieler mit Geister-Ritualist (mit und ohne Splitterwaffe, Stärke der Ehre, Einblick des Richters), Geister-Ritualist allein. Grenzen: keine Auslöser durch Gegneraktionen, keine Leichen, nur ein Ziel. Beim ersten Versuch klären: Zählt er Helden und Geister mit, und darf das volle Heldenteam mit?
+
+## Stufe 2: Strecke im Feld
+
+Tahnnakai-Tempel im Hardmode, die ersten drei Gruppen (stehen laut L bei jedem Start gleich). Jede Gruppe einzeln ziehen, nichts zusammenlaufen lassen, Gruppe bleibt in Kompassreichweite. Team: Derwisch mit Pious Renewal, Geister-Ritualist mit Splitterwaffe, Zwietracht-Nekromant mit Knochenteufel, zwei Energiewelle-Mesmer, ein dritter Mesmer, Schmerz-der-Entzauberung-Nekromant, Blut-ist-Kraft-Heiler. Ohne Conset.
 
 ## Pro Lauf festhalten
 
