@@ -1244,6 +1244,12 @@ function refTeams(){
       if (core) { let { L, E } = core; while (L.length < heroes) { let best = null; for (const o of pool) { if (L.some(x=>x.code===o.code)) continue; const L2 = L.concat([o]); if (!valid(L2)) continue; const E2 = evalTeam(L2); if (!best || better(E2, best.E)) best = { L:L2, E:E2 }; } if (!best) break; L = best.L; E = best.E; }
         if (L.length===heroes) cands.push(heroes>k0 ? improve({ L, E }) : { L, E }); } }
     const good = cands.filter(c=>c.E.ok).sort((a,b)=>b.E.dmg-a.E.dmg)[0] || cands.sort((a,b)=>a.E.gap-b.E.gap)[0];
+    // Varianten prüfen: Für jeden Platz alle Leisten mit derselben Elite aus dem Vorrat gegenrechnen. Der Tauschvorrat oben enthält nur die stärksten Leisten nach Einzelschaden, eine Variante mit einer Verstärkung für den Nahkämpfer fällt dort leicht heraus.
+    { let L = good.L, E = good.E; for (let round=0; round<2; round++) { let ch = false;
+        for (let i=0; i<L.length; i++) { let best = null; for (const o of P1) { if (o.elite.id!==L[i].elite.id || o.code===L[i].code) continue; const L2 = L.slice(); L2[i] = o; if (!valid(L2)) continue; const E2 = evalTeam(L2); if (better(E2, best ? best.E : E)) best = { L:L2, E:E2 }; }
+          if (best) { L = best.L; E = best.E; ch = true; } }
+        if (!ch) break; }
+      good.L = L; good.E = E; }
     // Nur für die Prüfung (tests/auswahl.py): bei drei Helden alle erlaubten Kombinationen aus dem Tauschvorrat durchrechnen und mit dem Suchergebnis vergleichen
     if (window.__gwExhaust && heroes===3) { let bestE = null, cnt = 0; const pool = swapPool.filter((o,i,a)=>a.findIndex(x=>x.code===o.code)===i);
       for (let i=0;i<pool.length;i++) for (let j=i+1;j<pool.length;j++) for (let k=j+1;k<pool.length;k++) { const L = [pool[i], pool[j], pool[k]]; if (!valid(L)) continue; cnt++; const E = evalTeam(L); if (!bestE || better(E, bestE)) bestE = E; }

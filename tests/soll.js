@@ -225,4 +225,9 @@ const tpart = (D, name, cat) => D.parts.filter(p => p.sid === id(name) && p.cat 
   T('Diener ohne Heilung: zwei Drittel von 10', cnt(['Animate Bone Fiend', 'Animate Bone Horror']), 6.7, 0.02);
   T('Diener mit Blut des Meisters: 10', cnt(['Animate Bone Fiend', 'Animate Bone Horror', 'Blood of the Master']), 10, 0.02); }
 
+// Strength of Honor mit Sense: Der Zusatzschaden fällt bei jedem getroffenen Gegner an. Gegen drei Gegner trifft die Sense im Schnitt 1 + 2 x 0,5 = 2 je Schwung, also doppelt so viel wie gegen einen.
+{ const soh = bar(RT, MO, { 34: 12, 15: 10 }, ['Strength of Honor']), derv = bar(D, 0, { 41: 12 }, []);
+  const one = team([derv, soh], 1, [6, 'Sense']), three = team([derv, soh], 3, [6, 'Sense']);
+  T('Stärke der Ehre mit Sense gegen 3 Gegner: doppelt', part(three[1], 'Strength of Honor') / part(one[1], 'Strength of Honor'), 2 * three[0].physical / one[0].physical, 0.03); }
+
 console.log(ok + ' von ' + (ok + bad) + ' Fällen bestanden'); fails.forEach(f => console.log('  FEHLER  ' + f)); process.exit(bad ? 1 : 0);
