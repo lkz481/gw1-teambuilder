@@ -1166,8 +1166,8 @@
       const key = ["ideal", (env.wmods && env.wmods[i]) || "-", death.toFixed(3), bars[i].skills.join(","), [...eff[i]].join(";"), n, base.armor, base.foeDps, allies].join("|");
       let I = RUNMEMO.get(key); if (!I) { I = GW.dps(bars[i], eff[i], Object.assign({}, base, { meleeAlly: true, physRate: Math.max(first0.physical || 0, 0.67), hero: true, wmod: (env.wmods && env.wmods[i]) || null, bipPips: 0 })); RUNMEMO.set(key, I); }
       const sum = X => { const m = new Map(); X.parts.forEach(p => { if (p.sid) m.set(p.sid, (m.get(p.sid) || 0) + p.dps * (p.cat === "ctrl" ? 40 : 1)); }); return m; };
-      const a = sum(I), b = sum(D), dead = []; a.forEach((v, sid) => { if (v > 1 && (b.get(sid) || 0) < 0.05 * v) dead.push(sid); });
-      return dead.length ? Object.assign({}, D, { dead }) : D; });
+      const a = sum(I), b = sum(D), dead = [], deadCat = {}; a.forEach((v, sid) => { if (v > 1 && (b.get(sid) || 0) < 0.05 * v) { dead.push(sid); deadCat[sid] = I.parts.filter(p => p.sid === sid).sort((x, y) => y.dps * (y.cat === "ctrl" ? 40 : 1) - x.dps * (x.cat === "ctrl" ? 40 : 1))[0].cat; } });
+      return dead.length ? Object.assign({}, D, { dead, deadCat }) : D; });
     return res;
   };
   // Team mit passender Kampfdauer: Wie schnell Gegner sterben, folgt aus dem Schaden des Teams. Lebenspunkte im schweren Modus nach Wiki ("Hard mode", Stufe 24 bis 28): rund 700, in Elite-Gebieten 850.

@@ -624,6 +624,7 @@ function compute(){
   }
   TEAM = TEAM.slice(0,1).concat(TEAM.slice(1).sort(lineCmp));
   DPS = computeDps();
+  fixDead();
 }
 
 // ---------- Darstellung ----------
@@ -1102,6 +1103,36 @@ function drawMember(body){
   }
 }
 function targetSeg(){ return `<div class="row" style="gap:10px"><div><div class="mut sm" style="text-align:right">Ziele</div><div class="seg" style="width:112px">${[1,3,5].map(k=>`<button class="${state.dpsN===k?"on":""}" data-dpsn="${k}">${k}</button>`).join("")}</div></div><div><div class="mut sm" style="text-align:right" title="Rüstung der Gegner">Rüstung</div><div class="seg" style="width:128px">${[60,80,100].map(k=>`<button class="${armorNow()===k?"on":""}" data-armor="${k}">${k}</button>`).join("")}</div></div></div>`; }
+// ---------- Wirkungslose Fertigkeiten in festen Teams ----------
+// Bewirkt eine Fertigkeit einer Heldenleiste in diesem Team nichts (zum Beispiel eine Nahkampf-Verstärkung ohne Nahkämpfer), tauscht das Tool sie gegen die stärkste passende Fertigkeit aus denselben Attributlinien.
+// Berechnete Teams enthalten solche Leisten gar nicht erst, von dir geänderte Leisten bleiben unberührt.
+function fixDead(){
+  if (CAT!=="team" || !PLAN || !DPS || !DPS.length) return;
+  const aiBad = k => GW.heroai[k.n] && GW.heroai[k.n][0]>=2;
+  const ALL = GW.allSkills().filter(k=>!k.pve && !k.pvp && !/\(PvP\)|Kurzick|Luxon/.test(k.n) && !k.e && !aiBad(k) && !/Attack|Trap|Preparation|Pet|Touch|Ritual|Weapon Spell/i.test(k.t||"") && !/resurrect|pet|while wielding|bow|melee|destroys a spirit/i.test(k.d||""));
+  for (let round=0; round<2; round++) {
+    let any = false; const used = new Set(TEAM.flatMap(m=>m.bar.skills));
+    TEAM.forEach((m,i)=>{ const D = DPS[i]; if (!i || !m.hero || m.changed || !D || !D.dead || !D.dead.length) return;
+      const ranks = new Map(m.bar.attrs);
+      const opts = { targets:state.dpsN, foeRate:0.5, armor:armorNow(), foeDps:foeDpsNow(), allies:TEAM.length, hero:true, physRate:(DPS[0] && DPS[0].physical)||0, meleeAlly:DPS.some(d=>d && d.meleeW) };
+      let r=[]; try{ r=GW.equipFor(m.bar, EQ, null).runes; }catch(e){}
+      // Ersatz nur aus derselben Art: Schaden für Schaden, Heilung für Heilung, Schutz für Schutz, Kontrolle für Kontrolle
+      const val = (X, cat) => cat==="heal" ? X.heal : cat==="prot" ? X.prot : cat==="ctrl" ? (X.ctrl||0)*40 : X.total;
+      const score = (bar, cat) => { try { const X = GW.dps(bar, GW.effRanks(bar, r), opts); return { v: val(X, cat), X }; } catch(e){ return { v:-1 }; } };
+      let bar = Object.assign({}, m.bar, { skills:m.bar.skills.slice() }); const swaps = [];
+      D.dead.forEach(sid=>{ const idx = bar.skills.indexOf(sid), cat = (D.deadCat||{})[sid] || "dmg"; if (idx<0 || GW.skill(sid).e) return; /* die Elite bleibt: Ohne sie wäre es eine andere Leiste */ const base = score(Object.assign({}, bar, { skills:bar.skills.map((x,j)=>j===idx?0:x) }), cat);
+        let best = null; ALL.forEach(c=>{ if ((c.p!==bar.pri && c.p!==bar.sec) || used.has(c.id) || !(c.aid==null || c.aid<0 || (ranks.get(c.aid)||0)>=9)) return;
+          const b2 = Object.assign({}, bar, { skills:bar.skills.slice() }); b2.skills[idx] = c.id; const sc = score(b2, cat); if (!sc.X || !sc.X.parts.some(p=>p.sid===c.id && p.cat===cat && p.dps>(cat==="ctrl"?0.02:0.5))) return; if (sc.v > base.v+1 && (!best || sc.v>best.v)) best = { v:sc.v, c, b2 }; });
+        if (best) { swaps.push([GW.skill(sid), best.c]); used.add(best.c.id); bar = best.b2; } });
+      if (!swaps.length) return; any = true;
+      m.bar = bar; m.code = GW.encode(bar.pri, bar.sec, bar.attrs, bar.skills); m.adapted = true;
+      m.why = (m.why ? m.why+" " : "") + "Angepasst: " + swaps.map(([a,b])=>`${dname(a)} bewirkt in diesem Team nach unserer Rechnung nichts, dafür ${dname(b)}`).join("; ") + "."; });
+    if (!any) break; DPS = computeDps();
+  }
+  // Was sich nicht ersetzen ließ, steht als Hinweis an der Leiste
+  TEAM.forEach((m,i)=>{ const D = DPS[i]; if (!i || !m.hero || !D || !D.dead || !D.dead.length || /Hinweis: .* nach unserer Rechnung nichts\./.test(m.why||"")) return;
+    m.why = (m.why ? m.why+" " : "") + "Hinweis: " + D.dead.map(id=>dname(GW.skill(id))).join(" und ") + (D.dead.length>1 ? " bewirken" : " bewirkt") + " in diesem Team nach unserer Rechnung nichts. Entweder fehlt die Voraussetzung oder ein anderer Held deckt dasselbe schon ab."; });
+}
 // ---------- Verfügbare Helden ----------
 // Wie viele Leisten einer Aufstellung bekämen keinen Helden? Jede Klasse braucht einen eigenen Helden. Razah und Söldner können jede Klasse übernehmen.
 function heroShort(bars){ const have = {}; GW.HEROES.forEach(([n,p])=>{ if (state.owned.has(n) && n!=="Razah") have[p] = (have[p]||0)+1; });
@@ -1311,6 +1342,7 @@ function drawDps(body){
     ${refHTML()}
     <details class="more"><summary>So wird gerechnet</summary><ul class="sm">
       <li>Jede Fertigkeit so oft, wie Aufladen, Wirkzeit und 0,75 s Nachwirkzeit erlauben. Ein Charakter kann nur eine Sache zugleich tun: Passen die Zauber nicht in die Zeit, laufen alle anteilig seltener, und Zauberzeit geht von den normalen Angriffen ab.</li>
+      <li>Wirkungslose Fertigkeiten: Bewirkt eine Fertigkeit einer Heldenleiste in genau diesem Team nichts, weil die Voraussetzung fehlt (etwa eine Nahkampf-Verstärkung ohne Nahkämpfer) oder ein anderer Held dasselbe schon abdeckt, nimmt die Teamsuche die Leiste nicht. In festen Teams tauscht das Tool sie gegen die stärkste Fertigkeit derselben Art aus denselben Attributlinien und schreibt das an die Leiste. Die Elite bleibt immer, von dir geänderte Leisten auch. Findet sich kein Ersatz, steht ein Hinweis an der Leiste.</li>
       <li>Flächen-Niederschlag (zum Beispiel Übernatürliche Labilität): Niedergeschlagene Gegner können sich laut Wiki nicht bewegen. Solange die Gruppe liegt, läuft niemand aus Flächenschaden über Zeit, und für diese Zeit rechnen wir mit drei Vierteln der übrigen Gegner neben dem Ziel statt der Hälfte (Annahme). Der erste Niederschlag fällt beim Anlaufen, die Liegezeit zählt anteilig an der Kampfdauer und gilt für das ganze Team.</li>
       <li>Energie: Grundregeneration (1 Pip = 1 Energie alle 3 s), dazu Seelensammlung, Energie aus kritischen Treffern, Führung und eigene Energie-Fertigkeiten. Ein Blut-ist-Kraft-Held versorgt drei Verbündete zugleich. Reicht die Energie nicht, sinkt die Nutzung anteilig.</li>
       <li>Gleiche Annahmen für alle Leisten: Im Kampf stirbt alle 6 s eine Kreatur (Leichen, Seelensammlung, Schaden beim Tod eines Gegners). Schaden, der nur trifft, wenn der Gegner gerade zaubert oder angreift, zählt mit halber Trefferquote.</li>
